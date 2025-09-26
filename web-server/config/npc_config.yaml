@@ -1,0 +1,27 @@
+npc:
+  name: npc
+  id_field: id
+  primary_key: id
+  fields:
+    - name: id
+      sql_type: TEXT
+      constraints: ["NOT NULL"]
+      is_nullable: false
+    - name: name_id
+      sql_type: TEXT
+      is_nullable: true
+    - name: name
+      sql_type: TEXT
+      is_nullable: true
+    - name: title
+      sql_type: TEXT
+      is_nullable: true
+  special_fields:
+    npc_id:
+      target_field: id
+    name_id:
+      translate: true
+      target_field: name_id
+    title_id:
+      translate: true
+      target_field: title

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rift_schedule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="rift_schedule.xsd">
+	<!-- Eltnen -->
+	<!-- 埃尔特内（天族地图） -->
+	<rift id="210020000">
+		<!-- 每小时整点开启一次 -->
+		<open schedule="0 0 * ? * *"/>
+	</rift>
+	<!-- Heiron -->
+	<!-- 海罗纳尔（天族地图） -->
+	<rift id="210040000">
+		<!-- 每小时整点开启一次 -->
+		<open schedule="0 0 * ? * *"/>
+	</rift>
+	<!-- Inggison -->
+	<!-- 英吉斯温（天族高级地图） -->
+	<rift id="210050000">
+		<!-- 每小时整点开启一次 -->
+		<open schedule="0 0 * ? * *"/>
+		<!-- 每周一、周五18:00开启，带有spawn属性 -->
+		<open schedule="0 0 18 ? * FRI,MON" spawn="true"/>
+		<!-- 每周三、周六23:00开启，带有spawn属性 -->
+		<open schedule="0 0 23 ? * WED,SAT" spawn="true"/>
+	</rift>
+	<!-- Cygnea -->
+	<!-- 锡尔卡纳（天族最新地图） -->
+	<rift id="210070000">
+		<!-- 每小时整点开启一次 -->
+		<open schedule="0 0 * ? * *"/>
+		<!-- 每周三、周五20:00开启，带有spawn属性 -->
+		<open schedule="0 0 20 ? * WED,FRI" spawn="true"/>
+		<!-- 每周日17:00开启，带有spawn属性 -->
+		<open schedule="0 0 17 ? * SUN" spawn="true"/>
+	</rift>
+
+	<!-- Morheim -->
+	<!-- 莫尔海姆（魔族地图） -->
+	<rift id="220020000">
+		<!-- 每小时整点开启一次 -->
+		<open schedule="0 0 * ? * *"/>
+	</rift>
+	<!-- Beluslan -->
+	<!-- 贝鲁斯兰（魔族地图） -->
+	<rift id="220040000">
+		<!-- 每小时整点开启一次 -->
+		<open schedule="0 0 * ? * *"/>
+	</rift>
+	<!-- Gelkmaros -->
+	<!-- 格尔克马洛斯（魔族高级地图） -->
+	<rift id="220070000">
+		<!-- 每小时整点开启一次 -->
+		<open schedule="0 0 * ? * *"/>
+		<!-- 每周日、周四18:00开启，带有spawn属性 -->
+		<open schedule="0 0 18 ? * SUN,THU" spawn="true"/>
+		<!-- 每周二、周五23:00开启，带有spawn属性 -->
+		<open schedule="0 0 23 ? * TUE,FRI" spawn="true"/>
+	</rift>
+	<!-- Enshar -->
+	<!-- 因萨尔（魔族最新地图） -->
+	<rift id="220080000">
+		<!-- 每小时整点开启一次 -->
+		<open schedule="0 0 * ? * *"/>
+		<!-- 每周二、周四20:00开启，带有spawn属性 -->
+		<open schedule="0 0 20 ? * TUE,THU" spawn="true"/>
+		<!-- 每周六17:00开启，带有spawn属性 -->
+		<open schedule="0 0 17 ? * SAT" spawn="true"/>
+	</rift>
+</rift_schedule>

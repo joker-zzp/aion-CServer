@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/scripts/global.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1></h1>
+      <nav>
+        <ul>
+        </ul>
+      </nav>
+    </header>
+    <main class="flex-col-box">
+      <div class="show-header search-section">
+        <h2>物品查询</h2>
+        <div class="search-form">
+          <input type="text" id="item-search" placeholder="输入物品名称或ID">
+          <button id="search-btn" class="small-btn">搜索</button>
+        </div>
+      </div>
+
+      <div class="flex-col-box show-content">
+        <div id="search-results" class="results-container"></div>
+        <!-- 分页容器 -->
+        <div class="pagination"></div>
+      </div>
+    </main>
+    <div id="message-box" class="message-box"></div>
+    <footer>
+      <p>&copy; 2023 Aion Game Data Web Service</p>
+    </footer>
+    <script src="/static/scripts/items.js" defer type="module"></script>
+  </body>
+</html>

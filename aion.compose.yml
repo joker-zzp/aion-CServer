@@ -1,0 +1,346 @@
+x-volumes:
+  db-volume: &db-volume /home/joker/Documents/aion-db
+  aion-server-volume: &server-volumes /home/joker/Documents/aion-server:/app
+  maven-repo-volume: &maven-repo-volume /home/joker/Documents/aion-server/.m2:/root/.m2
+
+x-server_path:
+  cs-path: &cs-path /home/joker/Documents/aion-server/chat-server
+  ls-path: &ls-path /home/joker/Documents/aion-server/login-server
+  gs-path: &gs-path /home/joker/Documents/aion-server/game-server
+
+x-server-log:
+  chat-log: &chat-log /home/joker/Documents/aion-log/chat:/workspace/log
+  login-log: &login-log /home/joker/Documents/aion-log/login:/workspace/log
+  game-log: &game-log /home/joker/Documents/aion-log/game:/workspace/log
+
+x-init-sql:
+  chat-sql: &chat-sql /home/joker/Documents/aion-server/chat-server/sql/aion_cs.sql:/docker-entrypoint-initdb.d/01_chat.sql
+  login-sql: &login-sql /home/joker/Documents/aion-server/login-server/sql/aion_ls.sql:/docker-entrypoint-initdb.d/02_login.sql
+  game-sql: &game-sql /home/joker/Documents/aion-server/game-server/sql/aion_gs.sql:/docker-entrypoint-initdb.d/03_game.sql 
+
+# MySQL数据库服务
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: aion-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${AION_DB_NAME:-aion}
+      MYSQL_USER: ${AION_DB_USER:-aion_user}
+      MYSQL_PASSWORD: ${AION_DB_PASSWORD:-aion_pass}
+      TZ: Asia/Shanghai
+    ports:
+      - "3307:3306"
+    volumes: 
+      - mysql-data:/var/lib/mysql
+      - *chat-sql
+      - *login-sql
+      - *game-sql
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-time-zone=Asia/Shanghai
+      --max_connections=100
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${AION_DB_USER:-aion_user}", "-p${AION_DB_PASSWORD:-aion_pass}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aion-network
+
+  # 构建服务
+  builder:
+    image: maven:3.9-eclipse-temurin-21
+    container_name: aion-builder
+    restart: "no"
+    environment:
+      AION_GAME_PASSWORD: ${AION_GAME_PASSWORD:-aion_pass}
+    volumes:
+      - *server-volumes
+      - *maven-repo-volume
+    working_dir: /app
+    # 使用数组样式命令，更适合处理复杂shell语法
+    command: >
+      sh -c '
+        set -e
+        echo "当前工作目录: $(pwd)"
+        ls -la
+        mvn dependency:go-offline && mvn clean package
+
+        # 检查构建是否成功
+        if [ $? -ne 0 ]; then
+          echo "错误: Maven构建失败!"
+          exit 1
+        fi
+
+        echo "Maven 构建完成，开始更新配置文件..."
+        # 导入 utils.sh write_db_properties 方法
+        . /app/utils.sh || {
+          echo "错误: 无法导入utils.sh脚本!";
+          exit 1;
+        }
+        # 处理登录服务配置文件
+        echo "写入登录服务配置文件..."
+        write_db_properties /app/login-server/config myls.properties || {
+          exit 1;
+        }
+        write_custom_properties /app/login-server/config myls.properties loginserver.log.logins true || {
+          exit 1;
+        }
+        cat /app/login-server/config/myls.properties
+
+        # 处理聊天服务配置文件
+        echo "写入聊天服务配置文件..."
+        write_db_properties /app/chat-server/config mycs.properties || {
+          exit 1;
+        }
+        # 处理 聊天服务与游戏服务关联密码
+        echo "写入聊天服务密码..."
+        write_custom_properties /app/chat-server/config mycs.properties chatserver.network.gameserver.password ${AION_GAME_PASSWORD:-aion_pass} || {
+          exit 1;
+        }
+        cat /app/chat-server/config/mycs.properties
+
+        # 处理游戏服务配置文件
+        echo "写入游戏服务配置文件..."
+        write_db_properties /app/game-server/config mygs.properties || {
+          exit 1;
+        }
+        echo "写入登录服务器地址..."
+        write_custom_properties /app/game-server/config mygs.properties gameserver.network.login.address "login-server:9014" || {
+          exit 1;
+        }
+        echo "写入聊天服务器地址..."
+        write_custom_properties /app/game-server/config mygs.properties gameserver.network.chat.address "chat-server:9021" || {
+          exit 1;
+        }
+        echo "写入游戏服务密码..."
+        write_custom_properties /app/game-server/config mygs.properties gameserver.network.chat.password ${AION_GAME_PASSWORD:-aion_pass} || {
+          exit 1;
+        }
+        echo "写入游戏服务对外服务地址..."
+        write_custom_properties /app/game-server/config mygs.properties gameserver.network.client.connect_address "8.140.200.60:7777" || {
+          exit 1;
+        }
+        cat /app/game-server/config/mygs.properties
+
+        echo "所有配置文件创建完成！"
+        exit 0
+      '
+    networks:
+      - aion-network
+
+  # 代码监控服务
+  # watcher:
+  #   image: maven:3.9-eclipse-temurin-21
+  #   container_name: aion-watcher
+  #   restart: always
+  #   depends_on:
+  #     - builder
+  #   volumes:
+  #     - *server-volumes
+  #     - *maven-repo-volume
+  #   working_dir: ~/workspace
+  #   command: >
+  #     sh -c "
+  #       apt-get update && apt-get install -y inotify-tools &&
+  #       while true; do
+  #         inotifywait -e modify,create,delete,move -r --exclude='(target|\\.git|\\.idea|\\.vscode)' /app/pom.xml /app/*-server/pom.xml /app/*-server/src/ &&
+  #         echo '代码发生变化，重新构建...' &&
+  #         mvn clean package &&
+  #         echo '构建完成'
+  #       done
+  #     "
+  #   networks:
+  #     - aion-network
+
+  # 登录服务
+  login-server:
+    image: maven:3.9-eclipse-temurin-21
+    container_name: aion-ls
+    restart: on-failure
+    working_dir: /workspace
+    depends_on:
+      mysql:
+        condition: service_healthy
+      builder:
+        condition: service_completed_successfully
+    ports:
+      - "2106:2106"   # 客户端登录服务端口
+      - "9014:9014"   # 监听游戏服务地址
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - *maven-repo-volume
+      - *server-volumes
+      - *login-log
+    command: >
+      sh -c '
+        # 设置日志级别和错误处理
+        set -e
+        echo "当前工作目录: $(pwd) 当前用户: $(whoami)"
+        
+        # echo "解压目录..."
+        # 将 app 中target/server.zip 解压到当前目录
+        jar -xf /app/login-server/target/login-server.zip || {
+          echo "解压失败"
+          exit 1
+        }
+
+        mv ./login-server/* ./ && rmdir login-server
+        # echo "解压完成..."
+        # 将app中配置文件复制到当前目录 (如果以存在要进行覆盖)
+        rm -rf ./config && cp -r /app/login-server/config ./
+        # echo "配置文件复制完成..."
+        chown -R 1000:1000 /app/login-server/config
+        # ls -l -R ./config
+        # cat ./config/myls.properties
+        # 启动登录服务
+        echo "准备启动登录服务..."
+        chmod +x ./start.sh && ./start.sh
+      '
+    networks:
+      - aion-network
+
+  # 聊天服务
+  chat-server:
+    image: maven:3.9-eclipse-temurin-21
+    container_name: aion-cs
+    restart: on-failure
+    working_dir: /workspace
+    depends_on:
+      mysql:
+        condition: service_healthy
+      builder:
+        condition: service_completed_successfully
+    ports:
+      - "9021:9021"   # 监听游戏服务地址
+      - "10241:10241"   # 监听Aion客户端连接的本地地址
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - *maven-repo-volume
+      - *server-volumes
+      # - *chat-log
+    command: >
+      sh -c '
+        set -e
+
+        echo "解压目录..."
+        # 将 app 中target/server.zip 解压到当前目录
+        jar -xf /app/chat-server/target/chat-server.zip || {
+          echo "解压失败"
+          exit 1
+        }
+
+        mv ./chat-server/* ./ && rmdir chat-server
+        echo "解压完成..."
+        # 将app中配置文件复制到当前目录 (如果已存在要进行覆盖)
+        rm -rf ./config && cp -r /app/chat-server/config ./
+        echo "配置文件复制完成..."
+        chown -R 1000:1000 /app/chat-server/config
+        # 显示配置文件内容进行调试
+        cat ./config/mycs.properties
+        # 启动聊天服务
+        echo "准备启动聊天服务..."
+        chmod +x ./start.sh && ./start.sh
+      '
+    networks:
+      - aion-network
+
+  # 游戏服务器
+  game-server:
+    image: maven:3.9-eclipse-temurin-21
+    container_name: aion-gs
+    restart: on-failure
+    working_dir: /workspace
+    depends_on:
+      mysql:
+        condition: service_healthy
+      builder:
+        condition: service_completed_successfully
+      login-server:
+        condition: service_started
+      chat-server:
+        condition: service_started
+    ports:
+      - "7777:7777"   # 游戏服务器端口
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - *maven-repo-volume
+      - *server-volumes
+      - *game-log
+    command: >
+      sh -c '
+        set -e
+
+        echo "解压目录..."
+        # 将 app 中target/server.zip 解压到当前目录
+        jar -xf /app/game-server/target/game-server.zip || {
+          echo "解压失败"
+          exit 1
+        }
+
+        mv ./game-server/* ./ && rmdir game-server
+        echo "解压完成..."
+        # 将app中配置文件复制到当前目录 (如果已存在要进行覆盖)
+        rm -rf ./config && cp -r /app/game-server/config ./
+        chown -R 1000:1000 /app/game-server/config
+        echo "配置文件复制完成..."
+        # 启动游戏服务
+        echo "准备启动游戏服务..."
+        chmod +x ./start.sh && ./start.sh
+      '
+    networks:
+      - aion-network
+
+  # web
+  web:
+    image: python:3.11-alpine
+    container_name: aion-web
+    restart: on-failure
+    working_dir: /workspace
+    ports:
+      - "8082:8000"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - *server-volumes
+    command: >
+      sh -c '
+        set -e
+        # 设置当前用户
+        chown -R 1000:1000 /workspace
+        # 文件拷貝
+        cp -r /app/web-server/* /workspace/
+        # 安裝依賴
+        pip install -r requirements.txt
+        # 启动web服务
+        echo "准备启动web服务..."
+        uvicorn main:app --host 0.0.0.0 --port 8000
+      '
+    networks:
+      - aion-network
+
+volumes:
+  mysql-data:
+    name: aion-mysql-data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: *db-volume
+  # server-volume:
+  #   name: aion-server-volumes
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     o: bind
+  #     device: *server-path
+
+networks:
+  aion-network:
+    driver: bridge

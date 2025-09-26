@@ -1,0 +1,43 @@
+item:
+  name: item
+  id_field: id
+  primary_key: id
+  fields:
+    - name: id
+      sql_type: TEXT
+      constraints: ["NOT NULL"]
+      is_nullable: false
+    - name: name
+      sql_type: TEXT
+      constraints: ["NOT NULL"]
+      is_nullable: false
+    - name: name_id
+      sql_type: TEXT
+      constraints: []
+      is_nullable: true
+    - name: item_type
+      sql_type: TEXT
+      constraints: ["NOT NULL"]
+      is_nullable: true
+      default_value: ""
+		- name: item_group
+      sql_type: TEXT
+      is_nullable: true
+    - name: subtype
+      sql_type: TEXT
+      is_nullable: true
+    - name: rarity
+      sql_type: TEXT
+      is_nullable: true
+    - name: level_required
+      sql_type: INTEGER
+      is_nullable: true
+      default_value: "0"
+  special_fields:
+    nameId:
+      translate: true
+      target_field: name_id
+    item_id:
+      target_field: id
+    type:
+      target_field: item_type

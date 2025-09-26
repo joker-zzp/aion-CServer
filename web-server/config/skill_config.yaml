@@ -1,0 +1,39 @@
+skill:
+  name: skill
+  id_field: id
+  primary_key: id
+  fields:
+    - name: id
+      sql_type: TEXT
+      constraints: ["NOT NULL"]
+      is_nullable: false
+    - name: name
+      sql_type: TEXT
+      constraints: ["NOT NULL"]
+      is_nullable: false
+    - name: name_id
+      sql_type: TEXT
+      constraints: ["NOT NULL"]
+      is_nullable: false
+    - name: level
+      sql_type: INTEGER
+      constraints: ["NOT NULL"]
+      is_nullable: false
+      default_value: "0"
+    - name: skilltype
+      sql_type: TEXT
+      is_nullable: true
+    - name: skillsubtype
+      sql_type: TEXT
+      is_nullable: true
+    - name: activation
+      sql_type: TEXT
+      is_nullable: true
+  special_fields:
+    nameId:
+      translate: true
+      target_field: name_id
+    skill_id:
+      target_field: id
+    lvl:
+      target_field: level

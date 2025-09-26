@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/scripts/global.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Aion Game Data Web Service</h1>
+    <nav>
+      <ul>
+        <li><a href="/">主页</a></li>
+        <li><a href="/skills">技能查询</a></li>
+        <li><a href="/items">物品查询</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="flex-col-box">
+		<div class="show-header search-section">
+			<h2>技能查询</h2>
+			<div class="search-form">
+				<input type="text" id="skill-search" placeholder="输入技能名称或ID">
+				<button id="search-btn" class="small-btn">搜索</button>
+			</div>
+		</div>
+
+		<div class="flex-col-box show-content">
+			<div id="search-results" class="results-container"></div>
+			<!-- 分页容器 -->
+			<div class="pagination"></div>
+		</div>
+  </main>
+	<div id="message-box" class="message-box"></div>
+  <footer>
+    <p>&copy; 2023 Aion Game Data Web Service</p>
+  </footer>
+  <script src="/static/scripts/skills.js" defer type="module"></script>
+</body>
+</html>

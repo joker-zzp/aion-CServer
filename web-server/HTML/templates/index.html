@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/scripts/global.js" defer></script>
+  </head>
+  <body>
+    <header>
+    </header>
+    <main class="flex-row-box">
+      <section class="flex-col-box">
+        <h2>欢迎使用Aion游戏数据查询服务</h2>
+        <p>本服务提供Aion游戏的静态数据查询功能，包括技能和物品等信息。</p>
+        <div class="flex-row-box">
+          <div class="card-root">
+            <p class="title">技能查询</p>
+            <p class="subtitle">查询游戏中的所有技能信息，包括技能效果、属性和使用条件等。</p>
+						<div class="content flex-row-box flex-center">
+							<a href="/skills" class="a-btn">前往查询</a>
+						</div>
+          </div>
+          <div class="card-root">
+            <p class="title">物品查询</p>
+            <p class="subtitle">浏览游戏中的装备、道具等物品信息，查看详细属性和获取方式。</p>
+						<div class="content flex-row-box flex-center">
+							<a href="/items" class="a-btn">前往查询</a>
+						</div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2023 Aion Game Data Web Service</p>
+    </footer>
+  </body>
+</html>
