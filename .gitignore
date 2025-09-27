@@ -16,5 +16,7 @@ login-server/target/
 **/.classpath
 **/.project
 
+.env
+
 .m2
 temp/

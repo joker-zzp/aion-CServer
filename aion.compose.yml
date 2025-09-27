@@ -1,22 +1,18 @@
-x-volumes:
-  db-volume: &db-volume /home/joker/Documents/aion-db
-  aion-server-volume: &server-volumes /home/joker/Documents/aion-server:/app
-  maven-repo-volume: &maven-repo-volume /home/joker/Documents/aion-server/.m2:/root/.m2
 
 x-server_path:
-  cs-path: &cs-path /home/joker/Documents/aion-server/chat-server
-  ls-path: &ls-path /home/joker/Documents/aion-server/login-server
-  gs-path: &gs-path /home/joker/Documents/aion-server/game-server
+  cs-path: &cs-path ${AION_HOME}/chat-server
+  ls-path: &ls-path ${AION_HOME}/login-server
+  gs-path: &gs-path ${AION_HOME}/game-server
 
 x-server-log:
-  chat-log: &chat-log /home/joker/Documents/aion-log/chat:/workspace/log
-  login-log: &login-log /home/joker/Documents/aion-log/login:/workspace/log
-  game-log: &game-log /home/joker/Documents/aion-log/game:/workspace/log
+  chat-log: &chat-log ${AION_LOG_PATH}/chat:/workspace/log
+  login-log: &login-log ${AION_LOG_PATH}/login:/workspace/log
+  game-log: &game-log ${AION_LOG_PATH}/game:/workspace/log
 
 x-init-sql:
-  chat-sql: &chat-sql /home/joker/Documents/aion-server/chat-server/sql/aion_cs.sql:/docker-entrypoint-initdb.d/01_chat.sql
-  login-sql: &login-sql /home/joker/Documents/aion-server/login-server/sql/aion_ls.sql:/docker-entrypoint-initdb.d/02_login.sql
-  game-sql: &game-sql /home/joker/Documents/aion-server/game-server/sql/aion_gs.sql:/docker-entrypoint-initdb.d/03_game.sql 
+  chat-sql: &chat-sql ${AION_HOME}/chat-server/sql/aion_cs.sql:/docker-entrypoint-initdb.d/01_chat.sql
+  login-sql: &login-sql ${AION_HOME}/login-server/sql/aion_ls.sql:/docker-entrypoint-initdb.d/02_login.sql
+  game-sql: &game-sql ${AION_HOME}/game-server/sql/aion_gs.sql:/docker-entrypoint-initdb.d/03_game.sql 
 
 # MySQL数据库服务
 services:
@@ -24,6 +20,8 @@ services:
     image: mysql:8.0
     container_name: aion-mysql
     restart: always
+    env_file:
+      - .env
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ${AION_DB_NAME:-aion}
@@ -33,7 +31,7 @@ services:
     ports:
       - "3307:3306"
     volumes: 
-      - mysql-data:/var/lib/mysql
+      - ${AION_DB_PATH}:/var/lib/mysql
       - *chat-sql
       - *login-sql
       - *game-sql
@@ -57,9 +55,13 @@ services:
     restart: "no"
     environment:
       AION_GAME_PASSWORD: ${AION_GAME_PASSWORD:-aion_pass}
+      AION_DB_NAME: ${AION_DB_NAME:-aion}
+      AION_DB_USER: ${AION_DB_USER:-aion_user}
+      AION_DB_PASSWORD: ${AION_DB_PASSWORD:-aion_pass}
+      AION_SERVER_IP: ${AION_SERVER_IP:-127.0.0.1}
     volumes:
-      - *server-volumes
-      - *maven-repo-volume
+      - ${AION_HOME}:/app
+      - ${AION_HOME}/.m2:/root/.m2
     working_dir: /app
     # 使用数组样式命令，更适合处理复杂shell语法
     command: >
@@ -121,7 +123,7 @@ services:
           exit 1;
         }
         echo "写入游戏服务对外服务地址..."
-        write_custom_properties /app/game-server/config mygs.properties gameserver.network.client.connect_address "8.140.200.60:7777" || {
+        write_custom_properties /app/game-server/config mygs.properties gameserver.network.client.connect_address "${AION_SERVER_IP:-127.0.0.1}:7777" || {
           exit 1;
         }
         cat /app/game-server/config/mygs.properties
@@ -131,30 +133,6 @@ services:
       '
     networks:
       - aion-network
-
-  # 代码监控服务
-  # watcher:
-  #   image: maven:3.9-eclipse-temurin-21
-  #   container_name: aion-watcher
-  #   restart: always
-  #   depends_on:
-  #     - builder
-  #   volumes:
-  #     - *server-volumes
-  #     - *maven-repo-volume
-  #   working_dir: ~/workspace
-  #   command: >
-  #     sh -c "
-  #       apt-get update && apt-get install -y inotify-tools &&
-  #       while true; do
-  #         inotifywait -e modify,create,delete,move -r --exclude='(target|\\.git|\\.idea|\\.vscode)' /app/pom.xml /app/*-server/pom.xml /app/*-server/src/ &&
-  #         echo '代码发生变化，重新构建...' &&
-  #         mvn clean package &&
-  #         echo '构建完成'
-  #       done
-  #     "
-  #   networks:
-  #     - aion-network
 
   # 登录服务
   login-server:
@@ -173,8 +151,7 @@ services:
     environment:
       TZ: Asia/Shanghai
     volumes:
-      - *maven-repo-volume
-      - *server-volumes
+      - server-volume:/app
       - *login-log
     command: >
       sh -c '
@@ -221,9 +198,8 @@ services:
     environment:
       TZ: Asia/Shanghai
     volumes:
-      - *maven-repo-volume
-      - *server-volumes
-      # - *chat-log
+      - server-volume:/app
+      - *chat-log
     command: >
       sh -c '
         set -e
@@ -270,8 +246,7 @@ services:
     environment:
       TZ: Asia/Shanghai
     volumes:
-      - *maven-repo-volume
-      - *server-volumes
+      - server-volume:/app
       - *game-log
     command: >
       sh -c '
@@ -308,7 +283,7 @@ services:
     environment:
       TZ: Asia/Shanghai
     volumes:
-      - *server-volumes
+      - server-volume:/app
     command: >
       sh -c '
         set -e
@@ -332,14 +307,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: *db-volume
-  # server-volume:
-  #   name: aion-server-volumes
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     o: bind
-  #     device: *server-path
+      device: ${AION_DB_PATH}
+  server-volume:
+    name: aion-server-volumes
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${AION_HOME}
 
 networks:
   aion-network:
