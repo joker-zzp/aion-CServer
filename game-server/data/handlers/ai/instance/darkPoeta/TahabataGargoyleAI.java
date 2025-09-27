@@ -12,13 +12,13 @@ import ai.AggressiveNpcAI;
 @AIName("tahabata_gargoyle")
 public class TahabataGargoyleAI extends AggressiveNpcAI {
 
-	public TahabataGargoyleAI(Npc owner) {
-		super(owner);
-	}
+  public TahabataGargoyleAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		if (skillTemplate.getSkillId() == 18219)
-			getOwner().getController().delete();
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    if (skillTemplate.getSkillId() == 18219)
+      getOwner().getController().delete();
+  }
 }

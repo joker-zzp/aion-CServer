@@ -14,78 +14,78 @@ import com.aionemu.gameserver.skillengine.model.Skill;
  */
 public class ActionObserver {
 
-	private AtomicBoolean used;
+  private AtomicBoolean used;
 
-	private final ObserverType observerType;
+  private final ObserverType observerType;
 
-	public ActionObserver(ObserverType observerType) {
-		this.observerType = observerType;
-	}
+  public ActionObserver(ObserverType observerType) {
+    this.observerType = observerType;
+  }
 
-	public void makeOneTimeUse() {
-		used = new AtomicBoolean(false);
-	}
+  public void makeOneTimeUse() {
+    used = new AtomicBoolean(false);
+  }
 
-	public boolean tryUse() {
-		return used.compareAndSet(false, true);
-	}
+  public boolean tryUse() {
+    return used.compareAndSet(false, true);
+  }
 
-	/**
-	 * Called when the observer was removed and no longer receives events
-	 */
-	public void onRemoved() {
-	}
+  /**
+   * Called when the observer was removed and no longer receives events
+   */
+  public void onRemoved() {
+  }
 
-	public ObserverType getObserverType() {
-		return observerType;
-	}
+  public ObserverType getObserverType() {
+    return observerType;
+  }
 
-	public void moved() {
-	}
+  public void moved() {
+  }
 
-	/**
-	 * @param creature who effected
-	 * @param skillId - effector skill id, which called this method
-	 */
-	public void attacked(Creature creature, int skillId) {
-	}
+  /**
+   * @param creature who effected
+   * @param skillId - effector skill id, which called this method
+   */
+  public void attacked(Creature creature, int skillId) {
+  }
 
-	public void attack(Creature creature, int skillId) {
-	}
+  public void attack(Creature creature, int skillId) {
+  }
 
-	public void equip(Item item, Player owner) {
-	}
+  public void equip(Item item, Player owner) {
+  }
 
-	public void unequip(Item item, Player owner) {
-	}
+  public void unequip(Item item, Player owner) {
+  }
 
-	public void startSkillCast(Skill skill) {
-	}
+  public void startSkillCast(Skill skill) {
+  }
 
-	public void endSkillCast(Skill skill) {
-	}
+  public void endSkillCast(Skill skill) {
+  }
 
-	public void boostSkillCost(Skill skill) {
-	}
+  public void boostSkillCost(Skill skill) {
+  }
 
-	public void died(Creature creature) {
-	}
+  public void died(Creature creature) {
+  }
 
-	public void dotattacked(Creature creature, Effect dotEffect) {
-	}
+  public void dotattacked(Creature creature, Effect dotEffect) {
+  }
 
-	public void itemused(Item item) {
-	}
+  public void itemused(Item item) {
+  }
 
-	public void abnormalsetted(AbnormalState state) {
-	}
+  public void abnormalsetted(AbnormalState state) {
+  }
 
-	public void summonrelease() {
-	}
+  public void summonrelease() {
+  }
 
-	public void sit() {
-	}
+  public void sit() {
+  }
 
-	public void hpChanged(int value) {
-	}
+  public void hpChanged(int value) {
+  }
 }

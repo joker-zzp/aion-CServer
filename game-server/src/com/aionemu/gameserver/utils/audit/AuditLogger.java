@@ -16,23 +16,23 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class AuditLogger {
 
-	private static final Logger log = LoggerFactory.getLogger("AUDIT_LOG");
+  private static final Logger log = LoggerFactory.getLogger("AUDIT_LOG");
 
-	/**
-	 * Logs message, if audit log is enabled.<br>
-	 * Notifies permitted online staff members.<br>
-	 * Automatically punishes player, if punishments are enabled.
-	 */
-	public static final void log(Player player, String message) {
-		if (PunishmentConfig.PUNISHMENT_ENABLE)
-			AutoBan.punishment(player);
+  /**
+   * Logs message, if audit log is enabled.<br>
+   * Notifies permitted online staff members.<br>
+   * Automatically punishes player, if punishments are enabled.
+   */
+  public static final void log(Player player, String message) {
+    if (PunishmentConfig.PUNISHMENT_ENABLE)
+      AutoBan.punishment(player);
 
-		if (LoggingConfig.LOG_AUDIT)
-			log.info(player + " " + message);
+    if (LoggingConfig.LOG_AUDIT)
+      log.info(player + " " + message);
 
-		for (Player gm : GMService.getInstance().getOnlineStaffMembers()) {
-			if (gm.hasAccess(AdminConfig.AUDIT_INFO))
-				PacketSendUtility.sendMessage(gm, ChatUtil.name(player) + " " + message, ChatType.YELLOW);
-		}
-	}
+    for (Player gm : GMService.getInstance().getOnlineStaffMembers()) {
+      if (gm.hasAccess(AdminConfig.AUDIT_INFO))
+        PacketSendUtility.sendMessage(gm, ChatUtil.name(player) + " " + message, ChatType.YELLOW);
+    }
+  }
 }

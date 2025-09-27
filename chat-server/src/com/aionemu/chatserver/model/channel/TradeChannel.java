@@ -8,19 +8,19 @@ import com.aionemu.chatserver.model.Race;
  */
 public class TradeChannel extends RaceChannel {
 
-	private final String mapIdentifier;
+  private final String mapIdentifier;
 
-	public TradeChannel(int gameServerId, Race race, String mapIdentifier) {
-		super(ChannelType.TRADE, gameServerId, race);
-		this.mapIdentifier = mapIdentifier;
-	}
+  public TradeChannel(int gameServerId, Race race, String mapIdentifier) {
+    super(ChannelType.TRADE, gameServerId, race);
+    this.mapIdentifier = mapIdentifier;
+  }
 
-	public String getMapIdentifier() {
-		return mapIdentifier;
-	}
+  public String getMapIdentifier() {
+    return mapIdentifier;
+  }
 
-	@Override
-	public boolean matches(ChannelType channelType, int gameServerId, Race race, String mapIdentifier) {
-		return getMapIdentifier().equals(mapIdentifier) && super.matches(channelType, gameServerId, race, mapIdentifier);
-	}
+  @Override
+  public boolean matches(ChannelType channelType, int gameServerId, Race race, String mapIdentifier) {
+    return getMapIdentifier().equals(mapIdentifier) && super.matches(channelType, gameServerId, race, mapIdentifier);
+  }
 }

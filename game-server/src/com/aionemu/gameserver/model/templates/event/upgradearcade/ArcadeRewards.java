@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ArcadeRewards")
 public class ArcadeRewards {
 
-	@XmlAttribute(name = "min_level")
-	private int minLevel;
-	@XmlElement(name = "item")
-	private List<ArcadeRewardItem> arcadeRewardItems;
+  @XmlAttribute(name = "min_level")
+  private int minLevel;
+  @XmlElement(name = "item")
+  private List<ArcadeRewardItem> arcadeRewardItems;
 
-	public int getMinLevel() {
-		return minLevel;
-	}
+  public int getMinLevel() {
+    return minLevel;
+  }
 
-	public List<ArcadeRewardItem> getArcadeRewardItems() {
-		return arcadeRewardItems;
-	}
+  public List<ArcadeRewardItem> getArcadeRewardItems() {
+    return arcadeRewardItems;
+  }
 }

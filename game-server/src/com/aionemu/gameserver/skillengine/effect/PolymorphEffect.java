@@ -16,20 +16,20 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "PolymorphEffect")
 public class PolymorphEffect extends TransformEffect {
 
-	@Override
-	public void startEffect(Effect effect) {
-		super.startEffect(effect);
-		if (model > 0) {
-			Creature effected = effect.getEffected();
-			NpcTemplate template = DataManager.NPC_DATA.getNpcTemplate(model);
-			if (template != null)
-				effected.getTransformModel().setTribe(template.getTribe());
-		}
-	}
+  @Override
+  public void startEffect(Effect effect) {
+    super.startEffect(effect);
+    if (model > 0) {
+      Creature effected = effect.getEffected();
+      NpcTemplate template = DataManager.NPC_DATA.getNpcTemplate(model);
+      if (template != null)
+        effected.getTransformModel().setTribe(template.getTribe());
+    }
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		super.endEffect(effect);
-		effect.getEffected().getTransformModel().setTribe(null);
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    super.endEffect(effect);
+    effect.getEffected().getTransformModel().setTribe(null);
+  }
 }

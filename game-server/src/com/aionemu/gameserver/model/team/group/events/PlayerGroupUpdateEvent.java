@@ -12,25 +12,25 @@ import com.aionemu.gameserver.utils.collections.Predicates;
  */
 public class PlayerGroupUpdateEvent extends AlwaysTrueTeamEvent {
 
-	private final PlayerGroup group;
-	private final Player player;
-	private final GroupEvent groupEvent;
-	private final int slot;
+  private final PlayerGroup group;
+  private final Player player;
+  private final GroupEvent groupEvent;
+  private final int slot;
 
-	public PlayerGroupUpdateEvent(PlayerGroup group, Player player, GroupEvent groupEvent, int slot) {
-		this.group = group;
-		this.player = player;
-		this.groupEvent = groupEvent;
-		this.slot = slot;
-	}
+  public PlayerGroupUpdateEvent(PlayerGroup group, Player player, GroupEvent groupEvent, int slot) {
+    this.group = group;
+    this.player = player;
+    this.groupEvent = groupEvent;
+    this.slot = slot;
+  }
 
-	public PlayerGroupUpdateEvent(PlayerGroup group, Player player, GroupEvent groupEvent) {
-		this(group, player, groupEvent, 0);
-	}
+  public PlayerGroupUpdateEvent(PlayerGroup group, Player player, GroupEvent groupEvent) {
+    this(group, player, groupEvent, 0);
+  }
 
-	@Override
-	public void handleEvent() {
-		group.sendPacket(Predicates.Players.allExcept(player), new SM_GROUP_MEMBER_INFO(group, player, groupEvent, slot));
-	}
+  @Override
+  public void handleEvent() {
+    group.sendPacket(Predicates.Players.allExcept(player), new SM_GROUP_MEMBER_INFO(group, player, groupEvent, slot));
+  }
 
 }

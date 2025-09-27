@@ -12,21 +12,21 @@ import com.aionemu.gameserver.services.LegionService;
  */
 public class CM_LEGION_SEND_EMBLEM extends AionClientPacket {
 
-	private int legionId;
+  private int legionId;
 
-	public CM_LEGION_SEND_EMBLEM(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_LEGION_SEND_EMBLEM(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		legionId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    legionId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Legion legion = LegionService.getInstance().getLegion(legionId);
-		if (legion != null)
-			LegionService.getInstance().sendEmblemData(getConnection().getActivePlayer(), legion.getLegionEmblem(), legionId, legion.getName());
-	}
+  @Override
+  protected void runImpl() {
+    Legion legion = LegionService.getInstance().getLegion(legionId);
+    if (legion != null)
+      LegionService.getInstance().sendEmblemData(getConnection().getActivePlayer(), legion.getLegionEmblem(), legionId, legion.getName());
+  }
 }

@@ -14,25 +14,25 @@ import com.aionemu.gameserver.services.LegionService;
  */
 public class CM_LEGION_SEND_EMBLEM_INFO extends AionClientPacket {
 
-	private int legionId;
+  private int legionId;
 
-	public CM_LEGION_SEND_EMBLEM_INFO(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_LEGION_SEND_EMBLEM_INFO(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		legionId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    legionId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		if (activePlayer == null)
-			return;
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    if (activePlayer == null)
+      return;
 
-		Legion legion = LegionService.getInstance().getLegion(legionId);
-		if (legion != null)
-			sendPacket(new SM_LEGION_SEND_EMBLEM(legionId, legion.getLegionEmblem(), 0, legion.getName())); // send only info without following EMBLEM_DATA packets
-	}
+    Legion legion = LegionService.getInstance().getLegion(legionId);
+    if (legion != null)
+      sendPacket(new SM_LEGION_SEND_EMBLEM(legionId, legion.getLegionEmblem(), 0, legion.getName())); // send only info without following EMBLEM_DATA packets
+  }
 }

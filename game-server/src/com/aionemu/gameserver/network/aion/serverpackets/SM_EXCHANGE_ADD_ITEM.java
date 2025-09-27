@@ -12,27 +12,27 @@ import com.aionemu.gameserver.network.aion.iteminfo.ItemInfoBlob;
  */
 public class SM_EXCHANGE_ADD_ITEM extends AionServerPacket {
 
-	private Player player;
-	private int action;
-	private Item item;
+  private Player player;
+  private int action;
+  private Item item;
 
-	public SM_EXCHANGE_ADD_ITEM(int action, Item item, Player player) {
-		this.player = player;
-		this.action = action;
-		this.item = item;
-	}
+  public SM_EXCHANGE_ADD_ITEM(int action, Item item, Player player) {
+    this.player = player;
+    this.action = action;
+    this.item = item;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		ItemTemplate itemTemplate = item.getItemTemplate();
+  @Override
+  protected void writeImpl(AionConnection con) {
+    ItemTemplate itemTemplate = item.getItemTemplate();
 
-		writeC(action); // 0 -self 1-other
+    writeC(action); // 0 -self 1-other
 
-		writeD(itemTemplate.getTemplateId());
-		writeD(item.getObjectId());
-		writeS(itemTemplate.getL10n());
+    writeD(itemTemplate.getTemplateId());
+    writeD(item.getObjectId());
+    writeS(itemTemplate.getL10n());
 
-		ItemInfoBlob itemInfoBlob = ItemInfoBlob.getFullBlob(player, item);
-		itemInfoBlob.writeMe(getBuf());
-	}
+    ItemInfoBlob itemInfoBlob = ItemInfoBlob.getFullBlob(player, item);
+    itemInfoBlob.writeMe(getBuf());
+  }
 }

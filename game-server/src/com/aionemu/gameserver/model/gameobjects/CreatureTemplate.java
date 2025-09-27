@@ -7,7 +7,7 @@ import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
  */
 public abstract class CreatureTemplate extends VisibleObjectTemplate {
 
-	public String getAiName() {
-		return null;
-	}
+  public String getAiName() {
+    return null;
+  }
 }

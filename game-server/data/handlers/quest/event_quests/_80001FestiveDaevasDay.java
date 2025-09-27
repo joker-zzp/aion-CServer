@@ -11,39 +11,39 @@ import com.aionemu.gameserver.services.QuestService;
 
 public class _80001FestiveDaevasDay extends AbstractQuestHandler {
 
-	public _80001FestiveDaevasDay() {
-		super(80001);
-	}
+  public _80001FestiveDaevasDay() {
+    super(80001);
+  }
 
-	@Override
-	public void register() {
-		qe.registerQuestNpc(798417).addOnTalkEvent(questId); // Belenus
-		qe.registerOnLevelChanged(questId);
-	}
+  @Override
+  public void register() {
+    qe.registerQuestNpc(798417).addOnTalkEvent(questId); // Belenus
+    qe.registerOnLevelChanged(questId);
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		final Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    final Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
 
-		if (env.getTargetId() == 0) {
-			if (env.getDialogActionId() == QUEST_ACCEPT_1) {
-				QuestService.startEventQuest(env, QuestStatus.START);
-				closeDialogWindow(env);
-				return true;
-			}
-		} else if (env.getTargetId() == 798417) { // Belenus
-			if (qs != null) {
-				if (env.getDialogActionId() == QUEST_SELECT && qs.getStatus() == QuestStatus.START) {
-					return sendQuestDialog(env, 2375);
-				} else if (env.getDialogActionId() == SELECT_QUEST_REWARD) {
-					qs.setQuestVar(1);
-					qs.setStatus(QuestStatus.REWARD);
-					updateQuestStatus(env);
-				}
-				return sendQuestEndDialog(env);
-			}
-		}
-		return false;
-	}
+    if (env.getTargetId() == 0) {
+      if (env.getDialogActionId() == QUEST_ACCEPT_1) {
+        QuestService.startEventQuest(env, QuestStatus.START);
+        closeDialogWindow(env);
+        return true;
+      }
+    } else if (env.getTargetId() == 798417) { // Belenus
+      if (qs != null) {
+        if (env.getDialogActionId() == QUEST_SELECT && qs.getStatus() == QuestStatus.START) {
+          return sendQuestDialog(env, 2375);
+        } else if (env.getDialogActionId() == SELECT_QUEST_REWARD) {
+          qs.setQuestVar(1);
+          qs.setStatus(QuestStatus.REWARD);
+          updateQuestStatus(env);
+        }
+        return sendQuestEndDialog(env);
+      }
+    }
+    return false;
+  }
 }

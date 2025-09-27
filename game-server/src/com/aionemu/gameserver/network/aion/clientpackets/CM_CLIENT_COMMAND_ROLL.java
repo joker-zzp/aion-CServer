@@ -16,24 +16,24 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class CM_CLIENT_COMMAND_ROLL extends AionClientPacket {
 
-	private int maxRoll;
+  private int maxRoll;
 
-	public CM_CLIENT_COMMAND_ROLL(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_CLIENT_COMMAND_ROLL(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		maxRoll = readD();
-	}
+  @Override
+  protected void readImpl() {
+    maxRoll = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (maxRoll <= 0) // client sends 100 on /roll 0 but negative numbers are passed through for whatever reason
-			maxRoll = 100;
-		int roll = Rnd.get(1, maxRoll);
-		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_DICE_CUSTOM_ME(roll, maxRoll));
-		PacketSendUtility.broadcastPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_DICE_CUSTOM_OTHER(player.getName(), roll, maxRoll));
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (maxRoll <= 0) // client sends 100 on /roll 0 but negative numbers are passed through for whatever reason
+      maxRoll = 100;
+    int roll = Rnd.get(1, maxRoll);
+    PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_DICE_CUSTOM_ME(roll, maxRoll));
+    PacketSendUtility.broadcastPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_DICE_CUSTOM_OTHER(player.getName(), roll, maxRoll));
+  }
 }

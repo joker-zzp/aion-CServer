@@ -15,10 +15,10 @@ import com.aionemu.gameserver.model.TribeClass;
 @XmlType(name = "GlobalDropTribe")
 public class GlobalDropTribe {
 
-	@XmlAttribute(name = "tribe", required = true)
-	protected TribeClass tribe;
+  @XmlAttribute(name = "tribe", required = true)
+  protected TribeClass tribe;
 
-	public TribeClass getTribe() {
-		return tribe;
-	}
+  public TribeClass getTribe() {
+    return tribe;
+  }
 }

@@ -20,27 +20,27 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @XmlType(name = "MegaphoneAction")
 public class MegaphoneAction extends AbstractItemAction {
 
-	@XmlAttribute(name = "color")
-	protected String color;
+  @XmlAttribute(name = "color")
+  protected String color;
 
-	public int getColor() {
-		int rgb = Integer.parseInt(color, 16);
-		return rgb;
-	}
+  public int getColor() {
+    int rgb = Integer.parseInt(color, 16);
+    return rgb;
+  }
 
-	@Override
-	public boolean canAct(Player player, Item item, Item targetItem, Object... params) {
-		return true;
-	}
+  @Override
+  public boolean canAct(Player player, Item item, Item targetItem, Object... params) {
+    return true;
+  }
 
-	@Override
-	public void act(Player player, Item item, Item targetItem, Object... params) {
-		String message = (String) params[0];
-		ItemTemplate itemTemplate = item.getItemTemplate();
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), item.getObjectId(), itemTemplate.getTemplateId()),
-			true);
-		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_USE_ITEM(item.getL10n()));
-		player.getInventory().decreaseByObjectId(item.getObjectId(), 1);
-		PacketSendUtility.broadcastToWorld(new SM_MEGAPHONE(player, message, item.getItemId()));
-	}
+  @Override
+  public void act(Player player, Item item, Item targetItem, Object... params) {
+    String message = (String) params[0];
+    ItemTemplate itemTemplate = item.getItemTemplate();
+    PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), item.getObjectId(), itemTemplate.getTemplateId()),
+      true);
+    PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_USE_ITEM(item.getL10n()));
+    player.getInventory().decreaseByObjectId(item.getObjectId(), 1);
+    PacketSendUtility.broadcastToWorld(new SM_MEGAPHONE(player, message, item.getItemId()));
+  }
 }

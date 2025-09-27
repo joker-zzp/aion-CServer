@@ -15,54 +15,54 @@ import com.aionemu.gameserver.network.loginserver.serverpackets.SM_MACBAN_CONTRO
  */
 public class BannedMacManager {
 
-	private static BannedMacManager manager = new BannedMacManager();
-	private final Logger log = LoggerFactory.getLogger(BannedMacManager.class);
-	private final Map<String, BannedMacEntry> bannedList = new HashMap<>();
+  private static BannedMacManager manager = new BannedMacManager();
+  private final Logger log = LoggerFactory.getLogger(BannedMacManager.class);
+  private final Map<String, BannedMacEntry> bannedList = new HashMap<>();
 
-	public static BannedMacManager getInstance() {
-		return manager;
-	}
+  public static BannedMacManager getInstance() {
+    return manager;
+  }
 
-	public final void banAddress(String address, long newTime, String details) {
-		BannedMacEntry entry;
-		if (bannedList.containsKey(address)) {
-			if (bannedList.get(address).isActiveTill(newTime)) {
-				return;
-			} else {
-				entry = bannedList.get(address);
-				entry.updateTime(newTime);
-			}
-		} else
-			entry = new BannedMacEntry(address, newTime);
+  public final void banAddress(String address, long newTime, String details) {
+    BannedMacEntry entry;
+    if (bannedList.containsKey(address)) {
+      if (bannedList.get(address).isActiveTill(newTime)) {
+        return;
+      } else {
+        entry = bannedList.get(address);
+        entry.updateTime(newTime);
+      }
+    } else
+      entry = new BannedMacEntry(address, newTime);
 
-		entry.setDetails(details);
+    entry.setDetails(details);
 
-		bannedList.put(address, entry);
+    bannedList.put(address, entry);
 
-		log.info("banned " + address + " to " + entry.getTime().toString() + " for " + details);
-		LoginServer.getInstance().sendPacket(new SM_MACBAN_CONTROL((byte) 1, address, newTime, details));
-	}
+    log.info("banned " + address + " to " + entry.getTime().toString() + " for " + details);
+    LoginServer.getInstance().sendPacket(new SM_MACBAN_CONTROL((byte) 1, address, newTime, details));
+  }
 
-	public final boolean unbanAddress(String address, String details) {
-		BannedMacEntry bannedMacEntry = bannedList.remove(address);
-		if (bannedMacEntry != null) {
-			log.info("unbanned " + address + " for " + details);
-			LoginServer.getInstance().sendPacket(new SM_MACBAN_CONTROL((byte) 0, address, 0, details));
-			return true;
-		} else
-			return false;
-	}
+  public final boolean unbanAddress(String address, String details) {
+    BannedMacEntry bannedMacEntry = bannedList.remove(address);
+    if (bannedMacEntry != null) {
+      log.info("unbanned " + address + " for " + details);
+      LoginServer.getInstance().sendPacket(new SM_MACBAN_CONTROL((byte) 0, address, 0, details));
+      return true;
+    } else
+      return false;
+  }
 
-	public final boolean isBanned(String address) {
-		BannedMacEntry bannedMacEntry = bannedList.get(address);
-		return bannedMacEntry != null && bannedMacEntry.isActive();
-	}
+  public final boolean isBanned(String address) {
+    BannedMacEntry bannedMacEntry = bannedList.get(address);
+    return bannedMacEntry != null && bannedMacEntry.isActive();
+  }
 
-	public final void dbLoad(String address, long time, String details) {
-		bannedList.put(address, new BannedMacEntry(address, new Timestamp(time), details));
-	}
+  public final void dbLoad(String address, long time, String details) {
+    bannedList.put(address, new BannedMacEntry(address, new Timestamp(time), details));
+  }
 
-	public void onEnd() {
-		log.info("Loaded " + bannedList.size() + " banned mac addresses");
-	}
+  public void onEnd() {
+    log.info("Loaded " + bannedList.size() + " banned mac addresses");
+  }
 }

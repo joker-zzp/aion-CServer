@@ -12,24 +12,24 @@ import com.aionemu.gameserver.services.StaticDoorService;
  */
 public class CM_OPEN_STATICDOOR extends AionClientPacket {
 
-	private int doorId;
+  private int doorId;
 
-	/**
-	 * @param opcode
-	 */
-	public CM_OPEN_STATICDOOR(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * @param opcode
+   */
+  public CM_OPEN_STATICDOOR(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		doorId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    doorId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = this.getConnection().getActivePlayer();
-		StaticDoorService.getInstance().openStaticDoor(player, doorId);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = this.getConnection().getActivePlayer();
+    StaticDoorService.getInstance().openStaticDoor(player, doorId);
+  }
 
 }

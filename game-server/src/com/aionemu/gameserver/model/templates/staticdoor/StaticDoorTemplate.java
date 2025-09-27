@@ -14,55 +14,55 @@ import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 @XmlType(name = "StaticDoor")
 public class StaticDoorTemplate extends VisibleObjectTemplate {
 
-	@XmlAttribute
-	private int id;
-	@XmlAttribute(name = "keyid")
-	private int keyId;
-	@XmlAttribute
-	private float x;
-	@XmlAttribute
-	private float y;
-	@XmlAttribute
-	private float z;
-	@XmlAttribute(name = "state")
-	private int state;
+  @XmlAttribute
+  private int id;
+  @XmlAttribute(name = "keyid")
+  private int keyId;
+  @XmlAttribute
+  private float x;
+  @XmlAttribute
+  private float y;
+  @XmlAttribute
+  private float z;
+  @XmlAttribute(name = "state")
+  private int state;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public int getKeyId() {
-		return keyId;
-	}
+  public int getKeyId() {
+    return keyId;
+  }
 
-	public float getX() {
-		return x;
-	}
+  public float getX() {
+    return x;
+  }
 
-	public float getY() {
-		return y;
-	}
+  public float getY() {
+    return y;
+  }
 
-	public float getZ() {
-		return z;
-	}
+  public float getZ() {
+    return z;
+  }
 
-	public int getState() {
-		return state;
-	}
+  public int getState() {
+    return state;
+  }
 
-	@Override
-	public int getTemplateId() {
-		return 300001;
-	}
+  @Override
+  public int getTemplateId() {
+    return 300001;
+  }
 
-	@Override
-	public String getName() {
-		return "door";
-	}
+  @Override
+  public String getName() {
+    return "door";
+  }
 
-	@Override
-	public int getL10nId() {
-		return 0;
-	}
+  @Override
+  public int getL10nId() {
+    return 0;
+  }
 }

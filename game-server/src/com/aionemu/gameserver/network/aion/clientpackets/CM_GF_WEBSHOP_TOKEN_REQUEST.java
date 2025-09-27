@@ -13,16 +13,16 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_GF_WEBSHOP_TOKEN_RES
  */
 public class CM_GF_WEBSHOP_TOKEN_REQUEST extends AionClientPacket {
 
-	public CM_GF_WEBSHOP_TOKEN_REQUEST(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_GF_WEBSHOP_TOKEN_REQUEST(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-	}
+  @Override
+  protected void readImpl() {
+  }
 
-	@Override
-	protected void runImpl() {
-		sendPacket(new SM_GF_WEBSHOP_TOKEN_RESPONSE("")); // TODO
-	}
+  @Override
+  protected void runImpl() {
+    sendPacket(new SM_GF_WEBSHOP_TOKEN_RESPONSE("")); // TODO
+  }
 }

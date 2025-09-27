@@ -10,37 +10,37 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
  */
 public class BanIp extends AdminCommand {
 
-	public BanIp() {
-		super("banip");
-	}
+  public BanIp() {
+    super("banip");
+  }
 
-	@Override
-	public void execute(Player player, String... params) {
-		if (params == null || params.length < 1) {
-			PacketSendUtility.sendMessage(player, "用法: //banip <掩码> [分钟数]");
-			return;
-		}
+  @Override
+  public void execute(Player player, String... params) {
+    if (params == null || params.length < 1) {
+      PacketSendUtility.sendMessage(player, "用法: //banip <掩码> [分钟数]");
+      return;
+    }
 
-		String mask = params[0];
+    String mask = params[0];
 
-		int time = 0; // Default: infinity
-		if (params.length > 1) {
-			try {
-				time = Integer.parseInt(params[1]);
-			} catch (NumberFormatException e) {
-				info(player, e.getMessage());
-				return;
-			}
-		}
-		if (time == 0) {
-			time = 60 * 24 * 365 * 10;// pseudo infinity
-		}
+    int time = 0; // Default: infinity
+    if (params.length > 1) {
+      try {
+        time = Integer.parseInt(params[1]);
+      } catch (NumberFormatException e) {
+        info(player, e.getMessage());
+        return;
+      }
+    }
+    if (time == 0) {
+      time = 60 * 24 * 365 * 10;// pseudo infinity
+    }
 
-		LoginServer.getInstance().sendBanPacket((byte) 2, 0, mask, time, player.getObjectId());
-	}
+    LoginServer.getInstance().sendBanPacket((byte) 2, 0, mask, time, player.getObjectId());
+  }
 
-	@Override
-	public void info(Player player, String message) {
-		PacketSendUtility.sendMessage(player, "用法: //banip <掩码> [分钟数]");
-	}
+  @Override
+  public void info(Player player, String message) {
+    PacketSendUtility.sendMessage(player, "用法: //banip <掩码> [分钟数]");
+  }
 }

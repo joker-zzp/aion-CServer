@@ -10,8 +10,8 @@ import com.aionemu.gameserver.model.templates.item.ItemTemplate;
  */
 public class NpcEquipmentList {
 
-	@XmlElement(name = "item")
-	@XmlIDREF
-	public ItemTemplate[] items;
+  @XmlElement(name = "item")
+  @XmlIDREF
+  public ItemTemplate[] items;
 
 }

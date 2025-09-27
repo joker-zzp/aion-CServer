@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RequiredMaterial {
 
-	@XmlAttribute(name = "item_id")
-	private int itemId;
-	@XmlAttribute(name = "item_count")
-	private int itemCount;
+  @XmlAttribute(name = "item_id")
+  private int itemId;
+  @XmlAttribute(name = "item_count")
+  private int itemCount;
 
-	public int getItemId() {
-		return itemId;
-	}
+  public int getItemId() {
+    return itemId;
+  }
 
-	public int getItemCount() {
-		return itemCount;
-	}
+  public int getItemCount() {
+    return itemCount;
+  }
 }

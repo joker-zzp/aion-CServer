@@ -17,23 +17,23 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @XmlType(name = "SkillAtkDrainInstantEffect")
 public class SkillAtkDrainInstantEffect extends DamageEffect {
 
-	@XmlAttribute(name = "hp_percent")
-	private int hpPercent;
-	@XmlAttribute(name = "mp_percent")
-	private int mpPercent;
+  @XmlAttribute(name = "hp_percent")
+  private int hpPercent;
+  @XmlAttribute(name = "mp_percent")
+  private int mpPercent;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		super.applyEffect(effect);
-		ThreadPoolManager.getInstance().schedule(() -> {
-			if (hpPercent != 0) {
-				effect.getEffector().getLifeStats().increaseHp(TYPE.ABSORBED_HP, effect.getReserveds(position).getValue() * hpPercent / 100, effect,
-						LOG.SKILLLATKDRAININSTANT);
-			}
-			if (mpPercent != 0) {
-				effect.getEffector().getLifeStats().increaseMp(TYPE.MP, effect.getReserveds(position).getValue() * mpPercent / 100, effect.getSkillId(),
-						LOG.SKILLLATKDRAININSTANT);
-			}
-		}, 1000); // on retail the effect is applied about 1sec later (maybe based on animationTime/hitTime?)
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    super.applyEffect(effect);
+    ThreadPoolManager.getInstance().schedule(() -> {
+      if (hpPercent != 0) {
+        effect.getEffector().getLifeStats().increaseHp(TYPE.ABSORBED_HP, effect.getReserveds(position).getValue() * hpPercent / 100, effect,
+            LOG.SKILLLATKDRAININSTANT);
+      }
+      if (mpPercent != 0) {
+        effect.getEffector().getLifeStats().increaseMp(TYPE.MP, effect.getReserveds(position).getValue() * mpPercent / 100, effect.getSkillId(),
+            LOG.SKILLLATKDRAININSTANT);
+      }
+    }, 1000); // on retail the effect is applied about 1sec later (maybe based on animationTime/hitTime?)
+  }
 }

@@ -11,26 +11,26 @@ import com.aionemu.gameserver.network.aion.AionConnection;
  */
 public class SM_CHARACTER_LIST extends AbstractPlayerInfoPacket {
 
-	/**
-	 * PlayOk2 - we dont care...
-	 */
-	private final int playOk2;
+  /**
+   * PlayOk2 - we dont care...
+   */
+  private final int playOk2;
 
-	/**
-	 * Constructs new <tt>SM_CHARACTER_LIST </tt> packet
-	 */
-	public SM_CHARACTER_LIST(int playOk2) {
-		this.playOk2 = playOk2;
-	}
+  /**
+   * Constructs new <tt>SM_CHARACTER_LIST </tt> packet
+   */
+  public SM_CHARACTER_LIST(int playOk2) {
+    this.playOk2 = playOk2;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		Account account = con.getAccount();
+  @Override
+  protected void writeImpl(AionConnection con) {
+    Account account = con.getAccount();
 
-		writeD(playOk2);
-		writeC(account.size()); // character count
-		for (PlayerAccountData playerData : account.getPlayerAccDataList()) {
-			writePlayerInfo(playerData, con);
-		}
-	}
+    writeD(playOk2);
+    writeC(account.size()); // character count
+    for (PlayerAccountData playerData : account.getPlayerAccDataList()) {
+      writePlayerInfo(playerData, con);
+    }
+  }
 }

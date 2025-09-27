@@ -12,38 +12,38 @@ import com.aionemu.gameserver.world.WorldPosition;
  */
 public class Pet extends VisibleObject {
 
-	private final Player master;
-	private CreatureMoveController<Pet> moveController;
-	private final PetCommonData commonData;
+  private final Player master;
+  private CreatureMoveController<Pet> moveController;
+  private final PetCommonData commonData;
 
-	public Pet(PetTemplate petTemplate, PetController controller, PetCommonData commonData, Player master) {
-		super(commonData.getObjectId(), controller, null, petTemplate, new WorldPosition(master.getWorldId()), false);
-		controller.setOwner(this);
-		this.master = master;
-		this.commonData = commonData;
-		this.moveController = new CreatureMoveController<Pet>(this) {};
-	}
+  public Pet(PetTemplate petTemplate, PetController controller, PetCommonData commonData, Player master) {
+    super(commonData.getObjectId(), controller, null, petTemplate, new WorldPosition(master.getWorldId()), false);
+    controller.setOwner(this);
+    this.master = master;
+    this.commonData = commonData;
+    this.moveController = new CreatureMoveController<Pet>(this) {};
+  }
 
-	@Override
-	public String getName() {
-		return commonData.getName();
-	}
+  @Override
+  public String getName() {
+    return commonData.getName();
+  }
 
-	public Player getMaster() {
-		return master;
-	}
+  public Player getMaster() {
+    return master;
+  }
 
-	public final PetCommonData getCommonData() {
-		return commonData;
-	}
+  public final PetCommonData getCommonData() {
+    return commonData;
+  }
 
-	public final CreatureMoveController<Pet> getMoveController() {
-		return moveController;
-	}
+  public final CreatureMoveController<Pet> getMoveController() {
+    return moveController;
+  }
 
-	@Override
-	public final PetTemplate getObjectTemplate() {
-		return (PetTemplate) super.getObjectTemplate();
-	}
+  @Override
+  public final PetTemplate getObjectTemplate() {
+    return (PetTemplate) super.getObjectTemplate();
+  }
 
 }

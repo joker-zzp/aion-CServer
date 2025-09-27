@@ -14,24 +14,24 @@ import com.aionemu.gameserver.skillengine.model.HealType;
 @XmlType(name = "MPHealInstantEffect")
 public class MPHealInstantEffect extends AbstractHealEffect {
 
-	@Override
-	public void calculate(Effect effect) {
-		super.calculate(effect, HealType.MP);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    super.calculate(effect, HealType.MP);
+  }
 
-	@Override
-	public void applyEffect(Effect effect) {
-		super.applyEffect(effect, HealType.MP);
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    super.applyEffect(effect, HealType.MP);
+  }
 
-	@Override
-	public int getCurrentStatValue(Effect effect) {
-		return effect.getEffected().getLifeStats().getCurrentMp();
-	}
+  @Override
+  public int getCurrentStatValue(Effect effect) {
+    return effect.getEffected().getLifeStats().getCurrentMp();
+  }
 
-	@Override
-	public int getMaxStatValue(Effect effect) {
-		return effect.getEffected().getGameStats().getMaxMp().getCurrent();
-	}
+  @Override
+  public int getMaxStatValue(Effect effect) {
+    return effect.getEffected().getGameStats().getMaxMp().getCurrent();
+  }
 
 }

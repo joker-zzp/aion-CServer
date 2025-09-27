@@ -18,23 +18,23 @@ import com.aionemu.gameserver.questEngine.model.QuestState;
 @XmlType(name = "DialogAction", propOrder = { "conditions", "operations" })
 public class QuestDialog {
 
-	@XmlElement(name = "conditions")
-	protected QuestConditions conditions;
-	
-	@XmlElement(name = "operations")
-	protected QuestOperations operations;
-	
-	@XmlAttribute(required = true)
-	protected int id;
+  @XmlElement(name = "conditions")
+  protected QuestConditions conditions;
+  
+  @XmlElement(name = "operations")
+  protected QuestOperations operations;
+  
+  @XmlAttribute(required = true)
+  protected int id;
 
-	public boolean operate(QuestEnv env, QuestState qs) {
-		if (env.getDialogActionId() != id)
-			return false;
-		if (conditions == null || conditions.checkConditionOfSet(env)) {
-			if (operations != null) {
-				return operations.operate(env);
-			}
-		}
-		return false;
-	}
+  public boolean operate(QuestEnv env, QuestState qs) {
+    if (env.getDialogActionId() != id)
+      return false;
+    if (conditions == null || conditions.checkConditionOfSet(env)) {
+      if (operations != null) {
+        return operations.operate(env);
+      }
+    }
+    return false;
+  }
 }

@@ -34,12 +34,12 @@ import com.aionemu.gameserver.model.templates.rewards.FoodItem;
 @XmlType(name = "FoodGroup")
 public class FoodGroup extends BonusItemGroup {
 
-	@XmlElement(name = "item")
-	private List<FoodItem> items;
+  @XmlElement(name = "item")
+  private List<FoodItem> items;
 
-	@Override
-	public List<FoodItem> getItems() {
-		return items == null ? Collections.emptyList() : items;
-	}
+  @Override
+  public List<FoodItem> getItems() {
+    return items == null ? Collections.emptyList() : items;
+  }
 
 }

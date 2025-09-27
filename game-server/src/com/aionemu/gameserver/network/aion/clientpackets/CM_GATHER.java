@@ -15,45 +15,45 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_GATHER extends AionClientPacket {
 
-	private int actionId;
+  private int actionId;
 
-	public CM_GATHER(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_GATHER(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		actionId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    actionId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		switch (actionId) {
-			case -1 -> cancelGathering(player);
-			case 0, 128 -> startGathering(player); // 128 is sent when using /attack chat command
-			default -> LoggerFactory.getLogger(getClass()).warn("Unhandled gathering action ID {} (sent by {} at {})", actionId, player, player.getPosition());
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    switch (actionId) {
+      case -1 -> cancelGathering(player);
+      case 0, 128 -> startGathering(player); // 128 is sent when using /attack chat command
+      default -> LoggerFactory.getLogger(getClass()).warn("Unhandled gathering action ID {} (sent by {} at {})", actionId, player, player.getPosition());
+    }
+  }
 
-	private void startGathering(Player player) {
-		if (player.getTarget() instanceof Gatherable gatherable)
-			gatherable.getController().startGathering(player);
-		else
-			AuditLogger.log(player, "tried to gather from " + player.getTarget());
-	}
+  private void startGathering(Player player) {
+    if (player.getTarget() instanceof Gatherable gatherable)
+      gatherable.getController().startGathering(player);
+    else
+      AuditLogger.log(player, "tried to gather from " + player.getTarget());
+  }
 
-	private void cancelGathering(Player player) {
-		// player can switch targets during gathering, so the target is not guaranteed to be the correct gatherable
-		Gatherable gatherable = player.getTarget() instanceof Gatherable g && g.getController().getGatheringPlayerId() == player.getObjectId() ? g : null;
-		if (gatherable == null) {
-			gatherable = player.getKnownList().getKnownObjects().values().stream()
-				.filter(o -> o instanceof Gatherable g && g.getController().getGatheringPlayerId() == player.getObjectId())
-				.map(o -> (Gatherable) o)
-				.findFirst()
-				.orElse(null);
-		}
-		if (gatherable != null)
-			gatherable.getController().cancelGathering();
-	}
+  private void cancelGathering(Player player) {
+    // player can switch targets during gathering, so the target is not guaranteed to be the correct gatherable
+    Gatherable gatherable = player.getTarget() instanceof Gatherable g && g.getController().getGatheringPlayerId() == player.getObjectId() ? g : null;
+    if (gatherable == null) {
+      gatherable = player.getKnownList().getKnownObjects().values().stream()
+        .filter(o -> o instanceof Gatherable g && g.getController().getGatheringPlayerId() == player.getObjectId())
+        .map(o -> (Gatherable) o)
+        .findFirst()
+        .orElse(null);
+    }
+    if (gatherable != null)
+      gatherable.getController().cancelGathering();
+  }
 }

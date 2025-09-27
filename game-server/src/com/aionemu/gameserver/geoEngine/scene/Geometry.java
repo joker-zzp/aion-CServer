@@ -42,126 +42,126 @@ import com.aionemu.gameserver.geoEngine.math.Vector3f;
 
 public class Geometry extends Spatial {
 
-	/**
-	 * The mesh contained herein
-	 */
-	protected Mesh mesh;
+  /**
+   * The mesh contained herein
+   */
+  protected Mesh mesh;
 
-	protected Matrix4f cachedWorldMat = new Matrix4f();
+  protected Matrix4f cachedWorldMat = new Matrix4f();
 
-	/**
-	 * Do not use this constructor. Serialization purposes only.
-	 */
-	protected Geometry() {
-	}
+  /**
+   * Do not use this constructor. Serialization purposes only.
+   */
+  protected Geometry() {
+  }
 
-	/**
-	 * Create a geometry node with mesh data.
-	 * 
-	 * @param name
-	 *          The name of this geometry
-	 * @param mesh
-	 *          The mesh data for this geometry
-	 */
-	public Geometry(String name, Mesh mesh) {
-		super(name);
-		if (mesh == null)
-			throw new NullPointerException();
+  /**
+   * Create a geometry node with mesh data.
+   * 
+   * @param name
+   *          The name of this geometry
+   * @param mesh
+   *          The mesh data for this geometry
+   */
+  public Geometry(String name, Mesh mesh) {
+    super(name);
+    if (mesh == null)
+      throw new NullPointerException();
 
-		this.mesh = mesh;
-	}
+    this.mesh = mesh;
+  }
 
-	@Override
-	public int getVertexCount() {
-		return mesh.getVertexCount();
-	}
+  @Override
+  public int getVertexCount() {
+    return mesh.getVertexCount();
+  }
 
-	@Override
-	public int getTriangleCount() {
-		return mesh.getTriangleCount();
-	}
+  @Override
+  public int getTriangleCount() {
+    return mesh.getTriangleCount();
+  }
 
-	public void setMesh(Mesh mesh) {
-		this.mesh = mesh;
-	}
+  public void setMesh(Mesh mesh) {
+    this.mesh = mesh;
+  }
 
-	public Mesh getMesh() {
-		return mesh;
-	}
+  public Mesh getMesh() {
+    return mesh;
+  }
 
-	/**
-	 * @return The bounding volume of the mesh, in model space.
-	 */
-	public BoundingVolume getModelBound() {
-		return mesh.getBound();
-	}
+  /**
+   * @return The bounding volume of the mesh, in model space.
+   */
+  public BoundingVolume getModelBound() {
+    return mesh.getBound();
+  }
 
-	/**
-	 * Updates the bounding volume of the mesh. Should be called when the mesh has been modified.
-	 */
-	@Override
-	public void updateModelBound() {
-		mesh.updateBound();
-		worldBound = getModelBound().transform(cachedWorldMat, worldBound);
-	}
+  /**
+   * Updates the bounding volume of the mesh. Should be called when the mesh has been modified.
+   */
+  @Override
+  public void updateModelBound() {
+    mesh.updateBound();
+    worldBound = getModelBound().transform(cachedWorldMat, worldBound);
+  }
 
-	public Matrix4f getWorldMatrix() {
-		return cachedWorldMat;
-	}
+  public Matrix4f getWorldMatrix() {
+    return cachedWorldMat;
+  }
 
-	@Override
-	public void setModelBound(BoundingVolume modelBound) {
-		mesh.setBound(modelBound);
-	}
+  @Override
+  public void setModelBound(BoundingVolume modelBound) {
+    mesh.setBound(modelBound);
+  }
 
-	@Override
-	public int collideWith(Collidable other, CollisionResults results) {
-		if (other instanceof Ray) {
-			if (!worldBound.intersects(((Ray) other)))
-				return 0;
-		}
-		// NOTE: BIHTree in mesh already checks collision with the
-		// mesh's bound
-		int prevSize = results.size();
-		int added = mesh.collideWith(other, cachedWorldMat, worldBound, results);
-		int newSize = results.size();
-		for (int i = prevSize; i < newSize; i++)
-			results.getCollisionDirect(i).setGeometry(this);
-		return added;
-	}
+  @Override
+  public int collideWith(Collidable other, CollisionResults results) {
+    if (other instanceof Ray) {
+      if (!worldBound.intersects(((Ray) other)))
+        return 0;
+    }
+    // NOTE: BIHTree in mesh already checks collision with the
+    // mesh's bound
+    int prevSize = results.size();
+    int added = mesh.collideWith(other, cachedWorldMat, worldBound, results);
+    int newSize = results.size();
+    for (int i = prevSize; i < newSize; i++)
+      results.getCollisionDirect(i).setGeometry(this);
+    return added;
+  }
 
-	@Override
-	public void setTransform(Matrix3f rotation, Vector3f loc, Vector3f scale) {
-		cachedWorldMat.loadIdentity();
-		cachedWorldMat.setRotationMatrix(rotation);
-		cachedWorldMat.scale(scale);
-		cachedWorldMat.setTranslation(loc);
-	}
+  @Override
+  public void setTransform(Matrix3f rotation, Vector3f loc, Vector3f scale) {
+    cachedWorldMat.loadIdentity();
+    cachedWorldMat.setRotationMatrix(rotation);
+    cachedWorldMat.scale(scale);
+    cachedWorldMat.setTranslation(loc);
+  }
 
-	@Override
-	public byte getCollisionIntentions() {
-		return mesh.getCollisionIntentions();
-	}
+  @Override
+  public byte getCollisionIntentions() {
+    return mesh.getCollisionIntentions();
+  }
 
-	@Override
-	public void setCollisionIntentions(byte collisionIntentions) {
-		mesh.setCollisionIntentions(collisionIntentions);
-	}
+  @Override
+  public void setCollisionIntentions(byte collisionIntentions) {
+    mesh.setCollisionIntentions(collisionIntentions);
+  }
 
-	@Override
-	public int getMaterialId() {
-		return mesh.getMaterialId();
-	}
+  @Override
+  public int getMaterialId() {
+    return mesh.getMaterialId();
+  }
 
-	@Override
-	public void setMaterialId(byte materialId) {
-		mesh.setMaterialId(materialId);
-	}
+  @Override
+  public void setMaterialId(byte materialId) {
+    mesh.setMaterialId(materialId);
+  }
 
-	@Override
-	public Geometry clone() throws CloneNotSupportedException {
-		Geometry geometry = (Geometry) super.clone();
-		geometry.cachedWorldMat = cachedWorldMat.clone();
-		return geometry;
-	}
+  @Override
+  public Geometry clone() throws CloneNotSupportedException {
+    Geometry geometry = (Geometry) super.clone();
+    geometry.cachedWorldMat = cachedWorldMat.clone();
+    return geometry;
+  }
 }

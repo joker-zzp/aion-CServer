@@ -19,34 +19,34 @@ import com.aionemu.gameserver.utils.Util;
  */
 public class CM_CHECK_NICKNAME extends AionClientPacket {
 
-	private String nick;
+  private String nick;
 
-	public CM_CHECK_NICKNAME(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_CHECK_NICKNAME(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		nick = readS();
-	}
+  @Override
+  protected void readImpl() {
+    nick = readS();
+  }
 
-	@Override
-	protected void runImpl() {
-		AionConnection client = getConnection();
+  @Override
+  protected void runImpl() {
+    AionConnection client = getConnection();
 
-		nick = Util.convertName(nick);
+    nick = Util.convertName(nick);
 
-		if (PlayerService.isNameUsedOrReserved(null, nick)) {
-			if (GSConfig.CHARACTER_CREATION_MODE == 2)
-				client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_NAME_RESERVED));
-			else
-				client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_NAME_ALREADY_USED));
-		} else if (!NameRestrictionService.isValidName(nick)) {
-			client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_INVALID_NAME));
-		} else if (NameRestrictionService.isForbidden(nick)) {
-			client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_FORBIDDEN_CHAR_NAME));
-		} else {
-			client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_OK));
-		}
-	}
+    if (PlayerService.isNameUsedOrReserved(null, nick)) {
+      if (GSConfig.CHARACTER_CREATION_MODE == 2)
+        client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_NAME_RESERVED));
+      else
+        client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_NAME_ALREADY_USED));
+    } else if (!NameRestrictionService.isValidName(nick)) {
+      client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_INVALID_NAME));
+    } else if (NameRestrictionService.isForbidden(nick)) {
+      client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_FORBIDDEN_CHAR_NAME));
+    } else {
+      client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_OK));
+    }
+  }
 }

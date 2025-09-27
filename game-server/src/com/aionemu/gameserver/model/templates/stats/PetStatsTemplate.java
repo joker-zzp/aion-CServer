@@ -12,34 +12,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "petstats")
 public class PetStatsTemplate {
 
-	@XmlAttribute(name = "reaction")
-	private String reaction;
-	@XmlAttribute(name = "run_speed")
-	private float runSpeed;
-	@XmlAttribute(name = "walk_speed")
-	private float walkSpeed;
-	@XmlAttribute(name = "height")
-	private float height;
-	@XmlAttribute(name = "altitude")
-	private float altitude;
+  @XmlAttribute(name = "reaction")
+  private String reaction;
+  @XmlAttribute(name = "run_speed")
+  private float runSpeed;
+  @XmlAttribute(name = "walk_speed")
+  private float walkSpeed;
+  @XmlAttribute(name = "height")
+  private float height;
+  @XmlAttribute(name = "altitude")
+  private float altitude;
 
-	public String getReaction() {
-		return reaction;
-	}
+  public String getReaction() {
+    return reaction;
+  }
 
-	public float getRunSpeed() {
-		return runSpeed;
-	}
+  public float getRunSpeed() {
+    return runSpeed;
+  }
 
-	public float getWalkSpeed() {
-		return walkSpeed;
-	}
+  public float getWalkSpeed() {
+    return walkSpeed;
+  }
 
-	public float getHeight() {
-		return height;
-	}
+  public float getHeight() {
+    return height;
+  }
 
-	public float getAltitude() {
-		return altitude;
-	}
+  public float getAltitude() {
+    return altitude;
+  }
 }

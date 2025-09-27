@@ -22,48 +22,48 @@ import com.aionemu.gameserver.world.WorldMapInstance;
 @InstanceID(300070000)
 public class RoahInstance extends GeneralInstanceHandler {
 
-	private final AtomicLong startTime = new AtomicLong();
-	private Race instanceRace;
+  private final AtomicLong startTime = new AtomicLong();
+  private Race instanceRace;
 
-	public RoahInstance(WorldMapInstance instance) {
-		super(instance);
-	}
+  public RoahInstance(WorldMapInstance instance) {
+    super(instance);
+  }
 
-	@Override
-	public void onInstanceCreate() {
-		new FlyRing(new FlyRingTemplate("ROAH_WING_1", mapId, new Point3D(501.77, 409.53, 94.12), new Point3D(503.93, 409.65, 98.9),
-			new Point3D(506.26, 409.7, 94.15), 10), instance.getInstanceId()).spawn();
-	}
+  @Override
+  public void onInstanceCreate() {
+    new FlyRing(new FlyRingTemplate("ROAH_WING_1", mapId, new Point3D(501.77, 409.53, 94.12), new Point3D(503.93, 409.65, 98.9),
+      new Point3D(506.26, 409.7, 94.15), 10), instance.getInstanceId()).spawn();
+  }
 
-	@Override
-	public boolean onPassFlyingRing(Player player, String flyingRing) {
-		if (flyingRing.equals("ROAH_WING_1")) {
-			if (startTime.compareAndSet(0, System.currentTimeMillis())) {
-				PacketSendUtility.sendPacket(player, STR_MSG_INSTANCE_START_IDABRE());
-				PacketSendUtility.sendPacket(player, new SM_QUEST_ACTION(0, 900));
-				ThreadPoolManager.getInstance().schedule(() -> deleteAliveNpcs(700472, 700473, 700474, 701489, 701484), 900000);
-			}
-		}
-		return false;
-	}
+  @Override
+  public boolean onPassFlyingRing(Player player, String flyingRing) {
+    if (flyingRing.equals("ROAH_WING_1")) {
+      if (startTime.compareAndSet(0, System.currentTimeMillis())) {
+        PacketSendUtility.sendPacket(player, STR_MSG_INSTANCE_START_IDABRE());
+        PacketSendUtility.sendPacket(player, new SM_QUEST_ACTION(0, 900));
+        ThreadPoolManager.getInstance().schedule(() -> deleteAliveNpcs(700472, 700473, 700474, 701489, 701484), 900000);
+      }
+    }
+    return false;
+  }
 
-	@Override
-	public void onEnterInstance(Player player) {
-		long start = startTime.get();
-		if (start > 0) {
-			long time = System.currentTimeMillis() - start;
-			if (time < 900000) {
-				PacketSendUtility.sendPacket(player, new SM_QUEST_ACTION(0, 900 - (int) time / 1000));
-			}
-		}
+  @Override
+  public void onEnterInstance(Player player) {
+    long start = startTime.get();
+    if (start > 0) {
+      long time = System.currentTimeMillis() - start;
+      if (time < 900000) {
+        PacketSendUtility.sendPacket(player, new SM_QUEST_ACTION(0, 900 - (int) time / 1000));
+      }
+    }
 
-		if (instanceRace == null) {
-			instanceRace = player.getRace();
-			spawnGoldChest();
-		}
-	}
+    if (instanceRace == null) {
+      instanceRace = player.getRace();
+      spawnGoldChest();
+    }
+  }
 
-	private void spawnGoldChest() {
-		spawn(instanceRace == Race.ELYOS ? 701484 : 701489, 504.44f, 460.57f, 86.88f, (byte) 60);
-	}
+  private void spawnGoldChest() {
+    spawn(instanceRace == Race.ELYOS ? 701484 : 701489, 504.44f, 460.57f, 86.88f, (byte) 60);
+  }
 }

@@ -16,34 +16,34 @@ import ai.AggressiveNpcAI;
 @AIName("unstabledayshade")
 public class UnstableDayshadeAI extends AggressiveNpcAI {
 
-	private final AtomicBoolean isHome = new AtomicBoolean(true);
+  private final AtomicBoolean isHome = new AtomicBoolean(true);
 
-	public UnstableDayshadeAI(Npc owner) {
-		super(owner);
-	}
+  public UnstableDayshadeAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleAttack(Creature creature) {
-		super.handleAttack(creature);
-		if (isHome.compareAndSet(true, false)) {
-			AIActions.die(this, creature);
-			spawn(219552, 455.5502f, 702.09485f, 433.13727f, (byte) 108); // ebonsoul
-			spawn(219551, 447.1937f, 683.72217f, 433.1805f, (byte) 108); // rukril
-			AIActions.deleteOwner(UnstableDayshadeAI.this);
-		}
-	}
+  @Override
+  protected void handleAttack(Creature creature) {
+    super.handleAttack(creature);
+    if (isHome.compareAndSet(true, false)) {
+      AIActions.die(this, creature);
+      spawn(219552, 455.5502f, 702.09485f, 433.13727f, (byte) 108); // ebonsoul
+      spawn(219551, 447.1937f, 683.72217f, 433.1805f, (byte) 108); // rukril
+      AIActions.deleteOwner(UnstableDayshadeAI.this);
+    }
+  }
 
-	@Override
-	protected void handleBackHome() {
-		super.handleBackHome();
-		isHome.set(true);
-	}
+  @Override
+  protected void handleBackHome() {
+    super.handleBackHome();
+    isHome.set(true);
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case REWARD_LOOT, REWARD_AP -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case REWARD_LOOT, REWARD_AP -> false;
+      default -> super.ask(question);
+    };
+  }
 }

@@ -9,15 +9,15 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_TARGET_UPDATE extends AionServerPacket {
 
-	private Player player;
+  private Player player;
 
-	public SM_TARGET_UPDATE(Player player) {
-		this.player = player;
-	}
+  public SM_TARGET_UPDATE(Player player) {
+    this.player = player;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(player.getObjectId());
-		writeD(player.getTarget() == null ? 0 : player.getTarget().getObjectId());
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(player.getObjectId());
+    writeD(player.getTarget() == null ? 0 : player.getTarget().getObjectId());
+  }
 }

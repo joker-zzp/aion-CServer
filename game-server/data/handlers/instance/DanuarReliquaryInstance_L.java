@@ -9,18 +9,18 @@ import com.aionemu.gameserver.world.WorldMapInstance;
 @InstanceID(301330000)
 public class DanuarReliquaryInstance_L extends DanuarReliquaryInstance {
 
-	public DanuarReliquaryInstance_L(WorldMapInstance instance) {
-		super(instance);
-	}
+  public DanuarReliquaryInstance_L(WorldMapInstance instance) {
+    super(instance);
+  }
 
-	@Override
-	protected int getExitId() {
-		return 730843;
-	}
+  @Override
+  protected int getExitId() {
+    return 730843;
+  }
 
-	@Override
-	protected int getTreasureBoxId() {
-		return 802183;
-	}
+  @Override
+  protected int getTreasureBoxId() {
+    return 802183;
+  }
 
 }

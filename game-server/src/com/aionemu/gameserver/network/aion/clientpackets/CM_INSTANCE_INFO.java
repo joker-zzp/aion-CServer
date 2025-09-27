@@ -16,27 +16,27 @@ import com.aionemu.gameserver.utils.collections.Predicates;
  */
 public class CM_INSTANCE_INFO extends AionClientPacket {
 
-	private byte updateType; // 0 = reset to client default values and overwrite, 1 = update team member info, 2 = overwrite only
+  private byte updateType; // 0 = reset to client default values and overwrite, 1 = update team member info, 2 = overwrite only
 
-	public CM_INSTANCE_INFO(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_INSTANCE_INFO(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		readD(); // unk (always 0)
-		updateType = readC();
-	}
+  @Override
+  protected void readImpl() {
+    readD(); // unk (always 0)
+    updateType = readC();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		Player firstObject = player.isInTeam() ? player.getCurrentTeam().getLeaderObject() : player; // always the team leader
-		sendPacket(new SM_INSTANCE_INFO(updateType, firstObject));
-		if (updateType == 1 && player.isInTeam()) {
-			List<Player> filteredTeamMembers = player.getCurrentTeam().filterMembers(Predicates.Players.allExcept(firstObject));
-			SplitList<Player> playersSplitList = new FixedElementCountSplitList<>(filteredTeamMembers, false, 3);
-			playersSplitList.forEach(part -> sendPacket(new SM_INSTANCE_INFO((byte) 2, part)));
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    Player firstObject = player.isInTeam() ? player.getCurrentTeam().getLeaderObject() : player; // always the team leader
+    sendPacket(new SM_INSTANCE_INFO(updateType, firstObject));
+    if (updateType == 1 && player.isInTeam()) {
+      List<Player> filteredTeamMembers = player.getCurrentTeam().filterMembers(Predicates.Players.allExcept(firstObject));
+      SplitList<Player> playersSplitList = new FixedElementCountSplitList<>(filteredTeamMembers, false, 3);
+      playersSplitList.forEach(part -> sendPacket(new SM_INSTANCE_INFO((byte) 2, part)));
+    }
+  }
 }

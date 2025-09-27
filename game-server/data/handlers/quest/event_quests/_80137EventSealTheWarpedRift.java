@@ -18,56 +18,56 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
  */
 public class _80137EventSealTheWarpedRift extends AbstractQuestHandler {
 
-	public _80137EventSealTheWarpedRift() {
-		super(80137);
-	}
+  public _80137EventSealTheWarpedRift() {
+    super(80137);
+  }
 
-	@Override
-	public void register() {
-		qe.registerQuestNpc(830245).addOnTalkEvent(questId);
-		qe.registerOnBonusApply(questId, BonusType.RIFT);
-	}
+  @Override
+  public void register() {
+    qe.registerQuestNpc(830245).addOnTalkEvent(questId);
+    qe.registerOnBonusApply(questId, BonusType.RIFT);
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		Player player = env.getPlayer();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    Player player = env.getPlayer();
 
-		if (env.getTargetId() == 0)
-			return sendQuestStartDialog(env);
+    if (env.getTargetId() == 0)
+      return sendQuestStartDialog(env);
 
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (qs == null)
-			return false;
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    if (qs == null)
+      return false;
 
-		int var = qs.getQuestVarById(0);
+    int var = qs.getQuestVarById(0);
 
-		if (qs.getStatus() == QuestStatus.START) {
-			if (env.getTargetId() == 830245) {
-				switch (env.getDialogActionId()) {
-					case QUEST_SELECT:
-						if (var == 0)
-							return sendQuestDialog(env, 2375);
-						return false;
-					case SELECT_QUEST_REWARD:
-						removeQuestItem(env, 182215133, 1);
-						return defaultCloseDialog(env, 0, 1, true, true);
-				}
-			}
-		}
-		return sendQuestRewardDialog(env, 830245, 0);
-	}
+    if (qs.getStatus() == QuestStatus.START) {
+      if (env.getTargetId() == 830245) {
+        switch (env.getDialogActionId()) {
+          case QUEST_SELECT:
+            if (var == 0)
+              return sendQuestDialog(env, 2375);
+            return false;
+          case SELECT_QUEST_REWARD:
+            removeQuestItem(env, 182215133, 1);
+            return defaultCloseDialog(env, 0, 1, true, true);
+        }
+      }
+    }
+    return sendQuestRewardDialog(env, 830245, 0);
+  }
 
-	@Override
-	public HandlerResult onBonusApplyEvent(QuestEnv env, BonusType bonusType, List<QuestItems> rewardItems) {
-		if (bonusType != BonusType.RIFT || env.getQuestId() != questId)
-			return HandlerResult.UNKNOWN;
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (qs != null && (qs.getStatus() == QuestStatus.START || qs.getStatus() == QuestStatus.COMPLETE)) {
-			if (qs.getQuestVarById(0) == 0)
-				return HandlerResult.SUCCESS;
-		}
-		return HandlerResult.FAILED;
-	}
+  @Override
+  public HandlerResult onBonusApplyEvent(QuestEnv env, BonusType bonusType, List<QuestItems> rewardItems) {
+    if (bonusType != BonusType.RIFT || env.getQuestId() != questId)
+      return HandlerResult.UNKNOWN;
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    if (qs != null && (qs.getStatus() == QuestStatus.START || qs.getStatus() == QuestStatus.COMPLETE)) {
+      if (qs.getQuestVarById(0) == 0)
+        return HandlerResult.SUCCESS;
+    }
+    return HandlerResult.FAILED;
+  }
 
 }

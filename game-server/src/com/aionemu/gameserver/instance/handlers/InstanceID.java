@@ -12,8 +12,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface InstanceID {
 
-	/**
-	 * @return id of the instance
-	 */
-	int value();
+  /**
+   * @return id of the instance
+   */
+  int value();
 }

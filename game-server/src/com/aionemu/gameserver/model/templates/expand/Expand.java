@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Expand {
 
-	@XmlAttribute(name = "level", required = true)
-	protected int level;
-	@XmlAttribute(name = "price", required = true)
-	protected int price;
+  @XmlAttribute(name = "level", required = true)
+  protected int level;
+  @XmlAttribute(name = "price", required = true)
+  protected int price;
 
-	public int getLevel() {
-		return level;
-	}
+  public int getLevel() {
+    return level;
+  }
 
-	public int getPrice() {
-		return price;
-	}
+  public int getPrice() {
+    return price;
+  }
 }

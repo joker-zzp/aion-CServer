@@ -10,21 +10,21 @@ import com.aionemu.gameserver.network.aion.AionConnection.State;
  */
 public class CM_MAY_QUIT extends AionClientPacket {
 
-	/**
-	 * @param opcode
-	 */
-	public CM_MAY_QUIT(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * @param opcode
+   */
+  public CM_MAY_QUIT(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		// empty
-	}
+  @Override
+  protected void readImpl() {
+    // empty
+  }
 
-	@Override
-	protected void runImpl() {
-		// Nothing to do
-	}
+  @Override
+  protected void runImpl() {
+    // Nothing to do
+  }
 
 }

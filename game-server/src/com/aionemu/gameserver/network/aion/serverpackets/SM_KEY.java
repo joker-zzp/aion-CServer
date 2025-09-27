@@ -8,8 +8,8 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_KEY extends AionServerPacket {
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(con.enableCryptKey());
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(con.enableCryptKey());
+  }
 }

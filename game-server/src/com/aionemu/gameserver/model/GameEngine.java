@@ -5,5 +5,5 @@ package com.aionemu.gameserver.model;
  */
 public interface GameEngine {
 
-	void init();
+  void init();
 }

@@ -16,33 +16,33 @@ import ai.AggressiveNpcAI;
 @AIName("rock_slide")
 public class RockSlideAI extends AggressiveNpcAI {
 
-	public RockSlideAI(Npc owner) {
-		super(owner);
-	}
+  public RockSlideAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean canThink() {
-		return false;
-	}
+  @Override
+  public boolean canThink() {
+    return false;
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		ThreadPoolManager.getInstance().schedule(this::useRockSlide, 2000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    ThreadPoolManager.getInstance().schedule(this::useRockSlide, 2000);
+  }
 
-	@Override
-	public float modifyDamage(Creature attacker, float damage, Effect effect) {
-		return 0;
-	}
+  @Override
+  public float modifyDamage(Creature attacker, float damage, Effect effect) {
+    return 0;
+  }
 
-	private void useRockSlide() {
-		AIActions.targetSelf(this);
-		AIActions.useSkill(this, 19295);
-	}
+  private void useRockSlide() {
+    AIActions.targetSelf(this);
+    AIActions.useSkill(this, 19295);
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		ThreadPoolManager.getInstance().schedule(this::useRockSlide, 2700);
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    ThreadPoolManager.getInstance().schedule(this::useRockSlide, 2700);
+  }
 }

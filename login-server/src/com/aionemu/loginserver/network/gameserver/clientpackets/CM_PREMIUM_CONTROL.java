@@ -8,21 +8,21 @@ import com.aionemu.loginserver.network.gameserver.GsClientPacket;
  */
 public class CM_PREMIUM_CONTROL extends GsClientPacket {
 
-	private int accountId;
-	private int requestId;
-	private long requiredCost;
-	private byte serverId;
+  private int accountId;
+  private int requestId;
+  private long requiredCost;
+  private byte serverId;
 
-	@Override
-	protected void readImpl() {
-		accountId = readD();
-		requestId = readD();
-		requiredCost = readQ();
-		serverId = readC();
-	}
+  @Override
+  protected void readImpl() {
+    accountId = readD();
+    requestId = readD();
+    requiredCost = readQ();
+    serverId = readC();
+  }
 
-	@Override
-	protected void runImpl() {
-		PremiumController.requestBuy(accountId, requestId, requiredCost, serverId);
-	}
+  @Override
+  protected void runImpl() {
+    PremiumController.requestBuy(accountId, requestId, requiredCost, serverId);
+  }
 }

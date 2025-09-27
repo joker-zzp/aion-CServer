@@ -19,37 +19,37 @@ import com.aionemu.gameserver.skillengine.model.SkillTemplate;
 @XmlRootElement(name = "Stigma")
 public class Stigma {
 
-	@XmlAttribute(name = "gain_skill_group1", required = true)
-	private String gainSkillGroup1;
+  @XmlAttribute(name = "gain_skill_group1", required = true)
+  private String gainSkillGroup1;
 
-	@XmlAttribute(name = "gain_skill_group2")
-	private String gainSkillGroup2;
+  @XmlAttribute(name = "gain_skill_group2")
+  private String gainSkillGroup2;
 
-	@XmlAttribute(name = "chargeable")
-	private boolean chargeable;
+  @XmlAttribute(name = "chargeable")
+  private boolean chargeable;
 
-	@XmlTransient
-	private String[] gainSkillGroups;
+  @XmlTransient
+  private String[] gainSkillGroups;
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		if (gainSkillGroup2 == null)
-			gainSkillGroups = new String[] { gainSkillGroup1 };
-		else
-			gainSkillGroups = new String[] { gainSkillGroup1, gainSkillGroup2 };
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    if (gainSkillGroup2 == null)
+      gainSkillGroups = new String[] { gainSkillGroup1 };
+    else
+      gainSkillGroups = new String[] { gainSkillGroup1, gainSkillGroup2 };
+  }
 
-	public String[] getGainSkillGroups() {
-		return gainSkillGroups;
-	}
+  public String[] getGainSkillGroups() {
+    return gainSkillGroups;
+  }
 
-	public List<SkillTemplate> getGainSkillsByGroup(int groupNo) {
-		if (groupNo > 0 && groupNo <= gainSkillGroups.length)
-			return DataManager.SKILL_DATA.getSkillTemplatesByGroup(gainSkillGroups[groupNo - 1]);
-		else
-			return null;
-	}
+  public List<SkillTemplate> getGainSkillsByGroup(int groupNo) {
+    if (groupNo > 0 && groupNo <= gainSkillGroups.length)
+      return DataManager.SKILL_DATA.getSkillTemplatesByGroup(gainSkillGroups[groupNo - 1]);
+    else
+      return null;
+  }
 
-	public boolean isChargeable() {
-		return chargeable;
-	}
+  public boolean isChargeable() {
+    return chargeable;
+  }
 }

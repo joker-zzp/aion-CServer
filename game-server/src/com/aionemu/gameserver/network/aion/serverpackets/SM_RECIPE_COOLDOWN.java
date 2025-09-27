@@ -13,28 +13,28 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_RECIPE_COOLDOWN extends AionServerPacket {
 
-	/**
-	 * 0 - unknown.
-	 * 1 - update recipe cooldown times.
-	 */
-	private int mode = 0;
-	private final Map<Integer, Integer> cooldowns = new HashMap<>();
+  /**
+   * 0 - unknown.
+   * 1 - update recipe cooldown times.
+   */
+  private int mode = 0;
+  private final Map<Integer, Integer> cooldowns = new HashMap<>();
 
-	public SM_RECIPE_COOLDOWN(Player player, int mode) {
-		this.mode = mode;
-		Cooldowns craftCooldowns = player.getCraftCooldowns();
-		if (!craftCooldowns.isEmpty())
-			craftCooldowns.forEach((cooldownId, value) -> cooldowns.put(cooldownId, craftCooldowns.remainingSeconds(cooldownId)));
-	}
+  public SM_RECIPE_COOLDOWN(Player player, int mode) {
+    this.mode = mode;
+    Cooldowns craftCooldowns = player.getCraftCooldowns();
+    if (!craftCooldowns.isEmpty())
+      craftCooldowns.forEach((cooldownId, value) -> cooldowns.put(cooldownId, craftCooldowns.remainingSeconds(cooldownId)));
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(mode);
-		writeH(cooldowns.size());
-		cooldowns.forEach((cooldownId, remainingSeconds) -> {
-			writeD(cooldownId);
-			writeD(remainingSeconds);
-		});
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(mode);
+    writeH(cooldowns.size());
+    cooldowns.forEach((cooldownId, remainingSeconds) -> {
+      writeD(cooldownId);
+      writeD(remainingSeconds);
+    });
+  }
 
 }

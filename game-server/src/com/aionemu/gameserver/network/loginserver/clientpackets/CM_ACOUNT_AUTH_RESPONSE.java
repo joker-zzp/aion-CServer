@@ -12,73 +12,73 @@ import com.aionemu.gameserver.network.loginserver.LsClientPacket;
  */
 public class CM_ACOUNT_AUTH_RESPONSE extends LsClientPacket {
 
-	public CM_ACOUNT_AUTH_RESPONSE(int opCode) {
-		super(opCode);
-	}
+  public CM_ACOUNT_AUTH_RESPONSE(int opCode) {
+    super(opCode);
+  }
 
-	/**
-	 * accountId
-	 */
-	private int accountId;
+  /**
+   * accountId
+   */
+  private int accountId;
 
-	/**
-	 * result - true = authed
-	 */
-	private boolean result;
+  /**
+   * result - true = authed
+   */
+  private boolean result;
 
-	/**
-	 * accountName [if response is ok]
-	 */
-	private String accountName;
-	/**
-	 * Time of account creation, measured in milliseconds since 1.1.1970 0:00 UTC
-	 */
-	private long creationDate;
-	/**
-	 * accountTime
-	 */
-	private AccountTime accountTime;
-	/**
-	 * access level - regular/gm/admin
-	 */
-	private byte accessLevel;
-	/**
-	 * Membership - regular/premium
-	 */
-	private byte membership;
+  /**
+   * accountName [if response is ok]
+   */
+  private String accountName;
+  /**
+   * Time of account creation, measured in milliseconds since 1.1.1970 0:00 UTC
+   */
+  private long creationDate;
+  /**
+   * accountTime
+   */
+  private AccountTime accountTime;
+  /**
+   * access level - regular/gm/admin
+   */
+  private byte accessLevel;
+  /**
+   * Membership - regular/premium
+   */
+  private byte membership;
 
-	/**
-	 * Toll
-	 */
-	private long toll;
-	/**
-	 * Allowed HDD serial
-	 */
-	private String allowedHddSerial;
+  /**
+   * Toll
+   */
+  private long toll;
+  /**
+   * Allowed HDD serial
+   */
+  private String allowedHddSerial;
 
-	@Override
-	public void readImpl() {
-		accountId = readD();
-		result = readC() == 1;
+  @Override
+  public void readImpl() {
+    accountId = readD();
+    result = readC() == 1;
 
-		if (result) {
-			accountName = readS();
-			creationDate = readQ();
-			accountTime = new AccountTime();
+    if (result) {
+      accountName = readS();
+      creationDate = readQ();
+      accountTime = new AccountTime();
 
-			accountTime.setAccumulatedOnlineTime(readQ());
-			accountTime.setAccumulatedRestTime(readQ());
+      accountTime.setAccumulatedOnlineTime(readQ());
+      accountTime.setAccumulatedRestTime(readQ());
 
-			accessLevel = readC();
-			membership = readC();
-			toll = readQ();
-			allowedHddSerial = readS();
-		}
-	}
+      accessLevel = readC();
+      membership = readC();
+      toll = readQ();
+      allowedHddSerial = readS();
+    }
+  }
 
-	@Override
-	public void runImpl() {
-		LoginServer.getInstance().accountAuthenticationResponse(accountId, accountName, result, creationDate, accountTime, accessLevel, membership, toll,
-			allowedHddSerial);
-	}
+  @Override
+  public void runImpl() {
+    LoginServer.getInstance().accountAuthenticationResponse(accountId, accountName, result, creationDate, accountTime, accessLevel, membership, toll,
+      allowedHddSerial);
+  }
 }

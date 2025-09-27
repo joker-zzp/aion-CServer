@@ -8,15 +8,15 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  */
 public class ZoneChecker extends DestinationChecker {
 
-	protected final ZoneName zoneName;
+  protected final ZoneName zoneName;
 
-	public ZoneChecker(Creature follower, ZoneName zoneName) {
-		super(follower);
-		this.zoneName = zoneName;
-	}
+  public ZoneChecker(Creature follower, ZoneName zoneName) {
+    super(follower);
+    this.zoneName = zoneName;
+  }
 
-	@Override
-	public boolean check() {
-		return follower.isInsideZone(zoneName);
-	}
+  @Override
+  public boolean check() {
+    return follower.isInsideZone(zoneName);
+  }
 }

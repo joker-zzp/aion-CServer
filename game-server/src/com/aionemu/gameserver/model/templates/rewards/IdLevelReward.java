@@ -30,18 +30,18 @@ import com.aionemu.gameserver.model.templates.itemgroups.ItemRaceEntry;
 @XmlType(name = "IdLevelReward")
 public class IdLevelReward extends ItemRaceEntry {
 
-	@XmlAttribute(name = "level", required = true)
-	private int level;
+  @XmlAttribute(name = "level", required = true)
+  private int level;
 
-	/**
-	 * Gets the value of the level property.
-	 */
-	public int getLevel() {
-		return level;
-	}
+  /**
+   * Gets the value of the level property.
+   */
+  public int getLevel() {
+    return level;
+  }
 
-	@Override
-	protected boolean matchesLevel(ItemTemplate itemTemplate, int bonusItemLevel) {
-		return bonusItemLevel == 0 || level == bonusItemLevel;
-	}
+  @Override
+  protected boolean matchesLevel(ItemTemplate itemTemplate, int bonusItemLevel) {
+    return bonusItemLevel == 0 || level == bonusItemLevel;
+  }
 }

@@ -12,18 +12,18 @@ import com.aionemu.gameserver.network.aion.skillinfo.SkillEntryWriter;
  */
 public class SM_GM_SHOW_PLAYER_SKILLS extends AionServerPacket {
 
-	public static final int STATIC_BODY_SIZE = 2;
+  public static final int STATIC_BODY_SIZE = 2;
 
-	private final List<PlayerSkillEntry> skillList;
+  private final List<PlayerSkillEntry> skillList;
 
-	public SM_GM_SHOW_PLAYER_SKILLS(List<PlayerSkillEntry> skillList) {
-		this.skillList = skillList;
-	}
+  public SM_GM_SHOW_PLAYER_SKILLS(List<PlayerSkillEntry> skillList) {
+    this.skillList = skillList;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeH(skillList.size()); // skills list size
-		for (PlayerSkillEntry entry : skillList)
-			SkillEntryWriter.writeSkillEntry(entry, getBuf());
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeH(skillList.size()); // skills list size
+    for (PlayerSkillEntry entry : skillList)
+      SkillEntryWriter.writeSkillEntry(entry, getBuf());
+  }
 }

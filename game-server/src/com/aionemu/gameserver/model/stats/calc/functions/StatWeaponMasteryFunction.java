@@ -14,45 +14,45 @@ import com.aionemu.gameserver.utils.stats.CalculationType;
  */
 public class StatWeaponMasteryFunction extends StatRateFunction {
 
-	private final ItemGroup itemGroup;
+  private final ItemGroup itemGroup;
 
-	public StatWeaponMasteryFunction(ItemGroup itemGroup, StatEnum name, int value, boolean bonus) {
-		super(name, value, bonus);
-		this.itemGroup = itemGroup;
-	}
+  public StatWeaponMasteryFunction(ItemGroup itemGroup, StatEnum name, int value, boolean bonus) {
+    super(name, value, bonus);
+    this.itemGroup = itemGroup;
+  }
 
-	@Override
-	public void apply(Stat2 stat, CalculationType... calculationTypes) {
-		Player player = (Player) stat.getOwner();
-		ItemGroup mainWeapon = player.getEquipment().getMainHandWeaponType();
-		ItemGroup offHandWeapon = player.getEquipment().getOffHandWeaponType();
-		switch (this.stat) {
-			case MAIN_HAND_POWER:
-				if (mainWeapon != null && mainWeapon.equals(itemGroup)) {
-					applyTo(stat, calculationTypes);
-				}
-				break;
-			case OFF_HAND_POWER:
-				if (offHandWeapon != null && offHandWeapon.equals(itemGroup))
-					applyTo(stat, calculationTypes);
-				break;
-			default:
-				if (mainWeapon != null && mainWeapon.equals(itemGroup))
-					applyTo(stat, calculationTypes);
-		}
-	}
+  @Override
+  public void apply(Stat2 stat, CalculationType... calculationTypes) {
+    Player player = (Player) stat.getOwner();
+    ItemGroup mainWeapon = player.getEquipment().getMainHandWeaponType();
+    ItemGroup offHandWeapon = player.getEquipment().getOffHandWeaponType();
+    switch (this.stat) {
+      case MAIN_HAND_POWER:
+        if (mainWeapon != null && mainWeapon.equals(itemGroup)) {
+          applyTo(stat, calculationTypes);
+        }
+        break;
+      case OFF_HAND_POWER:
+        if (offHandWeapon != null && offHandWeapon.equals(itemGroup))
+          applyTo(stat, calculationTypes);
+        break;
+      default:
+        if (mainWeapon != null && mainWeapon.equals(itemGroup))
+          applyTo(stat, calculationTypes);
+    }
+  }
 
 
-	private void applyTo(Stat2 stat, CalculationType... calculationTypes) {
-		if (isBonus()) {
-			int bonusRate = getValue();
-			if (ArrayUtils.contains(calculationTypes, CalculationType.SKILL) && ArrayUtils.contains(calculationTypes, CalculationType.DUAL_WIELD)) {
-				bonusRate = Rnd.get(0, getValue());
-			}
-			stat.setFixedBonusRate(bonusRate / 100f);
-		} else {
-			// TODO: Check if calculations differ if its not a bonus type.
-			stat.setBase(stat.getExactBaseWithoutBaseRate() * stat.calculatePercent(getValue()));
-		}
-	}
+  private void applyTo(Stat2 stat, CalculationType... calculationTypes) {
+    if (isBonus()) {
+      int bonusRate = getValue();
+      if (ArrayUtils.contains(calculationTypes, CalculationType.SKILL) && ArrayUtils.contains(calculationTypes, CalculationType.DUAL_WIELD)) {
+        bonusRate = Rnd.get(0, getValue());
+      }
+      stat.setFixedBonusRate(bonusRate / 100f);
+    } else {
+      // TODO: Check if calculations differ if its not a bonus type.
+      stat.setBase(stat.getExactBaseWithoutBaseRate() * stat.calculatePercent(getValue()));
+    }
+  }
 }

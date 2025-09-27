@@ -12,24 +12,24 @@ import ai.AggressiveNpcAI;
 @AIName("takun_gojira")
 public class TakunGojiraAI extends AggressiveNpcAI {
 
-	private Npc counterpart;
+  private Npc counterpart;
 
-	public TakunGojiraAI(Npc owner) {
-		super(owner);
-	}
+  public TakunGojiraAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void handleSpawned() {
-		super.handleSpawned();
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+  @Override
+  public void handleSpawned() {
+    super.handleSpawned();
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-			@Override
-			public void run() {
-				counterpart = getPosition().getWorldMapInstance().getNpc(getNpcId() == 217596 ? 217597 : 217596);
-				if (counterpart != null)
-					getAggroList().addHate(counterpart, 1000000);
-			}
-		}, 500);
-	}
+      @Override
+      public void run() {
+        counterpart = getPosition().getWorldMapInstance().getNpc(getNpcId() == 217596 ? 217597 : 217596);
+        if (counterpart != null)
+          getAggroList().addHate(counterpart, 1000000);
+      }
+    }, 500);
+  }
 
 }

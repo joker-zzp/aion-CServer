@@ -12,24 +12,24 @@ import com.aionemu.gameserver.services.item.ItemRemodelService;
  */
 public class CM_ITEM_REMODEL extends AionClientPacket {
 
-	private int keepItemId;
-	private int extractItemId;
+  private int keepItemId;
+  private int extractItemId;
 
-	public CM_ITEM_REMODEL(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_ITEM_REMODEL(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		readD(); // npcId
-		keepItemId = readD();
-		extractItemId = readD();
-		readD(); // unk 0
-	}
+  @Override
+  protected void readImpl() {
+    readD(); // npcId
+    keepItemId = readD();
+    extractItemId = readD();
+    readD(); // unk 0
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		ItemRemodelService.remodelItem(activePlayer, keepItemId, extractItemId);
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    ItemRemodelService.remodelItem(activePlayer, keepItemId, extractItemId);
+  }
 }

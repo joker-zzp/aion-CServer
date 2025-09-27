@@ -20,43 +20,43 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @XmlType(name = "ExpandInventoryAction")
 public class ExpandInventoryAction extends AbstractItemAction {
 
-	@XmlAttribute(name = "level")
-	private int level;
-	@XmlAttribute(name = "storage")
-	private StorageType storage;
+  @XmlAttribute(name = "level")
+  private int level;
+  @XmlAttribute(name = "storage")
+  private StorageType storage;
 
-	@Override
-	public boolean canAct(Player player, Item parentItem, Item targetItem, Object... params) {
-		switch (storage) {
-			case CUBE:
-				return CubeExpandService.canExpandByTicket(player, level);
-			case WAREHOUSE:
-				return WarehouseService.canExpandByTicket(player, level);
-		}
-		return false;
-	}
+  @Override
+  public boolean canAct(Player player, Item parentItem, Item targetItem, Object... params) {
+    switch (storage) {
+      case CUBE:
+        return CubeExpandService.canExpandByTicket(player, level);
+      case WAREHOUSE:
+        return WarehouseService.canExpandByTicket(player, level);
+    }
+    return false;
+  }
 
-	@Override
-	public void act(Player player, Item parentItem, Item targetItem, Object... params) {
-		if (!player.getInventory().decreaseByObjectId(parentItem.getObjectId(), 1))
-			return;
-		ItemTemplate itemTemplate = parentItem.getItemTemplate();
-		PacketSendUtility.broadcastPacket(player,
-			new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), itemTemplate.getTemplateId()), true);
+  @Override
+  public void act(Player player, Item parentItem, Item targetItem, Object... params) {
+    if (!player.getInventory().decreaseByObjectId(parentItem.getObjectId(), 1))
+      return;
+    ItemTemplate itemTemplate = parentItem.getItemTemplate();
+    PacketSendUtility.broadcastPacket(player,
+      new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), itemTemplate.getTemplateId()), true);
 
-		switch (storage) {
-			case CUBE:
-				CubeExpandService.itemExpand(player);
-				break;
-			case WAREHOUSE:
-				WarehouseService.expand(player, false);
-				break;
-		}
-	}
+    switch (storage) {
+      case CUBE:
+        CubeExpandService.itemExpand(player);
+        break;
+      case WAREHOUSE:
+        WarehouseService.expand(player, false);
+        break;
+    }
+  }
 
 }
 
 enum StorageType {
-	CUBE,
-	WAREHOUSE
+  CUBE,
+  WAREHOUSE
 }

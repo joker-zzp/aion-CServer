@@ -13,74 +13,74 @@ import com.aionemu.gameserver.world.World;
  */
 public class Ban extends AdminCommand {
 
-	public Ban() {
-		super("ban", "封禁玩家");
-	}
+  public Ban() {
+    super("ban", "封禁玩家");
+  }
 
-	@Override
-	public void execute(Player admin, String... params) {
-		if (params == null || params.length < 1) {
-			PacketSendUtility.sendMessage(admin, "用法: //ban <玩家> [account|ip|full] [分钟数]");
-			return;
-		}
+  @Override
+  public void execute(Player admin, String... params) {
+    if (params == null || params.length < 1) {
+      PacketSendUtility.sendMessage(admin, "用法: //ban <玩家> [account|ip|full] [分钟数]");
+      return;
+    }
 
-		// We need to get player's account ID
-		String name = Util.convertName(params[0]);
-		int accountId = 0;
-		String accountIp = "";
+    // We need to get player's account ID
+    String name = Util.convertName(params[0]);
+    int accountId = 0;
+    String accountIp = "";
 
-		// First, try to find player in the World
-		Player player = World.getInstance().getPlayer(name);
-		if (player != null) {
-			accountId = player.getClientConnection().getAccount().getId();
-			accountIp = player.getClientConnection().getIP();
-		}
+    // First, try to find player in the World
+    Player player = World.getInstance().getPlayer(name);
+    if (player != null) {
+      accountId = player.getClientConnection().getAccount().getId();
+      accountIp = player.getClientConnection().getIP();
+    }
 
-		// Second, try to get account ID of offline player from database
-		if (accountId == 0)
-			accountId = PlayerDAO.getAccountIdByName(name);
+    // Second, try to get account ID of offline player from database
+    if (accountId == 0)
+      accountId = PlayerDAO.getAccountIdByName(name);
 
-		// Third, fail
-		if (accountId == 0) {
-			PacketSendUtility.sendMessage(admin, "玩家 " + name + " 未找到!");
-			PacketSendUtility.sendMessage(admin, "用法: //ban <玩家> [account|ip|full] [分钟数]");
-			return;
-		}
+    // Third, fail
+    if (accountId == 0) {
+      PacketSendUtility.sendMessage(admin, "玩家 " + name + " 未找到!");
+      PacketSendUtility.sendMessage(admin, "用法: //ban <玩家> [account|ip|full] [分钟数]");
+      return;
+    }
 
-		byte type = 3; // Default: full
-		if (params.length > 1) {
-			// Smart Matching
-			String stype = params[1].toLowerCase();
-			if (("account").startsWith(stype))
-				type = 1;
-			else if (("ip").startsWith(stype))
-				type = 2;
-			else if (("full").startsWith(stype))
-				type = 3;
-			else {
-					PacketSendUtility.sendMessage(admin, "用法: //ban <玩家> [account|ip|full] [分钟数]");
-					return;
-				}
-		}
+    byte type = 3; // Default: full
+    if (params.length > 1) {
+      // Smart Matching
+      String stype = params[1].toLowerCase();
+      if (("account").startsWith(stype))
+        type = 1;
+      else if (("ip").startsWith(stype))
+        type = 2;
+      else if (("full").startsWith(stype))
+        type = 3;
+      else {
+          PacketSendUtility.sendMessage(admin, "用法: //ban <玩家> [account|ip|full] [分钟数]");
+          return;
+        }
+    }
 
-		int time = 0; // Default: infinity
-		if (params.length > 2) {
-			try {
-				time = Integer.parseInt(params[2]);
-			} catch (NumberFormatException e) {
-					PacketSendUtility.sendMessage(admin, "用法: //ban <玩家> [account|ip|full] [分钟数]");
-					return;
-				}
-		}
-		if (time == 0) {
-			time = 60 * 24 * 365 * 10; // pseudo infinity. TODO: rework
-		}
+    int time = 0; // Default: infinity
+    if (params.length > 2) {
+      try {
+        time = Integer.parseInt(params[2]);
+      } catch (NumberFormatException e) {
+          PacketSendUtility.sendMessage(admin, "用法: //ban <玩家> [account|ip|full] [分钟数]");
+          return;
+        }
+    }
+    if (time == 0) {
+      time = 60 * 24 * 365 * 10; // pseudo infinity. TODO: rework
+    }
 
-		LoginServer.getInstance().sendBanPacket(type, accountId, accountIp, time, admin.getObjectId());
-	}
+    LoginServer.getInstance().sendBanPacket(type, accountId, accountIp, time, admin.getObjectId());
+  }
 
-	@Override
-	public void info(Player player, String message) {
-		PacketSendUtility.sendMessage(player, "用法: //ban <玩家> [account|ip|full] [分钟数]");
-	}
+  @Override
+  public void info(Player player, String message) {
+    PacketSendUtility.sendMessage(player, "用法: //ban <玩家> [account|ip|full] [分钟数]");
+  }
 }

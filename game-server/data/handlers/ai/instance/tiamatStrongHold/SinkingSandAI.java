@@ -12,30 +12,30 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("sinkingsand")
 public class SinkingSandAI extends NpcAI {
 
-	public SinkingSandAI(Npc owner) {
-		super(owner);
-	}
+  public SinkingSandAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		useskill();
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    useskill();
+  }
 
-	private void useskill() {
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+  private void useskill() {
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-			@Override
-			public void run() {
-				AIActions.useSkill(SinkingSandAI.this, 20723);
-				ThreadPoolManager.getInstance().schedule(new Runnable() {
+      @Override
+      public void run() {
+        AIActions.useSkill(SinkingSandAI.this, 20723);
+        ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-					@Override
-					public void run() {
-						AIActions.deleteOwner(SinkingSandAI.this);
-					}
-				}, 1000);
-			}
-		}, 3000);
-	}
+          @Override
+          public void run() {
+            AIActions.deleteOwner(SinkingSandAI.this);
+          }
+        }, 1000);
+      }
+    }, 3000);
+  }
 }

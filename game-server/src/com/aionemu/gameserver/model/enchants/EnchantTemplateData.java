@@ -15,18 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EnchantTemplateData {
 
-	@XmlElement(name = "enchant_stat", required = true)
-	protected List<EnchantStat> enchantStats;
+  @XmlElement(name = "enchant_stat", required = true)
+  protected List<EnchantStat> enchantStats;
 
-	@XmlAttribute(name = "level", required = true)
-	private int level;
+  @XmlAttribute(name = "level", required = true)
+  private int level;
 
-	public List<EnchantStat> getEnchantStats() {
-		return enchantStats;
-	}
+  public List<EnchantStat> getEnchantStats() {
+    return enchantStats;
+  }
 
-	public int getLevel() {
-		return level;
-	}
+  public int getLevel() {
+    return level;
+  }
 
 }

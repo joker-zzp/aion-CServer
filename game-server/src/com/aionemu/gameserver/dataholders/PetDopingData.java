@@ -16,24 +16,24 @@ import com.aionemu.gameserver.model.templates.pet.PetDopingEntry;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PetDopingData {
 
-	@XmlElement(name = "doping")
-	private List<PetDopingEntry> list;
+  @XmlElement(name = "doping")
+  private List<PetDopingEntry> list;
 
-	@XmlTransient
-	private final Map<Integer, PetDopingEntry> dopingsById = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, PetDopingEntry> dopingsById = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (PetDopingEntry dope : list)
-			dopingsById.put(dope.getId(), dope);
-		list = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (PetDopingEntry dope : list)
+      dopingsById.put(dope.getId(), dope);
+    list = null;
+  }
 
-	public int size() {
-		return dopingsById.size();
-	}
+  public int size() {
+    return dopingsById.size();
+  }
 
-	public PetDopingEntry getDopingTemplate(int id) {
-		return dopingsById.get(id);
-	}
+  public PetDopingEntry getDopingTemplate(int id) {
+    return dopingsById.get(id);
+  }
 
 }

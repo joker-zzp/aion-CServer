@@ -12,32 +12,32 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "SubEffect")
 public class SubEffect {
 
-	@XmlAttribute(name = "skill_id", required = true)
-	private int skillId;
-	@XmlAttribute
-	private int chance = 100;
-	@XmlAttribute(name = "addeffect")
-	private boolean addEffect = false;
+  @XmlAttribute(name = "skill_id", required = true)
+  private int skillId;
+  @XmlAttribute
+  private int chance = 100;
+  @XmlAttribute(name = "addeffect")
+  private boolean addEffect = false;
 
-	/**
-	 * @return the skillId
-	 */
-	public int getSkillId() {
-		return skillId;
-	}
+  /**
+   * @return the skillId
+   */
+  public int getSkillId() {
+    return skillId;
+  }
 
-	/**
-	 * @return the chance
-	 */
-	public int getChance() {
-		return chance;
-	}
+  /**
+   * @return the chance
+   */
+  public int getChance() {
+    return chance;
+  }
 
-	/**
-	 * @return the addEffect
-	 */
-	public boolean isAddEffect() {
-		return addEffect;
-	}
+  /**
+   * @return the addEffect
+   */
+  public boolean isAddEffect() {
+    return addEffect;
+  }
 
 }

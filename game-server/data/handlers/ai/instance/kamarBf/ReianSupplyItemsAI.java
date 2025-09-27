@@ -11,29 +11,29 @@ import ai.ChestAI;
 @AIName("reiansupplyitems")
 public class ReianSupplyItemsAI extends ChestAI {
 
-	private Npc flag;
+  private Npc flag;
 
-	public ReianSupplyItemsAI(Npc owner) {
-		super(owner);
-	}
+  public ReianSupplyItemsAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		flag = (Npc) spawn(801959, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    flag = (Npc) spawn(801959, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
+  }
 
-	@Override
-	protected void handleDespawned() {
-		super.handleDespawned();
-		if (flag != null)
-			flag.getController().delete();
-	}
+  @Override
+  protected void handleDespawned() {
+    super.handleDespawned();
+    if (flag != null)
+      flag.getController().delete();
+  }
 
-	@Override
-	protected void handleDied() {
-		super.handleDied();
-		if (flag != null)
-			flag.getController().delete();
-	}
+  @Override
+  protected void handleDied() {
+    super.handleDied();
+    if (flag != null)
+      flag.getController().delete();
+  }
 }

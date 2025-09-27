@@ -13,18 +13,18 @@ import ai.SummonerAI;
 @AIName("mistressviloa")
 public class MistressViloaAI extends SummonerAI {
 
-	public MistressViloaAI(Npc owner) {
-		super(owner);
-	}
+  public MistressViloaAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		PacketSendUtility.broadcastMessage(getOwner(), 1501135, 3000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    PacketSendUtility.broadcastMessage(getOwner(), 1501135, 3000);
+  }
 
-	@Override
-	protected void handleSpawnFinished(SummonGroup summonGroup) {
-		PacketSendUtility.broadcastMessage(getOwner(), 1501134, 1000);
-	}
+  @Override
+  protected void handleSpawnFinished(SummonGroup summonGroup) {
+    PacketSendUtility.broadcastMessage(getOwner(), 1501134, 1000);
+  }
 }

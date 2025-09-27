@@ -9,17 +9,17 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_UPDATE_NOTE extends AionServerPacket {
 
-	private final int targetObjId;
-	private final String note;
+  private final int targetObjId;
+  private final String note;
 
-	public SM_UPDATE_NOTE(Player player) {
-		this.targetObjId = player.getObjectId();
-		this.note = player.getCommonData().getNote();
-	}
+  public SM_UPDATE_NOTE(Player player) {
+    this.targetObjId = player.getObjectId();
+    this.note = player.getCommonData().getNote();
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(targetObjId);
-		writeS(note);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(targetObjId);
+    writeS(note);
+  }
 }

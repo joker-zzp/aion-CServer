@@ -7,27 +7,27 @@ import java.util.EventObject;
  */
 public abstract class AbstractEvent<SourceType> extends EventObject {
 
-	private static final long serialVersionUID = -5493949678727753836L;
+  private static final long serialVersionUID = -5493949678727753836L;
 
-	protected Object[] callingArguments;
+  protected Object[] callingArguments;
 
-	private boolean handled;
+  private boolean handled;
 
-	public AbstractEvent(SourceType source) {
-		super(source);
-	}
+  public AbstractEvent(SourceType source) {
+    super(source);
+  }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public SourceType getSource() {
-		return (SourceType) super.getSource();
-	}
+  @Override
+  @SuppressWarnings("unchecked")
+  public SourceType getSource() {
+    return (SourceType) super.getSource();
+  }
 
-	public boolean isHandled() {
-		return handled;
-	}
+  public boolean isHandled() {
+    return handled;
+  }
 
-	public void setHandled(boolean handled) {
-		this.handled = handled;
-	}
+  public void setHandled(boolean handled) {
+    this.handled = handled;
+  }
 }

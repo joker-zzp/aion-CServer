@@ -9,22 +9,22 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_KISK_UPDATE extends AionServerPacket {
 
-	private final Kisk kisk;
+  private final Kisk kisk;
 
-	public SM_KISK_UPDATE(Kisk kisk) {
-		this.kisk = kisk;
-	}
+  public SM_KISK_UPDATE(Kisk kisk) {
+    this.kisk = kisk;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(kisk.getObjectId());
-		writeD(kisk.getCreatorId());
-		writeD(kisk.getUseMask());
-		writeD(kisk.getCurrentMemberCount());
-		writeD(kisk.getMaxMembers());
-		writeD(kisk.getRemainingResurrects());
-		writeD(kisk.getMaxRessurects());
-		writeD(kisk.getRemainingLifetime());
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(kisk.getObjectId());
+    writeD(kisk.getCreatorId());
+    writeD(kisk.getUseMask());
+    writeD(kisk.getCurrentMemberCount());
+    writeD(kisk.getMaxMembers());
+    writeD(kisk.getRemainingResurrects());
+    writeD(kisk.getMaxRessurects());
+    writeD(kisk.getRemainingLifetime());
+  }
 
 }

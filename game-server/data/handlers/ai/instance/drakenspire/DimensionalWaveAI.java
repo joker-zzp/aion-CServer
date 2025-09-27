@@ -15,36 +15,36 @@ import ai.UseSkillAndDieAI;
 @AIName("drakenspire_dimensional_wave")
 public class DimensionalWaveAI extends UseSkillAndDieAI {
 
-	public DimensionalWaveAI(Npc owner) {
-		super(owner);
-	}
+  public DimensionalWaveAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		if (skillTemplate.getSkillId() == 21620) {
-			ThreadPoolManager.getInstance().schedule(this::calculateAndApplyDamage, 1200); // Aligns visual hit and damage
-		}
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    if (skillTemplate.getSkillId() == 21620) {
+      ThreadPoolManager.getInstance().schedule(this::calculateAndApplyDamage, 1200); // Aligns visual hit and damage
+    }
+  }
 
-	private void calculateAndApplyDamage() {
-		getKnownList().getKnownPlayers().values().stream().filter(p -> !p.isDead() && PositionUtil.isInRange(getOwner(), p, 29, true)).forEach(p -> {
-			int headingTowardsPlayer = PositionUtil.getHeadingTowards(getPosition().getX(), getPosition().getY(), p.getX(), p.getY());
-			int headingMax = getPosition().getHeading(); // 30 or 90
-			int headingMin = headingMax - 60;
-			if (headingMin < 0) {
-				headingMin += 120;
-			}
+  private void calculateAndApplyDamage() {
+    getKnownList().getKnownPlayers().values().stream().filter(p -> !p.isDead() && PositionUtil.isInRange(getOwner(), p, 29, true)).forEach(p -> {
+      int headingTowardsPlayer = PositionUtil.getHeadingTowards(getPosition().getX(), getPosition().getY(), p.getX(), p.getY());
+      int headingMax = getPosition().getHeading(); // 30 or 90
+      int headingMin = headingMax - 60;
+      if (headingMin < 0) {
+        headingMin += 120;
+      }
 
-			boolean isHit;
-			if (headingMin <= headingMax) {
-				isHit = headingTowardsPlayer >= headingMin && headingTowardsPlayer <= headingMax;
-			} else {
-				isHit = headingTowardsPlayer >= headingMin || headingTowardsPlayer <= headingMax;
-			}
+      boolean isHit;
+      if (headingMin <= headingMax) {
+        isHit = headingTowardsPlayer >= headingMin && headingTowardsPlayer <= headingMax;
+      } else {
+        isHit = headingTowardsPlayer >= headingMin || headingTowardsPlayer <= headingMax;
+      }
 
-			if (isHit) {
-				SkillEngine.getInstance().applyEffect(21874, getOwner(), p);
-			}
-		});
-	}
+      if (isHit) {
+        SkillEngine.getInstance().applyEffect(21874, getOwner(), p);
+      }
+    });
+  }
 }

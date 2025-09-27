@@ -29,55 +29,55 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("drakenspire_lv3_human_beritra")
 public class Lv3HumanBeritraAI extends Lv2HumanBeritraAI implements HpPhases.PhaseHandler {
 
-	private final HpPhases hpPhases = new HpPhases(40);
+  private final HpPhases hpPhases = new HpPhases(40);
 
-	public Lv3HumanBeritraAI(Npc owner) {
-		super(owner);
-	}
+  public Lv3HumanBeritraAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleLastSealBlasted() {
-		getOwner().queueSkill(20842, 56);
-	}
+  @Override
+  protected void handleLastSealBlasted() {
+    getOwner().queueSkill(20842, 56);
+  }
 
-	/**
-	 * Can only happen if the fight takes longer than 11 minutes or HP reaches below 36%.
-	 */
-	@Override
-	protected void handleThirdPhaseStarted() {
-		if (getEffectController().findBySkillId(21611) != null)
-			SkillEngine.getInstance().applyEffectDirectly(21611, getOwner(), getOwner());
-		if (getEffectController().findBySkillId(21610) != null)
-			SkillEngine.getInstance().applyEffectDirectly(21610, getOwner(), getOwner());
-		PacketSendUtility.broadcastToMap(getOwner(), SM_SYSTEM_MESSAGE.STR_MSG_IDSEAL_VRITRA_HUMAN_03());
-		getLifeStats().setCurrentHp(getLifeStats().getMaxHp());
-		getOwner().getGameStats().setFightStartingTime();
-		resetBlastedSeal();
-	}
+  /**
+   * Can only happen if the fight takes longer than 11 minutes or HP reaches below 36%.
+   */
+  @Override
+  protected void handleThirdPhaseStarted() {
+    if (getEffectController().findBySkillId(21611) != null)
+      SkillEngine.getInstance().applyEffectDirectly(21611, getOwner(), getOwner());
+    if (getEffectController().findBySkillId(21610) != null)
+      SkillEngine.getInstance().applyEffectDirectly(21610, getOwner(), getOwner());
+    PacketSendUtility.broadcastToMap(getOwner(), SM_SYSTEM_MESSAGE.STR_MSG_IDSEAL_VRITRA_HUMAN_03());
+    getLifeStats().setCurrentHp(getLifeStats().getMaxHp());
+    getOwner().getGameStats().setFightStartingTime();
+    resetBlastedSeal();
+  }
 
-	@Override
-	protected void handleAttack(Creature creature) {
-		hpPhases.tryEnterNextPhase(this);
-		super.handleAttack(creature);
-	}
+  @Override
+  protected void handleAttack(Creature creature) {
+    hpPhases.tryEnterNextPhase(this);
+    super.handleAttack(creature);
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		if (skillTemplate.getSkillId() == 20842) {
-			// Retail would apply this through activate_skillarea
-			getPosition().getWorldMapInstance().forEachPlayer(p -> SkillEngine.getInstance().applyEffectDirectly(20842, getOwner(), p));
-			handleTransformation();
-		}
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    if (skillTemplate.getSkillId() == 20842) {
+      // Retail would apply this through activate_skillarea
+      getPosition().getWorldMapInstance().forEachPlayer(p -> SkillEngine.getInstance().applyEffectDirectly(20842, getOwner(), p));
+      handleTransformation();
+    }
+  }
 
-	private void handleTransformation() {
-		getPosition().getWorldMapInstance().getNpcs(702695, 702696).forEach(npc -> npc.getController().die()); // Collapse ceiling and ambient light
-		spawn(236247, 123.055f, 519.190f, 1750.3414f, (byte) 0); // Dragon Form
-		AIActions.deleteOwner(this);
-	}
+  private void handleTransformation() {
+    getPosition().getWorldMapInstance().getNpcs(702695, 702696).forEach(npc -> npc.getController().die()); // Collapse ceiling and ambient light
+    spawn(236247, 123.055f, 519.190f, 1750.3414f, (byte) 0); // Dragon Form
+    AIActions.deleteOwner(this);
+  }
 
-	@Override
-	public void handleHpPhase(int phaseHpPercent) {
-		handleLastSealBlasted(); // Using the same logic here
-	}
+  @Override
+  public void handleHpPhase(int phaseHpPercent) {
+    handleLastSealBlasted(); // Using the same logic here
+  }
 }

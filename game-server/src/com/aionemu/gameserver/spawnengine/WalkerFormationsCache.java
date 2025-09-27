@@ -8,22 +8,22 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 class WalkerFormationsCache {
 
-	private static Map<Integer, WorldWalkerFormations> formations = new ConcurrentHashMap<>();
+  private static Map<Integer, WorldWalkerFormations> formations = new ConcurrentHashMap<>();
 
-	private WalkerFormationsCache() {
-	}
+  private WalkerFormationsCache() {
+  }
 
-	protected static InstanceWalkerFormations getInstanceFormations(int worldId, int instanceId) {
-		WorldWalkerFormations wwf = formations.get(worldId);
-		if (wwf == null) {
-			wwf = new WorldWalkerFormations();
-			formations.put(worldId, wwf);
-		}
-		return wwf.getInstanceFormations(instanceId);
-	}
+  protected static InstanceWalkerFormations getInstanceFormations(int worldId, int instanceId) {
+    WorldWalkerFormations wwf = formations.get(worldId);
+    if (wwf == null) {
+      wwf = new WorldWalkerFormations();
+      formations.put(worldId, wwf);
+    }
+    return wwf.getInstanceFormations(instanceId);
+  }
 
-	protected static void onInstanceDestroy(int worldId, int instanceId) {
-		getInstanceFormations(worldId, instanceId).onInstanceDestroy();
-	}
+  protected static void onInstanceDestroy(int worldId, int instanceId) {
+    getInstanceFormations(worldId, instanceId).onInstanceDestroy();
+  }
 
 }

@@ -11,19 +11,19 @@ import com.aionemu.chatserver.service.ChatService;
  */
 public class CM_PLAYER_LOGOUT extends GsClientPacket {
 
-	private int playerId;
+  private int playerId;
 
-	public CM_PLAYER_LOGOUT(ByteBuffer buf, GsConnection connection) {
-		super(buf, connection, 0x02);
-	}
+  public CM_PLAYER_LOGOUT(ByteBuffer buf, GsConnection connection) {
+    super(buf, connection, 0x02);
+  }
 
-	@Override
-	protected void readImpl() {
-		playerId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    playerId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		ChatService.getInstance().playerLogout(playerId);
-	}
+  @Override
+  protected void runImpl() {
+    ChatService.getInstance().playerLogout(playerId);
+  }
 }

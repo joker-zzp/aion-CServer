@@ -11,8 +11,8 @@ import com.aionemu.gameserver.world.WorldPosition;
  */
 public class StaticObject extends VisibleObject {
 
-	public StaticObject(StaticObjectController controller, SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate) {
-		super(IDFactory.getInstance().nextId(), controller, spawnTemplate, objectTemplate, new WorldPosition(spawnTemplate.getWorldId()), true);
-		controller.setOwner(this);
-	}
+  public StaticObject(StaticObjectController controller, SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate) {
+    super(IDFactory.getInstance().nextId(), controller, spawnTemplate, objectTemplate, new WorldPosition(spawnTemplate.getWorldId()), true);
+    controller.setOwner(this);
+  }
 }

@@ -18,18 +18,18 @@ import ai.ActionItemNpcAI;
 @AIName("aether_blossom")
 public class AetherBlossomAI extends ActionItemNpcAI {
 
-	private AtomicBoolean hasRewarded = new AtomicBoolean();
+  private AtomicBoolean hasRewarded = new AtomicBoolean();
 
-	public AetherBlossomAI(Npc owner) {
-		super(owner);
-	}
+  public AetherBlossomAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		if (hasRewarded.compareAndSet(false, true)) // just in case
-			ItemService.addItem(player, 186000406, 1); // [Event] Aether Blossom
-		super.handleUseItemFinish(player);
-		AIActions.die(this);
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    if (hasRewarded.compareAndSet(false, true)) // just in case
+      ItemService.addItem(player, 186000406, 1); // [Event] Aether Blossom
+    super.handleUseItemFinish(player);
+    AIActions.die(this);
+  }
 
 }

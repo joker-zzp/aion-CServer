@@ -12,15 +12,15 @@ import ai.AggressiveNpcAI;
 @AIName("omegaclone")
 public class CloneOfBarrierAI extends AggressiveNpcAI {
 
-	public CloneOfBarrierAI(Npc owner) {
-		super(owner);
-	}
+  public CloneOfBarrierAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDied() {
-		VisibleObject object = getKnownList().findObject(216516); // Omega
-		if (object instanceof Npc omega && !omega.isDead() && isInRange(omega, 5))
-			omega.getEffectController().removeEffect(18671);
-		super.handleDied();
-	}
+  @Override
+  protected void handleDied() {
+    VisibleObject object = getKnownList().findObject(216516); // Omega
+    if (object instanceof Npc omega && !omega.isDead() && isInRange(omega, 5))
+      omega.getEffectController().removeEffect(18671);
+    super.handleDied();
+  }
 }

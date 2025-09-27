@@ -10,14 +10,14 @@ import com.aionemu.gameserver.model.gameobjects.Npc;
 @AIName("bubblegut")
 public class BubblegutAI extends GeneralNpcAI {
 
-	public BubblegutAI(Npc owner) {
-		super(owner);
-	}
+  public BubblegutAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		AIActions.useSkill(this, 16447);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    AIActions.useSkill(this, 16447);
+  }
 
 }

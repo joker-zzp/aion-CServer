@@ -16,17 +16,17 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 @XmlType(name = "ChargeArmorCondition")
 public class ChargeArmorCondition extends ChargeCondition {
 
-	@Override
-	public boolean validate(Skill env) {
-		if (env.getEffector() instanceof Player effector) {
-			for (Item item : effector.getEquipment().getEquippedItems()) {
-				if (item.getItemTemplate().isArmor() && item.getConditioningInfo() != null) {
-					if ((item.getEquipmentSlot() & ItemSlot.SUB_OFF_HAND.getSlotIdMask()) != 0)
-						continue;
-					item.getConditioningInfo().updateChargePoints(-value);
-				}
-			}
-		}
-		return true;
-	}
+  @Override
+  public boolean validate(Skill env) {
+    if (env.getEffector() instanceof Player effector) {
+      for (Item item : effector.getEquipment().getEquippedItems()) {
+        if (item.getItemTemplate().isArmor() && item.getConditioningInfo() != null) {
+          if ((item.getEquipmentSlot() & ItemSlot.SUB_OFF_HAND.getSlotIdMask()) != 0)
+            continue;
+          item.getConditioningInfo().updateChargePoints(-value);
+        }
+      }
+    }
+    return true;
+  }
 }

@@ -13,38 +13,38 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_CS_PLAYER_AUTH_RESPONSE extends CsClientPacket {
 
-	/**
-	 * Player for which authentication was performed
-	 */
-	private int playerId;
-	/**
-	 * Token will be sent to client
-	 */
-	private byte[] token;
+  /**
+   * Player for which authentication was performed
+   */
+  private int playerId;
+  /**
+   * Token will be sent to client
+   */
+  private byte[] token;
 
-	/**
-	 * @param opcode
-	 */
-	public CM_CS_PLAYER_AUTH_RESPONSE(int opcode) {
-		super(opcode);
-	}
+  /**
+   * @param opcode
+   */
+  public CM_CS_PLAYER_AUTH_RESPONSE(int opcode) {
+    super(opcode);
+  }
 
-	@Override
-	protected void readImpl() {
-		playerId = readD();
-		int tokenLenght = readUC();
-		token = readB(tokenLenght);
-	}
+  @Override
+  protected void readImpl() {
+    playerId = readD();
+    int tokenLenght = readUC();
+    token = readB(tokenLenght);
+  }
 
-	@Override
-	protected void runImpl() {
-		if (ChatServer.getInstance().isUp()) {
-			Player player = World.getInstance().getPlayer(playerId);
-			if (player != null) {
-				PacketSendUtility.sendPacket(player, new SM_CHAT_INIT(token));
-				if (ChatBanService.isBanned(player))
-					ChatServer.getInstance().sendPlayerGagPacket(player.getObjectId(), ChatBanService.getBanMinutes(player) * 60000L);
-			}
-		}
-	}
+  @Override
+  protected void runImpl() {
+    if (ChatServer.getInstance().isUp()) {
+      Player player = World.getInstance().getPlayer(playerId);
+      if (player != null) {
+        PacketSendUtility.sendPacket(player, new SM_CHAT_INIT(token));
+        if (ChatBanService.isBanned(player))
+          ChatServer.getInstance().sendPlayerGagPacket(player.getObjectId(), ChatBanService.getBanMinutes(player) * 60000L);
+      }
+    }
+  }
 }

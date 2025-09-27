@@ -8,15 +8,15 @@ import javax.xml.bind.annotation.XmlEnum;
 @XmlEnum
 public enum ConditionUnionType {
 
-	AND,
-	OR;
+  AND,
+  OR;
 
-	public String value() {
-		return name();
-	}
+  public String value() {
+    return name();
+  }
 
-	public static ConditionUnionType fromValue(String v) {
-		return valueOf(v);
-	}
+  public static ConditionUnionType fromValue(String v) {
+    return valueOf(v);
+  }
 
 }

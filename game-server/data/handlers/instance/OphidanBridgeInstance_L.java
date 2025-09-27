@@ -9,7 +9,7 @@ import com.aionemu.gameserver.world.WorldMapInstance;
 @InstanceID(301320000)
 public class OphidanBridgeInstance_L extends OphidanBridgeInstance {
 
-	public OphidanBridgeInstance_L(WorldMapInstance instance) {
-		super(instance);
-	}
+  public OphidanBridgeInstance_L(WorldMapInstance instance) {
+    super(instance);
+  }
 }

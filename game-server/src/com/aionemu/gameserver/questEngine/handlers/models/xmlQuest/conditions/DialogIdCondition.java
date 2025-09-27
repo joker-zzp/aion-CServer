@@ -14,25 +14,25 @@ import com.aionemu.gameserver.questEngine.model.QuestEnv;
 @XmlType(name = "DialogIdCondition")
 public class DialogIdCondition extends QuestCondition {
 
-	@XmlAttribute(required = true)
-	protected int value;
+  @XmlAttribute(required = true)
+  protected int value;
 
-	/**
-	 * Gets the value of the value property.
-	 */
-	public int getValue() {
-		return value;
-	}
+  /**
+   * Gets the value of the value property.
+   */
+  public int getValue() {
+    return value;
+  }
 
-	@Override
-	public boolean doCheck(QuestEnv env) {
-		switch (getOp()) {
-			case EQUAL:
-				return env.getDialogActionId() == value;
-			case NOT_EQUAL:
-				return env.getDialogActionId() != value;
-			default:
-				return false;
-		}
-	}
+  @Override
+  public boolean doCheck(QuestEnv env) {
+    switch (getOp()) {
+      case EQUAL:
+        return env.getDialogActionId() == value;
+      case NOT_EQUAL:
+        return env.getDialogActionId() != value;
+      default:
+        return false;
+    }
+  }
 }

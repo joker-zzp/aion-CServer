@@ -7,7 +7,7 @@ import com.aionemu.gameserver.model.templates.zone.ZoneInfo;
  */
 public class SiegeZoneInstance extends ZoneInstance {
 
-	public SiegeZoneInstance(int mapId, ZoneInfo template) {
-		super(mapId, template);
-	}
+  public SiegeZoneInstance(int mapId, ZoneInfo template) {
+    super(mapId, template);
+  }
 }

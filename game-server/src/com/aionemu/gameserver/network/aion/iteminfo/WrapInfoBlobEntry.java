@@ -9,18 +9,18 @@ import com.aionemu.gameserver.network.aion.iteminfo.ItemInfoBlob.ItemBlobType;
  */
 public class WrapInfoBlobEntry extends ItemBlobEntry {
 
-	WrapInfoBlobEntry() {
-		super(ItemBlobType.WRAP_INFO);
-	}
+  WrapInfoBlobEntry() {
+    super(ItemBlobType.WRAP_INFO);
+  }
 
-	@Override
-	public void writeThisBlob(ByteBuffer buf) {
-		writeC(buf, ownerItem.getPackCount());
-	}
+  @Override
+  public void writeThisBlob(ByteBuffer buf) {
+    writeC(buf, ownerItem.getPackCount());
+  }
 
-	@Override
-	public int getSize() {
-		return 1;
-	}
+  @Override
+  public int getSize() {
+    return 1;
+  }
 
 }

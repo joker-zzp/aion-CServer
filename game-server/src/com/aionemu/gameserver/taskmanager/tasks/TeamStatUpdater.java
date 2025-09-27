@@ -14,34 +14,34 @@ import com.aionemu.gameserver.taskmanager.AbstractIterativePeriodicTaskManager;
  */
 public final class TeamStatUpdater extends AbstractIterativePeriodicTaskManager<Player> {
 
-	private static final class SingletonHolder {
+  private static final class SingletonHolder {
 
-		private static final TeamStatUpdater INSTANCE = new TeamStatUpdater();
-	}
+    private static final TeamStatUpdater INSTANCE = new TeamStatUpdater();
+  }
 
-	public static TeamStatUpdater getInstance() {
-		return SingletonHolder.INSTANCE;
-	}
+  public static TeamStatUpdater getInstance() {
+    return SingletonHolder.INSTANCE;
+  }
 
-	public TeamStatUpdater() {
-		super(500);
-	}
+  public TeamStatUpdater() {
+    super(500);
+  }
 
-	@Override
-	protected void callTask(Player player) {
-		if (player.isOnline()) {
-			if (player.isInGroup()) {
-				PlayerGroupService.updateGroup(player, GroupEvent.MOVEMENT);
-			} else if (player.isInAlliance()) {
-				PlayerAllianceService.updateAlliance(player, PlayerAllianceEvent.MOVEMENT);
-			}
-		}
-		this.stopTask(player); // task will be re-added on demand
-	}
+  @Override
+  protected void callTask(Player player) {
+    if (player.isOnline()) {
+      if (player.isInGroup()) {
+        PlayerGroupService.updateGroup(player, GroupEvent.MOVEMENT);
+      } else if (player.isInAlliance()) {
+        PlayerAllianceService.updateAlliance(player, PlayerAllianceEvent.MOVEMENT);
+      }
+    }
+    this.stopTask(player); // task will be re-added on demand
+  }
 
-	@Override
-	protected String getCalledMethodName() {
-		return "teamStatUpdate()";
-	}
+  @Override
+  protected String getCalledMethodName() {
+    return "teamStatUpdate()";
+  }
 
 }

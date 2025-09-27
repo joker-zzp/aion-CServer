@@ -13,20 +13,20 @@ import javax.xml.bind.annotation.XmlElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ArcadeLevels {
 
-	@XmlAttribute(name = "min_resumable_level")
-	private int minResumableLevel;
-	@XmlElement(name = "level")
-	private List<ArcadeLevel> upgradeLevels;
+  @XmlAttribute(name = "min_resumable_level")
+  private int minResumableLevel;
+  @XmlElement(name = "level")
+  private List<ArcadeLevel> upgradeLevels;
 
-	public int getMinResumableLevel() {
-		return minResumableLevel;
-	}
+  public int getMinResumableLevel() {
+    return minResumableLevel;
+  }
 
-	public List<ArcadeLevel> getLevels() {
-		return upgradeLevels;
-	}
+  public List<ArcadeLevel> getLevels() {
+    return upgradeLevels;
+  }
 
-	public ArcadeLevel getMaxUpgradeLevel() {
-		return upgradeLevels.get(upgradeLevels.size() - 1);
-	}
+  public ArcadeLevel getMaxUpgradeLevel() {
+    return upgradeLevels.get(upgradeLevels.size() - 1);
+  }
 }

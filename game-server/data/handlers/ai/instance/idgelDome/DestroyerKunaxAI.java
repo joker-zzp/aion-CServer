@@ -14,21 +14,21 @@ import ai.AggressiveNpcAI;
 @AIName("destroyer_kunax")
 public class DestroyerKunaxAI extends AggressiveNpcAI {
 
-	public DestroyerKunaxAI(Npc owner) {
-		super(owner);
-	}
+  public DestroyerKunaxAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public AttackIntention chooseAttackIntention() {
-		double dist = 0;
-		if (getTarget() != null) {
-			dist = PositionUtil.getDistance(getOwner(), getTarget()) - getObjectTemplate().getBoundRadius().getMaxOfFrontAndSide()
-				- getTarget().getObjectTemplate().getBoundRadius().getMaxOfFrontAndSide();
-		}
-		if (dist > 3 && dist <= 30) {
-			SkillEngine.getInstance().getSkill(getOwner(), 21550, 56, getTarget()).useSkill();
-			return AttackIntention.SKILL_ATTACK;
-		}
-		return super.chooseAttackIntention();
-	}
+  @Override
+  public AttackIntention chooseAttackIntention() {
+    double dist = 0;
+    if (getTarget() != null) {
+      dist = PositionUtil.getDistance(getOwner(), getTarget()) - getObjectTemplate().getBoundRadius().getMaxOfFrontAndSide()
+        - getTarget().getObjectTemplate().getBoundRadius().getMaxOfFrontAndSide();
+    }
+    if (dist > 3 && dist <= 30) {
+      SkillEngine.getInstance().getSkill(getOwner(), 21550, 56, getTarget()).useSkill();
+      return AttackIntention.SKILL_ATTACK;
+    }
+    return super.chooseAttackIntention();
+  }
 }

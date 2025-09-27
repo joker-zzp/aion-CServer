@@ -9,8 +9,8 @@ import com.aionemu.gameserver.model.gameobjects.Npc;
 @AIName("guardian_general")
 public class GuardianGeneralAI extends SiegeNpcAI {
 
-	public GuardianGeneralAI(Npc owner) {
-		super(owner);
-	}
-	// TODO: Working AI for BA
+  public GuardianGeneralAI(Npc owner) {
+    super(owner);
+  }
+  // TODO: Working AI for BA
 }

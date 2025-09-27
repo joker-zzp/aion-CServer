@@ -15,17 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "PortalUse")
 public class PortalUse {
 
-	@XmlElement(name = "portal_path")
-	private List<PortalPath> portalPaths;
-	@XmlAttribute(name = "npc_id")
-	private int npcId;
+  @XmlElement(name = "portal_path")
+  private List<PortalPath> portalPaths;
+  @XmlAttribute(name = "npc_id")
+  private int npcId;
 
-	public List<PortalPath> getPortalPaths() {
-		return portalPaths;
-	}
+  public List<PortalPath> getPortalPaths() {
+    return portalPaths;
+  }
 
-	public int getNpcId() {
-		return npcId;
-	}
+  public int getNpcId() {
+    return npcId;
+  }
 
 }

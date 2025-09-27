@@ -12,15 +12,15 @@ import com.aionemu.gameserver.utils.chathandlers.PlayerCommand;
  */
 public class NoExp extends PlayerCommand {
 
-	public NoExp() {
-		super("noexp", "Enables/disables your ability to gain experience.");
-	}
+  public NoExp() {
+    super("noexp", "Enables/disables your ability to gain experience.");
+  }
 
-	@Override
-	public void execute(Player player, String... params) {
-		PlayerCommonData pcd = player.getCommonData();
+  @Override
+  public void execute(Player player, String... params) {
+    PlayerCommonData pcd = player.getCommonData();
 
-		pcd.setNoExp(!pcd.getNoExp());
-		sendInfo(player, "Experience rewards are now " + (pcd.getNoExp() ? ChatUtil.color("inactive", Color.RED) : ChatUtil.color("active", Color.GREEN)) + ".");
-	}
+    pcd.setNoExp(!pcd.getNoExp());
+    sendInfo(player, "Experience rewards are now " + (pcd.getNoExp() ? ChatUtil.color("inactive", Color.RED) : ChatUtil.color("active", Color.GREEN)) + ".");
+  }
 }

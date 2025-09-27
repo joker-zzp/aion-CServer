@@ -2,16 +2,16 @@ package com.aionemu.gameserver.model.animations;
 
 public enum AttackTypeAnimation {
 
-	MELEE(0),
-	RANGED(1);
+  MELEE(0),
+  RANGED(1);
 
-	private final byte animationId;
+  private final byte animationId;
 
-	AttackTypeAnimation(int animationId) {
-		this.animationId = (byte) animationId;
-	}
+  AttackTypeAnimation(int animationId) {
+    this.animationId = (byte) animationId;
+  }
 
-	public byte getId() {
-		return animationId;
-	}
+  public byte getId() {
+    return animationId;
+  }
 }

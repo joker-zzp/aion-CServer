@@ -16,48 +16,48 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("eternal_bastion_assaulter")
 public class EternalBastionAssaulterNpcAI extends EternalBastionAggressiveNpcAI {
 
-	public EternalBastionAssaulterNpcAI(Npc owner) {
-		super(owner);
-	}
+  public EternalBastionAssaulterNpcAI(Npc owner) {
+    super(owner);
+  }
 
-	private int getAggroRange() {
-		int range = getOwner().getAggroRange();
-		if (range < 11)
-			range = 11;
-		return range;
-	}
+  private int getAggroRange() {
+    int range = getOwner().getAggroRange();
+    if (range < 11)
+      range = 11;
+    return range;
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		ThreadPoolManager.getInstance().schedule(this::startWalking, 3000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    ThreadPoolManager.getInstance().schedule(this::startWalking, 3000);
+  }
 
-	private void startWalking() {
-		WalkManager.startWalking(this);
-		getOwner().unsetState(CreatureState.WALK_MODE);
-		PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getObjectId()));
-	}
+  private void startWalking() {
+    WalkManager.startWalking(this);
+    getOwner().unsetState(CreatureState.WALK_MODE);
+    PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getObjectId()));
+  }
 
-	@Override
-	public boolean isDestinationReached() {
-		getOwner().unsetState(CreatureState.WALK_MODE);
-		PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getObjectId()));
-		hateCommander();
-		return super.isDestinationReached();
-	}
+  @Override
+  public boolean isDestinationReached() {
+    getOwner().unsetState(CreatureState.WALK_MODE);
+    PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getObjectId()));
+    hateCommander();
+    return super.isDestinationReached();
+  }
 
-	private void hateCommander() {
-		Npc commander = getPosition().getWorldMapInstance().getNpc(209516);
-		if (commander == null)
-			commander = getPosition().getWorldMapInstance().getNpc(209517);
-		if (commander != null && !getOwner().getAggroList().isHating(commander) && PositionUtil.isInRange(getOwner(), commander, 20))
-			getOwner().getAggroList().addHate(commander, 100000);
-	}
+  private void hateCommander() {
+    Npc commander = getPosition().getWorldMapInstance().getNpc(209516);
+    if (commander == null)
+      commander = getPosition().getWorldMapInstance().getNpc(209517);
+    if (commander != null && !getOwner().getAggroList().isHating(commander) && PositionUtil.isInRange(getOwner(), commander, 20))
+      getOwner().getAggroList().addHate(commander, 100000);
+  }
 
-	@Override
-	protected void handleBackHome() {
-		super.handleBackHome();
-		hateCommander();
-	}
+  @Override
+  protected void handleBackHome() {
+    super.handleBackHome();
+    hateCommander();
+  }
 }

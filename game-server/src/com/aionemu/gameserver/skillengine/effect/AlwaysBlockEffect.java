@@ -15,25 +15,25 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "AlwaysBlockEffect")
 public class AlwaysBlockEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void startEffect(Effect effect) {
-		effect.addObserver(effect.getEffected(), new AttackStatusObserver(value, AttackStatus.BLOCK) {
+  @Override
+  public void startEffect(Effect effect) {
+    effect.addObserver(effect.getEffected(), new AttackStatusObserver(value, AttackStatus.BLOCK) {
 
-			@Override
-			public boolean checkStatus(AttackStatus status) {
-				if (status == AttackStatus.BLOCK) {
-					if (--value <= 0)
-						effect.endEffect();
-					return true;
-				}
-				return false;
-			}
+      @Override
+      public boolean checkStatus(AttackStatus status) {
+        if (status == AttackStatus.BLOCK) {
+          if (--value <= 0)
+            effect.endEffect();
+          return true;
+        }
+        return false;
+      }
 
-		});
-	}
+    });
+  }
 }

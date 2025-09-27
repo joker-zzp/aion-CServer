@@ -5,7 +5,7 @@ package com.aionemu.gameserver.events;
  */
 public interface EventListener<T extends AbstractEvent<?>> {
 
-	public void onBeforeEvent(T event);
+  public void onBeforeEvent(T event);
 
-	public void onAfterEvent(T event);
+  public void onAfterEvent(T event);
 }

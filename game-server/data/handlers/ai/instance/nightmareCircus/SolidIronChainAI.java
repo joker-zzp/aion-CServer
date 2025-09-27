@@ -13,19 +13,19 @@ import ai.AggressiveNpcAI;
 @AIName("solidironchain")
 public class SolidIronChainAI extends AggressiveNpcAI {
 
-	public SolidIronChainAI(Npc owner) {
-		super(owner);
-	}
+  public SolidIronChainAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean canThink() {
-		return false;
-	}
+  @Override
+  public boolean canThink() {
+    return false;
+  }
 
-	@Override
-	protected void handleDespawned() {
-		super.handleDespawned();
-		PacketSendUtility.broadcastToMap(getOwner(), new SM_PLAY_MOVIE(false, 0, 0, 983, true));
-	}
+  @Override
+  protected void handleDespawned() {
+    super.handleDespawned();
+    PacketSendUtility.broadcastToMap(getOwner(), new SM_PLAY_MOVIE(false, 0, 0, 983, true));
+  }
 
 }

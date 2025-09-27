@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ChargeCondition")
 public abstract class ChargeCondition extends Condition {
 
-	@XmlAttribute(name = "value")
-	protected int value;
+  @XmlAttribute(name = "value")
+  protected int value;
 
 }

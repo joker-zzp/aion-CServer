@@ -12,24 +12,24 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ChargedSkill")
 public class ChargedSkill {
 
-	@XmlAttribute(required = true)
-	protected int id;
+  @XmlAttribute(required = true)
+  protected int id;
 
-	@XmlAttribute(required = true)
-	protected int time;
+  @XmlAttribute(required = true)
+  protected int time;
 
-	/**
-	 * Gets the value of the time property.
-	 */
-	public int getTime() {
-		return time;
-	}
+  /**
+   * Gets the value of the time property.
+   */
+  public int getTime() {
+    return time;
+  }
 
-	/**
-	 * Gets the value of the id property.
-	 */
-	public int getId() {
-		return id;
-	}
+  /**
+   * Gets the value of the id property.
+   */
+  public int getId() {
+    return id;
+  }
 
 }

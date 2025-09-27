@@ -9,22 +9,22 @@ import com.aionemu.gameserver.model.templates.spawns.SpawnTemplate;
  */
 public class RiftSpawnTemplate extends SpawnTemplate {
 
-	private int id;
+  private int id;
 
-	public RiftSpawnTemplate(SpawnGroup spawnGroup, SpawnSpotTemplate spot) {
-		super(spawnGroup, spot);
-	}
+  public RiftSpawnTemplate(SpawnGroup spawnGroup, SpawnSpotTemplate spot) {
+    super(spawnGroup, spot);
+  }
 
-	public RiftSpawnTemplate(SpawnGroup spawnGroup, float x, float y, float z, byte heading, int randWalk, String walkerId, int staticId, int fly) {
-		super(spawnGroup, x, y, z, heading, randWalk, walkerId, staticId, fly);
-	}
+  public RiftSpawnTemplate(SpawnGroup spawnGroup, float x, float y, float z, byte heading, int randWalk, String walkerId, int staticId, int fly) {
+    super(spawnGroup, x, y, z, heading, randWalk, walkerId, staticId, fly);
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
 }

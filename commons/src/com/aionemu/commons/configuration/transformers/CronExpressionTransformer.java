@@ -9,13 +9,13 @@ import com.aionemu.commons.configuration.TransformationTypeInfo;
  */
 public class CronExpressionTransformer extends PropertyTransformer<CronExpression> {
 
-	/**
-	 * Shared instance of this transformer. It's thread-safe so no need of multiple instances
-	 */
-	public static final CronExpressionTransformer SHARED_INSTANCE = new CronExpressionTransformer();
+  /**
+   * Shared instance of this transformer. It's thread-safe so no need of multiple instances
+   */
+  public static final CronExpressionTransformer SHARED_INSTANCE = new CronExpressionTransformer();
 
-	@Override
-	protected CronExpression parseObject(String value, TransformationTypeInfo typeInfo) throws Exception {
-		return value.isEmpty() ? null : new CronExpression(value);
-	}
+  @Override
+  protected CronExpression parseObject(String value, TransformationTypeInfo typeInfo) throws Exception {
+    return value.isEmpty() ? null : new CronExpression(value);
+  }
 }

@@ -19,18 +19,18 @@ import com.aionemu.gameserver.questEngine.handlers.template.FountainRewards;
 @XmlType(name = "FountainRewardsData")
 public class FountainRewardsData extends XMLQuest {
 
-	@XmlAttribute(name = "start_npc_ids")
-	protected List<Integer> startNpcIds;
+  @XmlAttribute(name = "start_npc_ids")
+  protected List<Integer> startNpcIds;
 
-	@Override
-	public void register(QuestEngine questEngine) {
-		questEngine.addQuestHandler(new FountainRewards(id, startNpcIds));
-	}
+  @Override
+  public void register(QuestEngine questEngine) {
+    questEngine.addQuestHandler(new FountainRewards(id, startNpcIds));
+  }
 
-	@Override
-	public Set<Integer> getAlternativeNpcs(int npcId) {
-		if (startNpcIds != null && startNpcIds.size() > 1 && startNpcIds.contains(npcId))
-			return startNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
-		return null;
-	}
+  @Override
+  public Set<Integer> getAlternativeNpcs(int npcId) {
+    if (startNpcIds != null && startNpcIds.size() > 1 && startNpcIds.contains(npcId))
+      return startNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
+    return null;
+  }
 }

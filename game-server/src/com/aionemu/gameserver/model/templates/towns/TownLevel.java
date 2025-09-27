@@ -14,22 +14,22 @@ import com.aionemu.gameserver.model.templates.spawns.Spawn;
 @XmlType(name = "town_level")
 public class TownLevel {
 
-	@XmlAttribute(name = "level")
-	protected int level;
-	@XmlElement(name = "spawn")
-	protected List<Spawn> spawns;
+  @XmlAttribute(name = "level")
+  protected int level;
+  @XmlElement(name = "spawn")
+  protected List<Spawn> spawns;
 
-	/**
-	 * @return the level
-	 */
-	public int getLevel() {
-		return level;
-	}
+  /**
+   * @return the level
+   */
+  public int getLevel() {
+    return level;
+  }
 
-	/**
-	 * @return the spawn
-	 */
-	public List<Spawn> getSpawns() {
-		return spawns;
-	}
+  /**
+   * @return the spawn
+   */
+  public List<Spawn> getSpawns() {
+    return spawns;
+  }
 }

@@ -21,52 +21,52 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @XmlType(name = "SkillLearnAction")
 public class SkillLearnAction extends AbstractItemAction {
 
-	@XmlAttribute
-	protected int skillid;
-	@XmlAttribute
-	protected int level;
-	@XmlAttribute(name = "class")
-	protected PlayerClass playerClass;
+  @XmlAttribute
+  protected int skillid;
+  @XmlAttribute
+  protected int level;
+  @XmlAttribute(name = "class")
+  protected PlayerClass playerClass;
 
-	@Override
-	public boolean canAct(Player player, Item parentItem, Item targetItem, Object... params) {
-		// 1. check player level
-		if (player.getCommonData().getLevel() < level)
-			return false;
+  @Override
+  public boolean canAct(Player player, Item parentItem, Item targetItem, Object... params) {
+    // 1. check player level
+    if (player.getCommonData().getLevel() < level)
+      return false;
 
-		PlayerClass pc = player.getCommonData().getPlayerClass();
-		if (!validateClass(pc))
-			return false;
+    PlayerClass pc = player.getCommonData().getPlayerClass();
+    if (!validateClass(pc))
+      return false;
 
-		// 4. check player race and Race.PC_ALL
-		Race race = parentItem.getItemTemplate().getRace();
-		if (player.getRace() != race && race != Race.PC_ALL)
-			return false;
-		// 5. check whether this skill is already learned
-		if (player.getSkillList().isSkillPresent(skillid))
-			return false;
+    // 4. check player race and Race.PC_ALL
+    Race race = parentItem.getItemTemplate().getRace();
+    if (player.getRace() != race && race != Race.PC_ALL)
+      return false;
+    // 5. check whether this skill is already learned
+    if (player.getSkillList().isSkillPresent(skillid))
+      return false;
 
-		return true;
-	}
+    return true;
+  }
 
-	@Override
-	public void act(Player player, Item parentItem, Item targetItem, Object... params) {
-		// item animation and message
-		ItemTemplate itemTemplate = parentItem.getItemTemplate();
-		// PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.USE_ITEM(itemTemplate.getDescription()));
-		player.getController().cancelUseItem();
-		PacketSendUtility.broadcastPacket(player,
-			new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), itemTemplate.getTemplateId()), true);
+  @Override
+  public void act(Player player, Item parentItem, Item targetItem, Object... params) {
+    // item animation and message
+    ItemTemplate itemTemplate = parentItem.getItemTemplate();
+    // PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.USE_ITEM(itemTemplate.getDescription()));
+    player.getController().cancelUseItem();
+    PacketSendUtility.broadcastPacket(player,
+      new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), itemTemplate.getTemplateId()), true);
 
-		// add skill
-		SkillLearnService.learnSkillBook(player, skillid);
+    // add skill
+    SkillLearnService.learnSkillBook(player, skillid);
 
-		// remove book from inventory (assuming its not stackable)
-		Item item = player.getInventory().getItemByObjId(parentItem.getObjectId());
-		player.getInventory().delete(item);
-	}
+    // remove book from inventory (assuming its not stackable)
+    Item item = player.getInventory().getItemByObjId(parentItem.getObjectId());
+    player.getInventory().delete(item);
+  }
 
-	private boolean validateClass(PlayerClass pc) {
-		return playerClass == null || playerClass == pc || playerClass == pc.getStartingClass();
-	}
+  private boolean validateClass(PlayerClass pc) {
+    return playerClass == null || playerClass == pc || playerClass == pc.getStartingClass();
+  }
 }

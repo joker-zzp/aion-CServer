@@ -12,19 +12,19 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "AiInfo")
 public class AiInfo {
 
-	public static final AiInfo DEFAULT = new AiInfo();
+  public static final AiInfo DEFAULT = new AiInfo();
 
-	@XmlAttribute(name = "chase_target")
-	private int chaseTarget = 50;
-	@XmlAttribute(name = "chase_home")
-	private int chaseHome = 200;
+  @XmlAttribute(name = "chase_target")
+  private int chaseTarget = 50;
+  @XmlAttribute(name = "chase_home")
+  private int chaseHome = 200;
 
-	public final int getChaseTarget() {
-		return chaseTarget;
-	}
+  public final int getChaseTarget() {
+    return chaseTarget;
+  }
 
-	public final int getChaseHome() {
-		return chaseHome;
-	}
+  public final int getChaseHome() {
+    return chaseHome;
+  }
 
 }

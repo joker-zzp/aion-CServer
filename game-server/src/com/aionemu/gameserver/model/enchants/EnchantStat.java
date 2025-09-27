@@ -14,17 +14,17 @@ import com.aionemu.gameserver.model.stats.container.StatEnum;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EnchantStat {
 
-	@XmlAttribute(required = true)
-	protected StatEnum stat;
-	@XmlAttribute(required = true)
-	protected int value;
+  @XmlAttribute(required = true)
+  protected StatEnum stat;
+  @XmlAttribute(required = true)
+  protected int value;
 
-	public StatEnum getStat() {
-		return stat;
-	}
+  public StatEnum getStat() {
+    return stat;
+  }
 
-	public int getValue() {
-		return value;
-	}
+  public int getValue() {
+    return value;
+  }
 
 }

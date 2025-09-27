@@ -14,42 +14,42 @@ import com.aionemu.chatserver.common.netty.BaseServerPacket;
  */
 public abstract class AbstractChannelHandler extends SimpleChannelUpstreamHandler {
 
-	private static final Logger log = LoggerFactory.getLogger(AbstractChannelHandler.class);
+  private static final Logger log = LoggerFactory.getLogger(AbstractChannelHandler.class);
 
-	protected InetAddress inetAddress;
+  protected InetAddress inetAddress;
 
-	protected Channel associatedChannel;
+  protected Channel associatedChannel;
 
-	/**
-	 * Invoked when a Channel was disconnected from its remote peer
-	 */
-	@Override
-	public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
-		log.info("Channel disconnected IP: {}", inetAddress.getHostAddress());
-	}
+  /**
+   * Invoked when a Channel was disconnected from its remote peer
+   */
+  @Override
+  public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+    log.info("Channel disconnected IP: {}", inetAddress.getHostAddress());
+  }
 
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
-		if (e.getCause() instanceof IOException)
-			return;
-		log.error("Caught exception from netty", e.getCause());
-	}
+  @Override
+  public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
+    if (e.getCause() instanceof IOException)
+      return;
+    log.error("Caught exception from netty", e.getCause());
+  }
 
-	/**
-	 * Closes the channel but ensures that packet is send before close
-	 * 
-	 * @param packet
-	 *          Packet to be send before the channel is closed
-	 */
-	public void close(BaseServerPacket packet) {
-		associatedChannel.write(packet).addListener(ChannelFutureListener.CLOSE);
-	}
+  /**
+   * Closes the channel but ensures that packet is send before close
+   * 
+   * @param packet
+   *          Packet to be send before the channel is closed
+   */
+  public void close(BaseServerPacket packet) {
+    associatedChannel.write(packet).addListener(ChannelFutureListener.CLOSE);
+  }
 
-	public void close() {
-		associatedChannel.close();
-	}
+  public void close() {
+    associatedChannel.close();
+  }
 
-	public String getIP() {
-		return inetAddress.getHostAddress();
-	}
+  public String getIP() {
+    return inetAddress.getHostAddress();
+  }
 }

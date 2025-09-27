@@ -12,15 +12,15 @@ import com.aionemu.gameserver.model.templates.npc.NpcRating;
 @AIName("drakanmedic")
 public class DrakanMedicAI extends DrakanPriestAI {
 
-	public DrakanMedicAI(Npc owner) {
-		super(owner);
-	}
+  public DrakanMedicAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleAttack(Creature creature) {
-		super.handleAttack(creature);
-		if (Rnd.chance() < 3) {
-			spawnServants(getOwner().getObjectTemplate().getRating() == NpcRating.NORMAL ? 281621 : 281839, 1);
-		}
-	}
+  @Override
+  protected void handleAttack(Creature creature) {
+    super.handleAttack(creature);
+    if (Rnd.chance() < 3) {
+      spawnServants(getOwner().getObjectTemplate().getRating() == NpcRating.NORMAL ? 281621 : 281839, 1);
+    }
+  }
 }

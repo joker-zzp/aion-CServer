@@ -16,17 +16,17 @@ import com.aionemu.gameserver.skillengine.model.SkillTargetSlot;
 @XmlType(name = "AbstractDispelEffect")
 public abstract class AbstractDispelEffect extends EffectTemplate {
 
-	@XmlAttribute
-	protected int dpower;
-	@XmlAttribute
-	protected int power;
-	@XmlAttribute(name = "dispel_level")
-	protected int dispelLevel;
+  @XmlAttribute
+  protected int dpower;
+  @XmlAttribute
+  protected int power;
+  @XmlAttribute(name = "dispel_level")
+  protected int dispelLevel;
 
-	public void applyEffect(Effect effect, DispelCategoryType type, SkillTargetSlot slot) {
-		int count = calculateBaseValue(effect);
-		int finalPower = power + dpower * effect.getSkillLevel();
+  public void applyEffect(Effect effect, DispelCategoryType type, SkillTargetSlot slot) {
+    int count = calculateBaseValue(effect);
+    int finalPower = power + dpower * effect.getSkillLevel();
 
-		effect.getEffected().getEffectController().removeEffectByDispelCat(type, slot, count, dispelLevel, finalPower);
-	}
+    effect.getEffected().getEffectController().removeEffectByDispelCat(type, slot, count, dispelLevel, finalPower);
+  }
 }

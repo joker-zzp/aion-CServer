@@ -18,28 +18,28 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_FRIEND_STATUS;
  */
 public class CM_FRIEND_STATUS extends AionClientPacket {
 
-	private final Logger log = LoggerFactory.getLogger(CM_FRIEND_STATUS.class);
-	// The users new status
-	private byte status;
+  private final Logger log = LoggerFactory.getLogger(CM_FRIEND_STATUS.class);
+  // The users new status
+  private byte status;
 
-	public CM_FRIEND_STATUS(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_FRIEND_STATUS(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		status = readC();
-	}
+  @Override
+  protected void readImpl() {
+    status = readC();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		Status statusEnum = Status.getByValue(status);
-		if (statusEnum == null) {
-			log.warn("received unknown status id " + status);
-			statusEnum = Status.ONLINE;
-		}
-		activePlayer.getFriendList().setStatus(statusEnum, activePlayer.getCommonData());
-		sendPacket(new SM_FRIEND_STATUS(status));
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    Status statusEnum = Status.getByValue(status);
+    if (statusEnum == null) {
+      log.warn("received unknown status id " + status);
+      statusEnum = Status.ONLINE;
+    }
+    activePlayer.getFriendList().setStatus(statusEnum, activePlayer.getCommonData());
+    sendPacket(new SM_FRIEND_STATUS(status));
+  }
 }

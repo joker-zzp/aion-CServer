@@ -14,31 +14,31 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_REMOVE_ALTERED_STATE extends AionClientPacket {
 
-	private int skillId;
+  private int skillId;
 
-	public CM_REMOVE_ALTERED_STATE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_REMOVE_ALTERED_STATE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		skillId = readUH();
-		readC();
-		readC(); // seen 1 with skillId 3573
-	}
+  @Override
+  protected void readImpl() {
+    skillId = readUH();
+    readC();
+    readC(); // seen 1 with skillId 3573
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		Effect effect = player.getEffectController().findBySkillId(skillId);
-		if (effect != null) {
-			if (effect.getSkillSubType() == SkillSubType.DEBUFF) {
-				AuditLogger.log(player, "tried to remove a debuff: " + skillId + " " + effect.getSkillName() + " (effector: "
-					+ effect.getEffector() + ")");
-			} else {
-				effect.endEffect();
-			}
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    Effect effect = player.getEffectController().findBySkillId(skillId);
+    if (effect != null) {
+      if (effect.getSkillSubType() == SkillSubType.DEBUFF) {
+        AuditLogger.log(player, "tried to remove a debuff: " + skillId + " " + effect.getSkillName() + " (effector: "
+          + effect.getEffector() + ")");
+      } else {
+        effect.endEffect();
+      }
+    }
+  }
 
 }

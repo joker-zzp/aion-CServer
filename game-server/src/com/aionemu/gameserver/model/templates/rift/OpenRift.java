@@ -12,17 +12,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "OpenRift")
 public class OpenRift {
 
-	@XmlAttribute(name = "schedule")
-	protected String schedule;
-	@XmlAttribute(name = "spawn")
-	protected boolean guards;
+  @XmlAttribute(name = "schedule")
+  protected String schedule;
+  @XmlAttribute(name = "spawn")
+  protected boolean guards;
 
-	public String getSchedule() {
-		return schedule;
-	}
+  public String getSchedule() {
+    return schedule;
+  }
 
-	public boolean spawnGuards() {
-		return guards;
-	}
+  public boolean spawnGuards() {
+    return guards;
+  }
 
 }

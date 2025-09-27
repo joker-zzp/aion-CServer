@@ -7,13 +7,13 @@ import com.aionemu.gameserver.questEngine.handlers.AbstractQuestHandler;
  */
 public class _3220KeyItemHiddenQuest02 extends AbstractQuestHandler {
 
-	public _3220KeyItemHiddenQuest02() {
-		super(3220);
-	}
+  public _3220KeyItemHiddenQuest02() {
+    super(3220);
+  }
 
-	@Override
-	public void register() {
-		// TODO Auto-generated method stub
+  @Override
+  public void register() {
+    // TODO Auto-generated method stub
 
-	}
+  }
 }

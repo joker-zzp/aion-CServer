@@ -16,40 +16,40 @@ import ai.GeneralNpcAI;
 @AIName("stonespear_kebbit")
 public class KebbitAI extends GeneralNpcAI {
 
-	private Future<?> despawnTask;
+  private Future<?> despawnTask;
 
-	public KebbitAI(Npc owner) {
-		super(owner);
-	}
+  public KebbitAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void handleSpawned() {
-		super.handleSpawned();
-		despawnTask = ThreadPoolManager.getInstance().schedule(() -> getOwner().getController().delete(), 15500); // 15,5s
-	}
+  @Override
+  public void handleSpawned() {
+    super.handleSpawned();
+    despawnTask = ThreadPoolManager.getInstance().schedule(() -> getOwner().getController().delete(), 15500); // 15,5s
+  }
 
-	@Override
-	public void handleDied() {
-		cancelTask();
-		super.handleDied();
-		getOwner().getController().delete();
-	}
+  @Override
+  public void handleDied() {
+    cancelTask();
+    super.handleDied();
+    getOwner().getController().delete();
+  }
 
-	private void cancelTask() {
-		if (despawnTask != null && !despawnTask.isDone())
-			despawnTask.cancel(false);
-	}
+  private void cancelTask() {
+    if (despawnTask != null && !despawnTask.isDone())
+      despawnTask.cancel(false);
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT, REWARD_LOOT, ALLOW_DECAY -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT, REWARD_LOOT, ALLOW_DECAY -> false;
+      default -> super.ask(question);
+    };
+  }
 
-	@Override
-	protected void handleAttack(Creature creature) {
-		// do nothing
-	}
+  @Override
+  protected void handleAttack(Creature creature) {
+    // do nothing
+  }
 }

@@ -22,81 +22,81 @@ import com.aionemu.gameserver.services.player.PlayerService;
  */
 public class CM_CHARACTER_PASSKEY extends AionClientPacket {
 
-	private short type;
-	private String passkey;
-	private String newPasskey;
+  private short type;
+  private String passkey;
+  private String newPasskey;
 
-	public CM_CHARACTER_PASSKEY(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_CHARACTER_PASSKEY(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		type = readH(); // 0:new, 2:update, 3:input
-		passkey = new String(readB(48), StandardCharsets.UTF_16LE);
-		if (type == 2)
-			newPasskey = new String(readB(48), StandardCharsets.UTF_16LE);
-	}
+  @Override
+  protected void readImpl() {
+    type = readH(); // 0:new, 2:update, 3:input
+    passkey = new String(readB(48), StandardCharsets.UTF_16LE);
+    if (type == 2)
+      newPasskey = new String(readB(48), StandardCharsets.UTF_16LE);
+  }
 
-	@Override
-	protected void runImpl() {
-		AionConnection client = getConnection();
-		CharacterPasskey chaPasskey = client.getAccount().getCharacterPasskey();
+  @Override
+  protected void runImpl() {
+    AionConnection client = getConnection();
+    CharacterPasskey chaPasskey = client.getAccount().getCharacterPasskey();
 
-		switch (type) {
-			case 0:
-				chaPasskey.setIsPass(false);
-				chaPasskey.setWrongCount(0);
-				PlayerPasskeyDAO.insertPlayerPasskey(client.getAccount().getId(), passkey);
-				client.sendPacket(new SM_CHARACTER_SELECT(2, type, chaPasskey.getWrongCount()));
-				break;
-			case 2:
-				boolean isSuccess = PlayerPasskeyDAO.updatePlayerPasskey(client.getAccount().getId(), passkey, newPasskey);
+    switch (type) {
+      case 0:
+        chaPasskey.setIsPass(false);
+        chaPasskey.setWrongCount(0);
+        PlayerPasskeyDAO.insertPlayerPasskey(client.getAccount().getId(), passkey);
+        client.sendPacket(new SM_CHARACTER_SELECT(2, type, chaPasskey.getWrongCount()));
+        break;
+      case 2:
+        boolean isSuccess = PlayerPasskeyDAO.updatePlayerPasskey(client.getAccount().getId(), passkey, newPasskey);
 
-				chaPasskey.setIsPass(false);
-				if (isSuccess) {
-					chaPasskey.setWrongCount(0);
-					client.sendPacket(new SM_CHARACTER_SELECT(2, type, chaPasskey.getWrongCount()));
-				} else {
-					chaPasskey.setWrongCount(chaPasskey.getWrongCount() + 1);
-					checkBlock(client.getAccount().getId(), chaPasskey.getWrongCount());
-					client.sendPacket(new SM_CHARACTER_SELECT(2, type, chaPasskey.getWrongCount()));
-				}
-				break;
-			case 3:
-				boolean isPass = PlayerPasskeyDAO.checkPlayerPasskey(client.getAccount().getId(), passkey);
+        chaPasskey.setIsPass(false);
+        if (isSuccess) {
+          chaPasskey.setWrongCount(0);
+          client.sendPacket(new SM_CHARACTER_SELECT(2, type, chaPasskey.getWrongCount()));
+        } else {
+          chaPasskey.setWrongCount(chaPasskey.getWrongCount() + 1);
+          checkBlock(client.getAccount().getId(), chaPasskey.getWrongCount());
+          client.sendPacket(new SM_CHARACTER_SELECT(2, type, chaPasskey.getWrongCount()));
+        }
+        break;
+      case 3:
+        boolean isPass = PlayerPasskeyDAO.checkPlayerPasskey(client.getAccount().getId(), passkey);
 
-				if (isPass) {
-					chaPasskey.setIsPass(true);
-					chaPasskey.setWrongCount(0);
-					client.sendPacket(new SM_CHARACTER_SELECT(2, type, chaPasskey.getWrongCount()));
+        if (isPass) {
+          chaPasskey.setIsPass(true);
+          chaPasskey.setWrongCount(0);
+          client.sendPacket(new SM_CHARACTER_SELECT(2, type, chaPasskey.getWrongCount()));
 
-					if (chaPasskey.getConnectType() == ConnectType.ENTER)
-						PlayerEnterWorldService.enterWorld(client, chaPasskey.getObjectId());
-					else if (chaPasskey.getConnectType() == ConnectType.DELETE) {
-						PlayerAccountData playerAccData = client.getAccount().getPlayerAccountData(chaPasskey.getObjectId());
+          if (chaPasskey.getConnectType() == ConnectType.ENTER)
+            PlayerEnterWorldService.enterWorld(client, chaPasskey.getObjectId());
+          else if (chaPasskey.getConnectType() == ConnectType.DELETE) {
+            PlayerAccountData playerAccData = client.getAccount().getPlayerAccountData(chaPasskey.getObjectId());
 
-						PlayerService.deletePlayer(playerAccData);
-						client.sendPacket(new SM_DELETE_CHARACTER(chaPasskey.getObjectId(), playerAccData.getDeletionTimeInSeconds()));
-					}
-				} else {
-					chaPasskey.setIsPass(false);
-					chaPasskey.setWrongCount(chaPasskey.getWrongCount() + 1);
-					checkBlock(client.getAccount().getId(), chaPasskey.getWrongCount());
-					client.sendPacket(new SM_CHARACTER_SELECT(2, type, chaPasskey.getWrongCount()));
-				}
-				break;
-		}
-	}
+            PlayerService.deletePlayer(playerAccData);
+            client.sendPacket(new SM_DELETE_CHARACTER(chaPasskey.getObjectId(), playerAccData.getDeletionTimeInSeconds()));
+          }
+        } else {
+          chaPasskey.setIsPass(false);
+          chaPasskey.setWrongCount(chaPasskey.getWrongCount() + 1);
+          checkBlock(client.getAccount().getId(), chaPasskey.getWrongCount());
+          client.sendPacket(new SM_CHARACTER_SELECT(2, type, chaPasskey.getWrongCount()));
+        }
+        break;
+    }
+  }
 
-	/**
-	 * @param accountId
-	 * @param wrongCount
-	 */
-	private void checkBlock(int accountId, int wrongCount) {
-		if (wrongCount >= SecurityConfig.PASSKEY_WRONG_MAXCOUNT) {
-			// TODO : Change the account to be blocked
-			LoginServer.getInstance().sendBanPacket((byte) 2, accountId, "", 60 * 8, 0);
-		}
-	}
+  /**
+   * @param accountId
+   * @param wrongCount
+   */
+  private void checkBlock(int accountId, int wrongCount) {
+    if (wrongCount >= SecurityConfig.PASSKEY_WRONG_MAXCOUNT) {
+      // TODO : Change the account to be blocked
+      LoginServer.getInstance().sendBanPacket((byte) 2, accountId, "", 60 * 8, 0);
+    }
+  }
 }

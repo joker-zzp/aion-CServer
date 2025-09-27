@@ -10,20 +10,20 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum UseTarget {
 
-	ACCESSORY,
-	ARMOR,
-	EQUIPMENT,
-	WEAPON,
-	WING,
-	OTHER,
-	ALL;
+  ACCESSORY,
+  ARMOR,
+  EQUIPMENT,
+  WEAPON,
+  WING,
+  OTHER,
+  ALL;
 
-	public String value() {
-		return name();
-	}
+  public String value() {
+    return name();
+  }
 
-	public static UseTarget fromValue(String v) {
-		return valueOf(v);
-	}
+  public static UseTarget fromValue(String v) {
+    return valueOf(v);
+  }
 
 }

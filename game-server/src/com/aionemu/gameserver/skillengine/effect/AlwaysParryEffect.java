@@ -15,24 +15,24 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "AlwaysParryEffect")
 public class AlwaysParryEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void startEffect(Effect effect) {
-		effect.addObserver(effect.getEffected(), new AttackStatusObserver(value, AttackStatus.PARRY) {
+  @Override
+  public void startEffect(Effect effect) {
+    effect.addObserver(effect.getEffected(), new AttackStatusObserver(value, AttackStatus.PARRY) {
 
-			@Override
-			public boolean checkStatus(AttackStatus status) {
-				if (status == AttackStatus.PARRY) {
-					if (--value <= 0)
-						effect.endEffect();
-					return true;
-				}
-				return false;
-			}
-		});
-	}
+      @Override
+      public boolean checkStatus(AttackStatus status) {
+        if (status == AttackStatus.PARRY) {
+          if (--value <= 0)
+            effect.endEffect();
+          return true;
+        }
+        return false;
+      }
+    });
+  }
 }

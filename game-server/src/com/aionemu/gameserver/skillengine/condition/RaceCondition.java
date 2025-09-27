@@ -18,35 +18,35 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 @XmlType(name = "RaceCondition")
 public class RaceCondition extends Condition {
 
-	@XmlAttribute(name = "race")
-	private List<Race> races;
+  @XmlAttribute(name = "race")
+  private List<Race> races;
 
-	@Override
-	public boolean validate(Skill env) {
-		if (env.getFirstTarget() == null || env.getEffector() == null)
-			return false;
+  @Override
+  public boolean validate(Skill env) {
+    if (env.getFirstTarget() == null || env.getEffector() == null)
+      return false;
 
-		boolean result = false;
-		for (Race race : races) {
-			if (race == env.getFirstTarget().getRace())
-				result = true;
-		}
+    boolean result = false;
+    for (Race race : races) {
+      if (race == env.getFirstTarget().getRace())
+        result = true;
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	@Override
-	public boolean validate(Effect effect) {
-		if (effect.getEffected() == null || effect.getEffector() == null)
-			return false;
+  @Override
+  public boolean validate(Effect effect) {
+    if (effect.getEffected() == null || effect.getEffector() == null)
+      return false;
 
-		boolean result = false;
-		for (Race race : races) {
-			if (race == effect.getEffected().getRace())
-				result = true;
-		}
+    boolean result = false;
+    for (Race race : races) {
+      if (race == effect.getEffected().getRace())
+        result = true;
+    }
 
-		return result;
-	}
+    return result;
+  }
 
 }

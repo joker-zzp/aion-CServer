@@ -9,6 +9,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "TargetSpeciesAttribute")
 @XmlEnum
 public enum TargetSpeciesAttribute {
-	PC,
-	NPC;
+  PC,
+  NPC;
 }

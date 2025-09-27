@@ -12,24 +12,24 @@ import com.aionemu.gameserver.services.BrokerService;
  */
 public class CM_BROKER_SELL_WINDOW extends AionClientPacket {
 
-	private int itemUniqueId;
+  private int itemUniqueId;
 
-	public CM_BROKER_SELL_WINDOW(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_BROKER_SELL_WINDOW(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		this.itemUniqueId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    this.itemUniqueId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
 
-		if (player.isTrading())
-			return;
+    if (player.isTrading())
+      return;
 
-		BrokerService.getInstance().showSellWindow(player, itemUniqueId);
-	}
+    BrokerService.getInstance().showSellWindow(player, itemUniqueId);
+  }
 }

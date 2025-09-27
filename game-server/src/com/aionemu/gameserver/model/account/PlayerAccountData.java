@@ -23,123 +23,123 @@ import com.aionemu.gameserver.model.templates.BoundRadius;
  */
 public class PlayerAccountData {
 
-	private final PlayerCommonData playerCommonData;
-	private PlayerAppearance appearance;
-	private CharacterBanInfo cbi;
-	private List<VisibleItem> visibleItems;
-	private Timestamp creationDate;
-	private Timestamp deletionDate;
-	private LegionMember legionMember;
+  private final PlayerCommonData playerCommonData;
+  private PlayerAppearance appearance;
+  private CharacterBanInfo cbi;
+  private List<VisibleItem> visibleItems;
+  private Timestamp creationDate;
+  private Timestamp deletionDate;
+  private LegionMember legionMember;
 
-	public PlayerAccountData(PlayerCommonData playerCommonData, PlayerAppearance appearance) {
-		this(playerCommonData, appearance, null, Collections.emptyList(), null);
-	}
+  public PlayerAccountData(PlayerCommonData playerCommonData, PlayerAppearance appearance) {
+    this(playerCommonData, appearance, null, Collections.emptyList(), null);
+  }
 
-	public PlayerAccountData(PlayerCommonData playerCommonData, PlayerAppearance appearance, CharacterBanInfo cbi, List<VisibleItem> visibleItems,
-		LegionMember legionMember) {
-		this.playerCommonData = playerCommonData;
-		this.appearance = appearance;
-		this.cbi = cbi;
-		this.legionMember = legionMember;
-		this.visibleItems = visibleItems;
-		updateBoundingRadius();
-	}
+  public PlayerAccountData(PlayerCommonData playerCommonData, PlayerAppearance appearance, CharacterBanInfo cbi, List<VisibleItem> visibleItems,
+    LegionMember legionMember) {
+    this.playerCommonData = playerCommonData;
+    this.appearance = appearance;
+    this.cbi = cbi;
+    this.legionMember = legionMember;
+    this.visibleItems = visibleItems;
+    updateBoundingRadius();
+  }
 
-	public CharacterBanInfo getCharBanInfo() {
-		return cbi;
-	}
+  public CharacterBanInfo getCharBanInfo() {
+    return cbi;
+  }
 
-	public void setCharBanInfo(CharacterBanInfo cbi) {
-		this.cbi = cbi;
-	}
+  public void setCharBanInfo(CharacterBanInfo cbi) {
+    this.cbi = cbi;
+  }
 
-	public Timestamp getCreationDate() {
-		return creationDate;
-	}
+  public Timestamp getCreationDate() {
+    return creationDate;
+  }
 
-	/**
-	 * Sets deletion date.
-	 * 
-	 * @param deletionDate
-	 */
-	public void setDeletionDate(Timestamp deletionDate) {
-		this.deletionDate = deletionDate;
-	}
+  /**
+   * Sets deletion date.
+   * 
+   * @param deletionDate
+   */
+  public void setDeletionDate(Timestamp deletionDate) {
+    this.deletionDate = deletionDate;
+  }
 
-	/**
-	 * Get deletion date.
-	 * 
-	 * @return Timestamp date when char should be deleted.
-	 */
-	public Timestamp getDeletionDate() {
-		return deletionDate;
-	}
+  /**
+   * Get deletion date.
+   * 
+   * @return Timestamp date when char should be deleted.
+   */
+  public Timestamp getDeletionDate() {
+    return deletionDate;
+  }
 
-	/**
-	 * Get time in seconds when this player will be deleted ( 0 if player was not set to be deleted )
-	 * 
-	 * @return deletion time in seconds
-	 */
-	public int getDeletionTimeInSeconds() {
-		return deletionDate == null ? 0 : (int) (deletionDate.getTime() / 1000);
-	}
+  /**
+   * Get time in seconds when this player will be deleted ( 0 if player was not set to be deleted )
+   * 
+   * @return deletion time in seconds
+   */
+  public int getDeletionTimeInSeconds() {
+    return deletionDate == null ? 0 : (int) (deletionDate.getTime() / 1000);
+  }
 
-	/**
-	 * @return the playerCommonData
-	 */
-	public PlayerCommonData getPlayerCommonData() {
-		return playerCommonData;
-	}
+  /**
+   * @return the playerCommonData
+   */
+  public PlayerCommonData getPlayerCommonData() {
+    return playerCommonData;
+  }
 
-	public PlayerAppearance getAppearance() {
-		return appearance;
-	}
+  public PlayerAppearance getAppearance() {
+    return appearance;
+  }
 
-	public void setAppearance(PlayerAppearance appearance) {
-		this.appearance = appearance;
-		updateBoundingRadius();
-	}
+  public void setAppearance(PlayerAppearance appearance) {
+    this.appearance = appearance;
+    updateBoundingRadius();
+  }
 
-	public void updateBoundingRadius() {
-		playerCommonData.setBoundingRadius(new BoundRadius(0.25f, 0.25f, appearance.getBoundHeight()));
-	}
+  public void updateBoundingRadius() {
+    playerCommonData.setBoundingRadius(new BoundRadius(0.25f, 0.25f, appearance.getBoundHeight()));
+  }
 
-	/**
-	 * @param timestamp
-	 */
-	public void setCreationDate(Timestamp creationDate) {
-		this.creationDate = creationDate;
-	}
+  /**
+   * @param timestamp
+   */
+  public void setCreationDate(Timestamp creationDate) {
+    this.creationDate = creationDate;
+  }
 
-	/**
-	 * @return the legionMember
-	 */
-	public Legion getLegion() {
-		return legionMember.getLegion();
-	}
+  /**
+   * @return the legionMember
+   */
+  public Legion getLegion() {
+    return legionMember.getLegion();
+  }
 
-	/**
-	 * Returns true if player is a legion member
-	 * 
-	 * @return true or false
-	 */
-	public boolean isLegionMember() {
-		return legionMember != null;
-	}
+  /**
+   * Returns true if player is a legion member
+   * 
+   * @return true or false
+   */
+  public boolean isLegionMember() {
+    return legionMember != null;
+  }
 
-	public List<VisibleItem> getVisibleItems() {
-		return visibleItems;
-	}
+  public List<VisibleItem> getVisibleItems() {
+    return visibleItems;
+  }
 
-	public void setVisibleItems(List<Item> equipment) {
-		List<VisibleItem> items = new ArrayList<>();
-		for (Item item : equipment) {
-			byte slotType = ItemSlot.getEquipmentSlotType(item.getEquipmentSlot());
-			if (slotType != 0)
-				items.add(new VisibleItem(slotType, item.getItemSkinTemplate().getTemplateId(), item.getGodStoneId(), item.getItemColor()));
-		}
-		this.visibleItems = items;
-	}
+  public void setVisibleItems(List<Item> equipment) {
+    List<VisibleItem> items = new ArrayList<>();
+    for (Item item : equipment) {
+      byte slotType = ItemSlot.getEquipmentSlotType(item.getEquipmentSlot());
+      if (slotType != 0)
+        items.add(new VisibleItem(slotType, item.getItemSkinTemplate().getTemplateId(), item.getGodStoneId(), item.getItemColor()));
+    }
+    this.visibleItems = items;
+  }
 
-	public record VisibleItem(byte slotType, int itemId, int godStoneId, Integer color) {}
+  public record VisibleItem(byte slotType, int itemId, int godStoneId, Integer color) {}
 }

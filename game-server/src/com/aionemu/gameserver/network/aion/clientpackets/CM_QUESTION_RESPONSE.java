@@ -14,33 +14,33 @@ import com.aionemu.gameserver.services.ExchangeService;
  */
 public class CM_QUESTION_RESPONSE extends AionClientPacket {
 
-	private int questionid;
-	private int response;
-	@SuppressWarnings("unused")
-	private int senderid;
+  private int questionid;
+  private int response;
+  @SuppressWarnings("unused")
+  private int senderid;
 
-	public CM_QUESTION_RESPONSE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_QUESTION_RESPONSE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		questionid = readD();
+  @Override
+  protected void readImpl() {
+    questionid = readD();
 
-		response = readUC(); // y/n
-		readC(); // unk 0x00 - 0x01 ?
-		readH();
-		senderid = readD();
-		readD();
-		readH();
-	}
+    response = readUC(); // y/n
+    readC(); // unk 0x00 - 0x01 ?
+    readH();
+    senderid = readD();
+    readD();
+    readH();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player.isTrading() && response != 0) // answered request with yes during exchange
-			ExchangeService.getInstance().cancelExchange(player);
-		player.getResponseRequester().respond(questionid, response);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player.isTrading() && response != 0) // answered request with yes during exchange
+      ExchangeService.getInstance().cancelExchange(player);
+    player.getResponseRequester().respond(questionid, response);
+  }
 
 }

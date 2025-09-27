@@ -15,40 +15,40 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("timeaccelerator")
 public class TimeAcceleratorAI extends NpcAI {
 
-	public TimeAcceleratorAI(Npc owner) {
-		super(owner);
-	}
+  public TimeAcceleratorAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleCreatureSee(Creature creature) {
-		checkDistance(creature);
-	}
+  @Override
+  protected void handleCreatureSee(Creature creature) {
+    checkDistance(creature);
+  }
 
-	@Override
-	protected void handleCreatureMoved(Creature creature) {
-		checkDistance(creature);
-	}
+  @Override
+  protected void handleCreatureMoved(Creature creature) {
+    checkDistance(creature);
+  }
 
-	private void checkDistance(Creature creature) {
-		if (PositionUtil.isInRange(getOwner(), creature, 5) && !creature.getEffectController().hasAbnormalEffect(20727))
-			AIActions.useSkill(this, 20727);
-	}
+  private void checkDistance(Creature creature) {
+    if (PositionUtil.isInRange(getOwner(), creature, 5) && !creature.getEffectController().hasAbnormalEffect(20727))
+      AIActions.useSkill(this, 20727);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		despawn();
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    despawn();
+  }
 
-	private void despawn() {
-		ThreadPoolManager.getInstance().schedule(() -> getOwner().getController().delete(), 20000);
-	}
+  private void despawn() {
+    ThreadPoolManager.getInstance().schedule(() -> getOwner().getController().delete(), 20000);
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
+      default -> super.ask(question);
+    };
+  }
 }

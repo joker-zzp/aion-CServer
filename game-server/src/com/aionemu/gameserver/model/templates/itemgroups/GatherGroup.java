@@ -32,11 +32,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "GatherGroup")
 public class GatherGroup extends BonusItemGroup {
 
-	@XmlElement(name = "item")
-	private List<ItemRaceEntry> items;
+  @XmlElement(name = "item")
+  private List<ItemRaceEntry> items;
 
-	@Override
-	public List<ItemRaceEntry> getItems() {
-		return items == null ? Collections.emptyList() : items;
-	}
+  @Override
+  public List<ItemRaceEntry> getItems() {
+    return items == null ? Collections.emptyList() : items;
+  }
 }

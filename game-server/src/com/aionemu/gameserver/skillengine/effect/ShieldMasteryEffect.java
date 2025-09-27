@@ -18,16 +18,16 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "ShieldMasteryEffect")
 public class ShieldMasteryEffect extends BufEffect {
 
-	@Override
-	public void startEffect(Effect effect) {
+  @Override
+  public void startEffect(Effect effect) {
 
-		List<IStatFunction> modifiers = getModifiers(effect);
-		List<IStatFunction> masteryModifiers = new ArrayList<>();
-		for (IStatFunction modifier : modifiers) {
-			masteryModifiers.add(new StatShieldMasteryFunction(modifier.getName(), modifier.getValue(), modifier.isBonus()));
-		}
-		if (masteryModifiers.size() > 0) {
-			effect.getEffected().getGameStats().addEffect(effect, masteryModifiers);
-		}
-	}
+    List<IStatFunction> modifiers = getModifiers(effect);
+    List<IStatFunction> masteryModifiers = new ArrayList<>();
+    for (IStatFunction modifier : modifiers) {
+      masteryModifiers.add(new StatShieldMasteryFunction(modifier.getName(), modifier.getValue(), modifier.isBonus()));
+    }
+    if (masteryModifiers.size() > 0) {
+      effect.getEffected().getGameStats().addEffect(effect, masteryModifiers);
+    }
+  }
 }

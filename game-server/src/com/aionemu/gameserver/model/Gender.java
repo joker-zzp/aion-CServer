@@ -9,37 +9,37 @@ import javax.xml.bind.annotation.XmlEnum;
  */
 @XmlEnum
 public enum Gender {
-	/**
-	 * Males
-	 */
-	MALE(0),
+  /**
+   * Males
+   */
+  MALE(0),
 
-	/**
-	 * Females
-	 */
-	FEMALE(1);
+  /**
+   * Females
+   */
+  FEMALE(1);
 
-	/**
-	 * id of gender
-	 */
-	private int genderId;
+  /**
+   * id of gender
+   */
+  private int genderId;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param genderId
-	 *          id of the gender
-	 */
-	private Gender(int genderId) {
-		this.genderId = genderId;
-	}
+  /**
+   * Constructor.
+   * 
+   * @param genderId
+   *          id of the gender
+   */
+  private Gender(int genderId) {
+    this.genderId = genderId;
+  }
 
-	/**
-	 * Get id of this gender.
-	 * 
-	 * @return gender id
-	 */
-	public int getGenderId() {
-		return genderId;
-	}
+  /**
+   * Get id of this gender.
+   * 
+   * @return gender id
+   */
+  public int getGenderId() {
+    return genderId;
+  }
 }

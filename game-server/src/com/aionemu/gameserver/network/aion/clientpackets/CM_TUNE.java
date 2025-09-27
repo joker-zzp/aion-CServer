@@ -15,41 +15,41 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_TUNE extends AionClientPacket {
 
-	private int itemObjectId, tuningScrollObjectId;
+  private int itemObjectId, tuningScrollObjectId;
 
-	public CM_TUNE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_TUNE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		itemObjectId = readD();
-		tuningScrollObjectId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    itemObjectId = readD();
+    tuningScrollObjectId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player == null)
-			return;
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player == null)
+      return;
 
-		Item item = player.getInventory().getItemByObjId(itemObjectId);
-		if (item == null)
-			return;
+    Item item = player.getInventory().getItemByObjId(itemObjectId);
+    if (item == null)
+      return;
 
-		if (!item.isIdentified()) {
-			ItemActionService.identifyItem(player, item);
-		} else if (tuningScrollObjectId != 0) {
-			Item tuningScroll = player.getInventory().getItemByObjId(tuningScrollObjectId);
-			if (tuningScroll == null)
-				return;
+    if (!item.isIdentified()) {
+      ItemActionService.identifyItem(player, item);
+    } else if (tuningScrollObjectId != 0) {
+      Item tuningScroll = player.getInventory().getItemByObjId(tuningScrollObjectId);
+      if (tuningScroll == null)
+        return;
 
-			TuningAction action = tuningScroll.getItemTemplate().getActions().getTuningAction();
-			if (action != null && action.canAct(player, tuningScroll, item))
-				action.act(player, tuningScroll, item);
-		} else {
-			AuditLogger.log(player, "attempted to tune an already identified item without tuning scroll.");
-		}
-	}
+      TuningAction action = tuningScroll.getItemTemplate().getActions().getTuningAction();
+      if (action != null && action.canAct(player, tuningScroll, item))
+        action.act(player, tuningScroll, item);
+    } else {
+      AuditLogger.log(player, "attempted to tune an already identified item without tuning scroll.");
+    }
+  }
 
 }

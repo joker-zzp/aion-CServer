@@ -13,25 +13,25 @@ import com.aionemu.gameserver.services.HousingBidService;
  */
 public class CM_PLACE_BID extends AionClientPacket {
 
-	private int listIndex;
-	private long bidOffer;
+  private int listIndex;
+  private long bidOffer;
 
-	public CM_PLACE_BID(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_PLACE_BID(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		listIndex = readD();
-		bidOffer = readQ();
-	}
+  @Override
+  protected void readImpl() {
+    listIndex = readD();
+    bidOffer = readQ();
+  }
 
-	@Override
-	protected void runImpl() {
-		if (HousingConfig.ENABLE_HOUSE_AUCTIONS) {
-			Player player = getConnection().getActivePlayer();
-			HousingBidService.getInstance().bid(player, listIndex, bidOffer);
-		}
-	}
+  @Override
+  protected void runImpl() {
+    if (HousingConfig.ENABLE_HOUSE_AUCTIONS) {
+      Player player = getConnection().getActivePlayer();
+      HousingBidService.getInstance().bid(player, listIndex, bidOffer);
+    }
+  }
 
 }

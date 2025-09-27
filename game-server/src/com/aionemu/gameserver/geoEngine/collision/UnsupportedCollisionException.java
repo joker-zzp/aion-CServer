@@ -40,7 +40,7 @@ package com.aionemu.gameserver.geoEngine.collision;
 public class UnsupportedCollisionException extends UnsupportedOperationException {
 
 
-	public UnsupportedCollisionException(Throwable arg0) {
+  public UnsupportedCollisionException(Throwable arg0) {
         super(arg0);
     }
 

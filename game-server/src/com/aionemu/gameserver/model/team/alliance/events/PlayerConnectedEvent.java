@@ -14,31 +14,31 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class PlayerConnectedEvent extends AlwaysTrueTeamEvent {
 
-	private final PlayerAlliance alliance;
-	private final Player connected;
+  private final PlayerAlliance alliance;
+  private final Player connected;
 
-	public PlayerConnectedEvent(PlayerAlliance alliance, Player player) {
-		this.alliance = alliance;
-		this.connected = player;
-	}
+  public PlayerConnectedEvent(PlayerAlliance alliance, Player player) {
+    this.alliance = alliance;
+    this.connected = player;
+  }
 
-	@Override
-	public void handleEvent() {
-		alliance.removeMember(connected.getObjectId());
-		PlayerAllianceMember connectedMember = new PlayerAllianceMember(connected);
-		alliance.addMember(connectedMember);
+  @Override
+  public void handleEvent() {
+    alliance.removeMember(connected.getObjectId());
+    PlayerAllianceMember connectedMember = new PlayerAllianceMember(connected);
+    alliance.addMember(connectedMember);
 
-		PacketSendUtility.sendPacket(connected, new SM_ALLIANCE_INFO(alliance));
-		PacketSendUtility.sendPacket(connected, new SM_ALLIANCE_MEMBER_INFO(connectedMember, PlayerAllianceEvent.RECONNECT));
-		alliance.sendBrands(connected);
+    PacketSendUtility.sendPacket(connected, new SM_ALLIANCE_INFO(alliance));
+    PacketSendUtility.sendPacket(connected, new SM_ALLIANCE_MEMBER_INFO(connectedMember, PlayerAllianceEvent.RECONNECT));
+    alliance.sendBrands(connected);
 
-		alliance.forEachTeamMember(member -> {
-			Player player = member.getObject();
-			if (!connected.equals(player)) {
-				PacketSendUtility.sendPacket(player, new SM_ALLIANCE_MEMBER_INFO(connectedMember, PlayerAllianceEvent.RECONNECT));
-				PacketSendUtility.sendPacket(connected, new SM_ALLIANCE_MEMBER_INFO(member, PlayerAllianceEvent.RECONNECT));
-			}
-		});
-	}
+    alliance.forEachTeamMember(member -> {
+      Player player = member.getObject();
+      if (!connected.equals(player)) {
+        PacketSendUtility.sendPacket(player, new SM_ALLIANCE_MEMBER_INFO(connectedMember, PlayerAllianceEvent.RECONNECT));
+        PacketSendUtility.sendPacket(connected, new SM_ALLIANCE_MEMBER_INFO(member, PlayerAllianceEvent.RECONNECT));
+      }
+    });
+  }
 
 }

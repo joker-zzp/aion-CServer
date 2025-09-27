@@ -16,82 +16,82 @@ import com.aionemu.gameserver.skillengine.model.SkillTemplate;
  */
 public interface AI {
 
-	void onCreatureEvent(AIEventType event, Creature creature);
+  void onCreatureEvent(AIEventType event, Creature creature);
 
-	void onCustomEvent(int eventId, Object... args);
+  void onCustomEvent(int eventId, Object... args);
 
-	void onGeneralEvent(AIEventType event);
+  void onGeneralEvent(AIEventType event);
 
-	/**
-	 * If already handled dialog return true.
-	 */
-	boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex);
+  /**
+   * If already handled dialog return true.
+   */
+  boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex);
 
-	void think();
+  void think();
 
-	boolean canThink();
+  boolean canThink();
 
-	AIState getState();
+  AIState getState();
 
-	AISubState getSubState();
+  AISubState getSubState();
 
-	String getName();
+  String getName();
 
-	/**
-	 * Ask AI instance for the answer to the specified question.
-	 * 
-	 * @param question
-	 * @return The answer, true or false.
-	 */
-	boolean ask(AIQuestion question);
+  /**
+   * Ask AI instance for the answer to the specified question.
+   * 
+   * @param question
+   * @return The answer, true or false.
+   */
+  boolean ask(AIQuestion question);
 
-	boolean isLogging();
+  boolean isLogging();
 
-	/**
-	 * @param attacker
-	 * @param damage
-	 *          - The calculated damage from given attacker
-	 * @param effect
-	 *          - The effect which caused the damage (may be null)
-	 * @return The effectively received damage
-	 */
-	float modifyDamage(Creature attacker, float damage, Effect effect);
+  /**
+   * @param attacker
+   * @param damage
+   *          - The calculated damage from given attacker
+   * @param effect
+   *          - The effect which caused the damage (may be null)
+   * @return The effectively received damage
+   */
+  float modifyDamage(Creature attacker, float damage, Effect effect);
 
-	/**
-	 * @param damage
-	 *          - The calculated damage output of this creature
-	 * @param effected
-	 * @param effect
-	 * @return The effective damage output of this creature
-	 */
-	float modifyOwnerDamage(float damage, Creature effected, Effect effect);
+  /**
+   * @param damage
+   *          - The calculated damage output of this creature
+   * @param effected
+   * @param effect
+   * @return The effective damage output of this creature
+   */
+  float modifyOwnerDamage(float damage, Creature effected, Effect effect);
 
-	/**
-	 * Used to manipulate any game stat of the owner.
-	 *
-	 * @param stat
-	 */
-	void modifyOwnerStat(Stat2 stat);
+  /**
+   * Used to manipulate any game stat of the owner.
+   *
+   * @param stat
+   */
+  void modifyOwnerStat(Stat2 stat);
 
-	ItemAttackType modifyAttackType(ItemAttackType type);
+  ItemAttackType modifyAttackType(ItemAttackType type);
 
-	int modifyAggroRange(int value);
+  int modifyAggroRange(int value);
 
-	int modifyAggroAngle(int value);
+  int modifyAggroAngle(int value);
 
-	void onStartUseSkill(SkillTemplate skillTemplate, int skillLevel);
+  void onStartUseSkill(SkillTemplate skillTemplate, int skillLevel);
 
-	void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel);
+  void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel);
 
-	void onEffectApplied(Effect effect);
+  void onEffectApplied(Effect effect);
 
-	void onEffectEnd(Effect effect);
+  void onEffectEnd(Effect effect);
 
-	AttackHandAnimation modifyAttackHandAnimation(AttackHandAnimation attackHandAnimation);
+  AttackHandAnimation modifyAttackHandAnimation(AttackHandAnimation attackHandAnimation);
 
-	AttackTypeAnimation getAttackTypeAnimation(Creature target);
+  AttackTypeAnimation getAttackTypeAnimation(Creature target);
 
-	int modifyInitialSkillDelay(int delay);
+  int modifyInitialSkillDelay(int delay);
 
-	boolean isDestinationReached();
+  boolean isDestinationReached();
 }

@@ -16,16 +16,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "PeriodicActions", propOrder = "periodicActions")
 public class PeriodicActions {
 
-	@XmlElements({ @XmlElement(name = "hpuse", type = HpUsePeriodicAction.class), @XmlElement(name = "mpuse", type = MpUsePeriodicAction.class) })
-	protected List<PeriodicAction> periodicActions;
-	@XmlAttribute(name = "checktime")
-	protected int checktime;
+  @XmlElements({ @XmlElement(name = "hpuse", type = HpUsePeriodicAction.class), @XmlElement(name = "mpuse", type = MpUsePeriodicAction.class) })
+  protected List<PeriodicAction> periodicActions;
+  @XmlAttribute(name = "checktime")
+  protected int checktime;
 
-	public List<PeriodicAction> getPeriodicActions() {
-		return periodicActions;
-	}
+  public List<PeriodicAction> getPeriodicActions() {
+    return periodicActions;
+  }
 
-	public int getChecktime() {
-		return checktime;
-	}
+  public int getChecktime() {
+    return checktime;
+  }
 }

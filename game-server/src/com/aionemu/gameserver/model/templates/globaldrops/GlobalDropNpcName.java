@@ -13,17 +13,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "GlobalDropNpcName")
 public class GlobalDropNpcName {
 
-	@XmlAttribute(name = "value", required = true)
-	protected String name;
+  @XmlAttribute(name = "value", required = true)
+  protected String name;
 
-	@XmlAttribute(name = "function", required = true)
-	protected StringFunction function;
+  @XmlAttribute(name = "function", required = true)
+  protected StringFunction function;
 
-	public String getValue() {
-		return name;
-	}
+  public String getValue() {
+    return name;
+  }
 
-	public StringFunction getFunction() {
-		return function;
-	}
+  public StringFunction getFunction() {
+    return function;
+  }
 }

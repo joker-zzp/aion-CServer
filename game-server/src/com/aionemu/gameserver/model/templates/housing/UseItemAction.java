@@ -12,32 +12,32 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "UseItemAction")
 public class UseItemAction {
 
-	@XmlAttribute(name = "final_reward_id")
-	protected Integer finalRewardId;
+  @XmlAttribute(name = "final_reward_id")
+  protected Integer finalRewardId;
 
-	@XmlAttribute(name = "reward_id")
-	protected Integer rewardId;
+  @XmlAttribute(name = "reward_id")
+  protected Integer rewardId;
 
-	@XmlAttribute(name = "remove_count")
-	protected Integer removeCount;
+  @XmlAttribute(name = "remove_count")
+  protected Integer removeCount;
 
-	@XmlAttribute(name = "check_type")
-	protected Integer checkType;
+  @XmlAttribute(name = "check_type")
+  protected Integer checkType;
 
-	public Integer getFinalRewardId() {
-		return finalRewardId;
-	}
+  public Integer getFinalRewardId() {
+    return finalRewardId;
+  }
 
-	public Integer getRewardId() {
-		return rewardId;
-	}
+  public Integer getRewardId() {
+    return rewardId;
+  }
 
-	public Integer getRemoveCount() {
-		return removeCount;
-	}
+  public Integer getRemoveCount() {
+    return removeCount;
+  }
 
-	public Integer getCheckType() {
-		return checkType;
-	}
+  public Integer getCheckType() {
+    return checkType;
+  }
 
 }

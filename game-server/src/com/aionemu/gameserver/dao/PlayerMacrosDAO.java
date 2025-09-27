@@ -20,63 +20,63 @@ import com.aionemu.gameserver.model.gameobjects.player.Macros;
  */
 public class PlayerMacrosDAO {
 
-	private static final Logger log = LoggerFactory.getLogger(PlayerMacrosDAO.class);
+  private static final Logger log = LoggerFactory.getLogger(PlayerMacrosDAO.class);
 
-	public static final String INSERT_QUERY = "INSERT INTO `player_macrosses` (`player_id`, `order`, `macro`) VALUES (?,?,?)";
-	public static final String UPDATE_QUERY = "UPDATE `player_macrosses` SET `macro`=? WHERE `player_id`=? AND `order`=?";
-	public static final String DELETE_QUERY = "DELETE FROM `player_macrosses` WHERE `player_id`=? AND `order`=?";
-	public static final String SELECT_QUERY = "SELECT `order`, `macro` FROM `player_macrosses` WHERE `player_id`=?";
+  public static final String INSERT_QUERY = "INSERT INTO `player_macrosses` (`player_id`, `order`, `macro`) VALUES (?,?,?)";
+  public static final String UPDATE_QUERY = "UPDATE `player_macrosses` SET `macro`=? WHERE `player_id`=? AND `order`=?";
+  public static final String DELETE_QUERY = "DELETE FROM `player_macrosses` WHERE `player_id`=? AND `order`=?";
+  public static final String SELECT_QUERY = "SELECT `order`, `macro` FROM `player_macrosses` WHERE `player_id`=?";
 
-	public static void addMacro(int playerId, int macroPosition, String macro) {
-		DB.insertUpdate(INSERT_QUERY, new IUStH() {
+  public static void addMacro(int playerId, int macroPosition, String macro) {
+    DB.insertUpdate(INSERT_QUERY, new IUStH() {
 
-			@Override
-			public void handleInsertUpdate(PreparedStatement stmt) throws SQLException {
-				stmt.setInt(1, playerId);
-				stmt.setInt(2, macroPosition);
-				stmt.setString(3, macro);
-				stmt.execute();
-			}
-		});
-	}
+      @Override
+      public void handleInsertUpdate(PreparedStatement stmt) throws SQLException {
+        stmt.setInt(1, playerId);
+        stmt.setInt(2, macroPosition);
+        stmt.setString(3, macro);
+        stmt.execute();
+      }
+    });
+  }
 
-	public static void updateMacro(int playerId, int macroPosition, String macro) {
-		DB.insertUpdate(UPDATE_QUERY, new IUStH() {
+  public static void updateMacro(int playerId, int macroPosition, String macro) {
+    DB.insertUpdate(UPDATE_QUERY, new IUStH() {
 
-			@Override
-			public void handleInsertUpdate(PreparedStatement stmt) throws SQLException {
-				stmt.setString(1, macro);
-				stmt.setInt(2, playerId);
-				stmt.setInt(3, macroPosition);
-				stmt.execute();
-			}
-		});
-	}
+      @Override
+      public void handleInsertUpdate(PreparedStatement stmt) throws SQLException {
+        stmt.setString(1, macro);
+        stmt.setInt(2, playerId);
+        stmt.setInt(3, macroPosition);
+        stmt.execute();
+      }
+    });
+  }
 
-	public static void deleteMacro(int playerId, int macroPosition) {
-		DB.insertUpdate(DELETE_QUERY, new IUStH() {
+  public static void deleteMacro(int playerId, int macroPosition) {
+    DB.insertUpdate(DELETE_QUERY, new IUStH() {
 
-			@Override
-			public void handleInsertUpdate(PreparedStatement stmt) throws SQLException {
-				stmt.setInt(1, playerId);
-				stmt.setInt(2, macroPosition);
-				stmt.execute();
-			}
-		});
-	}
+      @Override
+      public void handleInsertUpdate(PreparedStatement stmt) throws SQLException {
+        stmt.setInt(1, playerId);
+        stmt.setInt(2, macroPosition);
+        stmt.execute();
+      }
+    });
+  }
 
-	public static Macros loadMacros(int playerId) {
-		Macros macros = new Macros();
-		try (Connection con = DatabaseFactory.getConnection(); PreparedStatement stmt = con.prepareStatement(SELECT_QUERY)) {
-			stmt.setInt(1, playerId);
-			try (ResultSet rset = stmt.executeQuery()) {
-				while (rset.next()) {
-					macros.add(rset.getInt("order"), rset.getString("macro"));
-				}
-			}
-		} catch (Exception e) {
-			log.error("Could not load macros for player " + playerId, e);
-		}
-		return macros;
-	}
+  public static Macros loadMacros(int playerId) {
+    Macros macros = new Macros();
+    try (Connection con = DatabaseFactory.getConnection(); PreparedStatement stmt = con.prepareStatement(SELECT_QUERY)) {
+      stmt.setInt(1, playerId);
+      try (ResultSet rset = stmt.executeQuery()) {
+        while (rset.next()) {
+          macros.add(rset.getInt("order"), rset.getString("macro"));
+        }
+      }
+    } catch (Exception e) {
+      log.error("Could not load macros for player " + playerId, e);
+    }
+    return macros;
+  }
 }

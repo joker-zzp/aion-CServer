@@ -17,40 +17,40 @@ import com.aionemu.gameserver.network.aion.AionConnection.State;
  */
 public class CM_PLAYER_STATUS_INFO extends AionClientPacket {
 
-	private int commandCode;
-	private int selectedObjectId;
-	private int allianceGroupId;
-	private int secondObjectId;
+  private int commandCode;
+  private int selectedObjectId;
+  private int allianceGroupId;
+  private int secondObjectId;
 
-	public CM_PLAYER_STATUS_INFO(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_PLAYER_STATUS_INFO(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		commandCode = readUC();
-		selectedObjectId = readD();
-		allianceGroupId = readD();
-		secondObjectId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    commandCode = readUC();
+    selectedObjectId = readD();
+    allianceGroupId = readD();
+    secondObjectId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		TeamCommand command = TeamCommand.getCommand(commandCode);
-		switch (command) {
-			case GROUP_SET_LFG:
-				activePlayer.setLookingForGroup(selectedObjectId == 2);
-				break;
-			case ALLIANCE_CHANGE_GROUP:
-				PlayerAllianceService.changeMemberGroup(activePlayer, selectedObjectId, secondObjectId, allianceGroupId);
-				break;
-			case LEAGUE_ALLIANCE_MOVE:
-				LeagueService.moveAlliance(activePlayer, selectedObjectId, allianceGroupId);
-				break;
-			default:
-				PlayerTeamCommandService.executeCommand(activePlayer, command, selectedObjectId);
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    TeamCommand command = TeamCommand.getCommand(commandCode);
+    switch (command) {
+      case GROUP_SET_LFG:
+        activePlayer.setLookingForGroup(selectedObjectId == 2);
+        break;
+      case ALLIANCE_CHANGE_GROUP:
+        PlayerAllianceService.changeMemberGroup(activePlayer, selectedObjectId, secondObjectId, allianceGroupId);
+        break;
+      case LEAGUE_ALLIANCE_MOVE:
+        LeagueService.moveAlliance(activePlayer, selectedObjectId, allianceGroupId);
+        break;
+      default:
+        PlayerTeamCommandService.executeCommand(activePlayer, command, selectedObjectId);
+    }
+  }
 
 }

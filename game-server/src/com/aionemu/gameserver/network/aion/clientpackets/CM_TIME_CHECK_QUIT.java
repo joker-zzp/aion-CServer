@@ -9,8 +9,8 @@ import com.aionemu.gameserver.network.aion.AionConnection.State;
  */
 public class CM_TIME_CHECK_QUIT extends CM_TIME_CHECK {
 
-	public CM_TIME_CHECK_QUIT(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_TIME_CHECK_QUIT(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
 }

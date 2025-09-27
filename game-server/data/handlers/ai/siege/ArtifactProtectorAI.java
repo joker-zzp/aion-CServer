@@ -12,13 +12,13 @@ import com.aionemu.gameserver.model.stats.container.StatEnum;
 @AIName("artifact_protector")
 public class ArtifactProtectorAI extends SiegeNpcAI {
 
-	public ArtifactProtectorAI(Npc owner) {
-		super(owner);
-	}
+  public ArtifactProtectorAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void modifyOwnerStat(Stat2 stat) {
-		if (stat.getStat() == StatEnum.MAXHP && getOwner().getLevel() >= 65)
-			stat.setBaseRate(SiegeConfig.ARTIFACT_PROTECTOR_HEALTH_MULTIPLIER);
-	}
+  @Override
+  public void modifyOwnerStat(Stat2 stat) {
+    if (stat.getStat() == StatEnum.MAXHP && getOwner().getLevel() >= 65)
+      stat.setBaseRate(SiegeConfig.ARTIFACT_PROTECTOR_HEALTH_MULTIPLIER);
+  }
 }

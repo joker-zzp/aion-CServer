@@ -15,29 +15,29 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_FRIEND_UPDATE extends AionServerPacket {
 
-	private int friendObjId;
+  private int friendObjId;
 
-	private static Logger log = LoggerFactory.getLogger(SM_FRIEND_UPDATE.class);
+  private static Logger log = LoggerFactory.getLogger(SM_FRIEND_UPDATE.class);
 
-	public SM_FRIEND_UPDATE(int friendObjId) {
-		this.friendObjId = friendObjId;
-	}
+  public SM_FRIEND_UPDATE(int friendObjId) {
+    this.friendObjId = friendObjId;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		Friend f = con.getActivePlayer().getFriendList().getFriend(friendObjId);
-		if (f == null)
-			log.debug("Attempted to update friend list status of " + friendObjId + " for " + con.getActivePlayer().getName()
-				+ " - object ID not found on friend list");
-		else {
-			writeS(f.getName());
-			writeD(f.getLevel());
-			writeD(f.getPlayerClass().getClassId());
-			writeC(f.getGender().getGenderId());
-			writeD(f.getMapId());
-			writeD(f.getStatus() == Status.ONLINE ? 0 : f.getLastOnlineEpochSeconds());
-			writeS(f.getNote());
-			writeC(f.getStatus().getId());
-		}
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    Friend f = con.getActivePlayer().getFriendList().getFriend(friendObjId);
+    if (f == null)
+      log.debug("Attempted to update friend list status of " + friendObjId + " for " + con.getActivePlayer().getName()
+        + " - object ID not found on friend list");
+    else {
+      writeS(f.getName());
+      writeD(f.getLevel());
+      writeD(f.getPlayerClass().getClassId());
+      writeC(f.getGender().getGenderId());
+      writeD(f.getMapId());
+      writeD(f.getStatus() == Status.ONLINE ? 0 : f.getLastOnlineEpochSeconds());
+      writeS(f.getNote());
+      writeC(f.getStatus().getId());
+    }
+  }
 }

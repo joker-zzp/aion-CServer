@@ -17,29 +17,29 @@ import com.aionemu.gameserver.model.templates.hotspot.HotspotTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class HotspotData {
 
-	@XmlElement(name = "hotspot_location")
-	private List<HotspotTemplate> hotspotTemplates;
+  @XmlElement(name = "hotspot_location")
+  private List<HotspotTemplate> hotspotTemplates;
 
-	public int size() {
-		if (hotspotTemplates == null) {
-			hotspotTemplates = new ArrayList<>();
-			return 0;
-		}
-		return hotspotTemplates.size();
-	}
+  public int size() {
+    if (hotspotTemplates == null) {
+      hotspotTemplates = new ArrayList<>();
+      return 0;
+    }
+    return hotspotTemplates.size();
+  }
 
-	public List<HotspotTemplate> getHotspotTemplates() {
-		if (hotspotTemplates == null) {
-			return new ArrayList<>();
-		}
-		return hotspotTemplates;
-	}
+  public List<HotspotTemplate> getHotspotTemplates() {
+    if (hotspotTemplates == null) {
+      return new ArrayList<>();
+    }
+    return hotspotTemplates;
+  }
 
-	public HotspotTemplate getHotspotTemplateById(int id) {
-		for (HotspotTemplate t : hotspotTemplates) {
-			if (t.getId() == id)
-				return t;
-		}
-		return null;
-	}
+  public HotspotTemplate getHotspotTemplateById(int id) {
+    for (HotspotTemplate t : hotspotTemplates) {
+      if (t.getId() == id)
+        return t;
+    }
+    return null;
+  }
 }

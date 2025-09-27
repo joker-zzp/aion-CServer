@@ -9,15 +9,15 @@ import com.aionemu.gameserver.model.team.league.events.LeagueLeftEvent.LeaveReso
  */
 public class LeagueDisbandEvent extends AlwaysTrueTeamEvent {
 
-	private final League league;
+  private final League league;
 
-	public LeagueDisbandEvent(League league) {
-		this.league = league;
-	}
+  public LeagueDisbandEvent(League league) {
+    this.league = league;
+  }
 
-	@Override
-	public void handleEvent() {
-		league.forEach(alliance -> league.onEvent(new LeagueLeftEvent(league, alliance, LeaveReson.DISBAND)));
-	}
+  @Override
+  public void handleEvent() {
+    league.forEach(alliance -> league.onEvent(new LeagueLeftEvent(league, alliance, LeaveReson.DISBAND)));
+  }
 
 }

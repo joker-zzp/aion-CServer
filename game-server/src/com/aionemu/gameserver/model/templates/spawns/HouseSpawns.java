@@ -16,18 +16,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "house")
 public class HouseSpawns {
 
-	@XmlElement(name = "spawn", required = true)
-	private List<HouseSpawn> spawns;
+  @XmlElement(name = "spawn", required = true)
+  private List<HouseSpawn> spawns;
 
-	@XmlAttribute(name = "address", required = true)
-	private int address;
+  @XmlAttribute(name = "address", required = true)
+  private int address;
 
-	public List<HouseSpawn> getSpawns() {
-		return spawns == null ? Collections.emptyList() : spawns;
-	}
+  public List<HouseSpawn> getSpawns() {
+    return spawns == null ? Collections.emptyList() : spawns;
+  }
 
-	public int getAddress() {
-		return address;
-	}
+  public int getAddress() {
+    return address;
+  }
 
 }

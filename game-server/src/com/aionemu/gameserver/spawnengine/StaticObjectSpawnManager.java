@@ -15,41 +15,41 @@ import com.aionemu.gameserver.world.knownlist.PlayerAwareKnownList;
  */
 public class StaticObjectSpawnManager {
 
-	/**
-	 * @param spawnGroup
-	 * @param instanceIndex
-	 */
-	public static void spawnTemplate(SpawnGroup spawn, int instanceIndex) {
-		VisibleObjectTemplate objectTemplate = DataManager.ITEM_DATA.getItemTemplate(spawn.getNpcId());
-		if (objectTemplate == null)
-			return;
+  /**
+   * @param spawnGroup
+   * @param instanceIndex
+   */
+  public static void spawnTemplate(SpawnGroup spawn, int instanceIndex) {
+    VisibleObjectTemplate objectTemplate = DataManager.ITEM_DATA.getItemTemplate(spawn.getNpcId());
+    if (objectTemplate == null)
+      return;
 
-		if (spawn.hasPool()) {
-			spawn.resetTemplates(instanceIndex);
-			for (int i = 0; i < spawn.getPool(); i++) {
-				SpawnTemplate template = spawn.getRndTemplate(instanceIndex);
-				StaticObject staticObject = new StaticObject(new StaticObjectController(), template, objectTemplate);
-				staticObject.setKnownlist(new PlayerAwareKnownList(staticObject));
-				bringIntoWorld(staticObject, template, instanceIndex);
-			}
-		} else {
-			for (SpawnTemplate template : spawn.getSpawnTemplates()) {
-				StaticObject staticObject = new StaticObject(new StaticObjectController(), template, objectTemplate);
-				staticObject.setKnownlist(new PlayerAwareKnownList(staticObject));
-				bringIntoWorld(staticObject, template, instanceIndex);
-			}
-		}
-	}
+    if (spawn.hasPool()) {
+      spawn.resetTemplates(instanceIndex);
+      for (int i = 0; i < spawn.getPool(); i++) {
+        SpawnTemplate template = spawn.getRndTemplate(instanceIndex);
+        StaticObject staticObject = new StaticObject(new StaticObjectController(), template, objectTemplate);
+        staticObject.setKnownlist(new PlayerAwareKnownList(staticObject));
+        bringIntoWorld(staticObject, template, instanceIndex);
+      }
+    } else {
+      for (SpawnTemplate template : spawn.getSpawnTemplates()) {
+        StaticObject staticObject = new StaticObject(new StaticObjectController(), template, objectTemplate);
+        staticObject.setKnownlist(new PlayerAwareKnownList(staticObject));
+        bringIntoWorld(staticObject, template, instanceIndex);
+      }
+    }
+  }
 
-	/**
-	 * @param visibleObject
-	 * @param spawn
-	 * @param instanceIndex
-	 */
-	private static void bringIntoWorld(VisibleObject visibleObject, SpawnTemplate spawn, int instanceIndex) {
-		World world = World.getInstance();
-		world.storeObject(visibleObject);
-		world.setPosition(visibleObject, spawn.getWorldId(), instanceIndex, spawn.getX(), spawn.getY(), spawn.getZ(), spawn.getHeading());
-		world.spawn(visibleObject);
-	}
+  /**
+   * @param visibleObject
+   * @param spawn
+   * @param instanceIndex
+   */
+  private static void bringIntoWorld(VisibleObject visibleObject, SpawnTemplate spawn, int instanceIndex) {
+    World world = World.getInstance();
+    world.storeObject(visibleObject);
+    world.setPosition(visibleObject, spawn.getWorldId(), instanceIndex, spawn.getX(), spawn.getY(), spawn.getZ(), spawn.getHeading());
+    world.spawn(visibleObject);
+  }
 }

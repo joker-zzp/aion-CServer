@@ -13,12 +13,12 @@ import ai.AggressiveNoLootNpcAI;
 @AIName("custom_instance_scapi")
 public class CustomInstanceScapiAI extends AggressiveNoLootNpcAI {
 
-	public CustomInstanceScapiAI(Npc owner) {
-		super(owner);
-	}
+  public CustomInstanceScapiAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public float modifyDamage(Creature attacker, float damage, Effect effect) {
-		return 1;
-	}
+  @Override
+  public float modifyDamage(Creature attacker, float damage, Effect effect) {
+    return 1;
+  }
 }

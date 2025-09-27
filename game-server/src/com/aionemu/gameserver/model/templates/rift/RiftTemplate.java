@@ -12,28 +12,28 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Rift")
 public class RiftTemplate {
 
-	@XmlAttribute(name = "id")
-	private int id;
-	@XmlAttribute(name = "world")
-	private int world;
-	@XmlAttribute(name = "has_spawns")
-	private boolean hasSpawns;
-	@XmlAttribute(name = "auto_closeable")
-	private boolean autoCloseable = true;
+  @XmlAttribute(name = "id")
+  private int id;
+  @XmlAttribute(name = "world")
+  private int world;
+  @XmlAttribute(name = "has_spawns")
+  private boolean hasSpawns;
+  @XmlAttribute(name = "auto_closeable")
+  private boolean autoCloseable = true;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public int getWorldId() {
-		return world;
-	}
+  public int getWorldId() {
+    return world;
+  }
 
-	public boolean hasSpawns() {
-		return hasSpawns;
-	}
+  public boolean hasSpawns() {
+    return hasSpawns;
+  }
 
-	public boolean isAutoCloseable() {
-		return autoCloseable;
-	}
+  public boolean isAutoCloseable() {
+    return autoCloseable;
+  }
 }

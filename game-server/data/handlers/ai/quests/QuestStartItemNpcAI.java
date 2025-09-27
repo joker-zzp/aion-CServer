@@ -20,15 +20,15 @@ import ai.ActionItemNpcAI;
 @AIName("quest_start_use_item")
 public class QuestStartItemNpcAI extends ActionItemNpcAI {
 
-	public QuestStartItemNpcAI(Npc owner) {
-		super(owner);
-	}
+  public QuestStartItemNpcAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		Set<Integer> relatedQuests = QuestEngine.getInstance().getQuestNpc(getOwner().getNpcId()).getOnQuestStart();
-		if (!QuestEngine.getInstance().onDialog(new QuestEnv(getOwner(), player, 0, relatedQuests.isEmpty() ? USE_OBJECT : QUEST_SELECT)))
-			if (getObjectTemplate().isDialogNpc()) // show default dialog
-				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    Set<Integer> relatedQuests = QuestEngine.getInstance().getQuestNpc(getOwner().getNpcId()).getOnQuestStart();
+    if (!QuestEngine.getInstance().onDialog(new QuestEnv(getOwner(), player, 0, relatedQuests.isEmpty() ? USE_OBJECT : QUEST_SELECT)))
+      if (getObjectTemplate().isDialogNpc()) // show default dialog
+        PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
+  }
 }

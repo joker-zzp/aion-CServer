@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TargetRangeAttribute {
 
-	ONLYONE,
-	PARTY,
-	AREA,
-	PARTY_WITHPET,
-	POINT
+  ONLYONE,
+  PARTY,
+  AREA,
+  PARTY_WITHPET,
+  POINT
 }

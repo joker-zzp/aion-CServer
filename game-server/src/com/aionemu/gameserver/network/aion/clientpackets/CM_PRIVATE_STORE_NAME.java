@@ -12,25 +12,25 @@ import com.aionemu.gameserver.services.PrivateStoreService;
  */
 public class CM_PRIVATE_STORE_NAME extends AionClientPacket {
 
-	private String name;
+  private String name;
 
-	/**
-	 * Constructs new instance of <tt>CM_PRIVATE_STORE</tt> packet
-	 * 
-	 * @param opcode
-	 */
-	public CM_PRIVATE_STORE_NAME(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * Constructs new instance of <tt>CM_PRIVATE_STORE</tt> packet
+   * 
+   * @param opcode
+   */
+  public CM_PRIVATE_STORE_NAME(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		name = readS();
-	}
+  @Override
+  protected void readImpl() {
+    name = readS();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		PrivateStoreService.openPrivateStore(activePlayer, name);
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    PrivateStoreService.openPrivateStore(activePlayer, name);
+  }
 }

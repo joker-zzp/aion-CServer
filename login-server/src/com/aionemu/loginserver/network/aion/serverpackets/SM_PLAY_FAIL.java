@@ -9,24 +9,24 @@ import com.aionemu.loginserver.network.aion.LoginConnection;
  */
 public class SM_PLAY_FAIL extends AionServerPacket {
 
-	/**
-	 * response - why play fail
-	 */
-	private AionAuthResponse response;
+  /**
+   * response - why play fail
+   */
+  private AionAuthResponse response;
 
-	/**
-	 * Constructs new instance of <tt>SM_PLAY_FAIL</tt> packet.
-	 * 
-	 * @param response
-	 *          auth response
-	 */
-	public SM_PLAY_FAIL(AionAuthResponse response) {
-		super(0x06);
-		this.response = response;
-	}
+  /**
+   * Constructs new instance of <tt>SM_PLAY_FAIL</tt> packet.
+   * 
+   * @param response
+   *          auth response
+   */
+  public SM_PLAY_FAIL(AionAuthResponse response) {
+    super(0x06);
+    this.response = response;
+  }
 
-	@Override
-	protected void writeImpl(LoginConnection con) {
-		writeD(response.getId());
-	}
+  @Override
+  protected void writeImpl(LoginConnection con) {
+    writeD(response.getId());
+  }
 }

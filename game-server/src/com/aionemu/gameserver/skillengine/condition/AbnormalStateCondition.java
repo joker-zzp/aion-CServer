@@ -11,21 +11,21 @@ import com.aionemu.gameserver.skillengine.model.Skill;
  */
 public class AbnormalStateCondition extends Condition {
 
-	@XmlAttribute(required = true)
-	protected AbnormalState value;
+  @XmlAttribute(required = true)
+  protected AbnormalState value;
 
-	@Override
-	public boolean validate(Skill env) {
-		if (env.getFirstTarget() != null)
-			return (env.getFirstTarget().getEffectController().isAbnormalSet(value));
-		return false;
-	}
+  @Override
+  public boolean validate(Skill env) {
+    if (env.getFirstTarget() != null)
+      return (env.getFirstTarget().getEffectController().isAbnormalSet(value));
+    return false;
+  }
 
-	@Override
-	public boolean validate(Effect effect) {
-		if (effect.getEffected() != null)
-			return (effect.getEffected().getEffectController().isAbnormalSet(value));
-		return false;
-	}
+  @Override
+  public boolean validate(Effect effect) {
+    if (effect.getEffected() != null)
+      return (effect.getEffected().getEffectController().isAbnormalSet(value));
+    return false;
+  }
 
 }

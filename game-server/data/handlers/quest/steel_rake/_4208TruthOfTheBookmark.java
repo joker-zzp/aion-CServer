@@ -7,13 +7,13 @@ import com.aionemu.gameserver.questEngine.handlers.AbstractQuestHandler;
  */
 public class _4208TruthOfTheBookmark extends AbstractQuestHandler {
 
-	public _4208TruthOfTheBookmark() {
-		super(4208);
-	}
+  public _4208TruthOfTheBookmark() {
+    super(4208);
+  }
 
-	@Override
-	public void register() {
-		// TODO Auto-generated method stub
+  @Override
+  public void register() {
+    // TODO Auto-generated method stub
 
-	}
+  }
 }

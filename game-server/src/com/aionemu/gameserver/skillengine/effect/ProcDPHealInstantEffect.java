@@ -15,24 +15,24 @@ import com.aionemu.gameserver.skillengine.model.HealType;
 @XmlType(name = "ProcDPHealInstantEffect")
 public class ProcDPHealInstantEffect extends AbstractHealEffect {
 
-	@Override
-	public void calculate(Effect effect) {
-		super.calculate(effect, HealType.DP);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    super.calculate(effect, HealType.DP);
+  }
 
-	@Override
-	public void applyEffect(Effect effect) {
-		super.applyEffect(effect, HealType.DP);
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    super.applyEffect(effect, HealType.DP);
+  }
 
-	@Override
-	public int getCurrentStatValue(Effect effect) {
-		return ((Player) effect.getEffected()).getCommonData().getDp();
-	}
+  @Override
+  public int getCurrentStatValue(Effect effect) {
+    return ((Player) effect.getEffected()).getCommonData().getDp();
+  }
 
-	@Override
-	public int getMaxStatValue(Effect effect) {
-		return ((Player) effect.getEffected()).getGameStats().getMaxDp().getCurrent();
-	}
+  @Override
+  public int getMaxStatValue(Effect effect) {
+    return ((Player) effect.getEffected()).getGameStats().getMaxDp().getCurrent();
+  }
 
 }

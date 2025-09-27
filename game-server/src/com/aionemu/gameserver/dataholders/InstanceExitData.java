@@ -16,29 +16,29 @@ import com.aionemu.gameserver.model.templates.portal.InstanceExit;
 @XmlRootElement(name = "instance_exits")
 public class InstanceExitData {
 
-	@XmlElement(name = "instance_exit")
-	protected List<InstanceExit> instanceExit;
+  @XmlElement(name = "instance_exit")
+  protected List<InstanceExit> instanceExit;
 
-	@XmlTransient
-	private final Map<Integer, List<InstanceExit>> instanceExitByWorldId = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, List<InstanceExit>> instanceExitByWorldId = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
-		instanceExit.forEach(exit -> instanceExitByWorldId.computeIfAbsent(exit.getInstanceId(), i -> new ArrayList<>()).add(exit));
-		instanceExit = null;
-	}
+  void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
+    instanceExit.forEach(exit -> instanceExitByWorldId.computeIfAbsent(exit.getInstanceId(), i -> new ArrayList<>()).add(exit));
+    instanceExit = null;
+  }
 
-	public InstanceExit getInstanceExit(int worldId, Race race) {
-		List<InstanceExit> instanceExits = instanceExitByWorldId.getOrDefault(worldId, Collections.emptyList());
-		if (instanceExits.isEmpty())
-			return null;
-		for (InstanceExit instanceExit : instanceExits)
-			if (instanceExit.getRace() == Race.PC_ALL || instanceExit.getRace() == race)
-				return instanceExit;
-		return null;
-	}
+  public InstanceExit getInstanceExit(int worldId, Race race) {
+    List<InstanceExit> instanceExits = instanceExitByWorldId.getOrDefault(worldId, Collections.emptyList());
+    if (instanceExits.isEmpty())
+      return null;
+    for (InstanceExit instanceExit : instanceExits)
+      if (instanceExit.getRace() == Race.PC_ALL || instanceExit.getRace() == race)
+        return instanceExit;
+    return null;
+  }
 
-	public int size() {
-		return instanceExitByWorldId.values().stream().mapToInt(List::size).sum();
-	}
+  public int size() {
+    return instanceExitByWorldId.values().stream().mapToInt(List::size).sum();
+  }
 
 }

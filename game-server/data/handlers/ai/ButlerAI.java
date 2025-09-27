@@ -15,25 +15,25 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("butler")
 public class ButlerAI extends GeneralNpcAI {
 
-	public ButlerAI(Npc owner) {
-		super(owner);
-	}
+  public ButlerAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		return kickDialog(player, DialogPage.getByActionId(dialogActionId));
-	}
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    return kickDialog(player, DialogPage.getByActionId(dialogActionId));
+  }
 
-	private boolean kickDialog(Player player, DialogPage page) {
-		if (page == DialogPage.NULL)
-			return false;
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getOwner().getObjectId(), page.id()));
-		return true;
-	}
+  private boolean kickDialog(Player player, DialogPage page) {
+    if (page == DialogPage.NULL)
+      return false;
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getOwner().getObjectId(), page.id()));
+    return true;
+  }
 
-	@Override
-	protected void handleCreatureSee(Creature creature) {
-		if (creature instanceof Player player && getCreator() instanceof House house)
-			house.sendScripts(player);
-	}
+  @Override
+  protected void handleCreatureSee(Creature creature) {
+    if (creature instanceof Player player && getCreator() instanceof House house)
+      house.sendScripts(player);
+  }
 }

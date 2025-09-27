@@ -17,19 +17,19 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 @XmlType(name = "BoostSkillCostEffect")
 public class BoostSkillCostEffect extends BufEffect {
 
-	@XmlAttribute
-	protected boolean percent;
+  @XmlAttribute
+  protected boolean percent;
 
-	@Override
-	public void startEffect(final Effect effect) {
-		super.startEffect(effect);
+  @Override
+  public void startEffect(final Effect effect) {
+    super.startEffect(effect);
 
-		effect.addObserver(effect.getEffected(), new ActionObserver(ObserverType.BOOSTSKILLCOST) {
+    effect.addObserver(effect.getEffected(), new ActionObserver(ObserverType.BOOSTSKILLCOST) {
 
-			@Override
-			public void boostSkillCost(Skill skill) {
-				skill.setBoostSkillCost(value);
-			}
-		});
-	}
+      @Override
+      public void boostSkillCost(Skill skill) {
+        skill.setBoostSkillCost(value);
+      }
+    });
+  }
 }

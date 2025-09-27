@@ -10,15 +10,15 @@ import com.aionemu.gameserver.model.gameobjects.Npc;
 @AIName("IDSweep_Boss")
 public class IDSweep_Bosses extends IDSweep_Shugos {
 
-	public IDSweep_Bosses(Npc owner) {
-		super(owner);
-	}
+  public IDSweep_Bosses(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case IS_IMMUNE_TO_ABNORMAL_STATES -> true;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case IS_IMMUNE_TO_ABNORMAL_STATES -> true;
+      default -> super.ask(question);
+    };
+  }
 }

@@ -19,35 +19,35 @@ import ai.AggressiveNpcAI;
 @AIName("seal_generator")
 public class SealGeneratorAI extends AggressiveNpcAI {
 
-	private final AtomicBoolean startedEvent = new AtomicBoolean();
+  private final AtomicBoolean startedEvent = new AtomicBoolean();
 
-	public SealGeneratorAI(Npc owner) {
-		super(owner);
-	}
+  public SealGeneratorAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean canThink() {
-		return false;
-	}
+  @Override
+  public boolean canThink() {
+    return false;
+  }
 
-	@Override
-	protected void handleCreatureMoved(Creature creature) {
-		if (creature instanceof Player player) {
-			if (PositionUtil.getDistance(getOwner(), player) <= 30 && startedEvent.compareAndSet(false, true))
-				PacketSendUtility.broadcastToMap(getOwner(), 1401156);
-		}
-	}
+  @Override
+  protected void handleCreatureMoved(Creature creature) {
+    if (creature instanceof Player player) {
+      if (PositionUtil.getDistance(getOwner(), player) <= 30 && startedEvent.compareAndSet(false, true))
+        PacketSendUtility.broadcastToMap(getOwner(), 1401156);
+    }
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case IS_IMMUNE_TO_ABNORMAL_STATES -> true;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case IS_IMMUNE_TO_ABNORMAL_STATES -> true;
+      default -> super.ask(question);
+    };
+  }
 
-	@Override
-	public float modifyDamage(Creature attacker, float damage, Effect effect) {
-		return 1;
-	}
+  @Override
+  public float modifyDamage(Creature attacker, float damage, Effect effect) {
+    return 1;
+  }
 }

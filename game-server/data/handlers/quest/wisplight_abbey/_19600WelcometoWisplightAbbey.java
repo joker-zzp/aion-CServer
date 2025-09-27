@@ -14,51 +14,51 @@ import com.aionemu.gameserver.services.QuestService;
  */
 public class _19600WelcometoWisplightAbbey extends AbstractQuestHandler {
 
-	private static final int npcId = 804651; // Lena
-	private static final int itemId = 164000335; // Abbey Return Stone
+  private static final int npcId = 804651; // Lena
+  private static final int itemId = 164000335; // Abbey Return Stone
 
-	public _19600WelcometoWisplightAbbey() {
-		super(19600);
-	}
+  public _19600WelcometoWisplightAbbey() {
+    super(19600);
+  }
 
-	@Override
-	public void register() {
-		qe.registerQuestNpc(npcId).addOnTalkEvent(questId);
-		qe.registerOnGetItem(itemId, questId); // quest acquisition linked to abbey return stone acquisition
-	}
+  @Override
+  public void register() {
+    qe.registerQuestNpc(npcId).addOnTalkEvent(questId);
+    qe.registerOnGetItem(itemId, questId); // quest acquisition linked to abbey return stone acquisition
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		int dialogActionId = env.getDialogActionId();
-		int targetId = env.getTargetId();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    int dialogActionId = env.getDialogActionId();
+    int targetId = env.getTargetId();
 
-		if (qs == null)
-			return false;
+    if (qs == null)
+      return false;
 
-		if (qs.getStatus() == QuestStatus.START) {
-			if (targetId == npcId) {
-				switch (dialogActionId) {
-					case QUEST_SELECT:
-						return sendQuestDialog(env, 1011);
-					case SETPRO1:
-						return sendQuestDialog(env, 10002);
-					case SELECT_QUEST_REWARD:
-						return defaultCloseDialog(env, 0, 0, true, true);
-				}
-			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == npcId) {
-				return sendQuestEndDialog(env);
-			}
-		}
-		return false;
-	}
+    if (qs.getStatus() == QuestStatus.START) {
+      if (targetId == npcId) {
+        switch (dialogActionId) {
+          case QUEST_SELECT:
+            return sendQuestDialog(env, 1011);
+          case SETPRO1:
+            return sendQuestDialog(env, 10002);
+          case SELECT_QUEST_REWARD:
+            return defaultCloseDialog(env, 0, 0, true, true);
+        }
+      }
+    } else if (qs.getStatus() == QuestStatus.REWARD) {
+      if (targetId == npcId) {
+        return sendQuestEndDialog(env);
+      }
+    }
+    return false;
+  }
 
-	@Override
-	public boolean onGetItemEvent(QuestEnv env) {
-		return QuestService.startQuest(env);
-	}
+  @Override
+  public boolean onGetItemEvent(QuestEnv env) {
+    return QuestService.startQuest(env);
+  }
 
 }

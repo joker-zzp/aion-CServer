@@ -22,37 +22,37 @@ import ai.ActionItemNpcAI;
 @AIName("eternal_bastion_mountable")
 public class EternalBastionMountableAI extends ActionItemNpcAI {
 
-	public EternalBastionMountableAI(Npc owner) {
-		super(owner);
-	}
+  public EternalBastionMountableAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		if (dialogActionId == SETPRO1)
-			useNpc(player);
-		return true;
-	}
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    if (dialogActionId == SETPRO1)
+      useNpc(player);
+    return true;
+  }
 
-	private void useNpc(Player player) {
-		if ((getOwner().getTribe() == TribeClass.IDF5_TD_WEAPON_PC || getOwner().getTribe() == TribeClass.IDF5_TD_WEAPON_PC_DARK))
-			tryMountNpc(player, 185000136, 21138 + player.getRace().getRaceId());
-		else
-			tryMountNpc(player, 185000137, 21141);
-	}
+  private void useNpc(Player player) {
+    if ((getOwner().getTribe() == TribeClass.IDF5_TD_WEAPON_PC || getOwner().getTribe() == TribeClass.IDF5_TD_WEAPON_PC_DARK))
+      tryMountNpc(player, 185000136, 21138 + player.getRace().getRaceId());
+    else
+      tryMountNpc(player, 185000137, 21141);
+  }
 
-	private void tryMountNpc(Player player, int keyItemId, int skillId) {
-		if (!player.getInventory().decreaseByItemId(keyItemId, 1)) {
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), DialogPage.NO_RIGHT.id()));
-			return;
-		}
-		World.getInstance().updatePosition(player, getPosition().getX(), getPosition().getY(), getPosition().getZ(), getPosition().getHeading());
-		PacketSendUtility.broadcastPacketAndReceive(player, new SM_POSITION(player));
-		SkillEngine.getInstance().applyEffectDirectly(skillId, player, player);
-		AIActions.deleteOwner(this);
-	}
+  private void tryMountNpc(Player player, int keyItemId, int skillId) {
+    if (!player.getInventory().decreaseByItemId(keyItemId, 1)) {
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), DialogPage.NO_RIGHT.id()));
+      return;
+    }
+    World.getInstance().updatePosition(player, getPosition().getX(), getPosition().getY(), getPosition().getZ(), getPosition().getHeading());
+    PacketSendUtility.broadcastPacketAndReceive(player, new SM_POSITION(player));
+    SkillEngine.getInstance().applyEffectDirectly(skillId, player, player);
+    AIActions.deleteOwner(this);
+  }
 }

@@ -5,17 +5,17 @@ package com.aionemu.gameserver.model.base;
  */
 public class PanesterraFactionCamp extends PanesterraBase {
 
-	public PanesterraFactionCamp(PanesterraBaseLocation loc) {
-		super(loc);
-	}
+  public PanesterraFactionCamp(PanesterraBaseLocation loc) {
+    super(loc);
+  }
 
-	@Override
-	protected int getBossSpawnDelay() {
-		return 10 * 60000;
-	}
+  @Override
+  protected int getBossSpawnDelay() {
+    return 10 * 60000;
+  }
 
-	@Override
-	protected int getNpcSpawnDelay() {
-		return 10 * 60000; // Retail delay
-	}
+  @Override
+  protected int getNpcSpawnDelay() {
+    return 10 * 60000; // Retail delay
+  }
 }

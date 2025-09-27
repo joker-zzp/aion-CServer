@@ -18,22 +18,22 @@ import com.aionemu.gameserver.utils.collections.SplitList;
  */
 public class CM_GET_HOUSE_BIDS extends AionClientPacket {
 
-	public CM_GET_HOUSE_BIDS(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_GET_HOUSE_BIDS(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
+  @Override
+  protected void readImpl() {
 
-	}
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		List<HouseBids> houseBids = HousingBidService.getInstance().getBidInfo(player.getRace());
-		SplitList<HouseBids> bidsSplitList = new DynamicServerPacketBodySplitList<>(houseBids, true, SM_HOUSE_BIDS.STATIC_BODY_SIZE,
-			SM_HOUSE_BIDS.DYNAMIC_BODY_PART_SIZE_CALCULATOR);
-		bidsSplitList.forEach(part -> PacketSendUtility.sendPacket(player, new SM_HOUSE_BIDS(part.isFirst(), part.isLast(), part)));
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    List<HouseBids> houseBids = HousingBidService.getInstance().getBidInfo(player.getRace());
+    SplitList<HouseBids> bidsSplitList = new DynamicServerPacketBodySplitList<>(houseBids, true, SM_HOUSE_BIDS.STATIC_BODY_SIZE,
+      SM_HOUSE_BIDS.DYNAMIC_BODY_PART_SIZE_CALCULATOR);
+    bidsSplitList.forEach(part -> PacketSendUtility.sendPacket(player, new SM_HOUSE_BIDS(part.isFirst(), part.isLast(), part)));
+  }
 
 }

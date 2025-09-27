@@ -16,52 +16,52 @@ import com.aionemu.commons.scripting.metadata.OnClassUnload;
  */
 public class OnClassLoadUnloadListener implements ClassListener {
 
-	/**
-	 * Logger
-	 */
-	private static final Logger log = LoggerFactory.getLogger(OnClassLoadUnloadListener.class);
+  /**
+   * Logger
+   */
+  private static final Logger log = LoggerFactory.getLogger(OnClassLoadUnloadListener.class);
 
-	@Override
-	public void postLoad(Class<?>[] classes) {
-		for (Class<?> c : classes) {
-			doMethodInvoke(c.getDeclaredMethods(), OnClassLoad.class);
-		}
-	}
+  @Override
+  public void postLoad(Class<?>[] classes) {
+    for (Class<?> c : classes) {
+      doMethodInvoke(c.getDeclaredMethods(), OnClassLoad.class);
+    }
+  }
 
-	@Override
-	public void preUnload(Class<?>[] classes) {
-		for (Class<?> c : classes) {
-			doMethodInvoke(c.getDeclaredMethods(), OnClassUnload.class);
-		}
-	}
+  @Override
+  public void preUnload(Class<?>[] classes) {
+    for (Class<?> c : classes) {
+      doMethodInvoke(c.getDeclaredMethods(), OnClassUnload.class);
+    }
+  }
 
-	/**
-	 * Actually invokes method where given annotation class is present. Only static methods can be invoked
-	 * 
-	 * @param methods
-	 *          Methods to scan for annotations
-	 * @param annotationClass
-	 *          class of annotation to search for
-	 */
-	protected final void doMethodInvoke(Method[] methods, Class<? extends Annotation> annotationClass) {
-		for (Method m : methods) {
-			if (!Modifier.isStatic(m.getModifiers()))
-				continue;
+  /**
+   * Actually invokes method where given annotation class is present. Only static methods can be invoked
+   * 
+   * @param methods
+   *          Methods to scan for annotations
+   * @param annotationClass
+   *          class of annotation to search for
+   */
+  protected final void doMethodInvoke(Method[] methods, Class<? extends Annotation> annotationClass) {
+    for (Method m : methods) {
+      if (!Modifier.isStatic(m.getModifiers()))
+        continue;
 
-			boolean accessible = m.canAccess(null);
-			m.setAccessible(true);
+      boolean accessible = m.canAccess(null);
+      m.setAccessible(true);
 
-			if (m.getAnnotation(annotationClass) != null) {
-				try {
-					m.invoke(null);
-				} catch (IllegalAccessException e) {
-					log.error("Can't access method " + m.getName() + " of class " + m.getDeclaringClass().getName(), e);
-				} catch (InvocationTargetException e) {
-					log.error("Can't invoke method " + m.getName() + " of class " + m.getDeclaringClass().getName(), e);
-				}
-			}
+      if (m.getAnnotation(annotationClass) != null) {
+        try {
+          m.invoke(null);
+        } catch (IllegalAccessException e) {
+          log.error("Can't access method " + m.getName() + " of class " + m.getDeclaringClass().getName(), e);
+        } catch (InvocationTargetException e) {
+          log.error("Can't invoke method " + m.getName() + " of class " + m.getDeclaringClass().getName(), e);
+        }
+      }
 
-			m.setAccessible(accessible);
-		}
-	}
+      m.setAccessible(accessible);
+    }
+  }
 }

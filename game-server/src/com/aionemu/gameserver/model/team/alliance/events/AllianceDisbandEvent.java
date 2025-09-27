@@ -9,18 +9,18 @@ import com.aionemu.gameserver.model.team.common.events.PlayerLeavedEvent.LeaveRe
  */
 public class AllianceDisbandEvent extends AlwaysTrueTeamEvent {
 
-	private final PlayerAlliance alliance;
+  private final PlayerAlliance alliance;
 
-	/**
-	 * @param alliance
-	 */
-	public AllianceDisbandEvent(PlayerAlliance alliance) {
-		this.alliance = alliance;
-	}
+  /**
+   * @param alliance
+   */
+  public AllianceDisbandEvent(PlayerAlliance alliance) {
+    this.alliance = alliance;
+  }
 
-	@Override
-	public void handleEvent() {
-		alliance.forEach(player -> alliance.onEvent(new PlayerAllianceLeavedEvent(alliance, player, LeaveReson.DISBAND)));
-	}
+  @Override
+  public void handleEvent() {
+    alliance.forEach(player -> alliance.onEvent(new PlayerAllianceLeavedEvent(alliance, player, LeaveReson.DISBAND)));
+  }
 
 }

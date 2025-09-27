@@ -12,10 +12,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Bombs")
 public class Bombs {
 
-	@XmlElement(name = "bomb")
-	private BombTemplate bombTemplate;
+  @XmlElement(name = "bomb")
+  private BombTemplate bombTemplate;
 
-	public BombTemplate getBombTemplate() {
-		return bombTemplate;
-	}
+  public BombTemplate getBombTemplate() {
+    return bombTemplate;
+  }
 }

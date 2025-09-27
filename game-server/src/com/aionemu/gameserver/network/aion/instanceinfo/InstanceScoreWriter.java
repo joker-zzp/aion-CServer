@@ -10,18 +10,18 @@ import com.aionemu.gameserver.network.PacketWriteHelper;
  */
 public abstract class InstanceScoreWriter<T extends InstanceScore<?>> extends PacketWriteHelper {
 
-	protected final T instanceScore;
+  protected final T instanceScore;
 
-	public InstanceScoreWriter(T instanceScore) {
-		this.instanceScore = instanceScore;
-	}
+  public InstanceScoreWriter(T instanceScore) {
+    this.instanceScore = instanceScore;
+  }
 
-	public T getInstanceScore() {
-		return instanceScore;
-	}
+  public T getInstanceScore() {
+    return instanceScore;
+  }
 
-	@Override
-	public void writeMe(ByteBuffer buf) {
-	}
+  @Override
+  public void writeMe(ByteBuffer buf) {
+  }
 
 }

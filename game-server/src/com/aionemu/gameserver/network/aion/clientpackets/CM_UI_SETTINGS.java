@@ -14,40 +14,40 @@ import com.aionemu.gameserver.network.aion.AionConnection.State;
  */
 public class CM_UI_SETTINGS extends AionClientPacket {
 
-	private static final Logger log = LoggerFactory.getLogger(CM_UI_SETTINGS.class);
-	private byte settingsType;
-	private byte[] data;
-	@SuppressWarnings("unused")
-	private int size;
+  private static final Logger log = LoggerFactory.getLogger(CM_UI_SETTINGS.class);
+  private byte settingsType;
+  private byte[] data;
+  @SuppressWarnings("unused")
+  private int size;
 
-	public CM_UI_SETTINGS(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_UI_SETTINGS(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		settingsType = readC();
-		readH();
-		size = readUH();
-		data = readB(getRemainingBytes());
-	}
+  @Override
+  protected void readImpl() {
+    settingsType = readC();
+    readH();
+    size = readUH();
+    data = readB(getRemainingBytes());
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
 
-		switch (settingsType) {
-			case 0:
-				player.getPlayerSettings().setUiSettings(data);
-				break;
-			case 1:
-				player.getPlayerSettings().setShortcuts(data);
-				break;
-			case 2:
-				player.getPlayerSettings().setHouseBuddies(data);
-				break;
-			default:
-				log.warn(player + " sent unknown type of player settings: " + settingsType);
-		}
-	}
+    switch (settingsType) {
+      case 0:
+        player.getPlayerSettings().setUiSettings(data);
+        break;
+      case 1:
+        player.getPlayerSettings().setShortcuts(data);
+        break;
+      case 2:
+        player.getPlayerSettings().setHouseBuddies(data);
+        break;
+      default:
+        log.warn(player + " sent unknown type of player settings: " + settingsType);
+    }
+  }
 }

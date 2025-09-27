@@ -13,20 +13,20 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "StatsSet", propOrder = { "modifiers" })
 public class AbsoluteStatsTemplate {
 
-	@XmlElement(required = true)
-	protected ModifiersTemplate modifiers;
+  @XmlElement(required = true)
+  protected ModifiersTemplate modifiers;
 
-	@XmlAttribute(required = true)
-	protected int id;
+  @XmlAttribute(required = true)
+  protected int id;
 
-	public ModifiersTemplate getModifiers() {
-		return this.modifiers;
-	}
+  public ModifiersTemplate getModifiers() {
+    return this.modifiers;
+  }
 
-	/**
-	 * Gets the value of the id property.
-	 */
-	public int getId() {
-		return id;
-	}
+  /**
+   * Gets the value of the id property.
+   */
+  public int getId() {
+    return id;
+  }
 }

@@ -15,35 +15,35 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("vengeful_orb")
 public class VengefulOrbAI extends NpcAI {
 
-	private Future<?> skillTask;
+  private Future<?> skillTask;
 
-	public VengefulOrbAI(Npc owner) {
-		super(owner);
-	}
+  public VengefulOrbAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		skillTask = ThreadPoolManager.getInstance().schedule(new Runnable() {
-			@Override
-			public void run() {
-				if (!getOwner().isDead())
-					AIActions.useSkill(VengefulOrbAI.this, 21178);
-			}
-		}, 100);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    skillTask = ThreadPoolManager.getInstance().schedule(new Runnable() {
+      @Override
+      public void run() {
+        if (!getOwner().isDead())
+          AIActions.useSkill(VengefulOrbAI.this, 21178);
+      }
+    }, 100);
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		if (skillTemplate.getSkillId() == 21178)
-			getOwner().getController().delete();
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    if (skillTemplate.getSkillId() == 21178)
+      getOwner().getController().delete();
+  }
 
-	@Override
-	protected void handleDespawned() {
-		if (skillTask != null) {
-			skillTask.cancel(false);
-		}
-		super.handleDespawned();
-	}
+  @Override
+  protected void handleDespawned() {
+    if (skillTask != null) {
+      skillTask.cancel(false);
+    }
+    super.handleDespawned();
+  }
 }

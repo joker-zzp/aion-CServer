@@ -11,20 +11,20 @@ import com.aionemu.gameserver.services.SiegeService;
  */
 public class SM_INFLUENCE_RATIO extends AionServerPacket {
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		Influence inf = Influence.getInstance();
+  @Override
+  protected void writeImpl(AionConnection con) {
+    Influence inf = Influence.getInstance();
 
-		writeD(SiegeService.getInstance().getSecondsUntilNextFortressState());
-		writeF(inf.getElyosInfluenceRate());
-		writeF(inf.getAsmodianInfluenceRate());
-		writeF(inf.getBalaurInfluenceRate());
-		writeH(inf.getInfluenceRelevantWorldIds().size());
-		for (int worldId : inf.getInfluenceRelevantWorldIds()) {
-			writeD(worldId);
-			writeF(inf.getInfluence(worldId, SiegeRace.ELYOS));
-			writeF(inf.getInfluence(worldId, SiegeRace.ASMODIANS));
-			writeF(inf.getInfluence(worldId, SiegeRace.BALAUR));
-		}
-	}
+    writeD(SiegeService.getInstance().getSecondsUntilNextFortressState());
+    writeF(inf.getElyosInfluenceRate());
+    writeF(inf.getAsmodianInfluenceRate());
+    writeF(inf.getBalaurInfluenceRate());
+    writeH(inf.getInfluenceRelevantWorldIds().size());
+    for (int worldId : inf.getInfluenceRelevantWorldIds()) {
+      writeD(worldId);
+      writeF(inf.getInfluence(worldId, SiegeRace.ELYOS));
+      writeF(inf.getInfluence(worldId, SiegeRace.ASMODIANS));
+      writeF(inf.getInfluence(worldId, SiegeRace.BALAUR));
+    }
+  }
 }

@@ -12,17 +12,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "WorldRaidNpc")
 public class WorldRaidNpc {
 
-	@XmlAttribute(name = "npc_id", required = true)
-	private int npcId = 0;
-	@XmlAttribute(name = "death_msg_id")
-	private Integer deathMsgId = 0;
+  @XmlAttribute(name = "npc_id", required = true)
+  private int npcId = 0;
+  @XmlAttribute(name = "death_msg_id")
+  private Integer deathMsgId = 0;
 
-	public int getNpcId() {
-		return npcId;
-	}
+  public int getNpcId() {
+    return npcId;
+  }
 
-	public Integer getDeathMsgId() {
-		return deathMsgId;
-	}
+  public Integer getDeathMsgId() {
+    return deathMsgId;
+  }
 
 }

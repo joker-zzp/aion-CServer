@@ -15,13 +15,13 @@ import com.aionemu.gameserver.services.item.ItemService;
 @XmlType(name = "GiveItemOperation")
 public class GiveItemOperation extends QuestOperation {
 
-	@XmlAttribute(name = "item_id", required = true)
-	protected int itemId;
-	@XmlAttribute(required = true)
-	protected int count;
+  @XmlAttribute(name = "item_id", required = true)
+  protected int itemId;
+  @XmlAttribute(required = true)
+  protected int count;
 
-	@Override
-	public void doOperate(QuestEnv env) {
-		ItemService.addItem(env.getPlayer(), itemId, count, true);
-	}
+  @Override
+  public void doOperate(QuestEnv env) {
+    ItemService.addItem(env.getPlayer(), itemId, count, true);
+  }
 }

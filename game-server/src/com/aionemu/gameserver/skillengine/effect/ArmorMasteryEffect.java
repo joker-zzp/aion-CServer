@@ -20,21 +20,21 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "ArmorMasteryEffect")
 public class ArmorMasteryEffect extends BufEffect {
 
-	@XmlAttribute(name = "armor")
-	private ItemSubType subGroup;
+  @XmlAttribute(name = "armor")
+  private ItemSubType subGroup;
 
-	@Override
-	public void startEffect(Effect effect) {
-		if (change == null)
-			return;
+  @Override
+  public void startEffect(Effect effect) {
+    if (change == null)
+      return;
 
-		List<IStatFunction> modifiers = getModifiers(effect);
-		List<IStatFunction> masteryModifiers = new ArrayList<>();
-		for (IStatFunction modifier : modifiers) {
-			masteryModifiers.add(new StatArmorMasteryFunction(subGroup, modifier.getName(), modifier.getValue(), modifier.isBonus()));
-		}
-		if (masteryModifiers.size() > 0) {
-			effect.getEffected().getGameStats().addEffect(effect, masteryModifiers);
-		}
-	}
+    List<IStatFunction> modifiers = getModifiers(effect);
+    List<IStatFunction> masteryModifiers = new ArrayList<>();
+    for (IStatFunction modifier : modifiers) {
+      masteryModifiers.add(new StatArmorMasteryFunction(subGroup, modifier.getName(), modifier.getValue(), modifier.isBonus()));
+    }
+    if (masteryModifiers.size() > 0) {
+      effect.getEffected().getGameStats().addEffect(effect, masteryModifiers);
+    }
+  }
 }

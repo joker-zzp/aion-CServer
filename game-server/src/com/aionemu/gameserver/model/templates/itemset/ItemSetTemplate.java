@@ -18,41 +18,41 @@ import com.aionemu.gameserver.model.stats.calc.StatOwner;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ItemSetTemplate implements StatOwner {
 
-	@XmlElement(required = true)
-	protected List<ItemPart> itempart;
-	@XmlElement(required = true)
-	protected List<PartBonus> partbonus;
-	protected FullBonus fullbonus;
-	@XmlAttribute
-	protected String name;
-	@XmlAttribute
-	protected int id;
+  @XmlElement(required = true)
+  protected List<ItemPart> itempart;
+  @XmlElement(required = true)
+  protected List<PartBonus> partbonus;
+  protected FullBonus fullbonus;
+  @XmlAttribute
+  protected String name;
+  @XmlAttribute
+  protected int id;
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		if (fullbonus != null) {
-			// Set number of items to apply the full bonus
-			fullbonus.setNumberOfItems(itempart.size());
-		}
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    if (fullbonus != null) {
+      // Set number of items to apply the full bonus
+      fullbonus.setNumberOfItems(itempart.size());
+    }
+  }
 
-	public List<ItemPart> getItempart() {
-		return itempart;
-	}
+  public List<ItemPart> getItempart() {
+    return itempart;
+  }
 
-	public List<PartBonus> getPartbonus() {
-		return partbonus;
-	}
+  public List<PartBonus> getPartbonus() {
+    return partbonus;
+  }
 
-	public FullBonus getFullbonus() {
-		return fullbonus;
-	}
+  public FullBonus getFullbonus() {
+    return fullbonus;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
 }

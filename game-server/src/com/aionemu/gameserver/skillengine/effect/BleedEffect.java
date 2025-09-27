@@ -20,30 +20,30 @@ import com.aionemu.gameserver.skillengine.model.EffectReserved.ResourceType;
 @XmlType(name = "BleedEffect")
 public class BleedEffect extends AbstractOverTimeEffect {
 
-	@Override
-	public void calculate(Effect effect) {
-		super.calculate(effect, StatEnum.BLEED_RESISTANCE, null);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    super.calculate(effect, StatEnum.BLEED_RESISTANCE, null);
+  }
 
-	@Override
-	public void startEffect(final Effect effect) {
-		int valueWithDelta = calculateBaseValue(effect);
-		int critAddDmg = critAddDmg2 + critAddDmg1 * effect.getSkillLevel();
-		int finalDamage = AttackUtil.calculateMagicalOverTimeSkillResult(effect, valueWithDelta, element, position, false, critProbMod2,
-			critAddDmg);
-		effect.setReserveds(new EffectReserved(position, finalDamage, ResourceType.HP, true, false), true);
-		super.startEffect(effect, AbnormalState.BLEED);
-	}
+  @Override
+  public void startEffect(final Effect effect) {
+    int valueWithDelta = calculateBaseValue(effect);
+    int critAddDmg = critAddDmg2 + critAddDmg1 * effect.getSkillLevel();
+    int finalDamage = AttackUtil.calculateMagicalOverTimeSkillResult(effect, valueWithDelta, element, position, false, critProbMod2,
+      critAddDmg);
+    effect.setReserveds(new EffectReserved(position, finalDamage, ResourceType.HP, true, false), true);
+    super.startEffect(effect, AbnormalState.BLEED);
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		super.endEffect(effect, AbnormalState.BLEED);
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    super.endEffect(effect, AbnormalState.BLEED);
+  }
 
-	@Override
-	public void onPeriodicAction(Effect effect) {
-		Creature effected = effect.getEffected();
-		effected.getController().onAttack(effect, TYPE.DAMAGE, effect.getReserveds(position).getValue(), false, LOG.BLEED, hopType);
-		effected.getObserveController().notifyDotAttackedObservers(effect.getEffector(), effect);
-	}
+  @Override
+  public void onPeriodicAction(Effect effect) {
+    Creature effected = effect.getEffected();
+    effected.getController().onAttack(effect, TYPE.DAMAGE, effect.getReserveds(position).getValue(), false, LOG.BLEED, hopType);
+    effected.getObserveController().notifyDotAttackedObservers(effect.getEffector(), effect);
+  }
 }

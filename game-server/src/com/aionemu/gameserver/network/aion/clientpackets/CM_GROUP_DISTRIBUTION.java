@@ -15,44 +15,44 @@ import com.aionemu.gameserver.restrictions.PlayerRestrictions;
  */
 public class CM_GROUP_DISTRIBUTION extends AionClientPacket {
 
-	private long amount;
-	private byte partyType;
+  private long amount;
+  private byte partyType;
 
-	public CM_GROUP_DISTRIBUTION(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_GROUP_DISTRIBUTION(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		amount = readQ();
-		partyType = readC();
-	}
+  @Override
+  protected void readImpl() {
+    amount = readQ();
+    partyType = readC();
+  }
 
-	@Override
-	protected void runImpl() {
-		if (amount < 2)
-			return;
+  @Override
+  protected void runImpl() {
+    if (amount < 2)
+      return;
 
-		Player player = getConnection().getActivePlayer();
+    Player player = getConnection().getActivePlayer();
 
-		if (!PlayerRestrictions.canTrade(player))
-			return;
+    if (!PlayerRestrictions.canTrade(player))
+      return;
 
-		switch (partyType) {
-			case 1:
-				if (player.isInAlliance()) {
-					PlayerAllianceService.distributeKinahInGroup(player, amount);
-				} else {
-					PlayerGroupService.distributeKinah(player, amount);
-				}
-				break;
-			case 2:
-				PlayerAllianceService.distributeKinah(player, amount);
-				break;
-			case 3:
-				LeagueService.distributeKinah(player, amount);
-				break;
-		}
-	}
+    switch (partyType) {
+      case 1:
+        if (player.isInAlliance()) {
+          PlayerAllianceService.distributeKinahInGroup(player, amount);
+        } else {
+          PlayerGroupService.distributeKinah(player, amount);
+        }
+        break;
+      case 2:
+        PlayerAllianceService.distributeKinah(player, amount);
+        break;
+      case 3:
+        LeagueService.distributeKinah(player, amount);
+        break;
+    }
+  }
 
 }

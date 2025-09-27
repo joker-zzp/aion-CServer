@@ -12,31 +12,31 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "RoadExit")
 public class RoadExit {
 
-	@XmlAttribute(name = "mapid")
-	private int mapId;
+  @XmlAttribute(name = "mapid")
+  private int mapId;
 
-	@XmlAttribute(name = "x")
-	private float x;
+  @XmlAttribute(name = "x")
+  private float x;
 
-	@XmlAttribute(name = "y")
-	private float y;
+  @XmlAttribute(name = "y")
+  private float y;
 
-	@XmlAttribute(name = "z")
-	private float z;
+  @XmlAttribute(name = "z")
+  private float z;
 
-	public int getMap() {
-		return mapId;
-	}
+  public int getMap() {
+    return mapId;
+  }
 
-	public float getX() {
-		return x;
-	}
+  public float getX() {
+    return x;
+  }
 
-	public float getY() {
-		return y;
-	}
+  public float getY() {
+    return y;
+  }
 
-	public float getZ() {
-		return z;
-	}
+  public float getZ() {
+    return z;
+  }
 }

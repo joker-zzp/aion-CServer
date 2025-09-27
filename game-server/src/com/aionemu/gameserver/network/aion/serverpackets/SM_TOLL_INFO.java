@@ -8,14 +8,14 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_TOLL_INFO extends AionServerPacket {
 
-	private long tollCount;
+  private long tollCount;
 
-	public SM_TOLL_INFO(long tollCount) {
-		this.tollCount = tollCount;
-	}
+  public SM_TOLL_INFO(long tollCount) {
+    this.tollCount = tollCount;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeQ(tollCount);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeQ(tollCount);
+  }
 }

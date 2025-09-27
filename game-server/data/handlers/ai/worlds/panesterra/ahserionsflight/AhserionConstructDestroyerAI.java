@@ -20,60 +20,60 @@ import com.aionemu.gameserver.world.WorldPosition;
 @AIName("ahserion_construct_destroyer")
 public class AhserionConstructDestroyerAI extends AhserionAggressiveNpcAI {
 
-	private final AtomicBoolean isActivated = new AtomicBoolean();
+  private final AtomicBoolean isActivated = new AtomicBoolean();
 
-	public AhserionConstructDestroyerAI(Npc owner) {
-		super(owner);
-	}
+  public AhserionConstructDestroyerAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		if (getSpawnTemplate().getHandlerType() == SpawnHandlerType.ATTACKER) {
-			getOwner().getController().addTask(TaskId.DESPAWN,
-				ThreadPoolManager.getInstance().schedule(() -> getOwner().getController().deleteIfAliveOrCancelRespawn(), 9, TimeUnit.MINUTES));
-		}
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    if (getSpawnTemplate().getHandlerType() == SpawnHandlerType.ATTACKER) {
+      getOwner().getController().addTask(TaskId.DESPAWN,
+        ThreadPoolManager.getInstance().schedule(() -> getOwner().getController().deleteIfAliveOrCancelRespawn(), 9, TimeUnit.MINUTES));
+    }
+  }
 
-	@Override
-	protected void handleCreatureAggro(Creature creature) {
-		super.handleCreatureAggro(creature);
-		if (isActivated.compareAndSet(false, true)) {
-			WorldPosition p = getPosition();
-			spawn(297191, p.getX() + 5, p.getY() - 5, p.getZ() + 0.5f, (byte) 0); // Ahserion Troopers Assassin
-			spawn(297191, p.getX() - 5, p.getY() + 5, p.getZ() + 0.5f, (byte) 0); // Ahserion Troopers Assassin
-		}
-	}
+  @Override
+  protected void handleCreatureAggro(Creature creature) {
+    super.handleCreatureAggro(creature);
+    if (isActivated.compareAndSet(false, true)) {
+      WorldPosition p = getPosition();
+      spawn(297191, p.getX() + 5, p.getY() - 5, p.getZ() + 0.5f, (byte) 0); // Ahserion Troopers Assassin
+      spawn(297191, p.getX() - 5, p.getY() + 5, p.getZ() + 0.5f, (byte) 0); // Ahserion Troopers Assassin
+    }
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		if (skillTemplate.getSkillId() == 17446 && skillLevel == 57)
-			addHateToRndTarget();
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    if (skillTemplate.getSkillId() == 17446 && skillLevel == 57)
+      addHateToRndTarget();
+  }
 
-	private void despawnAssassins() {
-		getKnownList().forEachNpc(npc -> {
-			if (npc.getNpcId() == 297191)
-				npc.getController().deleteIfAliveOrCancelRespawn();
-		});
-	}
+  private void despawnAssassins() {
+    getKnownList().forEachNpc(npc -> {
+      if (npc.getNpcId() == 297191)
+        npc.getController().deleteIfAliveOrCancelRespawn();
+    });
+  }
 
-	@Override
-	protected void handleBackHome() {
-		despawnAssassins();
-		isActivated.set(false);
-		super.handleBackHome();
-	}
+  @Override
+  protected void handleBackHome() {
+    despawnAssassins();
+    isActivated.set(false);
+    super.handleBackHome();
+  }
 
-	@Override
-	protected void handleDied() {
-		despawnAssassins();
-		super.handleDied();
-	}
+  @Override
+  protected void handleDied() {
+    despawnAssassins();
+    super.handleDied();
+  }
 
-	@Override
-	protected void handleDespawned() {
-		despawnAssassins();
-		super.handleDespawned();
-	}
+  @Override
+  protected void handleDespawned() {
+    despawnAssassins();
+    super.handleDespawned();
+  }
 }

@@ -23,32 +23,32 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
  */
 public class Fsc extends AdminCommand {
 
-	public Fsc() {
-		super("fsc");
-	}
+  public Fsc() {
+    super("fsc");
+  }
 
-	@Override
-	public void execute(Player player, String... params) {
-		if (params.length < 3) {
-			PacketSendUtility.sendMessage(player, "//fsc命令参数数量不正确");
-			return;
-		}
+  @Override
+  public void execute(Player player, String... params) {
+    if (params.length < 3) {
+      PacketSendUtility.sendMessage(player, "//fsc命令参数数量不正确");
+      return;
+    }
 
-		int id = Integer.decode(params[0]);
-		String format = params[1];
+    int id = Integer.decode(params[0]);
+    String format = params[1];
 
-		SM_CUSTOM_PACKET packet = new SM_CUSTOM_PACKET(id);
+    SM_CUSTOM_PACKET packet = new SM_CUSTOM_PACKET(id);
 
-		int i = 0;
-		for (char c : format.toCharArray()) {
-			packet.addElement(PacketElementType.getByCode(c), params[i + 2]);
-			i++;
-		}
-		PacketSendUtility.sendPacket(player, packet);
-	}
+    int i = 0;
+    for (char c : format.toCharArray()) {
+      packet.addElement(PacketElementType.getByCode(c), params[i + 2]);
+      i++;
+    }
+    PacketSendUtility.sendPacket(player, packet);
+  }
 
-	@Override
-	public void info(Player player, String message) {
-		PacketSendUtility.sendMessage(player, "//fsc命令参数数量不正确");
-	}
+  @Override
+  public void info(Player player, String message) {
+    PacketSendUtility.sendMessage(player, "//fsc命令参数数量不正确");
+  }
 }

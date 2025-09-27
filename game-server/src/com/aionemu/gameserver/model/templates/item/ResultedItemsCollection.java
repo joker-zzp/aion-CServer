@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ResultedItemsCollection")
 public class ResultedItemsCollection {
 
-	@XmlElement(name = "item")
-	private List<ResultedItem> items;
-	@XmlElement(name = "random_item")
-	private List<RandomItem> randomItems;
+  @XmlElement(name = "item")
+  private List<ResultedItem> items;
+  @XmlElement(name = "random_item")
+  private List<RandomItem> randomItems;
 
-	public List<ResultedItem> getItems() {
-		return items != null ? items : Collections.emptyList();
-	}
+  public List<ResultedItem> getItems() {
+    return items != null ? items : Collections.emptyList();
+  }
 
-	public List<RandomItem> getRandomItems() {
-		return randomItems != null ? randomItems : Collections.emptyList();
-	}
+  public List<RandomItem> getRandomItems() {
+    return randomItems != null ? randomItems : Collections.emptyList();
+  }
 }

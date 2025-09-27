@@ -16,63 +16,63 @@ import com.aionemu.gameserver.services.QuestService;
  */
 public class _21061NewOrder extends AbstractQuestHandler {
 
-	public _21061NewOrder() {
-		super(21061);
-	}
+  public _21061NewOrder() {
+    super(21061);
+  }
 
-	@Override
-	public void register() {
-		qe.registerQuestItem(182207850, questId);
-		qe.registerQuestNpc(799360).addOnTalkEvent(questId);
-		qe.registerQuestNpc(216516).addOnKillEvent(questId);
-	}
+  @Override
+  public void register() {
+    qe.registerQuestItem(182207850, questId);
+    qe.registerQuestNpc(799360).addOnTalkEvent(questId);
+    qe.registerQuestNpc(216516).addOnKillEvent(questId);
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		int dialogActionId = env.getDialogActionId();
-		int targetId = env.getTargetId();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    int dialogActionId = env.getDialogActionId();
+    int targetId = env.getTargetId();
 
-		if (qs == null || qs.isStartable()) {
-			if (targetId == 0) {
-				if (dialogActionId == QUEST_ACCEPT_1) {
-					QuestService.startQuest(env);
-					return closeDialogWindow(env);
-				}
-			}
-		} else if (qs.getStatus() == QuestStatus.START) {
-			if (targetId == 799360) {
-				if (dialogActionId == QUEST_SELECT) {
-					return sendQuestDialog(env, 1011);
-				} else if (dialogActionId == SETPRO1) {
-					return defaultCloseDialog(env, 0, 1);
-				}
-			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 799360) {
-				if (dialogActionId == USE_OBJECT) {
-					return sendQuestDialog(env, 10002);
-				}
-				removeQuestItem(env, 182207850, 1);
-				return sendQuestEndDialog(env);
-			}
-		}
-		return false;
-	}
+    if (qs == null || qs.isStartable()) {
+      if (targetId == 0) {
+        if (dialogActionId == QUEST_ACCEPT_1) {
+          QuestService.startQuest(env);
+          return closeDialogWindow(env);
+        }
+      }
+    } else if (qs.getStatus() == QuestStatus.START) {
+      if (targetId == 799360) {
+        if (dialogActionId == QUEST_SELECT) {
+          return sendQuestDialog(env, 1011);
+        } else if (dialogActionId == SETPRO1) {
+          return defaultCloseDialog(env, 0, 1);
+        }
+      }
+    } else if (qs.getStatus() == QuestStatus.REWARD) {
+      if (targetId == 799360) {
+        if (dialogActionId == USE_OBJECT) {
+          return sendQuestDialog(env, 10002);
+        }
+        removeQuestItem(env, 182207850, 1);
+        return sendQuestEndDialog(env);
+      }
+    }
+    return false;
+  }
 
-	@Override
-	public boolean onKillEvent(QuestEnv env) {
-		return defaultOnKillEvent(env, 216516, 1, true);
-	}
+  @Override
+  public boolean onKillEvent(QuestEnv env) {
+    return defaultOnKillEvent(env, 216516, 1, true);
+  }
 
-	@Override
-	public HandlerResult onItemUseEvent(QuestEnv env, Item item) {
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (qs == null || qs.isStartable()) {
-			return HandlerResult.fromBoolean(sendQuestDialog(env, 4));
-		}
-		return HandlerResult.FAILED;
-	}
+  @Override
+  public HandlerResult onItemUseEvent(QuestEnv env, Item item) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    if (qs == null || qs.isStartable()) {
+      return HandlerResult.fromBoolean(sendQuestDialog(env, 4));
+    }
+    return HandlerResult.FAILED;
+  }
 }

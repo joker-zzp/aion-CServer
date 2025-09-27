@@ -15,31 +15,31 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("gravity")
 public class GravityAI extends NpcAI {
 
-	private Future<?> task;
+  private Future<?> task;
 
-	public GravityAI(Npc owner) {
-		super(owner);
-	}
+  public GravityAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		task = ThreadPoolManager.getInstance().scheduleAtFixedRate(() -> AIActions.useSkill(GravityAI.this, 20738), 0, 3250);
-		ThreadPoolManager.getInstance().schedule(() -> AIActions.deleteOwner(GravityAI.this), 20000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    task = ThreadPoolManager.getInstance().scheduleAtFixedRate(() -> AIActions.useSkill(GravityAI.this, 20738), 0, 3250);
+    ThreadPoolManager.getInstance().schedule(() -> AIActions.deleteOwner(GravityAI.this), 20000);
+  }
 
-	@Override
-	public void handleDespawned() {
-		if (task != null)
-			task.cancel(true);
-		super.handleDespawned();
-	}
+  @Override
+  public void handleDespawned() {
+    if (task != null)
+      task.cancel(true);
+    super.handleDespawned();
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
+      default -> super.ask(question);
+    };
+  }
 }

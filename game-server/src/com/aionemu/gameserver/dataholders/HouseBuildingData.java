@@ -20,28 +20,28 @@ import com.aionemu.gameserver.model.templates.housing.Building;
 @XmlType(name = "", propOrder = { "buildings" })
 public class HouseBuildingData {
 
-	@XmlElement(name = "building")
-	private List<Building> buildings;
+  @XmlElement(name = "building")
+  private List<Building> buildings;
 
-	@XmlTransient
-	private Map<Integer, Building> buildingById = new HashMap<>();
+  @XmlTransient
+  private Map<Integer, Building> buildingById = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		if (buildings == null)
-			return;
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    if (buildings == null)
+      return;
 
-		for (Building building : buildings) {
-			if (buildingById.put(building.getId(), building) != null)
-				throw new IllegalArgumentException("Duplicate building ID " + building.getId());
-		}
-		buildings = null;
-	}
+    for (Building building : buildings) {
+      if (buildingById.put(building.getId(), building) != null)
+        throw new IllegalArgumentException("Duplicate building ID " + building.getId());
+    }
+    buildings = null;
+  }
 
-	public Building getBuilding(int buildingId) {
-		return buildingById.get(buildingId);
-	}
+  public Building getBuilding(int buildingId) {
+    return buildingById.get(buildingId);
+  }
 
-	public int size() {
-		return buildingById.size();
-	}
+  public int size() {
+    return buildingById.size();
+  }
 }

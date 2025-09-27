@@ -12,13 +12,13 @@ import ai.GeneralNpcAI;
 @AIName("wave_event_bomber")
 public class WaveEventBomberAI extends GeneralNpcAI {
 
-	public WaveEventBomberAI(Npc owner) {
-		super(owner);
-	}
+  public WaveEventBomberAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		PacketSendUtility.broadcastMessage(getOwner(), 1501312, 4000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    PacketSendUtility.broadcastMessage(getOwner(), 1501312, 4000);
+  }
 }

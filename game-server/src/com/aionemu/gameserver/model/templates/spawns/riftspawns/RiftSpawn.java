@@ -18,23 +18,23 @@ import com.aionemu.gameserver.model.templates.spawns.Spawn;
 @XmlType(name = "RiftSpawn")
 public class RiftSpawn {
 
-	@XmlAttribute(name = "id")
-	private int id;
-	@XmlAttribute(name = "world")
-	private int world;
-	@XmlElement(name = "spawn")
-	private List<Spawn> spawns = new ArrayList<>();
+  @XmlAttribute(name = "id")
+  private int id;
+  @XmlAttribute(name = "world")
+  private int world;
+  @XmlElement(name = "spawn")
+  private List<Spawn> spawns = new ArrayList<>();
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public int getWorldId() {
-		return world;
-	}
+  public int getWorldId() {
+    return world;
+  }
 
-	public List<Spawn> getSpawns() {
-		return spawns;
-	}
+  public List<Spawn> getSpawns() {
+    return spawns;
+  }
 
 }

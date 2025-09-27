@@ -11,29 +11,29 @@ import com.aionemu.gameserver.model.gameobjects.Npc;
 @AIName("homing")
 public class HomingNpcAI extends GeneralNpcAI {
 
-	public HomingNpcAI(Npc owner) {
-		super(owner);
-	}
+  public HomingNpcAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void think() {
-		// homings are not thinking to return :)
-	}
+  @Override
+  public void think() {
+    // homings are not thinking to return :)
+  }
 
-	@Override
-	public AttackIntention chooseAttackIntention() {
-		if (getTarget() != null && chooseSkillAttack(false))
-			return AttackIntention.SKILL_ATTACK;
+  @Override
+  public AttackIntention chooseAttackIntention() {
+    if (getTarget() != null && chooseSkillAttack(false))
+      return AttackIntention.SKILL_ATTACK;
 
-		return AttackIntention.SIMPLE_ATTACK;
-	}
+    return AttackIntention.SIMPLE_ATTACK;
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
+      default -> super.ask(question);
+    };
+  }
 
 }

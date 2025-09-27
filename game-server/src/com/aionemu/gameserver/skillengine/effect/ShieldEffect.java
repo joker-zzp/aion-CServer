@@ -16,40 +16,40 @@ import com.aionemu.gameserver.skillengine.model.ShieldType;
 @XmlType(name = "ShieldEffect")
 public class ShieldEffect extends EffectTemplate {
 
-	@XmlAttribute
-	protected int hitdelta;
-	@XmlAttribute
-	protected int hitvalue;
-	@XmlAttribute
-	protected boolean percent;
-	@XmlAttribute
-	protected int radius = 0;
-	@XmlAttribute
-	protected int minradius = 0;
+  @XmlAttribute
+  protected int hitdelta;
+  @XmlAttribute
+  protected int hitvalue;
+  @XmlAttribute
+  protected boolean percent;
+  @XmlAttribute
+  protected int radius = 0;
+  @XmlAttribute
+  protected int minradius = 0;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		// check for condition race, skillId: 10317,10318, implemented as RaceCondition
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    // check for condition race, skillId: 10317,10318, implemented as RaceCondition
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void startEffect(Effect effect) {
-		int valueWithDelta = calculateBaseValue(effect);
-		int hitValueWithDelta = hitvalue + hitdelta * effect.getSkillLevel();
+  @Override
+  public void startEffect(Effect effect) {
+    int valueWithDelta = calculateBaseValue(effect);
+    int hitValueWithDelta = hitvalue + hitdelta * effect.getSkillLevel();
 
-		AttackShieldObserver asObserver = new AttackShieldObserver(hitValueWithDelta, valueWithDelta, percent, effect, hitType, getType(), hitTypeProb);
-		effect.addObserver(effect.getEffected(), asObserver);
-		effect.getEffected().getEffectController().setUnderNormalShield(true);
-	}
+    AttackShieldObserver asObserver = new AttackShieldObserver(hitValueWithDelta, valueWithDelta, percent, effect, hitType, getType(), hitTypeProb);
+    effect.addObserver(effect.getEffected(), asObserver);
+    effect.getEffected().getEffectController().setUnderNormalShield(true);
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		effect.getEffected().getEffectController().setUnderNormalShield(false);
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    effect.getEffected().getEffectController().setUnderNormalShield(false);
+  }
 
-	public ShieldType getType() {
-		return ShieldType.NORMAL;
-	}
+  public ShieldType getType() {
+    return ShieldType.NORMAL;
+  }
 
 }

@@ -12,32 +12,32 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_TELEPORT_LOC extends AionServerPacket {
 
-	private byte portAnimation;
-	private int mapId;
-	private int instanceId;
-	private float x, y, z;
-	private byte heading;
-	private boolean isInstance;
+  private byte portAnimation;
+  private int mapId;
+  private int instanceId;
+  private float x, y, z;
+  private byte heading;
+  private boolean isInstance;
 
-	public SM_TELEPORT_LOC(int mapId, int instanceId, float x, float y, float z, byte heading, TeleportAnimation portAnimation) {
-		this.isInstance = DataManager.WORLD_MAPS_DATA.getTemplate(mapId).isInstance();
-		this.instanceId = instanceId;
-		this.mapId = mapId;
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.heading = heading;
-		this.portAnimation = portAnimation.getId();
-	}
+  public SM_TELEPORT_LOC(int mapId, int instanceId, float x, float y, float z, byte heading, TeleportAnimation portAnimation) {
+    this.isInstance = DataManager.WORLD_MAPS_DATA.getTemplate(mapId).isInstance();
+    this.instanceId = instanceId;
+    this.mapId = mapId;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.heading = heading;
+    this.portAnimation = portAnimation.getId();
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(portAnimation);
-		writeD(mapId);// new 4.3 NA -->old //writeH(mapId & 0xFFFF);
-		writeD(isInstance ? instanceId : mapId); // mapId | instanceId
-		writeF(x);
-		writeF(y);
-		writeF(z);
-		writeC(heading);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(portAnimation);
+    writeD(mapId);// new 4.3 NA -->old //writeH(mapId & 0xFFFF);
+    writeD(isInstance ? instanceId : mapId); // mapId | instanceId
+    writeF(x);
+    writeF(y);
+    writeF(z);
+    writeC(heading);
+  }
 }

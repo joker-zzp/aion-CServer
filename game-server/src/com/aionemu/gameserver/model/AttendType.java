@@ -8,17 +8,17 @@ import javax.xml.bind.annotation.XmlEnum;
 @XmlEnum
 public enum AttendType {
 
-	DAILY(0),
-	ANNIVERSARY(1),
-	CUMULATIVE(2);
+  DAILY(0),
+  ANNIVERSARY(1),
+  CUMULATIVE(2);
 
-	private int id;
+  private int id;
 
-	AttendType(int id) {
-		this.id = id;
-	}
+  AttendType(int id) {
+    this.id = id;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 }

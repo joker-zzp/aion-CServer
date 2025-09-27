@@ -8,22 +8,22 @@ import com.aionemu.gameserver.model.Race;
  */
 public class DredgionRoom {
 
-	private final int roomId;
-	private int state = 0xFF;
+  private final int roomId;
+  private int state = 0xFF;
 
-	public DredgionRoom(int roomId) {
-		this.roomId = roomId;
-	}
+  public DredgionRoom(int roomId) {
+    this.roomId = roomId;
+  }
 
-	public int getRoomId() {
-		return roomId;
-	}
+  public int getRoomId() {
+    return roomId;
+  }
 
-	public void captureRoom(Race race) {
-		state = race == Race.ASMODIANS ? 0x01 : 0x00;
-	}
+  public void captureRoom(Race race) {
+    state = race == Race.ASMODIANS ? 0x01 : 0x00;
+  }
 
-	public int getState() {
-		return state;
-	}
+  public int getState() {
+    return state;
+  }
 }

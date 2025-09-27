@@ -12,13 +12,13 @@ import ai.GeneralNpcAI;
 @AIName("generalrunner")
 public class WalkGeneralRunnerAI extends GeneralNpcAI {
 
-	public WalkGeneralRunnerAI(Npc owner) {
-		super(owner);
-	}
+  public WalkGeneralRunnerAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleMoveArrived() {
-		super.handleMoveArrived();
-		getOwner().setState(CreatureState.WEAPON_EQUIPPED);
-	}
+  @Override
+  protected void handleMoveArrived() {
+    super.handleMoveArrived();
+    getOwner().setState(CreatureState.WEAPON_EQUIPPED);
+  }
 }

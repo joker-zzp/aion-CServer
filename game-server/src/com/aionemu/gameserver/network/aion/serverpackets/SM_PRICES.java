@@ -9,11 +9,11 @@ import com.aionemu.gameserver.services.trade.PricesService;
  */
 public class SM_PRICES extends AionServerPacket {
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(PricesService.getGlobalPrices(con.getActivePlayer().getRace())); // Display Buying Price
-																																						// %
-		writeC(PricesService.getGlobalPricesModifier()); // Buying Modified Price %
-		writeC(PricesService.getTaxes(con.getActivePlayer().getRace())); // Tax = -100 + C %
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(PricesService.getGlobalPrices(con.getActivePlayer().getRace())); // Display Buying Price
+                                                                            // %
+    writeC(PricesService.getGlobalPricesModifier()); // Buying Modified Price %
+    writeC(PricesService.getTaxes(con.getActivePlayer().getRace())); // Tax = -100 + C %
+  }
 }

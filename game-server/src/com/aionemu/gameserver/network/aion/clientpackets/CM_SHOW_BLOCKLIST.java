@@ -13,19 +13,19 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_BLOCK_LIST;
  */
 public class CM_SHOW_BLOCKLIST extends AionClientPacket {
 
-	public CM_SHOW_BLOCKLIST(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_SHOW_BLOCKLIST(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
+  @Override
+  protected void readImpl() {
 
-	}
+  }
 
-	@Override
-	protected void runImpl() {
-		sendPacket(new SM_BLOCK_LIST());
+  @Override
+  protected void runImpl() {
+    sendPacket(new SM_BLOCK_LIST());
 
-	}
+  }
 
 }

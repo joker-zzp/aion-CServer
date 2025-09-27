@@ -33,213 +33,213 @@ import com.aionemu.gameserver.utils.xml.JAXBUtil;
  */
 public class Wish extends ConsoleCommand {
 
-	public Wish() {
-		super("wish", "Spawns npcs and adds items.");
+  public Wish() {
+    super("wish", "Spawns npcs and adds items.");
 
-		// @formatter:off
-		setSyntaxInfo(
-			"<npc name> - Spawns the specified npc on your targets position.",
-			"<count> <item name> - Adds the specified item to your target.",
-			"<item name> <enchant> - Adds the specified item with the enchant level to your target."
-		);
-		// @formatter:on
-	}
+    // @formatter:off
+    setSyntaxInfo(
+      "<npc name> - Spawns the specified npc on your targets position.",
+      "<count> <item name> - Adds the specified item to your target.",
+      "<item name> <enchant> - Adds the specified item with the enchant level to your target."
+    );
+    // @formatter:on
+  }
 
-	@Override
-	public void execute(Player admin, String... params) {
-		if (params.length == 0) {
-			sendInfo(admin);
-			return;
-		}
+  @Override
+  public void execute(Player admin, String... params) {
+    if (params.length == 0) {
+      sendInfo(admin);
+      return;
+    }
 
-		if (params.length == 1) { // spawn npc
-			String npcName = params[0];
-			File xml = new File("./data/handlers/consolecommands/data/npcs.xml");
-			NpcData data = JAXBUtil.deserialize(xml, NpcData.class);
-			NpcTemplate npcTemplate = data.getNpcTemplate(npcName);
+    if (params.length == 1) { // spawn npc
+      String npcName = params[0];
+      File xml = new File("./data/handlers/consolecommands/data/npcs.xml");
+      NpcData data = JAXBUtil.deserialize(xml, NpcData.class);
+      NpcTemplate npcTemplate = data.getNpcTemplate(npcName);
 
-			if (npcTemplate == null) {
-				sendInfo(admin, "There is no template with this name");
-				return;
-			}
-			int npcId = npcTemplate.getTemplateId();
-			SpawnTemplate spawn = SpawnEngine.newSpawn(admin.getWorldId(), npcId, admin.getX(), admin.getY(), admin.getZ(), admin.getHeading(), 0);
-			VisibleObject visibleObject = SpawnEngine.spawnObject(spawn, admin.getInstanceId());
-			if (visibleObject == null) {
-				sendInfo(admin, "Spawn id " + npcId + " was not found!");
-				return;
-			}
+      if (npcTemplate == null) {
+        sendInfo(admin, "There is no template with this name");
+        return;
+      }
+      int npcId = npcTemplate.getTemplateId();
+      SpawnTemplate spawn = SpawnEngine.newSpawn(admin.getWorldId(), npcId, admin.getX(), admin.getY(), admin.getZ(), admin.getHeading(), 0);
+      VisibleObject visibleObject = SpawnEngine.spawnObject(spawn, admin.getInstanceId());
+      if (visibleObject == null) {
+        sendInfo(admin, "Spawn id " + npcId + " was not found!");
+        return;
+      }
 
-			String objectName = visibleObject.getObjectTemplate().getName();
-			sendInfo(admin, objectName + " spawned");
-		} else { // add item
-			if (!(admin.getTarget() instanceof Player player)) {
-				PacketSendUtility.sendPacket(admin, SM_SYSTEM_MESSAGE.STR_INVALID_TARGET());
-				return;
-			}
+      String objectName = visibleObject.getObjectTemplate().getName();
+      sendInfo(admin, objectName + " spawned");
+    } else { // add item
+      if (!(admin.getTarget() instanceof Player player)) {
+        PacketSendUtility.sendPacket(admin, SM_SYSTEM_MESSAGE.STR_INVALID_TARGET());
+        return;
+      }
 
-			String itemName = params[0];
-			long addCount = 1;
-			int itemId;
-			int enchant = 0;
-			try {
-				addCount = Integer.parseInt(params[0]);
-				itemName = params[1];
-			} catch (NumberFormatException e) {
-				try {
-					enchant = Integer.parseInt(params[1]);
-				} catch (NumberFormatException e2) {
-				}
-			}
+      String itemName = params[0];
+      long addCount = 1;
+      int itemId;
+      int enchant = 0;
+      try {
+        addCount = Integer.parseInt(params[0]);
+        itemName = params[1];
+      } catch (NumberFormatException e) {
+        try {
+          enchant = Integer.parseInt(params[1]);
+        } catch (NumberFormatException e2) {
+        }
+      }
 
-			File xml = new File("./data/handlers/consolecommands/data/items.xml");
-			ItemData data = JAXBUtil.deserialize(xml, ItemData.class);
-			ItemTemplate itemTemplate = data.getItemTemplate(itemName);
+      File xml = new File("./data/handlers/consolecommands/data/items.xml");
+      ItemData data = JAXBUtil.deserialize(xml, ItemData.class);
+      ItemTemplate itemTemplate = data.getItemTemplate(itemName);
 
-			if (itemTemplate != null) {
-				itemId = itemTemplate.getTemplateId();
-				if (!AdminService.getInstance().canOperate(admin, player, itemId, "command ///wish"))
-					return;
+      if (itemTemplate != null) {
+        itemId = itemTemplate.getTemplateId();
+        if (!AdminService.getInstance().canOperate(admin, player, itemId, "command ///wish"))
+          return;
 
-				long addedCount;
-				if (enchant > 0) {
-					Item newItem = ItemFactory.newItem(itemId);
+        long addedCount;
+        if (enchant > 0) {
+          Item newItem = ItemFactory.newItem(itemId);
 
-					if (newItem == null)
-						return;
-					enchant = Math.min(enchant, 255);
-					if (newItem.getItemTemplate().getEquipmentType() != EquipType.PLUME) {
-						if (newItem.getItemTemplate().canTune() && newItem.getItemTemplate().getMaxEnchantBonus() > 0)
-							enchant = Math.min(enchant, newItem.getItemTemplate().getMaxEnchantLevel());
-						newItem.setEnchantLevel(enchant);
-						if (enchant > newItem.getItemTemplate().getMaxEnchantLevel()) {
-							newItem.setAmplified(true);
-							if (enchant >= 20)
-								newItem.setBuffSkill(EnchantService.getEquipBuff(newItem));
-						}
-					} else {
-						newItem.setTempering(enchant);
-					}
-					addedCount = addCount - ItemService.addItem(player, newItem);
-				} else {
-					addedCount = addCount - ItemService.addItem(player, itemId, addCount, true);
-				}
+          if (newItem == null)
+            return;
+          enchant = Math.min(enchant, 255);
+          if (newItem.getItemTemplate().getEquipmentType() != EquipType.PLUME) {
+            if (newItem.getItemTemplate().canTune() && newItem.getItemTemplate().getMaxEnchantBonus() > 0)
+              enchant = Math.min(enchant, newItem.getItemTemplate().getMaxEnchantLevel());
+            newItem.setEnchantLevel(enchant);
+            if (enchant > newItem.getItemTemplate().getMaxEnchantLevel()) {
+              newItem.setAmplified(true);
+              if (enchant >= 20)
+                newItem.setBuffSkill(EnchantService.getEquipBuff(newItem));
+            }
+          } else {
+            newItem.setTempering(enchant);
+          }
+          addedCount = addCount - ItemService.addItem(player, newItem);
+        } else {
+          addedCount = addCount - ItemService.addItem(player, itemId, addCount, true);
+        }
 
-				if (addedCount <= 0) {
-					sendInfo(admin, "Item couldn't be added");
-				} else {
-					if (!admin.equals(player)) {
-						sendInfo(admin, "You gave " + addedCount + " " + ChatUtil.item(itemId) + " to " + player.getName() + ".");
-						sendInfo(player, "You received " + addedCount + " " + ChatUtil.item(itemId) + " from " + admin.getName() + ".");
-					}
-				}
-			}
-		}
-	}
+        if (addedCount <= 0) {
+          sendInfo(admin, "Item couldn't be added");
+        } else {
+          if (!admin.equals(player)) {
+            sendInfo(admin, "You gave " + addedCount + " " + ChatUtil.item(itemId) + " to " + player.getName() + ".");
+            sendInfo(player, "You received " + addedCount + " " + ChatUtil.item(itemId) + " from " + admin.getName() + ".");
+          }
+        }
+      }
+    }
+  }
 
-	@XmlAccessorType(XmlAccessType.NONE)
-	@XmlType(namespace = "", name = "ItemTemplate")
-	private static class ItemTemplate {
+  @XmlAccessorType(XmlAccessType.NONE)
+  @XmlType(namespace = "", name = "ItemTemplate")
+  private static class ItemTemplate {
 
-		@XmlAttribute(name = "id", required = true)
-		@XmlID
-		private String id;
+    @XmlAttribute(name = "id", required = true)
+    @XmlID
+    private String id;
 
-		@XmlAttribute(name = "name")
-		private String name;
+    @XmlAttribute(name = "name")
+    private String name;
 
-		public String getName() {
-			return name;
-		}
+    public String getName() {
+      return name;
+    }
 
-		public int getTemplateId() {
-			return itemId;
-		}
+    public int getTemplateId() {
+      return itemId;
+    }
 
-		private int itemId;
+    private int itemId;
 
-		public void setItemId(int itemId) {
-			this.itemId = itemId;
-		}
+    public void setItemId(int itemId) {
+      this.itemId = itemId;
+    }
 
-		@SuppressWarnings("unused")
-		void afterUnmarshal(Unmarshaller u, Object parent) {
-			setItemId(Integer.parseInt(id));
-		}
+    @SuppressWarnings("unused")
+    void afterUnmarshal(Unmarshaller u, Object parent) {
+      setItemId(Integer.parseInt(id));
+    }
 
-	}
+  }
 
-	@XmlRootElement(name = "items")
-	@XmlAccessorType(XmlAccessType.FIELD)
-	private static class ItemData {
+  @XmlRootElement(name = "items")
+  @XmlAccessorType(XmlAccessType.FIELD)
+  private static class ItemData {
 
-		@XmlElement(name = "item")
-		private List<ItemTemplate> its;
+    @XmlElement(name = "item")
+    private List<ItemTemplate> its;
 
-		public ItemTemplate getItemTemplate(String item) {
+    public ItemTemplate getItemTemplate(String item) {
 
-			for (ItemTemplate it : getData()) {
-				if (it.getName().equals(item))
-					return it;
-			}
-			return null;
-		}
+      for (ItemTemplate it : getData()) {
+        if (it.getName().equals(item))
+          return it;
+      }
+      return null;
+    }
 
-		protected List<ItemTemplate> getData() {
-			return its;
-		}
-	}
+    protected List<ItemTemplate> getData() {
+      return its;
+    }
+  }
 
-	@XmlAccessorType(XmlAccessType.NONE)
-	@XmlType(namespace = "", name = "NpcTemplate")
-	private static class NpcTemplate {
+  @XmlAccessorType(XmlAccessType.NONE)
+  @XmlType(namespace = "", name = "NpcTemplate")
+  private static class NpcTemplate {
 
-		@XmlAttribute(name = "id", required = true)
-		@XmlID
-		private String id;
+    @XmlAttribute(name = "id", required = true)
+    @XmlID
+    private String id;
 
-		@XmlAttribute(name = "name")
-		private String name;
+    @XmlAttribute(name = "name")
+    private String name;
 
-		public String getName() {
-			return name;
-		}
+    public String getName() {
+      return name;
+    }
 
-		public int getTemplateId() {
-			return npcId;
-		}
+    public int getTemplateId() {
+      return npcId;
+    }
 
-		private int npcId;
+    private int npcId;
 
-		public void setNpcId(int npcId) {
-			this.npcId = npcId;
-		}
+    public void setNpcId(int npcId) {
+      this.npcId = npcId;
+    }
 
-		@SuppressWarnings("unused")
-		void afterUnmarshal(Unmarshaller u, Object parent) {
-			setNpcId(Integer.parseInt(id));
-		}
+    @SuppressWarnings("unused")
+    void afterUnmarshal(Unmarshaller u, Object parent) {
+      setNpcId(Integer.parseInt(id));
+    }
 
-	}
+  }
 
-	@XmlRootElement(name = "npcs")
-	@XmlAccessorType(XmlAccessType.FIELD)
-	private static class NpcData {
+  @XmlRootElement(name = "npcs")
+  @XmlAccessorType(XmlAccessType.FIELD)
+  private static class NpcData {
 
-		@XmlElement(name = "npc")
-		private List<NpcTemplate> its;
+    @XmlElement(name = "npc")
+    private List<NpcTemplate> its;
 
-		public NpcTemplate getNpcTemplate(String npcName) {
+    public NpcTemplate getNpcTemplate(String npcName) {
 
-			for (NpcTemplate it : getData()) {
-				if (it.getName().equalsIgnoreCase(npcName))
-					return it;
-			}
-			return null;
-		}
+      for (NpcTemplate it : getData()) {
+        if (it.getName().equalsIgnoreCase(npcName))
+          return it;
+      }
+      return null;
+    }
 
-		protected List<NpcTemplate> getData() {
-			return its;
-		}
-	}
+    protected List<NpcTemplate> getData() {
+      return its;
+    }
+  }
 }

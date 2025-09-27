@@ -15,25 +15,25 @@ import java.lang.reflect.Method;
  */
 public interface AnnotatedMethod {
 
-	/**
-	 * @return the annotated class where the method is declared.
-	 */
-	AnnotatedClass getAnnotatedClass();
+  /**
+   * @return the annotated class where the method is declared.
+   */
+  AnnotatedClass getAnnotatedClass();
 
-	/**
-	 * @return the method wrapped by the annotated method.
-	 */
-	Method getMethod();
+  /**
+   * @return the method wrapped by the annotated method.
+   */
+  Method getMethod();
 
-	/**
-	 * @return all inherited and declared annotations of the method.
-	 */
-	Annotation[] getAllAnnotations();
+  /**
+   * @return all inherited and declared annotations of the method.
+   */
+  Annotation[] getAllAnnotations();
 
-	/**
-	 * @param annotationClass
-	 *          of the annotation to find.
-	 * @return the inherited or declared annotation of the specified class.
-	 */
-	<T extends Annotation> T getAnnotation(Class<T> annotationClass);
+  /**
+   * @param annotationClass
+   *          of the annotation to find.
+   * @return the inherited or declared annotation of the specified class.
+   */
+  <T extends Annotation> T getAnnotation(Class<T> annotationClass);
 }

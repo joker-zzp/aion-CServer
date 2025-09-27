@@ -12,58 +12,58 @@ import com.aionemu.gameserver.utils.chathandlers.ConsoleCommand;
  */
 public class Givetitle extends ConsoleCommand {
 
-	public Givetitle() {
-		super("givetitle");
-	}
+  public Givetitle() {
+    super("givetitle");
+  }
 
-	@Override
-	public void execute(Player admin, String... params) {
-		if (params.length < 1) {
-			info(admin, null);
-			return;
-		}
+  @Override
+  public void execute(Player admin, String... params) {
+    if (params.length < 1) {
+      info(admin, null);
+      return;
+    }
 
-		if (!ChatProcessor.getInstance().isCommandAllowed(admin, "set")) {
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
-			return;
-		}
+    if (!ChatProcessor.getInstance().isCommandAllowed(admin, "set")) {
+      PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
+      return;
+    }
 
-		final VisibleObject target = admin.getTarget();
-		if (target == null) {
-			PacketSendUtility.sendMessage(admin, "No target selected.");
-			return;
-		}
+    final VisibleObject target = admin.getTarget();
+    if (target == null) {
+      PacketSendUtility.sendMessage(admin, "No target selected.");
+      return;
+    }
 
-		if (!(target instanceof Player)) {
-			PacketSendUtility.sendMessage(admin, "Select one player.");
-			return;
-		}
+    if (!(target instanceof Player)) {
+      PacketSendUtility.sendMessage(admin, "Select one player.");
+      return;
+    }
 
-		final Player player = (Player) target;
+    final Player player = (Player) target;
 
-		int titleId;
-		try {
-			titleId = Integer.parseInt(params[0]);
-		} catch (NumberFormatException e) {
-			PacketSendUtility.sendMessage(admin, "You should enter valid second params!");
-			return;
-		}
-		if (titleId <= 263)
-			setTitle(player, titleId);
-		PacketSendUtility.sendMessage(admin, "Added " + titleId + " to" + player.getCommonData().getName());
-	}
+    int titleId;
+    try {
+      titleId = Integer.parseInt(params[0]);
+    } catch (NumberFormatException e) {
+      PacketSendUtility.sendMessage(admin, "You should enter valid second params!");
+      return;
+    }
+    if (titleId <= 263)
+      setTitle(player, titleId);
+    PacketSendUtility.sendMessage(admin, "Added " + titleId + " to" + player.getCommonData().getName());
+  }
 
-	@Override
-	public void info(Player admin, String message) {
-		PacketSendUtility.sendMessage(admin, "syntax ///addskill <named name>");
-	}
+  @Override
+  public void info(Player admin, String message) {
+    PacketSendUtility.sendMessage(admin, "syntax ///addskill <named name>");
+  }
 
-	private void setTitle(Player player, int value) {
+  private void setTitle(Player player, int value) {
 
-		if (player.getTitleList().contains(value)) {
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_TOOLTIP_LEARNED_TITLE());
-			return;
-		}
-		player.getTitleList().addTitle(value, false, 0);
-	}
+    if (player.getTitleList().contains(value)) {
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_TOOLTIP_LEARNED_TITLE());
+      return;
+    }
+    player.getTitleList().addTitle(value, false, 0);
+  }
 }

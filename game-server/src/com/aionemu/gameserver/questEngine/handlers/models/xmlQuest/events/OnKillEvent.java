@@ -24,46 +24,46 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @XmlType(name = "OnKillEvent", propOrder = { "monster", "complite" })
 public class OnKillEvent extends QuestEvent {
 
-	@XmlElement(name = "monster")
-	protected List<Monster> monster;
+  @XmlElement(name = "monster")
+  protected List<Monster> monster;
 
-	@XmlElement(name = "complite")
-	protected QuestOperations complite;
+  @XmlElement(name = "complite")
+  protected QuestOperations complite;
 
-	public List<Monster> getMonsters() {
-		if (monster == null) {
-			monster = new ArrayList<>();
-		}
-		return this.monster;
-	}
+  public List<Monster> getMonsters() {
+    if (monster == null) {
+      monster = new ArrayList<>();
+    }
+    return this.monster;
+  }
 
-	@Override
-	public boolean operate(QuestEnv env) {
-		if (monster == null || !(env.getVisibleObject() instanceof Npc))
-			return false;
+  @Override
+  public boolean operate(QuestEnv env) {
+    if (monster == null || !(env.getVisibleObject() instanceof Npc))
+      return false;
 
-		QuestState qs = env.getPlayer().getQuestStateList().getQuestState(env.getQuestId());
-		if (qs == null)
-			return false;
+    QuestState qs = env.getPlayer().getQuestStateList().getQuestState(env.getQuestId());
+    if (qs == null)
+      return false;
 
-		Npc npc = (Npc) env.getVisibleObject();
-		for (Monster m : monster) {
-			if (m.getNpcIds().contains(npc.getNpcId())) {
-				int var = qs.getQuestVarById(m.getVar());
-				if (var >= m.getStartVar() && var < m.getEndVar()) {
-					qs.setQuestVarById(m.getVar(), var + 1);
-					PacketSendUtility.sendPacket(env.getPlayer(), new SM_QUEST_ACTION(ActionType.UPDATE, qs));
-				}
-			}
-		}
+    Npc npc = (Npc) env.getVisibleObject();
+    for (Monster m : monster) {
+      if (m.getNpcIds().contains(npc.getNpcId())) {
+        int var = qs.getQuestVarById(m.getVar());
+        if (var >= m.getStartVar() && var < m.getEndVar()) {
+          qs.setQuestVarById(m.getVar(), var + 1);
+          PacketSendUtility.sendPacket(env.getPlayer(), new SM_QUEST_ACTION(ActionType.UPDATE, qs));
+        }
+      }
+    }
 
-		if (complite != null) {
-			for (Monster m : monster) {
-				if (qs.getQuestVarById(m.getVar()) != m.getEndVar())
-					return false;
-			}
-			complite.operate(env);
-		}
-		return false;
-	}
+    if (complite != null) {
+      for (Monster m : monster) {
+        if (qs.getQuestVarById(m.getVar()) != m.getEndVar())
+          return false;
+      }
+      complite.operate(env);
+    }
+    return false;
+  }
 }

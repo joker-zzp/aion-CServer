@@ -5,12 +5,12 @@ package com.aionemu.gameserver.model.base;
  */
 public class PanesterraArtifact extends PanesterraBase {
 
-	public PanesterraArtifact(PanesterraBaseLocation loc) {
-		super(loc);
-	}
+  public PanesterraArtifact(PanesterraBaseLocation loc) {
+    super(loc);
+  }
 
-	@Override
-	protected int getBossSpawnDelay() {
-		return 5 * 60000; // Retail delay
-	}
+  @Override
+  protected int getBossSpawnDelay() {
+    return 5 * 60000; // Retail delay
+  }
 }

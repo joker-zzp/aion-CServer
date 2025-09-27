@@ -12,13 +12,13 @@ import com.aionemu.gameserver.skillengine.model.SkillTemplate;
 @AIName("ahserion_assault_commander")
 public class AhserionAssaultCommanderAI extends AhserionAggressiveNpcAI {
 
-	public AhserionAssaultCommanderAI(Npc owner) {
-		super(owner);
-	}
+  public AhserionAssaultCommanderAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		if (skillTemplate.getSkillId() == 20648) // Pincer Attack
-			addHateToRndTarget();
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    if (skillTemplate.getSkillId() == 20648) // Pincer Attack
+      addHateToRndTarget();
+  }
 }

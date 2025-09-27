@@ -28,53 +28,53 @@ import ch.qos.logback.classic.ClassicConstants;
  */
 public class Config {
 
-	/**
-	 * Load configs from files.
-	 */
-	public static void load() {
-		Set<String> unusedProperties = ConfigurableProcessor.process(loadProperties(), CommonsConfig.class, LoggingConfig.class, DatabaseConfig.class, NetworkConfig.class);
-		if (!unusedProperties.isEmpty()) {
-			removePropertiesUsedInLogbackXml(unusedProperties);
-			unusedProperties.forEach(p -> LoggerFactory.getLogger(Config.class).warn("Config property " + p + " is unknown and therefore ignored."));
-		}
+  /**
+   * Load configs from files.
+   */
+  public static void load() {
+    Set<String> unusedProperties = ConfigurableProcessor.process(loadProperties(), CommonsConfig.class, LoggingConfig.class, DatabaseConfig.class, NetworkConfig.class);
+    if (!unusedProperties.isEmpty()) {
+      removePropertiesUsedInLogbackXml(unusedProperties);
+      unusedProperties.forEach(p -> LoggerFactory.getLogger(Config.class).warn("Config property " + p + " is unknown and therefore ignored."));
+    }
 
-		if (NetworkConfig.CLIENT_CONNECT_ADDRESS.getAddress().isAnyLocalAddress()) {
-			InetAddress localIPv4 = NetworkUtils.findLocalIPv4();
-			if (localIPv4 == null)
-				throw new Error("No connect IP for Aion client configured and local IP discovery failed. Please configure chatserver.network.client.connect_address");
-			NetworkConfig.CLIENT_CONNECT_ADDRESS = new InetSocketAddress(localIPv4, NetworkConfig.CLIENT_CONNECT_ADDRESS.getPort());
-			LoggerFactory.getLogger(Config.class).info("No connect IP for Aion client configured, using " + localIPv4.getHostAddress());
-		}
-	}
+    if (NetworkConfig.CLIENT_CONNECT_ADDRESS.getAddress().isAnyLocalAddress()) {
+      InetAddress localIPv4 = NetworkUtils.findLocalIPv4();
+      if (localIPv4 == null)
+        throw new Error("No connect IP for Aion client configured and local IP discovery failed. Please configure chatserver.network.client.connect_address");
+      NetworkConfig.CLIENT_CONNECT_ADDRESS = new InetSocketAddress(localIPv4, NetworkConfig.CLIENT_CONNECT_ADDRESS.getPort());
+      LoggerFactory.getLogger(Config.class).info("No connect IP for Aion client configured, using " + localIPv4.getHostAddress());
+    }
+  }
 
-	private static Properties loadProperties() {
-		Logger log = LoggerFactory.getLogger(Config.class);
-		List<String> defaultsFolders = Arrays.asList("./config/main", "./config/network");
-		Properties defaults = new Properties();
-		try {
-			for (String configDir : defaultsFolders) {
-				log.info("Loading default configuration values from: {}/*", configDir);
-				PropertiesUtils.loadFromDirectory(defaults, configDir, false);
-			}
-			log.info("Loading: ./config/mycs.properties");
-			Properties properties = PropertiesUtils.load("./config/mycs.properties", defaults);
-			if (properties.isEmpty())
-				log.info("No override properties found");
-			return properties;
-		} catch (Exception e) {
-			throw new Error("Can't load chatserver configuration:", e);
-		}
-	}
+  private static Properties loadProperties() {
+    Logger log = LoggerFactory.getLogger(Config.class);
+    List<String> defaultsFolders = Arrays.asList("./config/main", "./config/network");
+    Properties defaults = new Properties();
+    try {
+      for (String configDir : defaultsFolders) {
+        log.info("Loading default configuration values from: {}/*", configDir);
+        PropertiesUtils.loadFromDirectory(defaults, configDir, false);
+      }
+      log.info("Loading: ./config/mycs.properties");
+      Properties properties = PropertiesUtils.load("./config/mycs.properties", defaults);
+      if (properties.isEmpty())
+        log.info("No override properties found");
+      return properties;
+    } catch (Exception e) {
+      throw new Error("Can't load chatserver configuration:", e);
+    }
+  }
 
-	private static void removePropertiesUsedInLogbackXml(Set<String> properties) {
-		String logbackXml = System.getProperty(ClassicConstants.CONFIG_FILE_PROPERTY);
-		if (logbackXml != null) {
-			try {
-				String logbackXmlContent = Files.readString(Path.of(logbackXml));
-				properties.removeIf(property -> logbackXmlContent.contains("${" + property + '}'));
-			} catch (IOException e) {
-				LoggerFactory.getLogger(Config.class).error("", e);
-			}
-		}
-	}
+  private static void removePropertiesUsedInLogbackXml(Set<String> properties) {
+    String logbackXml = System.getProperty(ClassicConstants.CONFIG_FILE_PROPERTY);
+    if (logbackXml != null) {
+      try {
+        String logbackXmlContent = Files.readString(Path.of(logbackXml));
+        properties.removeIf(property -> logbackXmlContent.contains("${" + property + '}'));
+      } catch (IOException e) {
+        LoggerFactory.getLogger(Config.class).error("", e);
+      }
+    }
+  }
 }

@@ -13,9 +13,9 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "XPBoostEffect")
 public class XPBoostEffect extends BufEffect {
 
-	@Override
-	public void calculate(Effect effect) {
-		effect.addSuccessEffect(this);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    effect.addSuccessEffect(this);
+  }
 
 }

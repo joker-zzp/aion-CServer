@@ -17,34 +17,34 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "OneTimeBoostSkillCriticalEffect")
 public class OneTimeBoostSkillCriticalEffect extends EffectTemplate {
 
-	@XmlAttribute
-	private int count;
-	@XmlAttribute
-	private boolean percent;
+  @XmlAttribute
+  private int count;
+  @XmlAttribute
+  private boolean percent;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void startEffect(final Effect effect) {
-		effect.addObserver(effect.getEffected(), new AttackerCriticalStatusObserver(AttackStatus.CRITICAL, count, value, percent) {
+  @Override
+  public void startEffect(final Effect effect) {
+    effect.addObserver(effect.getEffected(), new AttackerCriticalStatusObserver(AttackStatus.CRITICAL, count, value, percent) {
 
-			@Override
-			public AttackerCriticalStatus checkAttackerCriticalStatus(AttackStatus stat, boolean isSkill) {
-				if (stat == status && isSkill) {
-					if (getCount() <= 1)
-						effect.endEffect();
-					else
-						decreaseCount();
+      @Override
+      public AttackerCriticalStatus checkAttackerCriticalStatus(AttackStatus stat, boolean isSkill) {
+        if (stat == status && isSkill) {
+          if (getCount() <= 1)
+            effect.endEffect();
+          else
+            decreaseCount();
 
-					acStatus.setResult(true);
-				} else
-					acStatus.setResult(false);
+          acStatus.setResult(true);
+        } else
+          acStatus.setResult(false);
 
-				return acStatus;
-			}
-		});
-	}
+        return acStatus;
+      }
+    });
+  }
 }

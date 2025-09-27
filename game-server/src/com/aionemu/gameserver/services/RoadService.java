@@ -13,25 +13,25 @@ import com.aionemu.gameserver.world.World;
  */
 public class RoadService {
 
-	Logger log = LoggerFactory.getLogger(RoadService.class);
+  Logger log = LoggerFactory.getLogger(RoadService.class);
 
-	private static class SingletonHolder {
+  private static class SingletonHolder {
 
-		protected static final RoadService instance = new RoadService();
-	}
+    protected static final RoadService instance = new RoadService();
+  }
 
-	public static final RoadService getInstance() {
-		return SingletonHolder.instance;
-	}
+  public static final RoadService getInstance() {
+    return SingletonHolder.instance;
+  }
 
-	private RoadService() {
-		for (RoadTemplate rt : DataManager.ROAD_DATA.getRoadTemplates()) {
-			for (Integer instanceId : World.getInstance().getWorldMap(rt.getMap()).getAvailableInstanceIds()) {
-				Road r = new Road(rt, instanceId);
-				r.spawn();
-				log.debug("Added " + r.getName() + " at m=" + r.getWorldId() + ",x=" + r.getX() + ",y=" + r.getY() + ",z=" + r.getZ() + " [" + instanceId
-					+ "]");
-			}
-		}
-	}
+  private RoadService() {
+    for (RoadTemplate rt : DataManager.ROAD_DATA.getRoadTemplates()) {
+      for (Integer instanceId : World.getInstance().getWorldMap(rt.getMap()).getAvailableInstanceIds()) {
+        Road r = new Road(rt, instanceId);
+        r.spawn();
+        log.debug("Added " + r.getName() + " at m=" + r.getWorldId() + ",x=" + r.getX() + ",y=" + r.getY() + ",z=" + r.getZ() + " [" + instanceId
+          + "]");
+      }
+    }
+  }
 }

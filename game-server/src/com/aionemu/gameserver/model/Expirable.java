@@ -7,23 +7,23 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  */
 public interface Expirable {
 
-	public int getExpireTime();
+  public int getExpireTime();
 
-	public default int secondsUntilExpiration() {
-		return getExpireTime() == 0 ? 0 : getExpireTime() - (int) (System.currentTimeMillis() / 1000);
-	}
+  public default int secondsUntilExpiration() {
+    return getExpireTime() == 0 ? 0 : getExpireTime() - (int) (System.currentTimeMillis() / 1000);
+  }
 
-	public default boolean isExpired() {
-		return secondsUntilExpiration() < 0;
-	}
+  public default boolean isExpired() {
+    return secondsUntilExpiration() < 0;
+  }
 
-	public default void onBeforeExpire(Player player, int remainingMinutes) {
-	}
+  public default void onBeforeExpire(Player player, int remainingMinutes) {
+  }
 
-	public void onExpire(Player player);
+  public void onExpire(Player player);
 
-	public default boolean canExpireNow() {
-		return true;
-	}
+  public default boolean canExpireNow() {
+    return true;
+  }
 
 }

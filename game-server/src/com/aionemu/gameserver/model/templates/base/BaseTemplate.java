@@ -16,35 +16,35 @@ import com.aionemu.gameserver.model.base.BaseType;
 @XmlType(name = "Base")
 public class BaseTemplate {
 
-	@XmlAttribute(name = "id")
-	protected int id;
-	@XmlAttribute(name = "world")
-	protected int world;
-	@XmlAttribute(name = "type")
-	protected BaseType type;
-	@XmlAttribute(name = "color")
-	protected BaseColorType color;
-	@XmlAttribute(name = "default_occupier")
-	protected BaseOccupier defaultOccupier = BaseOccupier.BALAUR;
+  @XmlAttribute(name = "id")
+  protected int id;
+  @XmlAttribute(name = "world")
+  protected int world;
+  @XmlAttribute(name = "type")
+  protected BaseType type;
+  @XmlAttribute(name = "color")
+  protected BaseColorType color;
+  @XmlAttribute(name = "default_occupier")
+  protected BaseOccupier defaultOccupier = BaseOccupier.BALAUR;
 
 
-	public int getId() {
-		return this.id;
-	}
+  public int getId() {
+    return this.id;
+  }
 
-	public int getWorldId() {
-		return this.world;
-	}
-	
-	public BaseType getType() {
-		return type;
-	}
+  public int getWorldId() {
+    return this.world;
+  }
+  
+  public BaseType getType() {
+    return type;
+  }
 
-	public BaseColorType getColor() {
-		return color;
-	}
+  public BaseColorType getColor() {
+    return color;
+  }
 
-	public BaseOccupier getDefaultOccupier() {
-		return defaultOccupier;
-	}
+  public BaseOccupier getDefaultOccupier() {
+    return defaultOccupier;
+  }
 }

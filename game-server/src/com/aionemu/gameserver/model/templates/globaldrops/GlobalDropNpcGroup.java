@@ -15,10 +15,10 @@ import com.aionemu.gameserver.model.templates.npc.GroupDropType;
 @XmlType(name = "GlobalDropNpcGroup")
 public class GlobalDropNpcGroup {
 
-	@XmlAttribute(name = "group", required = true)
-	protected GroupDropType group;
+  @XmlAttribute(name = "group", required = true)
+  protected GroupDropType group;
 
-	public GroupDropType getGroup() {
-		return group;
-	}
+  public GroupDropType getGroup() {
+    return group;
+  }
 }

@@ -12,8 +12,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Listenable {
 
-	/**
-	 * @return true if the method should be listenable; set to false to disable temporary
-	 */
-	boolean value() default true;
+  /**
+   * @return true if the method should be listenable; set to false to disable temporary
+   */
+  boolean value() default true;
 }

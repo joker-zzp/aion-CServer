@@ -18,37 +18,37 @@ import com.aionemu.gameserver.model.vortex.VortexStateType;
 @XmlType(name = "VortexSpawn")
 public class VortexSpawn {
 
-	@XmlAttribute(name = "id")
-	private int id;
+  @XmlAttribute(name = "id")
+  private int id;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	@XmlElement(name = "state_type")
-	private List<VortexStateTemplate> stateTemplates;
+  @XmlElement(name = "state_type")
+  private List<VortexStateTemplate> stateTemplates;
 
-	public List<VortexStateTemplate> getSiegeModTemplates() {
-		return stateTemplates;
-	}
+  public List<VortexStateTemplate> getSiegeModTemplates() {
+    return stateTemplates;
+  }
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlType(name = "VortexStateTemplate")
-	public static class VortexStateTemplate {
+  @XmlAccessorType(XmlAccessType.FIELD)
+  @XmlType(name = "VortexStateTemplate")
+  public static class VortexStateTemplate {
 
-		@XmlElement(name = "spawn")
-		private List<Spawn> spawns;
-		@XmlAttribute(name = "state")
-		private VortexStateType stateType;
+    @XmlElement(name = "spawn")
+    private List<Spawn> spawns;
+    @XmlAttribute(name = "state")
+    private VortexStateType stateType;
 
-		public List<Spawn> getSpawns() {
-			return spawns;
-		}
+    public List<Spawn> getSpawns() {
+      return spawns;
+    }
 
-		public VortexStateType getStateType() {
-			return stateType;
-		}
+    public VortexStateType getStateType() {
+      return stateType;
+    }
 
-	}
+  }
 
 }

@@ -18,28 +18,28 @@ import com.aionemu.gameserver.model.templates.road.RoadTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RoadData {
 
-	@XmlElement(name = "road")
-	private List<RoadTemplate> roadTemplates;
+  @XmlElement(name = "road")
+  private List<RoadTemplate> roadTemplates;
 
-	public int size() {
-		if (roadTemplates == null) {
-			roadTemplates = new ArrayList<>();
-			return 0;
-		}
-		return roadTemplates.size();
-	}
+  public int size() {
+    if (roadTemplates == null) {
+      roadTemplates = new ArrayList<>();
+      return 0;
+    }
+    return roadTemplates.size();
+  }
 
-	public List<RoadTemplate> getRoadTemplates() {
-		if (roadTemplates == null) {
-			return new ArrayList<>();
-		}
-		return roadTemplates;
-	}
+  public List<RoadTemplate> getRoadTemplates() {
+    if (roadTemplates == null) {
+      return new ArrayList<>();
+    }
+    return roadTemplates;
+  }
 
-	public void addAll(Collection<RoadTemplate> templates) {
-		if (roadTemplates == null) {
-			roadTemplates = new ArrayList<>();
-		}
-		roadTemplates.addAll(templates);
-	}
+  public void addAll(Collection<RoadTemplate> templates) {
+    if (roadTemplates == null) {
+      roadTemplates = new ArrayList<>();
+    }
+    roadTemplates.addAll(templates);
+  }
 }

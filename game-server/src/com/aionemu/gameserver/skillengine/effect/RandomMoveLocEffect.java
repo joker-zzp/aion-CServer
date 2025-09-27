@@ -22,31 +22,31 @@ import com.aionemu.gameserver.world.geo.GeoService;
 @XmlType(name = "RandomMoveLocEffect")
 public class RandomMoveLocEffect extends EffectTemplate {
 
-	@XmlAttribute(name = "distance")
-	private float distance;
-	@XmlAttribute(name = "direction")
-	private float direction;
-	@XmlAttribute(name = "reserved5")
-	private int reserved5;
+  @XmlAttribute(name = "distance")
+  private float distance;
+  @XmlAttribute(name = "direction")
+  private float direction;
+  @XmlAttribute(name = "reserved5")
+  private int reserved5;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		Skill skill = effect.getSkill();
-		World.getInstance().updatePosition(effect.getEffector(), skill.getX(), skill.getY(), skill.getZ(), skill.getH());
-		if (effect.getEffector().getMoveController() instanceof PlayerMoveController pmc)
-			pmc.setHasMovedByRandomMoveLocEffect(skill);
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    Skill skill = effect.getSkill();
+    World.getInstance().updatePosition(effect.getEffector(), skill.getX(), skill.getY(), skill.getZ(), skill.getH());
+    if (effect.getEffector().getMoveController() instanceof PlayerMoveController pmc)
+      pmc.setHasMovedByRandomMoveLocEffect(skill);
+  }
 
-	@Override
-	public void calculate(Effect effect) {
-		effect.addSuccessEffect(this);
-		DashStatus ds = reserved5 == 1 ? DashStatus.RANDOMMOVELOC_NEW : DashStatus.RANDOMMOVELOC;
-		effect.setDashStatus(ds);
+  @Override
+  public void calculate(Effect effect) {
+    effect.addSuccessEffect(this);
+    DashStatus ds = reserved5 == 1 ? DashStatus.RANDOMMOVELOC_NEW : DashStatus.RANDOMMOVELOC;
+    effect.setDashStatus(ds);
 
-		Creature effector = effect.getEffector();
-		// Move Effector backwards direction=1 or frontwards direction=0
-		float dir = PositionUtil.convertHeadingToAngle(effector.getHeading());
-		Vector3f closestCollision = GeoService.getInstance().findMovementCollision(effector, direction == 1 ? dir + 180 : dir, distance);
-		effect.getSkill().setTargetPosition(closestCollision.getX(), closestCollision.getY(), closestCollision.getZ(), effector.getHeading());
-	}
+    Creature effector = effect.getEffector();
+    // Move Effector backwards direction=1 or frontwards direction=0
+    float dir = PositionUtil.convertHeadingToAngle(effector.getHeading());
+    Vector3f closestCollision = GeoService.getInstance().findMovementCollision(effector, direction == 1 ? dir + 180 : dir, distance);
+    effect.getSkill().setTargetPosition(closestCollision.getX(), closestCollision.getY(), closestCollision.getZ(), effector.getHeading());
+  }
 }

@@ -10,13 +10,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum NpcSkillTargetAttribute {
 
-	FRIEND,
-	ME,
-	MOST_HATED,
-	SECOND_MOST_HATED,
-	THIRD_MOST_HATED,
-	RANDOM,
-	RANDOM_EXCEPT_MOST_HATED,
-	NONE;
+  FRIEND,
+  ME,
+  MOST_HATED,
+  SECOND_MOST_HATED,
+  THIRD_MOST_HATED,
+  RANDOM,
+  RANDOM_EXCEPT_MOST_HATED,
+  NONE;
 
 }

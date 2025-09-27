@@ -16,40 +16,40 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "MaterialSkill")
 public class MaterialSkill {
 
-	@XmlAttribute
-	@XmlList
-	private List<MaterialActCondition> conditions;
+  @XmlAttribute
+  @XmlList
+  private List<MaterialActCondition> conditions;
 
-	@XmlAttribute(required = true)
-	private int frequency;
+  @XmlAttribute(required = true)
+  private int frequency;
 
-	@XmlAttribute
-	private MaterialTarget target;
+  @XmlAttribute
+  private MaterialTarget target;
 
-	@XmlAttribute(required = true)
-	private int level;
+  @XmlAttribute(required = true)
+  private int level;
 
-	@XmlAttribute(required = true)
-	private int id;
+  @XmlAttribute(required = true)
+  private int id;
 
-	public List<MaterialActCondition> getConditions() {
-		return conditions == null ? Collections.emptyList() : conditions;
-	}
+  public List<MaterialActCondition> getConditions() {
+    return conditions == null ? Collections.emptyList() : conditions;
+  }
 
-	public int getFrequency() {
-		return frequency;
-	}
+  public int getFrequency() {
+    return frequency;
+  }
 
-	public MaterialTarget getTarget() {
-		return target == null ? MaterialTarget.ALL : target;
-	}
+  public MaterialTarget getTarget() {
+    return target == null ? MaterialTarget.ALL : target;
+  }
 
-	public int getSkillLevel() {
-		return level;
-	}
+  public int getSkillLevel() {
+    return level;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
 }

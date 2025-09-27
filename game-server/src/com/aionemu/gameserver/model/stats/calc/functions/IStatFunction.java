@@ -10,24 +10,24 @@ import com.aionemu.gameserver.utils.stats.CalculationType;
  */
 public interface IStatFunction extends Comparable<IStatFunction> {
 
-	StatEnum getName();
+  StatEnum getName();
 
-	boolean isBonus();
+  boolean isBonus();
 
-	int getPriority();
+  int getPriority();
 
-	int getValue();
+  int getValue();
 
-	boolean validate(Stat2 stat);
+  boolean validate(Stat2 stat);
 
-	void apply(Stat2 stat, CalculationType... calculationTypes);
+  void apply(Stat2 stat, CalculationType... calculationTypes);
 
-	StatOwner getOwner();
+  StatOwner getOwner();
 
-	boolean hasConditions();
+  boolean hasConditions();
 
-	@Override
-	default int compareTo(IStatFunction o) {
-		return getPriority() - o.getPriority();
-	}
+  @Override
+  default int compareTo(IStatFunction o) {
+    return getPriority() - o.getPriority();
+  }
 }

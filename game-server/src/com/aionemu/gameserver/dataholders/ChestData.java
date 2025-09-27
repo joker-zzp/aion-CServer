@@ -16,32 +16,32 @@ import com.aionemu.gameserver.model.templates.chest.ChestTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ChestData {
 
-	@XmlElement(name = "chest")
-	private List<ChestTemplate> chests;
+  @XmlElement(name = "chest")
+  private List<ChestTemplate> chests;
 
-	@XmlTransient
-	private final Map<Integer, ChestTemplate> chestData = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, ChestTemplate> chestData = new HashMap<>();
 
-	/**
-	 * Initializes all maps for subsequent use - Don't nullify initial chest list as it will be used during reload
-	 * 
-	 * @param u
-	 * @param parent
-	 */
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		chestData.clear();
+  /**
+   * Initializes all maps for subsequent use - Don't nullify initial chest list as it will be used during reload
+   * 
+   * @param u
+   * @param parent
+   */
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    chestData.clear();
 
-		for (ChestTemplate chest : chests) {
-			chestData.put(chest.getNpcId(), chest);
-		}
-		chests = null;
-	}
+    for (ChestTemplate chest : chests) {
+      chestData.put(chest.getNpcId(), chest);
+    }
+    chests = null;
+  }
 
-	public int size() {
-		return chestData.size();
-	}
+  public int size() {
+    return chestData.size();
+  }
 
-	public ChestTemplate getChestTemplate(int npcId) {
-		return chestData.get(npcId);
-	}
+  public ChestTemplate getChestTemplate(int npcId) {
+    return chestData.get(npcId);
+  }
 }

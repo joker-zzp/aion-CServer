@@ -12,22 +12,22 @@ import com.aionemu.gameserver.model.templates.flyring.FlyRingTemplate;
  */
 public class FlyRingService {
 
-	Logger log = LoggerFactory.getLogger(FlyRingService.class);
+  Logger log = LoggerFactory.getLogger(FlyRingService.class);
 
-	private static class SingletonHolder {
+  private static class SingletonHolder {
 
-		protected static final FlyRingService instance = new FlyRingService();
-	}
+    protected static final FlyRingService instance = new FlyRingService();
+  }
 
-	public static final FlyRingService getInstance() {
-		return SingletonHolder.instance;
-	}
+  public static final FlyRingService getInstance() {
+    return SingletonHolder.instance;
+  }
 
-	private FlyRingService() {
-		for (FlyRingTemplate t : DataManager.FLY_RING_DATA.getFlyRingTemplates()) {
-			FlyRing f = new FlyRing(t, 0);
-			f.spawn();
-			log.debug("Added " + f.getName() + " at m=" + f.getWorldId() + ",x=" + f.getX() + ",y=" + f.getY() + ",z=" + f.getZ());
-		}
-	}
+  private FlyRingService() {
+    for (FlyRingTemplate t : DataManager.FLY_RING_DATA.getFlyRingTemplates()) {
+      FlyRing f = new FlyRing(t, 0);
+      f.spawn();
+      log.debug("Added " + f.getName() + " at m=" + f.getWorldId() + ",x=" + f.getX() + ",y=" + f.getY() + ",z=" + f.getZ());
+    }
+  }
 }

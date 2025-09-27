@@ -10,24 +10,24 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  */
 public class DuplicateAionObjectException extends RuntimeException {
 
-	private static final long serialVersionUID = -2031489557355197834L;
+  private static final long serialVersionUID = -2031489557355197834L;
 
-	/**
-	 * Constructs an <code>DuplicateAionObjectException</code> for the given objects
-	 */
-	public DuplicateAionObjectException(AionObject object, AionObject presentObject) {
-		super(createMessage(object, presentObject));
-	}
+  /**
+   * Constructs an <code>DuplicateAionObjectException</code> for the given objects
+   */
+  public DuplicateAionObjectException(AionObject object, AionObject presentObject) {
+    super(createMessage(object, presentObject));
+  }
 
-	private static String createMessage(AionObject object, AionObject presentObject) {
-		StringBuilder sb = new StringBuilder("Duplicate object: ");
-		sb.append(object);
-		if (object instanceof Player)
-			sb.append(' ').append(((Player) object).getPosition());
-		sb.append(", already present object: ");
-		sb.append(presentObject);
-		if (presentObject instanceof Player)
-			sb.append(' ').append(((Player) presentObject).getPosition());
-		return sb.toString();
-	}
+  private static String createMessage(AionObject object, AionObject presentObject) {
+    StringBuilder sb = new StringBuilder("Duplicate object: ");
+    sb.append(object);
+    if (object instanceof Player)
+      sb.append(' ').append(((Player) object).getPosition());
+    sb.append(", already present object: ");
+    sb.append(presentObject);
+    if (presentObject instanceof Player)
+      sb.append(' ').append(((Player) presentObject).getPosition());
+    return sb.toString();
+  }
 }

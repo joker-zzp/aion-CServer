@@ -18,28 +18,28 @@ import com.aionemu.gameserver.model.templates.event.upgradearcade.ArcadeRewards;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class UpgradeArcadeData {
 
-	@XmlElement(name = "levels")
-	private ArcadeLevels levels;
-	@XmlElement(name = "rewards")
-	private List<ArcadeRewards> rewards;
+  @XmlElement(name = "levels")
+  private ArcadeLevels levels;
+  @XmlElement(name = "rewards")
+  private List<ArcadeRewards> rewards;
 
-	public int size() {
-		return rewards.size();
-	}
+  public int size() {
+    return rewards.size();
+  }
 
-	public int getMinResumableLevel() {
-		return levels.getMinResumableLevel();
-	}
+  public int getMinResumableLevel() {
+    return levels.getMinResumableLevel();
+  }
 
-	public List<ArcadeLevel> getUpgradeLevels() {
-		return levels.getLevels();
-	}
+  public List<ArcadeLevel> getUpgradeLevels() {
+    return levels.getLevels();
+  }
 
-	public ArcadeLevel getMaxUpgradeLevel() {
-		return levels.getMaxUpgradeLevel();
-	}
+  public ArcadeLevel getMaxUpgradeLevel() {
+    return levels.getMaxUpgradeLevel();
+  }
 
-	public List<ArcadeRewards> getRewards() {
-		return rewards;
-	}
+  public List<ArcadeRewards> getRewards() {
+    return rewards;
+  }
 }

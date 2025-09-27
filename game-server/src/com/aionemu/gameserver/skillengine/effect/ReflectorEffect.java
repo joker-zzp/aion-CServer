@@ -16,25 +16,25 @@ import com.aionemu.gameserver.skillengine.model.ShieldType;
 @XmlType(name = "ReflectorEffect")
 public class ReflectorEffect extends ShieldEffect {
 
-	@XmlAttribute
-	protected int reflectType;
+  @XmlAttribute
+  protected int reflectType;
 
-	@Override
-	public void startEffect(final Effect effect) {
-		int hit = hitvalue + hitdelta * effect.getSkillLevel();
+  @Override
+  public void startEffect(final Effect effect) {
+    int hit = hitvalue + hitdelta * effect.getSkillLevel();
 
-		AttackShieldObserver asObserver = new AttackShieldObserver(hit, value, percent, false, effect, hitType, getType(), hitTypeProb, minradius, radius,
-			null, 0);
+    AttackShieldObserver asObserver = new AttackShieldObserver(hit, value, percent, false, effect, hitType, getType(), hitTypeProb, minradius, radius,
+      null, 0);
 
-		effect.addObserver(effect.getEffected(), asObserver);
-	}
+    effect.addObserver(effect.getEffected(), asObserver);
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-	}
+  @Override
+  public void endEffect(Effect effect) {
+  }
 
-	@Override
-	public ShieldType getType() {
-		return reflectType == 1 ? ShieldType.SKILL_REFLECTOR : ShieldType.REFLECTOR;
-	}
+  @Override
+  public ShieldType getType() {
+    return reflectType == 1 ? ShieldType.SKILL_REFLECTOR : ShieldType.REFLECTOR;
+  }
 }

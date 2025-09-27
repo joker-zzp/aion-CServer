@@ -12,11 +12,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Bounds")
 public class Bounds extends BoundRadius {
 
-	@XmlAttribute
-	private float altitude;
+  @XmlAttribute
+  private float altitude;
 
-	public float getAltitude() {
-		return altitude;
-	}
+  public float getAltitude() {
+    return altitude;
+  }
 
 }

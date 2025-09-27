@@ -10,15 +10,15 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_RECEIVE_BIDS extends AionServerPacket {
 
-	private final int unk;
+  private final int unk;
 
-	public SM_RECEIVE_BIDS(int unk) {
-		this.unk = unk;
-	}
+  public SM_RECEIVE_BIDS(int unk) {
+    this.unk = unk;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(unk);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(unk);
+  }
 
 }

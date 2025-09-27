@@ -11,17 +11,17 @@ import com.aionemu.gameserver.network.aion.iteminfo.ItemInfoBlob.ItemBlobType;
  */
 public class ConditioningInfoBlobEntry extends ItemBlobEntry {
 
-	ConditioningInfoBlobEntry() {
-		super(ItemBlobType.CONDITIONING_INFO);
-	}
+  ConditioningInfoBlobEntry() {
+    super(ItemBlobType.CONDITIONING_INFO);
+  }
 
-	@Override
-	public void writeThisBlob(ByteBuffer buf) {
-		writeD(buf, ownerItem.getChargePoints());
-	}
+  @Override
+  public void writeThisBlob(ByteBuffer buf) {
+    writeD(buf, ownerItem.getChargePoints());
+  }
 
-	@Override
-	public int getSize() {
-		return 4;
-	}
+  @Override
+  public int getSize() {
+    return 4;
+  }
 }

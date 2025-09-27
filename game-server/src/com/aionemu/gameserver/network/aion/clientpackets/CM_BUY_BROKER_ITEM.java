@@ -14,29 +14,29 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_BUY_BROKER_ITEM extends AionClientPacket {
 
-	private int brokerObjId;
-	private int itemUniqueId;
-	private long itemCount;
+  private int brokerObjId;
+  private int itemUniqueId;
+  private long itemCount;
 
-	public CM_BUY_BROKER_ITEM(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_BUY_BROKER_ITEM(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		brokerObjId = readD();
-		itemUniqueId = readD();
-		itemCount = readQ();
-	}
+  @Override
+  protected void readImpl() {
+    brokerObjId = readD();
+    itemUniqueId = readD();
+    itemCount = readQ();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (itemCount < 1)
-			return;
-		if (player.isTargetingNpcWithFunction(brokerObjId, DialogAction.OPEN_VENDOR))
-			BrokerService.getInstance().buyBrokerItem(player, itemUniqueId, itemCount);
-		else
-			AuditLogger.log(player, "tried to buy an item from broker without targeting a broker");
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (itemCount < 1)
+      return;
+    if (player.isTargetingNpcWithFunction(brokerObjId, DialogAction.OPEN_VENDOR))
+      BrokerService.getInstance().buyBrokerItem(player, itemUniqueId, itemCount);
+    else
+      AuditLogger.log(player, "tried to buy an item from broker without targeting a broker");
+  }
 }

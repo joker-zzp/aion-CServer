@@ -7,9 +7,9 @@ import com.aionemu.gameserver.model.templates.base.BaseTemplate;
  */
 public class PanesterraBaseLocation extends BaseLocation {
 
-	public PanesterraBaseLocation(BaseTemplate template) {
-		super(template);
-		if (template.getType() == BaseType.PANESTERRA_FACTION_CAMP)
-			occupier = BaseOccupier.PEACE;
-	}
+  public PanesterraBaseLocation(BaseTemplate template) {
+    super(template);
+    if (template.getType() == BaseType.PANESTERRA_FACTION_CAMP)
+      occupier = BaseOccupier.PEACE;
+  }
 }

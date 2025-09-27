@@ -8,12 +8,12 @@ import com.aionemu.gameserver.world.zone.ZoneInstance;
  */
 public class GeneralZoneHandler implements ZoneHandler {
 
-	@Override
-	public void onEnterZone(Creature player, ZoneInstance zone) {
-	}
+  @Override
+  public void onEnterZone(Creature player, ZoneInstance zone) {
+  }
 
-	@Override
-	public void onLeaveZone(Creature player, ZoneInstance zone) {
-	}
+  @Override
+  public void onLeaveZone(Creature player, ZoneInstance zone) {
+  }
 
 }

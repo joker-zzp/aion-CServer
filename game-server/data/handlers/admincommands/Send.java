@@ -31,147 +31,147 @@ import com.aionemu.gameserver.utils.xml.JAXBUtil;
  */
 public class Send extends AdminCommand {
 
-	private static final String FOLDER = "./data/packets/";
-	private static final String SCHEMAFILE = FOLDER + "packets.xsd";
+  private static final String FOLDER = "./data/packets/";
+  private static final String SCHEMAFILE = FOLDER + "packets.xsd";
 
-	public Send() {
-		super("send", "发送自定义数据包。");
+  public Send() {
+    super("send", "发送自定义数据包。");
 
-		setSyntaxInfo("<file> - 根据./data/packets/<file>.xml模板向您的客户端发送数据包。");
-	}
+    setSyntaxInfo("<file> - 根据./data/packets/<file>.xml模板向您的客户端发送数据包。");
+  }
 
-	@Override
-	public void execute(Player admin, String... params) {
-		if (params.length == 0 || params[0].equalsIgnoreCase("help")) {
-			sendInfo(admin);
-			return;
-		}
+  @Override
+  public void execute(Player admin, String... params) {
+    if (params.length == 0 || params[0].equalsIgnoreCase("help")) {
+      sendInfo(admin);
+      return;
+    }
 
-		String fileName = params[0] + ".xml";
-		File file = new File(FOLDER + fileName);
+    String fileName = params[0] + ".xml";
+    File file = new File(FOLDER + fileName);
 
-		if (!file.isFile()) {
-			sendInfo(admin, "未找到文件 " + fileName);
-			return;
-		}
+    if (!file.isFile()) {
+      sendInfo(admin, "未找到文件 " + fileName);
+      return;
+    }
 
-		Packets packetsTemplate = JAXBUtil.deserialize(file, Packets.class, SCHEMAFILE);
-		send(admin, packetsTemplate);
-	}
+    Packets packetsTemplate = JAXBUtil.deserialize(file, Packets.class, SCHEMAFILE);
+    send(admin, packetsTemplate);
+  }
 
-	private void send(Player player, Packets packets) {
-		String senderObjectId = String.valueOf(player.getObjectId());
-		String targetObjectId = player.getTarget() != null ? String.valueOf(player.getTarget().getObjectId()) : "0";
-		long delay = 0;
-		for (Packet packetTemplate : packets) {
-			SM_CUSTOM_PACKET packet = new SM_CUSTOM_PACKET(packetTemplate.getOpcode());
+  private void send(Player player, Packets packets) {
+    String senderObjectId = String.valueOf(player.getObjectId());
+    String targetObjectId = player.getTarget() != null ? String.valueOf(player.getTarget().getObjectId()) : "0";
+    long delay = 0;
+    for (Packet packetTemplate : packets) {
+      SM_CUSTOM_PACKET packet = new SM_CUSTOM_PACKET(packetTemplate.getOpcode());
 
-			for (Part part : packetTemplate.getParts()) {
-				PacketElementType byCode = PacketElementType.getByCode(part.getType());
+      for (Part part : packetTemplate.getParts()) {
+        PacketElementType byCode = PacketElementType.getByCode(part.getType());
 
-				String value = part.getValue();
+        String value = part.getValue();
 
-				if (value.contains("${objectId}"))
-					value = value.replace("${objectId}", senderObjectId);
-				if (value.contains("${targetObjectId}"))
-					value = value.replace("${targetObjectId}", targetObjectId);
+        if (value.contains("${objectId}"))
+          value = value.replace("${objectId}", senderObjectId);
+        if (value.contains("${targetObjectId}"))
+          value = value.replace("${targetObjectId}", targetObjectId);
 
-				for (int i = 0; i < part.getRepeatCount(); i++)
-					packet.addElement(byCode, value);
-			}
+        for (int i = 0; i < part.getRepeatCount(); i++)
+          packet.addElement(byCode, value);
+      }
 
-			delay += packetTemplate.getDelay();
+      delay += packetTemplate.getDelay();
 
-			ThreadPoolManager.getInstance().schedule(() -> PacketSendUtility.sendPacket(player, packet), delay);
+      ThreadPoolManager.getInstance().schedule(() -> PacketSendUtility.sendPacket(player, packet), delay);
 
-			delay += packets.getDelay();
-		}
-	}
+      delay += packets.getDelay();
+    }
+  }
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlRootElement(name = "packets")
-	private static class Packets implements Iterable<Packet> {
+  @XmlAccessorType(XmlAccessType.FIELD)
+  @XmlRootElement(name = "packets")
+  private static class Packets implements Iterable<Packet> {
 
-		@XmlElement(name = "packet")
-		private List<Packet> packets;
+    @XmlElement(name = "packet")
+    private List<Packet> packets;
 
-		@XmlAttribute(name = "delay")
-		private long delay = -1;
+    @XmlAttribute(name = "delay")
+    private long delay = -1;
 
-		public long getDelay() {
-			return delay;
-		}
+    public long getDelay() {
+      return delay;
+    }
 
-		@Override
-		public Iterator<Packet> iterator() {
-			return packets.iterator();
-		}
+    @Override
+    public Iterator<Packet> iterator() {
+      return packets.iterator();
+    }
 
-		@Override
-		public String toString() {
-			return "Packets" + "{delay=" + delay + ", packets=" + packets + '}';
-		}
-	}
+    @Override
+    public String toString() {
+      return "Packets" + "{delay=" + delay + ", packets=" + packets + '}';
+    }
+  }
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlRootElement(name = "packet")
-	private static class Packet {
+  @XmlAccessorType(XmlAccessType.FIELD)
+  @XmlRootElement(name = "packet")
+  private static class Packet {
 
-		@XmlElement(name = "part")
-		private Collection<Part> parts = new ArrayList<>();
+    @XmlElement(name = "part")
+    private Collection<Part> parts = new ArrayList<>();
 
-		@XmlAttribute(name = "opcode")
-		private String opcode = "-1";
+    @XmlAttribute(name = "opcode")
+    private String opcode = "-1";
 
-		@XmlAttribute(name = "delay")
-		private long delay = 0;
+    @XmlAttribute(name = "delay")
+    private long delay = 0;
 
-		public int getOpcode() {
-			return Integer.decode(opcode);
-		}
+    public int getOpcode() {
+      return Integer.decode(opcode);
+    }
 
-		public Collection<Part> getParts() {
-			return parts;
-		}
+    public Collection<Part> getParts() {
+      return parts;
+    }
 
-		public long getDelay() {
-			return delay;
-		}
+    public long getDelay() {
+      return delay;
+    }
 
-		@Override
-		public String toString() {
-			return "Packet" + "{opcode=" + opcode + ", parts=" + parts + '}';
-		}
-	}
+    @Override
+    public String toString() {
+      return "Packet" + "{opcode=" + opcode + ", parts=" + parts + '}';
+    }
+  }
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlRootElement(name = "part")
-	private static class Part {
+  @XmlAccessorType(XmlAccessType.FIELD)
+  @XmlRootElement(name = "part")
+  private static class Part {
 
-		@XmlAttribute(name = "type", required = true)
-		private String type = null;
+    @XmlAttribute(name = "type", required = true)
+    private String type = null;
 
-		@XmlAttribute(name = "value", required = true)
-		private String value = null;
+    @XmlAttribute(name = "value", required = true)
+    private String value = null;
 
-		@XmlAttribute(name = "repeat", required = true)
-		private int repeatCount = 1;
+    @XmlAttribute(name = "repeat", required = true)
+    private int repeatCount = 1;
 
-		public char getType() {
-			return type.charAt(0);
-		}
+    public char getType() {
+      return type.charAt(0);
+    }
 
-		public String getValue() {
-			return value;
-		}
+    public String getValue() {
+      return value;
+    }
 
-		public int getRepeatCount() {
-			return repeatCount;
-		}
+    public int getRepeatCount() {
+      return repeatCount;
+    }
 
-		@Override
-		public String toString() {
-			return "Part" + "{type='" + type + '\'' + ", value='" + value + '\'' + ", repeatCount=" + repeatCount + '}';
-		}
-	}
+    @Override
+    public String toString() {
+      return "Part" + "{type='" + type + '\'' + ", value='" + value + '\'' + ", repeatCount=" + repeatCount + '}';
+    }
+  }
 }

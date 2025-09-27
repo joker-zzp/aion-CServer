@@ -13,24 +13,24 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Ai")
 public class AITemplate {
 
-	@XmlElement(name = "summons")
-	private Summons summons;
+  @XmlElement(name = "summons")
+  private Summons summons;
 
-	@XmlElement(name = "bombs")
-	private Bombs bombs;
+  @XmlElement(name = "bombs")
+  private Bombs bombs;
 
-	@XmlAttribute(name = "npcId")
-	private int npcId;
+  @XmlAttribute(name = "npcId")
+  private int npcId;
 
-	public Summons getSummons() {
-		return summons;
-	}
+  public Summons getSummons() {
+    return summons;
+  }
 
-	public Bombs getBombs() {
-		return bombs;
-	}
+  public Bombs getBombs() {
+    return bombs;
+  }
 
-	public int getNpcId() {
-		return npcId;
-	}
+  public int getNpcId() {
+    return npcId;
+  }
 }

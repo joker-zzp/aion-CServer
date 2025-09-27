@@ -8,18 +8,18 @@ import javax.xml.bind.annotation.XmlEnum;
 @XmlEnum
 public enum QuestStatus {
 
-	START(3), // Accepted quests
-	REWARD(4), // The quests, that are finished. "Go and get your reward"
-	COMPLETE(5), // Completed quests
-	LOCKED(6); // Not (yet) available quests
+  START(3), // Accepted quests
+  REWARD(4), // The quests, that are finished. "Go and get your reward"
+  COMPLETE(5), // Completed quests
+  LOCKED(6); // Not (yet) available quests
 
-	private int id;
+  private int id;
 
-	private QuestStatus(int id) {
-		this.id = id;
-	}
+  private QuestStatus(int id) {
+    this.id = id;
+  }
 
-	public int value() {
-		return id;
-	}
+  public int value() {
+    return id;
+  }
 }

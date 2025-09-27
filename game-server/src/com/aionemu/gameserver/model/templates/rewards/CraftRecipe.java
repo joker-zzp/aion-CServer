@@ -29,28 +29,28 @@ import com.aionemu.gameserver.model.templates.QuestTemplate;
 @XmlType(name = "CraftRecipe")
 public class CraftRecipe extends CraftReward {
 
-	@XmlAttribute(name = "level", required = true)
-	private int level;
+  @XmlAttribute(name = "level", required = true)
+  private int level;
 
-	/**
-	 * Gets the value of the level property.
-	 */
-	public int getLevel() {
-		return level;
-	}
+  /**
+   * Gets the value of the level property.
+   */
+  public int getLevel() {
+    return level;
+  }
 
-	@Override
-	protected boolean matchesQuest(QuestTemplate questTemplate) {
-		if (!super.matchesQuest(questTemplate))
-			return false;
-		if (questTemplate.getCombineSkillPoint() < level)
-			return false;
-		if (questTemplate.getCombineSkillPoint() > getMaxLevel())
-			return false;
-		return true;
-	}
+  @Override
+  protected boolean matchesQuest(QuestTemplate questTemplate) {
+    if (!super.matchesQuest(questTemplate))
+      return false;
+    if (questTemplate.getCombineSkillPoint() < level)
+      return false;
+    if (questTemplate.getCombineSkillPoint() > getMaxLevel())
+      return false;
+    return true;
+  }
 
-	private int getMaxLevel() {
-		return Math.min(level + 40, level / 100 * 100 + 99);
-	}
+  private int getMaxLevel() {
+    return Math.min(level + 40, level / 100 * 100 + 99);
+  }
 }

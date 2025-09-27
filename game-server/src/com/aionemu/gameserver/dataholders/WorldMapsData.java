@@ -21,42 +21,42 @@ import com.aionemu.gameserver.model.templates.world.WorldMapTemplate;
 @XmlAccessorType(XmlAccessType.NONE)
 public class WorldMapsData implements Iterable<WorldMapTemplate> {
 
-	@XmlElement(name = "map")
-	private List<WorldMapTemplate> worldMaps;
+  @XmlElement(name = "map")
+  private List<WorldMapTemplate> worldMaps;
 
-	@XmlTransient
-	private final Map<Integer, WorldMapTemplate> mapsById = new LinkedHashMap<>();
+  @XmlTransient
+  private final Map<Integer, WorldMapTemplate> mapsById = new LinkedHashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (WorldMapTemplate map : worldMaps) {
-			mapsById.put(map.getMapId(), map);
-		}
-		worldMaps = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (WorldMapTemplate map : worldMaps) {
+      mapsById.put(map.getMapId(), map);
+    }
+    worldMaps = null;
+  }
 
-	@Override
-	public Iterator<WorldMapTemplate> iterator() {
-		return mapsById.values().iterator();
-	}
+  @Override
+  public Iterator<WorldMapTemplate> iterator() {
+    return mapsById.values().iterator();
+  }
 
-	public void forEachParalllel(Consumer<WorldMapTemplate> consumer) {
-		mapsById.values().parallelStream().forEach(consumer);
-	}
+  public void forEachParalllel(Consumer<WorldMapTemplate> consumer) {
+    mapsById.values().parallelStream().forEach(consumer);
+  }
 
-	public int size() {
-		return mapsById.size();
-	}
+  public int size() {
+    return mapsById.size();
+  }
 
-	public WorldMapTemplate getTemplate(int worldId) {
-		return mapsById.get(worldId);
-	}
+  public WorldMapTemplate getTemplate(int worldId) {
+    return mapsById.get(worldId);
+  }
 
-	public int getWorldIdByCName(String name) {
-		for (WorldMapTemplate template : mapsById.values()) {
-			if (template.getCName().equalsIgnoreCase(name)) {
-				return template.getMapId();
-			}
-		}
-		return 0;
-	}
+  public int getWorldIdByCName(String name) {
+    for (WorldMapTemplate template : mapsById.values()) {
+      if (template.getCName().equalsIgnoreCase(name)) {
+        return template.getMapId();
+      }
+    }
+    return 0;
+  }
 }

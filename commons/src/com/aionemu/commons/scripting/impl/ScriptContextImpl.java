@@ -27,122 +27,122 @@ import com.aionemu.commons.scripting.impl.javacompiler.ScriptCompilerImpl;
  */
 public class ScriptContextImpl implements ScriptContext {
 
-	private static final Logger log = LoggerFactory.getLogger(ScriptContextImpl.class);
+  private static final Logger log = LoggerFactory.getLogger(ScriptContextImpl.class);
 
-	/**
-	 * Root directories of this script context. It and it's subdirectories will be scanned for .java files.
-	 */
-	private final File[] directories;
+  /**
+   * Root directories of this script context. It and it's subdirectories will be scanned for .java files.
+   */
+  private final File[] directories;
 
-	/**
-	 * Result of compilation of script context
-	 */
-	private CompilationResult compilationResult;
+  /**
+   * Result of compilation of script context
+   */
+  private CompilationResult compilationResult;
 
-	/**
-	 * Classlistener for this script context
-	 */
-	private ClassListener classListener;
+  /**
+   * Classlistener for this script context
+   */
+  private ClassListener classListener;
 
-	/**
-	 * Creates new scriptcontext with given root file
-	 * 
-	 * @param directories
-	 *          directories where java files will be loaded from (recursively)
-	 * @throws NullPointerException
-	 *           if dirPattern is null
-	 * @throws IllegalArgumentException
-	 *           if no directory exists for dirPattern
-	 */
-	public ScriptContextImpl(File... directories) {
-		if (directories.length == 0 || !Stream.of(directories).allMatch(File::isDirectory))
-			throw new IllegalArgumentException("Invalid directories given: " + Arrays.toString(directories));
-		this.directories = directories;
-	}
+  /**
+   * Creates new scriptcontext with given root file
+   * 
+   * @param directories
+   *          directories where java files will be loaded from (recursively)
+   * @throws NullPointerException
+   *           if dirPattern is null
+   * @throws IllegalArgumentException
+   *           if no directory exists for dirPattern
+   */
+  public ScriptContextImpl(File... directories) {
+    if (directories.length == 0 || !Stream.of(directories).allMatch(File::isDirectory))
+      throw new IllegalArgumentException("Invalid directories given: " + Arrays.toString(directories));
+    this.directories = directories;
+  }
 
-	@Override
-	public synchronized void init() {
-		if (compilationResult != null) {
-			log.error("Init request on initialized ScriptContext");
-			return;
-		}
+  @Override
+  public synchronized void init() {
+    if (compilationResult != null) {
+      log.error("Init request on initialized ScriptContext");
+      return;
+    }
 
-		ScriptCompiler scriptCompiler = new ScriptCompilerImpl();
-		List<File> sourceFiles = findFiles();
-		if (CommonsConfig.SCRIPT_COMPILER_CACHING)
-			scriptCompiler.setClasses(ScriptCompilerCache.findValidCachedClassFiles(sourceFiles));
-		try {
-			compilationResult = scriptCompiler.compile(sourceFiles);
-		} catch (ClassFormatError e) {
-			if (!CommonsConfig.SCRIPT_COMPILER_CACHING)
-				throw e;
-			log.warn("Couldn't load cached classes from " + ScriptCompilerCache.CACHE_DIR + ", refreshing files in cache...", e);
-			ScriptCompilerCache.invalidate(sourceFiles = findFiles());
-			scriptCompiler.setClasses(Collections.emptyMap());
-			compilationResult = scriptCompiler.compile(sourceFiles);
-		}
-		if (CommonsConfig.SCRIPT_COMPILER_CACHING)
-			ScriptCompilerCache.cacheClasses(compilationResult.getBinaryClasses());
+    ScriptCompiler scriptCompiler = new ScriptCompilerImpl();
+    List<File> sourceFiles = findFiles();
+    if (CommonsConfig.SCRIPT_COMPILER_CACHING)
+      scriptCompiler.setClasses(ScriptCompilerCache.findValidCachedClassFiles(sourceFiles));
+    try {
+      compilationResult = scriptCompiler.compile(sourceFiles);
+    } catch (ClassFormatError e) {
+      if (!CommonsConfig.SCRIPT_COMPILER_CACHING)
+        throw e;
+      log.warn("Couldn't load cached classes from " + ScriptCompilerCache.CACHE_DIR + ", refreshing files in cache...", e);
+      ScriptCompilerCache.invalidate(sourceFiles = findFiles());
+      scriptCompiler.setClasses(Collections.emptyMap());
+      compilationResult = scriptCompiler.compile(sourceFiles);
+    }
+    if (CommonsConfig.SCRIPT_COMPILER_CACHING)
+      ScriptCompilerCache.cacheClasses(compilationResult.getBinaryClasses());
 
-		getClassListener().postLoad(compilationResult.getCompiledClasses());
-	}
+    getClassListener().postLoad(compilationResult.getCompiledClasses());
+  }
 
-	private List<File> findFiles() {
-		List<File> files = new ArrayList<>();
-		for (File dir : directories) {
-			try {
-				Files.find(dir.toPath(), Integer.MAX_VALUE, (path, attrs) -> attrs.isRegularFile() && path.toString().endsWith(".java"))
-					.forEach(path -> files.add(path.toFile()));
-			} catch (IOException e) {
-				throw new RuntimeException("Error scanning " + dir, e);
-			}
-		}
-		return files;
-	}
+  private List<File> findFiles() {
+    List<File> files = new ArrayList<>();
+    for (File dir : directories) {
+      try {
+        Files.find(dir.toPath(), Integer.MAX_VALUE, (path, attrs) -> attrs.isRegularFile() && path.toString().endsWith(".java"))
+          .forEach(path -> files.add(path.toFile()));
+      } catch (IOException e) {
+        throw new RuntimeException("Error scanning " + dir, e);
+      }
+    }
+    return files;
+  }
 
-	@Override
-	public synchronized void shutdown() {
-		if (compilationResult == null) {
-			log.error("Shutdown of not initialized script context", new Exception());
-			return;
-		}
-		getClassListener().preUnload(compilationResult.getCompiledClasses());
-		compilationResult = null;
-	}
+  @Override
+  public synchronized void shutdown() {
+    if (compilationResult == null) {
+      log.error("Shutdown of not initialized script context", new Exception());
+      return;
+    }
+    getClassListener().preUnload(compilationResult.getCompiledClasses());
+    compilationResult = null;
+  }
 
-	@Override
-	public void reload() {
-		shutdown();
-		init();
-	}
+  @Override
+  public void reload() {
+    shutdown();
+    init();
+  }
 
-	@Override
-	public CompilationResult getCompilationResult() {
-		return compilationResult;
-	}
+  @Override
+  public CompilationResult getCompilationResult() {
+    return compilationResult;
+  }
 
-	@Override
-	public synchronized boolean isInitialized() {
-		return compilationResult != null;
-	}
+  @Override
+  public synchronized boolean isInitialized() {
+    return compilationResult != null;
+  }
 
-	@Override
-	public void setClassListener(ClassListener cl) {
-		classListener = cl;
-	}
+  @Override
+  public void setClassListener(ClassListener cl) {
+    classListener = cl;
+  }
 
-	@Override
-	public ClassListener getClassListener() {
-		return classListener;
-	}
+  @Override
+  public ClassListener getClassListener() {
+    return classListener;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		return obj instanceof ScriptContextImpl another && Arrays.equals(another.directories, directories);
-	}
+  @Override
+  public boolean equals(Object obj) {
+    return obj instanceof ScriptContextImpl another && Arrays.equals(another.directories, directories);
+  }
 
-	@Override
-	public int hashCode() {
-		return Arrays.hashCode(directories);
-	}
+  @Override
+  public int hashCode() {
+    return Arrays.hashCode(directories);
+  }
 }

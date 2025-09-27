@@ -16,24 +16,24 @@ import com.aionemu.loginserver.network.gameserver.serverpackets.SM_ACCOUNT_RECON
  */
 public class CM_ACCOUNT_RECONNECT_KEY extends GsClientPacket {
 
-	/**
-	 * accountId of account that will be reconnecting.
-	 */
-	private int accountId;
+  /**
+   * accountId of account that will be reconnecting.
+   */
+  private int accountId;
 
-	@Override
-	protected void readImpl() {
-		accountId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    accountId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		int reconectKey = Rnd.nextInt();
-		Account acc = getConnection().getGameServerInfo().removeAccountFromGameServer(accountId);
-		if (acc == null)
-			LoggerFactory.getLogger(CM_ACCOUNT_RECONNECT_KEY.class).warn(getConnection() + " requested reconnection for account " + accountId + ", but account is not registered on game server");
-		else
-			AccountController.addReconnectingAccount(new ReconnectingAccount(acc, reconectKey));
-		sendPacket(new SM_ACCOUNT_RECONNECT_KEY(accountId, reconectKey));
-	}
+  @Override
+  protected void runImpl() {
+    int reconectKey = Rnd.nextInt();
+    Account acc = getConnection().getGameServerInfo().removeAccountFromGameServer(accountId);
+    if (acc == null)
+      LoggerFactory.getLogger(CM_ACCOUNT_RECONNECT_KEY.class).warn(getConnection() + " requested reconnection for account " + accountId + ", but account is not registered on game server");
+    else
+      AccountController.addReconnectingAccount(new ReconnectingAccount(acc, reconectKey));
+    sendPacket(new SM_ACCOUNT_RECONNECT_KEY(accountId, reconectKey));
+  }
 }

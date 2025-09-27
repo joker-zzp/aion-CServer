@@ -20,23 +20,23 @@ import ai.OneDmgAI;
 @AIName("IDTiamat_2_Drakan_NPC")
 public class IDTiamat_2_DrakanNpcAI extends OneDmgAI {
 
-	public IDTiamat_2_DrakanNpcAI(Npc owner) {
-		super(owner);
-	}
+  public IDTiamat_2_DrakanNpcAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public float modifyDamage(Creature attacker, float damage, Effect effect) {
-		return damage;
-	}
+  @Override
+  public float modifyDamage(Creature attacker, float damage, Effect effect) {
+    return damage;
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		AIActions.targetCreature(this, Rnd.get(getPosition().getWorldMapInstance().getPlayersInside()));
-		setStateIfNot(AIState.WALKING);
-		getOwner().setState(CreatureState.ACTIVE, true);
-		getMoveController().moveToTargetObject();
-		PacketSendUtility.broadcastToMap(getOwner(), new SM_EMOTION(getOwner(), EmotionType.WALK));
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    AIActions.targetCreature(this, Rnd.get(getPosition().getWorldMapInstance().getPlayersInside()));
+    setStateIfNot(AIState.WALKING);
+    getOwner().setState(CreatureState.ACTIVE, true);
+    getMoveController().moveToTargetObject();
+    PacketSendUtility.broadcastToMap(getOwner(), new SM_EMOTION(getOwner(), EmotionType.WALK));
+  }
 
 }

@@ -8,18 +8,18 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_TELEPORT_MAP extends AionServerPacket {
 
-	private int targetObjId;
-	private int teleportId;
+  private int targetObjId;
+  private int teleportId;
 
-	public SM_TELEPORT_MAP(int targetObjId, int teleportId) {
-		this.targetObjId = targetObjId;
-		this.teleportId = teleportId;
-		
-	}
+  public SM_TELEPORT_MAP(int targetObjId, int teleportId) {
+    this.targetObjId = targetObjId;
+    this.teleportId = teleportId;
+    
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(targetObjId);
-		writeH(teleportId);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(targetObjId);
+    writeH(teleportId);
+  }
 }

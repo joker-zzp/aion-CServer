@@ -14,41 +14,41 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class LeagueChangeLeaderEvent extends ChangeLeaderEvent<PlayerAlliance> {
 
-	private League league;
+  private League league;
 
-	public LeagueChangeLeaderEvent(PlayerAlliance team, Player eventPlayer) {
-		super(team, eventPlayer);
-		league = team.getLeague();
-	}
+  public LeagueChangeLeaderEvent(PlayerAlliance team, Player eventPlayer) {
+    super(team, eventPlayer);
+    league = team.getLeague();
+  }
 
-	@Override
-	protected void changeLeaderTo(final Player player) {
-		int obj = eventPlayer.getPlayerAlliance().getObjectId();
-		final LeagueMember leagueMember = league.getMember(obj);
-		final int position = leagueMember.getLeaguePosition();
-		leagueMember.setLeaguePosition(0);
-		league.changeLeader(leagueMember);
-		league.getMember(team.getObjectId()).setLeaguePosition(position);
-		league.forEach(alliance -> alliance.forEach(member -> {
-			PacketSendUtility.sendPacket(member, new SM_ALLIANCE_INFO(member.getPlayerAlliance()));
-			if (team.equals(leagueMember.getObject())) {
-				PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_UNION_CHANGE_FORCE_NUMBER_ME(position));
+  @Override
+  protected void changeLeaderTo(final Player player) {
+    int obj = eventPlayer.getPlayerAlliance().getObjectId();
+    final LeagueMember leagueMember = league.getMember(obj);
+    final int position = leagueMember.getLeaguePosition();
+    leagueMember.setLeaguePosition(0);
+    league.changeLeader(leagueMember);
+    league.getMember(team.getObjectId()).setLeaguePosition(position);
+    league.forEach(alliance -> alliance.forEach(member -> {
+      PacketSendUtility.sendPacket(member, new SM_ALLIANCE_INFO(member.getPlayerAlliance()));
+      if (team.equals(leagueMember.getObject())) {
+        PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_UNION_CHANGE_FORCE_NUMBER_ME(position));
 
-			}
-			PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_UNION_CHANGE_FORCE_NUMBER_HIM(player.getName(), leagueMember.getLeaguePosition()));
-			if (team.getLeaderObject().equals(member)) {
-				PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_UNION_CHANGE_LEADER(player.getName(), player.getName()));
-			}
-		}));
-	}
+      }
+      PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_UNION_CHANGE_FORCE_NUMBER_HIM(player.getName(), leagueMember.getLeaguePosition()));
+      if (team.getLeaderObject().equals(member)) {
+        PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_UNION_CHANGE_LEADER(player.getName(), player.getName()));
+      }
+    }));
+  }
 
-	@Override
-	public void handleEvent() {
-		if (!eventPlayer.isInLeague() || !eventPlayer.getPlayerAlliance().getLeaderObject().equals(eventPlayer)) {
-			return;
-		}
+  @Override
+  public void handleEvent() {
+    if (!eventPlayer.isInLeague() || !eventPlayer.getPlayerAlliance().getLeaderObject().equals(eventPlayer)) {
+      return;
+    }
 
-		changeLeaderTo(eventPlayer);
-	}
+    changeLeaderTo(eventPlayer);
+  }
 
 }

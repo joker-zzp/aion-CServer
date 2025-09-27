@@ -16,30 +16,30 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class CM_DELETE_ITEM extends AionClientPacket {
 
-	public int itemObjectId;
+  public int itemObjectId;
 
-	public CM_DELETE_ITEM(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_DELETE_ITEM(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		itemObjectId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    itemObjectId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
+  @Override
+  protected void runImpl() {
 
-		Player player = getConnection().getActivePlayer();
-		Storage inventory = player.getInventory();
-		Item item = inventory.getItemByObjId(itemObjectId);
+    Player player = getConnection().getActivePlayer();
+    Storage inventory = player.getInventory();
+    Item item = inventory.getItemByObjId(itemObjectId);
 
-		if (item != null) {
-			if (!item.getItemTemplate().isBreakable()) {
-				PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_UNBREAKABLE_ITEM(item.getL10n()));
-			} else {
-				inventory.delete(item, ItemDeleteType.DISCARD);
-			}
-		}
-	}
+    if (item != null) {
+      if (!item.getItemTemplate().isBreakable()) {
+        PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_UNBREAKABLE_ITEM(item.getL10n()));
+      } else {
+        inventory.delete(item, ItemDeleteType.DISCARD);
+      }
+    }
+  }
 }

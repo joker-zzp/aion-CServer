@@ -12,12 +12,12 @@ import com.aionemu.gameserver.world.WorldMapInstance;
 @InstanceID(301250000)
 public class LegionsMirenBarracks extends MirenBarracks {
 
-	public LegionsMirenBarracks(WorldMapInstance instance) {
-		super(instance);
-	}
+  public LegionsMirenBarracks(WorldMapInstance instance) {
+    super(instance);
+  }
 
-	@Override
-	protected int getChestId() {
-		return 702298;
-	}
+  @Override
+  protected int getChestId() {
+    return 702298;
+  }
 }

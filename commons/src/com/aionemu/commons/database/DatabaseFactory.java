@@ -20,41 +20,41 @@ import com.zaxxer.hikari.pool.HikariPool;
  */
 public class DatabaseFactory {
 
-	/**
-	 * Connection Pool holds all connections - Idle or Active
-	 */
-	private static DataSource dataSource;
+  /**
+   * Connection Pool holds all connections - Idle or Active
+   */
+  private static DataSource dataSource;
 
-	public synchronized static void init() {
-		if (dataSource != null) {
-			return;
-		}
+  public synchronized static void init() {
+    if (dataSource != null) {
+      return;
+    }
 
-		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl(DatabaseConfig.DATABASE_URL);
-		config.setUsername(DatabaseConfig.DATABASE_USER);
-		config.setPassword(DatabaseConfig.DATABASE_PASSWORD);
-		config.setMaximumPoolSize(DatabaseConfig.DATABASE_CONNECTIONS_MAX);
-		config.setConnectionTimeout(DatabaseConfig.DATABASE_TIMEOUT);
+    HikariConfig config = new HikariConfig();
+    config.setJdbcUrl(DatabaseConfig.DATABASE_URL);
+    config.setUsername(DatabaseConfig.DATABASE_USER);
+    config.setPassword(DatabaseConfig.DATABASE_PASSWORD);
+    config.setMaximumPoolSize(DatabaseConfig.DATABASE_CONNECTIONS_MAX);
+    config.setConnectionTimeout(DatabaseConfig.DATABASE_TIMEOUT);
 
-		dataSource = new HikariDataSource(config);
-	}
+    dataSource = new HikariDataSource(config);
+  }
 
-	/**
-	 * @return An active connection from the {@link HikariPool connection pool}
-	 * @see HikariDataSource#getConnection()
-	 */
-	public static Connection getConnection() throws SQLException {
-		Connection con = dataSource.getConnection();
+  /**
+   * @return An active connection from the {@link HikariPool connection pool}
+   * @see HikariDataSource#getConnection()
+   */
+  public static Connection getConnection() throws SQLException {
+    Connection con = dataSource.getConnection();
 
-		if (!con.getAutoCommit()) {
-			LoggerFactory.getLogger(DatabaseFactory.class).error("Connection was not in auto-commit mode.", new IllegalStateException());
-			con.setAutoCommit(true);
-		}
+    if (!con.getAutoCommit()) {
+      LoggerFactory.getLogger(DatabaseFactory.class).error("Connection was not in auto-commit mode.", new IllegalStateException());
+      con.setAutoCommit(true);
+    }
 
-		return con;
-	}
+    return con;
+  }
 
-	private DatabaseFactory() {
-	}
+  private DatabaseFactory() {
+  }
 }

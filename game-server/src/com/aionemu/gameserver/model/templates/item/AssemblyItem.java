@@ -15,30 +15,30 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "AssemblyItem")
 public class AssemblyItem {
 
-	@XmlAttribute(required = true)
-	protected List<Integer> parts;
-	@XmlAttribute(required = true)
-	protected int id;
+  @XmlAttribute(required = true)
+  protected List<Integer> parts;
+  @XmlAttribute(required = true)
+  protected int id;
 
-	public List<Integer> getParts() {
-		if (parts == null) {
-			parts = new ArrayList<>();
-		}
-		return this.parts;
-	}
+  public List<Integer> getParts() {
+    if (parts == null) {
+      parts = new ArrayList<>();
+    }
+    return this.parts;
+  }
 
-	/**
-	 * Gets the value of the id property.
-	 */
-	public int getId() {
-		return id;
-	}
+  /**
+   * Gets the value of the id property.
+   */
+  public int getId() {
+    return id;
+  }
 
-	/**
-	 * Sets the value of the id property.
-	 */
-	public void setId(int value) {
-		this.id = value;
-	}
+  /**
+   * Sets the value of the id property.
+   */
+  public void setId(int value) {
+    this.id = value;
+  }
 
 }

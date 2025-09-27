@@ -19,37 +19,37 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @XmlType(name = "MpUseAction")
 public class MpUseAction extends Action {
 
-	@XmlAttribute(required = true)
-	protected int value;
+  @XmlAttribute(required = true)
+  protected int value;
 
-	@XmlAttribute
-	protected int delta;
+  @XmlAttribute
+  protected int delta;
 
-	@XmlAttribute
-	protected boolean ratio;
+  @XmlAttribute
+  protected boolean ratio;
 
-	@Override
-	public boolean act(Skill skill) {
-		Creature effector = skill.getEffector();
-		int currentMp = effector.getLifeStats().getCurrentMp();
-		int valueWithDelta = value + delta * skill.getSkillLevel();
-		if (ratio)
-			valueWithDelta = skill.getEffector().getLifeStats().getMaxMp() * valueWithDelta / 100;
-		int changeMpPercent = skill.getBoostSkillCost();
-		if (changeMpPercent != 0) {
-			// changeMpPercent is negative
-			valueWithDelta = valueWithDelta - ((valueWithDelta / ((100 / changeMpPercent))));
-		}
+  @Override
+  public boolean act(Skill skill) {
+    Creature effector = skill.getEffector();
+    int currentMp = effector.getLifeStats().getCurrentMp();
+    int valueWithDelta = value + delta * skill.getSkillLevel();
+    if (ratio)
+      valueWithDelta = skill.getEffector().getLifeStats().getMaxMp() * valueWithDelta / 100;
+    int changeMpPercent = skill.getBoostSkillCost();
+    if (changeMpPercent != 0) {
+      // changeMpPercent is negative
+      valueWithDelta = valueWithDelta - ((valueWithDelta / ((100 / changeMpPercent))));
+    }
 
-		if (effector instanceof Player) {
-			if (currentMp <= 0 || currentMp < valueWithDelta) {
-				PacketSendUtility.sendPacket((Player) effector, SM_SYSTEM_MESSAGE.STR_SKILL_NOT_ENOUGH_MP());
-				return false;
-			}
-		}
+    if (effector instanceof Player) {
+      if (currentMp <= 0 || currentMp < valueWithDelta) {
+        PacketSendUtility.sendPacket((Player) effector, SM_SYSTEM_MESSAGE.STR_SKILL_NOT_ENOUGH_MP());
+        return false;
+      }
+    }
 
-		effector.getLifeStats().reduceMp(SM_ATTACK_STATUS.TYPE.USED_MP, valueWithDelta, 0, SM_ATTACK_STATUS.LOG.REGULAR);
-		return true;
-	}
+    effector.getLifeStats().reduceMp(SM_ATTACK_STATUS.TYPE.USED_MP, valueWithDelta, 0, SM_ATTACK_STATUS.LOG.REGULAR);
+    return true;
+  }
 
 }

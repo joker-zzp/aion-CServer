@@ -13,24 +13,24 @@ import com.aionemu.gameserver.model.road.Road;
  */
 public class RoadController extends VisibleObjectController<Road> {
 
-	ConcurrentHashMap<Integer, RoadObserver> observed = new ConcurrentHashMap<>();
+  ConcurrentHashMap<Integer, RoadObserver> observed = new ConcurrentHashMap<>();
 
-	@Override
-	public void see(VisibleObject object) {
-		if (object instanceof Player) {
-			Player p = (Player) object;
-			RoadObserver observer = new RoadObserver(getOwner(), p);
-			p.getObserveController().addObserver(observer);
-			observed.put(p.getObjectId(), observer);
-		}
-	}
+  @Override
+  public void see(VisibleObject object) {
+    if (object instanceof Player) {
+      Player p = (Player) object;
+      RoadObserver observer = new RoadObserver(getOwner(), p);
+      p.getObserveController().addObserver(observer);
+      observed.put(p.getObjectId(), observer);
+    }
+  }
 
-	@Override
-	public void notSee(VisibleObject object, ObjectDeleteAnimation animation) {
-		if (object instanceof Player) {
-			Player p = (Player) object;
-			RoadObserver observer = observed.remove(p.getObjectId());
-			p.getObserveController().removeObserver(observer);
-		}
-	}
+  @Override
+  public void notSee(VisibleObject object, ObjectDeleteAnimation animation) {
+    if (object instanceof Player) {
+      Player p = (Player) object;
+      RoadObserver observer = observed.remove(p.getObjectId());
+      p.getObserveController().removeObserver(observer);
+    }
+  }
 }

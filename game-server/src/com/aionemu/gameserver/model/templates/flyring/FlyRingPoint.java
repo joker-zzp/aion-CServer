@@ -14,33 +14,33 @@ import com.aionemu.gameserver.model.geometry.Point3D;
 @XmlType(name = "FlyRingPoint")
 public class FlyRingPoint {
 
-	@XmlAttribute(name = "x")
-	private float x;
+  @XmlAttribute(name = "x")
+  private float x;
 
-	@XmlAttribute(name = "y")
-	private float y;
+  @XmlAttribute(name = "y")
+  private float y;
 
-	@XmlAttribute(name = "z")
-	private float z;
+  @XmlAttribute(name = "z")
+  private float z;
 
-	public float getX() {
-		return x;
-	}
+  public float getX() {
+    return x;
+  }
 
-	public float getY() {
-		return y;
-	}
+  public float getY() {
+    return y;
+  }
 
-	public float getZ() {
-		return z;
-	}
+  public float getZ() {
+    return z;
+  }
 
-	public FlyRingPoint() {
-	}
+  public FlyRingPoint() {
+  }
 
-	public FlyRingPoint(Point3D p) {
-		x = p.getX();
-		y = p.getY();
-		z = p.getZ();
-	}
+  public FlyRingPoint(Point3D p) {
+    x = p.getX();
+    y = p.getY();
+    z = p.getZ();
+  }
 }

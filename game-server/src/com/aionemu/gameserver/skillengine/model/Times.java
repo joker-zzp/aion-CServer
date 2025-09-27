@@ -13,39 +13,39 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Times")
 public class Times {
 
-	@XmlAttribute(name = "weapon")
-	private String weapon;
+  @XmlAttribute(name = "weapon")
+  private String weapon;
 
-	@XmlAttribute(name = "id")
-	private int id;
+  @XmlAttribute(name = "id")
+  private int id;
 
-	@XmlAttribute(name = "min")
-	private float minTime;
+  @XmlAttribute(name = "min")
+  private float minTime;
 
-	@XmlAttribute(name = "max")
-	private float maxTime;
+  @XmlAttribute(name = "max")
+  private float maxTime;
 
-	@XmlAttribute(name = "animation_length")
-	private float animationLength;
+  @XmlAttribute(name = "animation_length")
+  private float animationLength;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public float getMinTime() {
-		return minTime;
-	}
+  public float getMinTime() {
+    return minTime;
+  }
 
-	public float getMaxTime() {
-		return maxTime;
-	}
+  public float getMaxTime() {
+    return maxTime;
+  }
 
-	public float getAnimationLength() {
-		return animationLength;
-	}
+  public float getAnimationLength() {
+    return animationLength;
+  }
 
-	public String getWeapon() {
-		return weapon;
-	}
+  public String getWeapon() {
+    return weapon;
+  }
 
 }

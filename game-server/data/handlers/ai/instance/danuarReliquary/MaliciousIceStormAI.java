@@ -15,24 +15,24 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("malicious_ice_storm")
 public class MaliciousIceStormAI extends NpcAI {
 
-	public MaliciousIceStormAI(Npc owner) {
-		super(owner);
-	}
+  public MaliciousIceStormAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		ThreadPoolManager.getInstance().schedule(() -> AIActions.useSkill(MaliciousIceStormAI.this, 21180), 1000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    ThreadPoolManager.getInstance().schedule(() -> AIActions.useSkill(MaliciousIceStormAI.this, 21180), 1000);
+  }
 
-	@Override
-	public float modifyOwnerDamage(float damage, Creature effected, Effect effect) {
-		return damage * 0.5f;
-	}
+  @Override
+  public float modifyOwnerDamage(float damage, Creature effected, Effect effect) {
+    return damage * 0.5f;
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		if (skillTemplate.getSkillId() == 21180)
-			getOwner().getController().delete();
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    if (skillTemplate.getSkillId() == 21180)
+      getOwner().getController().delete();
+  }
 }

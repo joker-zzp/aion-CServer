@@ -8,15 +8,15 @@ import com.aionemu.gameserver.network.chatserver.CsServerPacket;
  */
 public class SM_CS_PLAYER_LOGOUT extends CsServerPacket {
 
-	private int playerId;
+  private int playerId;
 
-	public SM_CS_PLAYER_LOGOUT(int playerId) {
-		super(0x02);
-		this.playerId = playerId;
-	}
+  public SM_CS_PLAYER_LOGOUT(int playerId) {
+    super(0x02);
+    this.playerId = playerId;
+  }
 
-	@Override
-	protected void writeImpl(ChatServerConnection con) {
-		writeD(playerId);
-	}
+  @Override
+  protected void writeImpl(ChatServerConnection con) {
+    writeD(playerId);
+  }
 }

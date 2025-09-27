@@ -14,10 +14,10 @@ import com.aionemu.gameserver.questEngine.model.QuestEnv;
 @XmlType(name = "KillOperation")
 public class KillOperation extends QuestOperation {
 
-	@Override
-	public void doOperate(QuestEnv env) {
-		if (env.getVisibleObject() instanceof Npc)
-			((Npc) env.getVisibleObject()).getController().die(env.getPlayer());
-	}
+  @Override
+  public void doOperate(QuestEnv env) {
+    if (env.getVisibleObject() instanceof Npc)
+      ((Npc) env.getVisibleObject()).getController().die(env.getPlayer());
+  }
 
 }

@@ -18,62 +18,62 @@ import com.aionemu.gameserver.utils.stats.CalculationType;
  */
 public class Speed extends AdminCommand implements StatOwner {
 
-	public Speed() {
-		super("speed", "设置你的移动速度。");
+  public Speed() {
+    super("speed", "设置你的移动速度。");
 
-		setSyntaxInfo("<0-100> - 设置你的移动速度为指定值(0表示重置).");
-	}
+    setSyntaxInfo("<0-100> - 设置你的移动速度为指定值(0表示重置).");
+  }
 
-	@Override
-	public void execute(Player admin, String... params) {
-		if (params.length == 0 || "help".equals(params[0])) {
-			sendInfo(admin);
-			return;
-		}
+  @Override
+  public void execute(Player admin, String... params) {
+    if (params.length == 0 || "help".equals(params[0])) {
+      sendInfo(admin);
+      return;
+    }
 
-		float parameter = 0;
-		try {
-			parameter = Float.parseFloat(params[0]);
-			if (parameter < 0 || parameter > 100) {
-				throw new IllegalArgumentException("速度值必须在0到100之间。");
-			}
-		} catch (IllegalArgumentException e) {
-			sendInfo(admin, e.getClass() == IllegalArgumentException.class ? e.getMessage() : null); // 默认信息用于数字格式化异常
-			return;
-		}
+    float parameter = 0;
+    try {
+      parameter = Float.parseFloat(params[0]);
+      if (parameter < 0 || parameter > 100) {
+        throw new IllegalArgumentException("速度值必须在0到100之间。");
+      }
+    } catch (IllegalArgumentException e) {
+      sendInfo(admin, e.getClass() == IllegalArgumentException.class ? e.getMessage() : null); // 默认信息用于数字格式化异常
+      return;
+    }
 
-		admin.getGameStats().endEffect(this);
-		if (parameter == 0) {
-			sendInfo(admin, "已恢复你的标准移动速度。");
-			return;
-		}
+    admin.getGameStats().endEffect(this);
+    if (parameter == 0) {
+      sendInfo(admin, "已恢复你的标准移动速度。");
+      return;
+    }
 
-		List<IStatFunction> functions = new ArrayList<>();
-		functions.add(new SpeedFunction(StatEnum.SPEED, parameter));
-		functions.add(new SpeedFunction(StatEnum.FLY_SPEED, parameter));
-		admin.getGameStats().addEffect(this, functions);
-		sendInfo(admin, "你的移动速度已设置为 " + parameter);
-	}
+    List<IStatFunction> functions = new ArrayList<>();
+    functions.add(new SpeedFunction(StatEnum.SPEED, parameter));
+    functions.add(new SpeedFunction(StatEnum.FLY_SPEED, parameter));
+    admin.getGameStats().addEffect(this, functions);
+    sendInfo(admin, "你的移动速度已设置为 " + parameter);
+  }
 
-	class SpeedFunction extends StatFunction {
+  class SpeedFunction extends StatFunction {
 
-		private int speed;
+    private int speed;
 
-		SpeedFunction(StatEnum stat, float speed) {
-			this.stat = stat;
-			this.speed = (int) (speed * 1000);
-		}
+    SpeedFunction(StatEnum stat, float speed) {
+      this.stat = stat;
+      this.speed = (int) (speed * 1000);
+    }
 
-		@Override
-		public void apply(Stat2 otherStat, CalculationType... calculationTypes) {
-			otherStat.setBase(speed);
-			otherStat.setBaseRate(1);
-			otherStat.setBonus(0);
-		}
+    @Override
+    public void apply(Stat2 otherStat, CalculationType... calculationTypes) {
+      otherStat.setBase(speed);
+      otherStat.setBaseRate(1);
+      otherStat.setBonus(0);
+    }
 
-		@Override
-		public int getPriority() {
-			return 120;
-		}
-	}
+    @Override
+    public int getPriority() {
+      return 120;
+    }
+  }
 }

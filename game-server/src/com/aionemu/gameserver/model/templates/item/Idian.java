@@ -12,17 +12,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Idian")
 public class Idian {
 
-	@XmlAttribute(name = "burn_defend")
-	private int burnDefend;
+  @XmlAttribute(name = "burn_defend")
+  private int burnDefend;
 
-	@XmlAttribute(name = "burn_attack")
-	private int burnAttack;
+  @XmlAttribute(name = "burn_attack")
+  private int burnAttack;
 
-	public int getBurnAttack() {
-		return burnAttack;
-	}
+  public int getBurnAttack() {
+    return burnAttack;
+  }
 
-	public int getBurnDefend() {
-		return burnDefend;
-	}
+  public int getBurnDefend() {
+    return burnDefend;
+  }
 }

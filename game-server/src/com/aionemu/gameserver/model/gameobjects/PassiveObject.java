@@ -8,8 +8,8 @@ import com.aionemu.gameserver.model.templates.housing.HousingPassiveItem;
  */
 public class PassiveObject extends HouseObject<HousingPassiveItem> {
 
-	public PassiveObject(HouseRegistry registry, int objId, int templateId) {
-		super(registry, objId, templateId);
-	}
+  public PassiveObject(HouseRegistry registry, int objId, int templateId) {
+    super(registry, objId, templateId);
+  }
 
 }

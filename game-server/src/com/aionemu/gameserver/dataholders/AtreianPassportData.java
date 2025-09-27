@@ -20,29 +20,29 @@ import com.aionemu.gameserver.model.templates.event.AtreianPassport;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AtreianPassportData {
 
-	@XmlElement(name = "login_event")
-	private List<AtreianPassport> list;
+  @XmlElement(name = "login_event")
+  private List<AtreianPassport> list;
 
-	@XmlTransient
-	private Map<Integer, AtreianPassport> passportData = new HashMap<>();
+  @XmlTransient
+  private Map<Integer, AtreianPassport> passportData = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (AtreianPassport passport : list) {
-			passportData.put(passport.getId(), passport);
-		}
-		list = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (AtreianPassport passport : list) {
+      passportData.put(passport.getId(), passport);
+    }
+    list = null;
+  }
 
-	public int size() {
-		return passportData.size();
-	}
+  public int size() {
+    return passportData.size();
+  }
 
-	public Map<Integer, AtreianPassport> getAll() {
-		return passportData;
-	}
+  public Map<Integer, AtreianPassport> getAll() {
+    return passportData;
+  }
 
-	public AtreianPassport getAtreianPassportId(int id) {
-		return passportData.get(id);
-	}
+  public AtreianPassport getAtreianPassportId(int id) {
+    return passportData.get(id);
+  }
 
 }

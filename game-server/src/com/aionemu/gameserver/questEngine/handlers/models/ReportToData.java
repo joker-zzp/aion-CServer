@@ -19,26 +19,26 @@ import com.aionemu.gameserver.questEngine.handlers.template.ReportTo;
 @XmlType(name = "ReportToData")
 public class ReportToData extends XMLQuest {
 
-	@XmlAttribute(name = "start_npc_ids")
-	private List<Integer> startNpcIds;
+  @XmlAttribute(name = "start_npc_ids")
+  private List<Integer> startNpcIds;
 
-	@XmlAttribute(name = "end_npc_ids")
-	private List<Integer> endNpcIds;
+  @XmlAttribute(name = "end_npc_ids")
+  private List<Integer> endNpcIds;
 
-	@XmlAttribute(name = "start_dialog_id")
-	private int startDialogId;
+  @XmlAttribute(name = "start_dialog_id")
+  private int startDialogId;
 
-	@Override
-	public void register(QuestEngine questEngine) {
-		questEngine.addQuestHandler(new ReportTo(id, startNpcIds, endNpcIds, startDialogId));
-	}
+  @Override
+  public void register(QuestEngine questEngine) {
+    questEngine.addQuestHandler(new ReportTo(id, startNpcIds, endNpcIds, startDialogId));
+  }
 
-	@Override
-	public Set<Integer> getAlternativeNpcs(int npcId) {
-		if (startNpcIds != null && startNpcIds.size() > 1 && startNpcIds.contains(npcId))
-			return startNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
-		if (endNpcIds != null && endNpcIds.size() > 1 && endNpcIds.contains(npcId))
-			return endNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
-		return null;
-	}
+  @Override
+  public Set<Integer> getAlternativeNpcs(int npcId) {
+    if (startNpcIds != null && startNpcIds.size() > 1 && startNpcIds.contains(npcId))
+      return startNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
+    if (endNpcIds != null && endNpcIds.size() > 1 && endNpcIds.contains(npcId))
+      return endNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
+    return null;
+  }
 }

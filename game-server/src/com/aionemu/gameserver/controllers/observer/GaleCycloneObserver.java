@@ -9,31 +9,31 @@ import com.aionemu.gameserver.utils.PositionUtil;
  */
 public abstract class GaleCycloneObserver extends ActionObserver {
 
-	private Player player;
-	private Creature creature;
-	private double oldRange;
+  private Player player;
+  private Creature creature;
+  private double oldRange;
 
-	public GaleCycloneObserver(Player player, Creature creature) {
-		super(ObserverType.MOVE);
-		this.player = player;
-		this.creature = creature;
-		oldRange = PositionUtil.getDistance(player, creature);
-	}
+  public GaleCycloneObserver(Player player, Creature creature) {
+    super(ObserverType.MOVE);
+    this.player = player;
+    this.creature = creature;
+    oldRange = PositionUtil.getDistance(player, creature);
+  }
 
-	@Override
-	public void moved() {
-		double newRange = PositionUtil.getDistance(player, creature);
-		if (creature == null || creature.isDead()) {
-			if (player != null) {
-				player.getObserveController().removeObserver(this);
-			}
-			return;
-		}
-		if (oldRange > 12 && newRange <= 12) {
-			onMove();
-		}
-		oldRange = newRange;
-	}
+  @Override
+  public void moved() {
+    double newRange = PositionUtil.getDistance(player, creature);
+    if (creature == null || creature.isDead()) {
+      if (player != null) {
+        player.getObserveController().removeObserver(this);
+      }
+      return;
+    }
+    if (oldRange > 12 && newRange <= 12) {
+      onMove();
+    }
+    oldRange = newRange;
+  }
 
-	public abstract void onMove();
+  public abstract void onMove();
 }

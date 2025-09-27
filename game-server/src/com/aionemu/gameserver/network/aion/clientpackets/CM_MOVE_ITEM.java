@@ -12,26 +12,26 @@ import com.aionemu.gameserver.services.item.ItemMoveService;
  */
 public class CM_MOVE_ITEM extends AionClientPacket {
 
-	private int itemObjId;
-	private byte source;
-	private byte destination;
-	private short slot;
+  private int itemObjId;
+  private byte source;
+  private byte destination;
+  private short slot;
 
-	public CM_MOVE_ITEM(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_MOVE_ITEM(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		itemObjId = readD();
-		source = readC(); // FROM (0 - player inventory, 1 - regular warehouse, 2 - account warehouse, 3 - legion warehouse)
-		destination = readC(); // TO
-		slot = readH();
-	}
+  @Override
+  protected void readImpl() {
+    itemObjId = readD();
+    source = readC(); // FROM (0 - player inventory, 1 - regular warehouse, 2 - account warehouse, 3 - legion warehouse)
+    destination = readC(); // TO
+    slot = readH();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		ItemMoveService.moveItem(player, itemObjId, source, destination, slot);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    ItemMoveService.moveItem(player, itemObjId, source, destination, slot);
+  }
 }

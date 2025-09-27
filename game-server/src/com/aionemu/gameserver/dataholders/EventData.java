@@ -15,42 +15,42 @@ import com.aionemu.gameserver.model.templates.event.EventTemplate;
 @XmlRootElement(name = "timed_events")
 public class EventData {
 
-	@XmlElement(name = "event")
-	private List<EventTemplate> events;
+  @XmlElement(name = "event")
+  private List<EventTemplate> events;
 
-	@XmlTransient
-	private Set<Integer> allNpcIds = new HashSet<>();
+  @XmlTransient
+  private Set<Integer> allNpcIds = new HashSet<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		if (events == null)
-			events = Collections.emptyList();
-		allNpcIds.clear();
-		for (EventTemplate ev : events) {
-			if (ev.getEndDate() != null && ev.getStartDate() != null && !ev.getStartDate().isBefore(ev.getEndDate()))
-				throw new IllegalArgumentException("Event \"" + ev.getName() + "\" has an invalid start or end date: start date must be before end date");
-			if (ev.getSpawns() != null)
-				allNpcIds.addAll(ev.getSpawns().getAllNpcIds());
-		}
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    if (events == null)
+      events = Collections.emptyList();
+    allNpcIds.clear();
+    for (EventTemplate ev : events) {
+      if (ev.getEndDate() != null && ev.getStartDate() != null && !ev.getStartDate().isBefore(ev.getEndDate()))
+        throw new IllegalArgumentException("Event \"" + ev.getName() + "\" has an invalid start or end date: start date must be before end date");
+      if (ev.getSpawns() != null)
+        allNpcIds.addAll(ev.getSpawns().getAllNpcIds());
+    }
+  }
 
-	public int size() {
-		return events.size();
-	}
+  public int size() {
+    return events.size();
+  }
 
-	public List<EventTemplate> getEvents() {
-		return events;
-	}
+  public List<EventTemplate> getEvents() {
+    return events;
+  }
 
-	public void setEvents(List<EventTemplate> events) {
-		this.events = events;
-		afterUnmarshal(null, null);
-	}
+  public void setEvents(List<EventTemplate> events) {
+    this.events = events;
+    afterUnmarshal(null, null);
+  }
 
-	/**
-	 * @param npcId
-	 * @return True, if the given npc appears in any of the spawn templates (town level 1-5)
-	 */
-	public boolean containsAnySpawnForNpc(int npcId) {
-		return allNpcIds.contains(npcId);
-	}
+  /**
+   * @param npcId
+   * @return True, if the given npc appears in any of the spawn templates (town level 1-5)
+   */
+  public boolean containsAnySpawnForNpc(int npcId) {
+    return allNpcIds.contains(npcId);
+  }
 }

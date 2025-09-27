@@ -22,27 +22,27 @@ import com.aionemu.gameserver.skillengine.model.SkillType;
 @XmlType(name = "MagicCounterAtkEffect")
 public class MagicCounterAtkEffect extends EffectTemplate {
 
-	@XmlAttribute
-	protected int maxdmg;
+  @XmlAttribute
+  protected int maxdmg;
 
-	// TODO bosses are resistent to this?
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  // TODO bosses are resistent to this?
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void startEffect(final Effect effect) {
-		Creature effected = effect.getEffected();
-		effect.addObserver(effected, new ActionObserver(ObserverType.ENDSKILLCAST) {
+  @Override
+  public void startEffect(final Effect effect) {
+    Creature effected = effect.getEffected();
+    effect.addObserver(effected, new ActionObserver(ObserverType.ENDSKILLCAST) {
 
-			@Override
-			public void endSkillCast(Skill skill) {
-				if (skill.getSkillMethod() != SkillMethod.ITEM && skill.getSkillTemplate().getType() == SkillType.MAGICAL) {
-					int damage = Math.min(maxdmg, (int) (effected.getGameStats().getMaxHp().getBase() / 100f * value));
-					effected.getController().onAttack(effect, TYPE.MAGICCOUNTERATK, damage, false, LOG.MAGICCOUNTERATK, hopType);
-				}
-			}
-		});
-	}
+      @Override
+      public void endSkillCast(Skill skill) {
+        if (skill.getSkillMethod() != SkillMethod.ITEM && skill.getSkillTemplate().getType() == SkillType.MAGICAL) {
+          int damage = Math.min(maxdmg, (int) (effected.getGameStats().getMaxHp().getBase() / 100f * value));
+          effected.getController().onAttack(effect, TYPE.MAGICCOUNTERATK, damage, false, LOG.MAGICCOUNTERATK, hopType);
+        }
+      }
+    });
+  }
 }

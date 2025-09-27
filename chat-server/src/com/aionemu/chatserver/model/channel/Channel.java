@@ -9,39 +9,39 @@ import com.aionemu.chatserver.utils.IdFactory;
  */
 public abstract class Channel {
 
-	private final ChannelType channelType;
-	private final int gameServerId;
-	private final int channelId;
+  private final ChannelType channelType;
+  private final int gameServerId;
+  private final int channelId;
 
-	public Channel(ChannelType channelType, int gameServerId) {
-		this.channelType = channelType;
-		this.gameServerId = gameServerId;
-		this.channelId = IdFactory.getInstance().nextId();
-	}
+  public Channel(ChannelType channelType, int gameServerId) {
+    this.channelType = channelType;
+    this.gameServerId = gameServerId;
+    this.channelId = IdFactory.getInstance().nextId();
+  }
 
-	public ChannelType getChannelType() {
-		return channelType;
-	}
+  public ChannelType getChannelType() {
+    return channelType;
+  }
 
-	public int getGameServerId() {
-		return gameServerId;
-	}
+  public int getGameServerId() {
+    return gameServerId;
+  }
 
-	/**
-	 * @return The unique id of this channel.
-	 */
-	public int getChannelId() {
-		return channelId;
-	}
+  /**
+   * @return The unique id of this channel.
+   */
+  public int getChannelId() {
+    return channelId;
+  }
 
-	/**
-	 * @return True, if the channel matches the specified criteria. Used to determine if a clients request matches an existing channel or we need to
-	 *         create a new one.
-	 */
-	public abstract boolean matches(ChannelType channelType, int gameServerId, Race race, String channelMeta);
+  /**
+   * @return True, if the channel matches the specified criteria. Used to determine if a clients request matches an existing channel or we need to
+   *         create a new one.
+   */
+  public abstract boolean matches(ChannelType channelType, int gameServerId, Race race, String channelMeta);
 
-	/**
-	 * @return The name of this channel (mainly for logging purposes).
-	 */
-	public abstract String name();
+  /**
+   * @return The name of this channel (mainly for logging purposes).
+   */
+  public abstract String name();
 }

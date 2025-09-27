@@ -14,22 +14,22 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "RebirthEffect")
 public class RebirthEffect extends EffectTemplate {
 
-	@XmlAttribute(name = "resurrect_percent", required = true)
-	protected int resurrectPercent;
+  @XmlAttribute(name = "resurrect_percent", required = true)
+  protected int resurrectPercent;
 
-	@XmlAttribute(name = "skill_id")
-	protected int skillId;
+  @XmlAttribute(name = "skill_id")
+  protected int skillId;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	public int getResurrectPercent() {
-		return resurrectPercent;
-	}
+  public int getResurrectPercent() {
+    return resurrectPercent;
+  }
 
-	public int getSkillId() {
-		return skillId;
-	}
+  public int getSkillId() {
+    return skillId;
+  }
 }

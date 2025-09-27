@@ -17,29 +17,29 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "TargetClassDamageModifier")
 public class TargetClassDamageModifier extends ActionModifier {
 
-	@XmlAttribute(name = "class")
-	private PlayerClass skillTargetClass;
+  @XmlAttribute(name = "class")
+  private PlayerClass skillTargetClass;
 
-	@Override
-	public int analyze(Effect effect) {
-		Creature effected = effect.getEffected();
-		if (effected instanceof Player) {
-			Player player = (Player) effected;
-			if (player.getPlayerClass() == skillTargetClass) {
-				return value + effect.getSkillLevel() * delta;
-			}
-		}
-		return 0;
-	}
+  @Override
+  public int analyze(Effect effect) {
+    Creature effected = effect.getEffected();
+    if (effected instanceof Player) {
+      Player player = (Player) effected;
+      if (player.getPlayerClass() == skillTargetClass) {
+        return value + effect.getSkillLevel() * delta;
+      }
+    }
+    return 0;
+  }
 
-	@Override
-	public boolean check(Effect effect) {
-		Creature effected = effect.getEffected();
-		if (effected instanceof Player) {
-			Player player = (Player) effected;
-			return player.getPlayerClass() == skillTargetClass;
-		}
-		return false;
-	}
+  @Override
+  public boolean check(Effect effect) {
+    Creature effected = effect.getEffected();
+    if (effected instanceof Player) {
+      Player player = (Player) effected;
+      return player.getPlayerClass() == skillTargetClass;
+    }
+    return false;
+  }
 
 }

@@ -15,25 +15,25 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_CHAT_PLAYER_INFO extends AionClientPacket {
 
-	private String playerName;
+  private String playerName;
 
-	public CM_CHAT_PLAYER_INFO(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_CHAT_PLAYER_INFO(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		playerName = readS();
-	}
+  @Override
+  protected void readImpl() {
+    playerName = readS();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player target = World.getInstance().getPlayer(ChatUtil.getRealCharName(playerName));
-		if (target == null) {
-			sendPacket(SM_SYSTEM_MESSAGE.STR_NO_SUCH_USER(playerName));
-			return;
-		}
-		if (!getConnection().getActivePlayer().getKnownList().knows(target))
-			sendPacket(new SM_CHAT_WINDOW(target, false));
-	}
+  @Override
+  protected void runImpl() {
+    Player target = World.getInstance().getPlayer(ChatUtil.getRealCharName(playerName));
+    if (target == null) {
+      sendPacket(SM_SYSTEM_MESSAGE.STR_NO_SUCH_USER(playerName));
+      return;
+    }
+    if (!getConnection().getActivePlayer().getKnownList().knows(target))
+      sendPacket(new SM_CHAT_WINDOW(target, false));
+  }
 }

@@ -12,17 +12,17 @@ import ai.AggressiveNpcAI;
 @AIName("harlequinlordreshkasummon")
 public class HarlequinLordReshkaSummonAI extends AggressiveNpcAI {
 
-	public HarlequinLordReshkaSummonAI(Npc owner) {
-		super(owner);
-	}
+  public HarlequinLordReshkaSummonAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		Npc boss = getPosition().getWorldMapInstance().getNpc(233453);
-		if (boss != null && !boss.isDead()) {
-			Creature player = boss.getPosition().getWorldMapInstance().getNpc(233453).getAggroList().getMostHated();
-			getAggroList().addHate(player, 1);
-		}
-		super.handleSpawned();
-	}
+  @Override
+  protected void handleSpawned() {
+    Npc boss = getPosition().getWorldMapInstance().getNpc(233453);
+    if (boss != null && !boss.isDead()) {
+      Creature player = boss.getPosition().getWorldMapInstance().getNpc(233453).getAggroList().getMostHated();
+      getAggroList().addHate(player, 1);
+    }
+    super.handleSpawned();
+  }
 }

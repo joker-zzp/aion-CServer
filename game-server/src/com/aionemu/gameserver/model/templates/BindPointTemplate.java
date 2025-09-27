@@ -12,24 +12,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.NONE)
 public class BindPointTemplate {
 
-	@XmlAttribute(name = "name", required = true)
-	private String name;
+  @XmlAttribute(name = "name", required = true)
+  private String name;
 
-	@XmlAttribute(name = "npcid")
-	private int npcId;
+  @XmlAttribute(name = "npcid")
+  private int npcId;
 
-	@XmlAttribute(name = "price")
-	private int price = 0;
+  @XmlAttribute(name = "price")
+  private int price = 0;
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public int getNpcId() {
-		return npcId;
-	}
+  public int getNpcId() {
+    return npcId;
+  }
 
-	public int getPrice() {
-		return price;
-	}
+  public int getPrice() {
+    return price;
+  }
 }

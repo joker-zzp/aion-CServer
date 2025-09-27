@@ -17,28 +17,28 @@ import com.aionemu.gameserver.model.templates.stats.ModifiersTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CPRank {
 
-	@XmlAttribute(name = "type", required = true)
-	private CPType type;
-	@XmlAttribute(name = "rank_num", required = true)
-	private int rankNum;
-	@XmlAttribute(name = "visible_intruder_min_rank")
-	private int visibleIntruderMinRank;
-	@XmlElement(name = "modifiers")
-	private ModifiersTemplate statModifiers;
+  @XmlAttribute(name = "type", required = true)
+  private CPType type;
+  @XmlAttribute(name = "rank_num", required = true)
+  private int rankNum;
+  @XmlAttribute(name = "visible_intruder_min_rank")
+  private int visibleIntruderMinRank;
+  @XmlElement(name = "modifiers")
+  private ModifiersTemplate statModifiers;
 
-	public CPType getType() {
-		return type;
-	}
+  public CPType getType() {
+    return type;
+  }
 
-	public int getRankNum() {
-		return rankNum;
-	}
+  public int getRankNum() {
+    return rankNum;
+  }
 
-	public List<StatFunction> getStatModifiers() {
-		return statModifiers == null ? Collections.emptyList() : statModifiers.getModifiers();
-	}
+  public List<StatFunction> getStatModifiers() {
+    return statModifiers == null ? Collections.emptyList() : statModifiers.getModifiers();
+  }
 
-	public int getVisibleIntruderMinRank() {
-		return visibleIntruderMinRank;
-	}
+  public int getVisibleIntruderMinRank() {
+    return visibleIntruderMinRank;
+  }
 }

@@ -9,11 +9,11 @@ import com.aionemu.gameserver.model.team.TemporaryPlayerTeam;
  */
 public abstract class AbstractTeamPlayerEvent<T extends TemporaryPlayerTeam<?>> implements TeamEvent {
 
-	protected final T team;
-	protected final Player eventPlayer;
+  protected final T team;
+  protected final Player eventPlayer;
 
-	public AbstractTeamPlayerEvent(T team, Player eventPlayer) {
-		this.team = team;
-		this.eventPlayer = eventPlayer;
-	}
+  public AbstractTeamPlayerEvent(T team, Player eventPlayer) {
+    this.team = team;
+    this.eventPlayer = eventPlayer;
+  }
 }

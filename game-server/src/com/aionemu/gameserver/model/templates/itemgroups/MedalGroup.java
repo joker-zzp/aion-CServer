@@ -17,12 +17,12 @@ import com.aionemu.gameserver.model.templates.rewards.FullRewardItem;
 @XmlType(name = "MedalGroup")
 public class MedalGroup extends BonusItemGroup {
 
-	@XmlElement(name = "item")
-	private List<FullRewardItem> items;
+  @XmlElement(name = "item")
+  private List<FullRewardItem> items;
 
-	@Override
-	public List<FullRewardItem> getItems() {
-		return items == null ? Collections.emptyList() : items;
-	}
+  @Override
+  public List<FullRewardItem> getItems() {
+    return items == null ? Collections.emptyList() : items;
+  }
 
 }

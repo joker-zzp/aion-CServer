@@ -8,28 +8,28 @@ import com.aionemu.gameserver.model.team.TemporaryPlayerTeam;
  */
 public abstract class ChangeLeaderEvent<T extends TemporaryPlayerTeam<?>> extends AbstractTeamPlayerEvent<T> {
 
-	public ChangeLeaderEvent(T team, Player eventPlayer) {
-		super(team, eventPlayer);
-	}
+  public ChangeLeaderEvent(T team, Player eventPlayer) {
+    super(team, eventPlayer);
+  }
 
-	/**
-	 * New leader either is null or should be online
-	 */
-	@Override
-	public boolean checkCondition() {
-		return eventPlayer == null || eventPlayer.isOnline();
-	}
+  /**
+   * New leader either is null or should be online
+   */
+  @Override
+  public boolean checkCondition() {
+    return eventPlayer == null || eventPlayer.isOnline();
+  }
 
-	protected final void changeLeaderToNextAvailablePlayer() {
-		team.applyOnMembers(member -> {
-			if (member.isOnline() && !member.equals(team.getLeader().getObject())) {
-				changeLeaderTo(member);
-				return false;
-			}
-			return true;
-		});
-	}
+  protected final void changeLeaderToNextAvailablePlayer() {
+    team.applyOnMembers(member -> {
+      if (member.isOnline() && !member.equals(team.getLeader().getObject())) {
+        changeLeaderTo(member);
+        return false;
+      }
+      return true;
+    });
+  }
 
-	protected abstract void changeLeaderTo(Player player);
+  protected abstract void changeLeaderTo(Player player);
 
 }

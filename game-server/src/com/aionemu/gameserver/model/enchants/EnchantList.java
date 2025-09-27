@@ -15,17 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EnchantList {
 
-	@XmlElement(name = "enchant_data", required = true)
-	protected List<EnchantTemplateData> enchantDatas;
+  @XmlElement(name = "enchant_data", required = true)
+  protected List<EnchantTemplateData> enchantDatas;
 
-	@XmlAttribute(name = "item_group", required = true)
-	private String itemGroup;
+  @XmlAttribute(name = "item_group", required = true)
+  private String itemGroup;
 
-	public List<EnchantTemplateData> getEnchantDatas() {
-		return enchantDatas;
-	}
+  public List<EnchantTemplateData> getEnchantDatas() {
+    return enchantDatas;
+  }
 
-	public String getItemGroup() {
-		return itemGroup;
-	}
+  public String getItemGroup() {
+    return itemGroup;
+  }
 }

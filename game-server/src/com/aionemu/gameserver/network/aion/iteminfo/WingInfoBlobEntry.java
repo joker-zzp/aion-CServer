@@ -12,18 +12,18 @@ import com.aionemu.gameserver.network.aion.iteminfo.ItemInfoBlob.ItemBlobType;
  */
 public class WingInfoBlobEntry extends ItemBlobEntry {
 
-	WingInfoBlobEntry() {
-		super(ItemBlobType.SLOTS_WING);
-	}
+  WingInfoBlobEntry() {
+    super(ItemBlobType.SLOTS_WING);
+  }
 
-	@Override
-	public void writeThisBlob(ByteBuffer buf) {
-		writeQ(buf, ItemSlot.getSlotFor(ownerItem.getItemTemplate().getItemSlot()).getSlotIdMask());
-		writeQ(buf, 0); // no secondary slot
-	}
+  @Override
+  public void writeThisBlob(ByteBuffer buf) {
+    writeQ(buf, ItemSlot.getSlotFor(ownerItem.getItemTemplate().getItemSlot()).getSlotIdMask());
+    writeQ(buf, 0); // no secondary slot
+  }
 
-	@Override
-	public int getSize() {
-		return 16;
-	}
+  @Override
+  public int getSize() {
+    return 16;
+  }
 }

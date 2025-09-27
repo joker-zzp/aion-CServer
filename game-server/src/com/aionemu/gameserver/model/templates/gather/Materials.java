@@ -14,15 +14,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Materials", propOrder = { "material" })
 public class Materials {
 
-	protected List<Material> material;
+  protected List<Material> material;
 
-	/**
-	 * Gets the value of the material property.
-	 */
-	public List<Material> getMaterial() {
-		if (material == null) {
-			material = new ArrayList<>();
-		}
-		return this.material;
-	}
+  /**
+   * Gets the value of the material property.
+   */
+  public List<Material> getMaterial() {
+    if (material == null) {
+      material = new ArrayList<>();
+    }
+    return this.material;
+  }
 }

@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum AreaDirections {
 
-	NONE,
-	FRONT,
-	BACK
+  NONE,
+  FRONT,
+  BACK
 }

@@ -8,13 +8,13 @@ import java.util.List;
  */
 public class LimitedTradeNpc {
 
-	private final List<LimitedItem> limitedItems = new ArrayList<>();
+  private final List<LimitedItem> limitedItems = new ArrayList<>();
 
-	public void addLimitedItems(List<LimitedItem> limitedItems) {
-		this.limitedItems.addAll(limitedItems);
-	}
+  public void addLimitedItems(List<LimitedItem> limitedItems) {
+    this.limitedItems.addAll(limitedItems);
+  }
 
-	public List<LimitedItem> getLimitedItems() {
-		return limitedItems;
-	}
+  public List<LimitedItem> getLimitedItems() {
+    return limitedItems;
+  }
 }

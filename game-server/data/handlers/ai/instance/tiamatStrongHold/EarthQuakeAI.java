@@ -16,43 +16,43 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("earthquake")
 public class EarthQuakeAI extends NpcAI {
 
-	public EarthQuakeAI(Npc owner) {
-		super(owner);
-	}
+  public EarthQuakeAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleCreatureSee(Creature creature) {
-		checkDistance(creature);
-	}
+  @Override
+  protected void handleCreatureSee(Creature creature) {
+    checkDistance(creature);
+  }
 
-	@Override
-	protected void handleCreatureMoved(Creature creature) {
-		checkDistance(creature);
-	}
+  @Override
+  protected void handleCreatureMoved(Creature creature) {
+    checkDistance(creature);
+  }
 
-	private void checkDistance(Creature creature) {
-		if (creature instanceof Player) {
-			if (PositionUtil.isInRange(getOwner(), creature, 5) && !creature.getEffectController().hasAbnormalEffect(20718)) {
-				AIActions.useSkill(this, 20718);
-			}
-		}
-	}
+  private void checkDistance(Creature creature) {
+    if (creature instanceof Player) {
+      if (PositionUtil.isInRange(getOwner(), creature, 5) && !creature.getEffectController().hasAbnormalEffect(20718)) {
+        AIActions.useSkill(this, 20718);
+      }
+    }
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		despawn();
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    despawn();
+  }
 
-	private void despawn() {
-		ThreadPoolManager.getInstance().schedule(() -> getOwner().getController().delete(), 9000);
-	}
+  private void despawn() {
+    ThreadPoolManager.getInstance().schedule(() -> getOwner().getController().delete(), 9000);
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
+      default -> super.ask(question);
+    };
+  }
 }

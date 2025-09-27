@@ -17,26 +17,26 @@ import ai.GeneralNpcAI;
 @AIName("poppyontherun")
 public class PoppyOnTheRunAI extends GeneralNpcAI {
 
-	public PoppyOnTheRunAI(Npc owner) {
-		super(owner);
-	}
+  public PoppyOnTheRunAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean canThink() {
-		return false;
-	}
+  @Override
+  public boolean canThink() {
+    return false;
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
-		return true;
-	}
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
+    return true;
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		getOwner().setState(CreatureState.ACTIVE, true);
-		PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getObjectId()));
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    getOwner().setState(CreatureState.ACTIVE, true);
+    PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getObjectId()));
+  }
 
 }

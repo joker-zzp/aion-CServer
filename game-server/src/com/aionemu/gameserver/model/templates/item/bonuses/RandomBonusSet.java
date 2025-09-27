@@ -14,25 +14,25 @@ import com.aionemu.gameserver.model.templates.stats.ModifiersTemplate;
 @XmlType(name = "RandomBonusSet")
 public class RandomBonusSet {
 
-	@XmlElement(required = true)
-	private List<ModifiersTemplate> modifiers;
+  @XmlElement(required = true)
+  private List<ModifiersTemplate> modifiers;
 
-	@XmlAttribute(required = true)
-	private int id;
+  @XmlAttribute(required = true)
+  private int id;
 
-	@XmlAttribute(name = "type", required = true)
-	private StatBonusType bonusType;
+  @XmlAttribute(name = "type", required = true)
+  private StatBonusType bonusType;
 
-	public List<ModifiersTemplate> getModifiers() {
-		return modifiers;
-	}
+  public List<ModifiersTemplate> getModifiers() {
+    return modifiers;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public StatBonusType getBonusType() {
-		return bonusType;
-	}
+  public StatBonusType getBonusType() {
+    return bonusType;
+  }
 
 }

@@ -12,10 +12,10 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public abstract class AbstractPeriodicTaskManager extends AbstractLockManager implements Runnable {
 
-	protected static final Logger log = LoggerFactory.getLogger(AbstractPeriodicTaskManager.class);
+  protected static final Logger log = LoggerFactory.getLogger(AbstractPeriodicTaskManager.class);
 
-	public AbstractPeriodicTaskManager(int period) {
-		log.info(getClass().getSimpleName() + " initialized.");
-		ThreadPoolManager.getInstance().scheduleAtFixedRate(this, Rnd.get(500, 550), period);
-	}
+  public AbstractPeriodicTaskManager(int period) {
+    log.info(getClass().getSimpleName() + " initialized.");
+    ThreadPoolManager.getInstance().scheduleAtFixedRate(this, Rnd.get(500, 550), period);
+  }
 }

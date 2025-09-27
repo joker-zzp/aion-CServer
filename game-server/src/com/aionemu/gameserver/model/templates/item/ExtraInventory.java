@@ -12,11 +12,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ExtraInventory")
 public class ExtraInventory {
 
-	@XmlAttribute(required = true)
-	protected int id;
+  @XmlAttribute(required = true)
+  protected int id;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
 }

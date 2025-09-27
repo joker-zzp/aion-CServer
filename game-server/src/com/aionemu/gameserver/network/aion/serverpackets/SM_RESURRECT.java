@@ -9,22 +9,22 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_RESURRECT extends AionServerPacket {
 
-	private String name;
-	private int skillId;
+  private String name;
+  private int skillId;
 
-	public SM_RESURRECT(Creature creature) {
-		this(creature, 0);
-	}
+  public SM_RESURRECT(Creature creature) {
+    this(creature, 0);
+  }
 
-	public SM_RESURRECT(Creature creature, int skillId) {
-		this.name = creature.getName();
-		this.skillId = skillId;
-	}
+  public SM_RESURRECT(Creature creature, int skillId) {
+    this.name = creature.getName();
+    this.skillId = skillId;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeS(name);
-		writeH(skillId); // unk
-		writeD(0);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeS(name);
+    writeH(skillId); // unk
+    writeD(0);
+  }
 }

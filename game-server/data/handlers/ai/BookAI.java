@@ -13,12 +13,12 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("book")
 public class BookAI extends NpcAI {
 
-	public BookAI(Npc owner) {
-		super(owner);
-	}
+  public BookAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
+  }
 }

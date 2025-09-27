@@ -17,29 +17,29 @@ import ai.ActionItemNpcAI;
 @AIName("defensive_cannon")
 public class DefensiveCannonAI extends ActionItemNpcAI {
 
-	private final AtomicBoolean canUse = new AtomicBoolean(true);
+  private final AtomicBoolean canUse = new AtomicBoolean(true);
 
-	public DefensiveCannonAI(Npc owner) {
-		super(owner);
-	}
+  public DefensiveCannonAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		if (canUse.compareAndSet(true, false)) {
-			switch (getNpcId()) {
-				case 831338:
-				case 831339:
-					SkillEngine.getInstance().getSkill(getOwner(), 20364, 60, player).useNoAnimationSkill(); // Board Artillery Morph
-			}
-			AIActions.deleteOwner(this);
-		}
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    if (canUse.compareAndSet(true, false)) {
+      switch (getNpcId()) {
+        case 831338:
+        case 831339:
+          SkillEngine.getInstance().getSkill(getOwner(), 20364, 60, player).useNoAnimationSkill(); // Board Artillery Morph
+      }
+      AIActions.deleteOwner(this);
+    }
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case REWARD_AP_XP_DP_LOOT -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case REWARD_AP_XP_DP_LOOT -> false;
+      default -> super.ask(question);
+    };
+  }
 }

@@ -12,14 +12,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "RequireSkill")
 public class RequireSkill {
 
-	@XmlAttribute
-	protected List<Integer> skillIds;
+  @XmlAttribute
+  protected List<Integer> skillIds;
 
-	public List<Integer> getSkillIds() {
-		if (skillIds == null) {
-			skillIds = new ArrayList<>();
-		}
-		return this.skillIds;
-	}
+  public List<Integer> getSkillIds() {
+    if (skillIds == null) {
+      skillIds = new ArrayList<>();
+    }
+    return this.skillIds;
+  }
 
 }

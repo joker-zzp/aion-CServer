@@ -16,30 +16,30 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EventQuestList {
 
-	@XmlElement(name = "startable")
-	@XmlList
-	private List<Integer> startQuests;
+  @XmlElement(name = "startable")
+  @XmlList
+  private List<Integer> startQuests;
 
-	@XmlElement(name = "maintainable")
-	@XmlList
-	private List<Integer> maintainQuests;
+  @XmlElement(name = "maintainable")
+  @XmlList
+  private List<Integer> maintainQuests;
 
-	/**
-	 * @return the startQuests (automatically started on logon)
-	 */
-	public List<Integer> getStartableQuests() {
-		if (startQuests == null)
-			return Collections.emptyList();
-		return startQuests;
-	}
+  /**
+   * @return the startQuests (automatically started on logon)
+   */
+  public List<Integer> getStartableQuests() {
+    if (startQuests == null)
+      return Collections.emptyList();
+    return startQuests;
+  }
 
-	/**
-	 * @return the maintainQuests (started indirectly from other quests)
-	 */
-	public List<Integer> getMaintainQuests() {
-		if (maintainQuests == null)
-			return Collections.emptyList();
-		return maintainQuests;
-	}
+  /**
+   * @return the maintainQuests (started indirectly from other quests)
+   */
+  public List<Integer> getMaintainQuests() {
+    if (maintainQuests == null)
+      return Collections.emptyList();
+    return maintainQuests;
+  }
 
 }

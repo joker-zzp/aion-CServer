@@ -15,14 +15,14 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "SwitchHpMpEffect")
 public class SwitchHpMpEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		CreatureLifeStats<? extends Creature> lifeStats = effect.getEffected().getLifeStats();
-		int currentHp = lifeStats.getCurrentHp();
-		int currentMp = lifeStats.getCurrentMp();
+  @Override
+  public void applyEffect(Effect effect) {
+    CreatureLifeStats<? extends Creature> lifeStats = effect.getEffected().getLifeStats();
+    int currentHp = lifeStats.getCurrentHp();
+    int currentMp = lifeStats.getCurrentMp();
 
-		// doesn't send sm_attack_status, checked on 4.5
-		lifeStats.setCurrentHp(currentMp, effect.getEffector());
-		lifeStats.setCurrentMp(currentHp);
-	}
+    // doesn't send sm_attack_status, checked on 4.5
+    lifeStats.setCurrentHp(currentMp, effect.getEffector());
+    lifeStats.setCurrentMp(currentHp);
+  }
 }

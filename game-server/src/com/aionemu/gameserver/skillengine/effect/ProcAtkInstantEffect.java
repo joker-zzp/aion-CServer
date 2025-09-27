@@ -15,17 +15,17 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "ProcAtkInstantEffect")
 public class ProcAtkInstantEffect extends DamageEffect {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		int damage = effect.getReserveds(position).getValue();
-		effect.getEffected().getController().onAttack(effect, TYPE.DAMAGE, damage, true, LOG.PROCATKINSTANT, hopType);
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    int damage = effect.getReserveds(position).getValue();
+    effect.getEffected().getController().onAttack(effect, TYPE.DAMAGE, damage, true, LOG.PROCATKINSTANT, hopType);
+  }
 
-	@Override
-	protected int calculateBaseValue(Effect effect) {
-		if (delta == 1 && effect.getSkillTemplate().isProvoked())
-			return value;
-		else
-			return super.calculateBaseValue(effect);
-	}
+  @Override
+  protected int calculateBaseValue(Effect effect) {
+    if (delta == 1 && effect.getSkillTemplate().isProvoked())
+      return value;
+    else
+      return super.calculateBaseValue(effect);
+  }
 }

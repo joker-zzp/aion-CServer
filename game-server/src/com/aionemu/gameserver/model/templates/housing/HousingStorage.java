@@ -12,19 +12,19 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "HousingStorage")
 public class HousingStorage extends PlaceableHouseObject {
 
-	@XmlAttribute(name = "warehouse_id", required = true)
-	protected int warehouseId;
+  @XmlAttribute(name = "warehouse_id", required = true)
+  protected int warehouseId;
 
-	/**
-	 * Gets the value of the warehouseId property.
-	 */
-	public int getWarehouseId() {
-		return warehouseId;
-	}
+  /**
+   * Gets the value of the warehouseId property.
+   */
+  public int getWarehouseId() {
+    return warehouseId;
+  }
 
-	@Override
-	public byte getTypeId() {
-		return 2;
-	}
+  @Override
+  public byte getTypeId() {
+    return 2;
+  }
 
 }

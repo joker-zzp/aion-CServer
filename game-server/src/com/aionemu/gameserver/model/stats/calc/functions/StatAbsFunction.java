@@ -9,37 +9,37 @@ import com.aionemu.gameserver.utils.stats.CalculationType;
  */
 public class StatAbsFunction extends StatFunction {
 
-	private boolean debuff = false;
+  private boolean debuff = false;
 
-	public StatAbsFunction() {
-	}
+  public StatAbsFunction() {
+  }
 
-	public StatAbsFunction(StatEnum name, int value, boolean debuff) {
-		super(name, value, false);
-		this.debuff = debuff;
-	}
+  public StatAbsFunction(StatEnum name, int value, boolean debuff) {
+    super(name, value, false);
+    this.debuff = debuff;
+  }
 
-	@Override
-	public void apply(Stat2 stat, CalculationType... calculationTypes) {
-		if (!isBonus()) {
-			stat.setBase(getValue());
-			stat.setBonus(0);
-			stat.setBaseRate(1f);
-		}
-		// what to do with bonus?
-	}
+  @Override
+  public void apply(Stat2 stat, CalculationType... calculationTypes) {
+    if (!isBonus()) {
+      stat.setBase(getValue());
+      stat.setBonus(0);
+      stat.setBaseRate(1f);
+    }
+    // what to do with bonus?
+  }
 
-	@Override
-	public final int getPriority() {
-		if (debuff)
-			return isBonus() ? 110 : 90;
+  @Override
+  public final int getPriority() {
+    if (debuff)
+      return isBonus() ? 110 : 90;
 
-		return isBonus() ? 100 : 80;
-	}
+    return isBonus() ? 100 : 80;
+  }
 
-	@Override
-	public String toString() {
-		return "StatAbsFunction [" + super.toString() + "]";
-	}
+  @Override
+  public String toString() {
+    return "StatAbsFunction [" + super.toString() + "]";
+  }
 
 }

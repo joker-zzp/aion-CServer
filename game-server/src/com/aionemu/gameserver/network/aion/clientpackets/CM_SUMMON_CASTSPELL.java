@@ -21,62 +21,62 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_SUMMON_CASTSPELL extends AionClientPacket {
 
-	private static final Logger log = LoggerFactory.getLogger(CM_SUMMON_CASTSPELL.class);
-	private int summonObjId;
-	private int targetObjId;
-	private int skillId;
-	private int skillLvl;
-	@SuppressWarnings("unused")
-	private int unk; // probably related to release
+  private static final Logger log = LoggerFactory.getLogger(CM_SUMMON_CASTSPELL.class);
+  private int summonObjId;
+  private int targetObjId;
+  private int skillId;
+  private int skillLvl;
+  @SuppressWarnings("unused")
+  private int unk; // probably related to release
 
-	public CM_SUMMON_CASTSPELL(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_SUMMON_CASTSPELL(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		summonObjId = readD();
-		skillId = readUH();
-		skillLvl = readUC();
-		targetObjId = readD();
-		unk = readD();
-	}
+  @Override
+  protected void readImpl() {
+    summonObjId = readD();
+    skillId = readUH();
+    skillLvl = readUC();
+    targetObjId = readD();
+    unk = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
 
-		final Summon summon = player.getSummon();
-		if (summon == null || !summon.isPet()) {
-			sendPacket(SM_SYSTEM_MESSAGE.STR_SKILL_NOT_NEED_PET());
-			return;
-		}
+    final Summon summon = player.getSummon();
+    if (summon == null || !summon.isPet()) {
+      sendPacket(SM_SYSTEM_MESSAGE.STR_SKILL_NOT_NEED_PET());
+      return;
+    }
 
-		if (summon.getObjectId() != summonObjId) {
-			AuditLogger.log(player, "tried to cast a summon spell from a different summon instance");
-			return;
-		}
+    if (summon.getObjectId() != summonObjId) {
+      AuditLogger.log(player, "tried to cast a summon spell from a different summon instance");
+      return;
+    }
 
-		Creature target;
-		if (targetObjId != summon.getObjectId()) {
-			VisibleObject obj = summon.getKnownList().getObject(targetObjId);
-			if (obj instanceof Creature) {
-				target = (Creature) obj;
-			} else { // null or not a creature (attack should be client restricted)
-				if (obj != null) // may be null due to lags while the target runs out of sight
-					AuditLogger.log(player, "tried to cast a summon spell on a wrong target: " + obj);
-				return;
-			}
-		} else {
-			target = summon;
-		}
+    Creature target;
+    if (targetObjId != summon.getObjectId()) {
+      VisibleObject obj = summon.getKnownList().getObject(targetObjId);
+      if (obj instanceof Creature) {
+        target = (Creature) obj;
+      } else { // null or not a creature (attack should be client restricted)
+        if (obj != null) // may be null due to lags while the target runs out of sight
+          AuditLogger.log(player, "tried to cast a summon spell on a wrong target: " + obj);
+        return;
+      }
+    } else {
+      target = summon;
+    }
 
-		final SkillOrder order = summon.retrieveNextSkillOrder();
-		if (order != null && order.getTarget().equals(target)) {
-			if (order.getSkillId() != skillId || order.getSkillLevel() != skillLvl)
-				log.warn(player + " used summon order with a different skill: skillId {}->{}; skillLvl {}->{}.", skillId, order.getSkillId(), skillLvl,
-					order.getSkillLevel());
-			ThreadPoolManager.getInstance().execute(() -> summon.getController().useSkill(order));
-		}
-	}
+    final SkillOrder order = summon.retrieveNextSkillOrder();
+    if (order != null && order.getTarget().equals(target)) {
+      if (order.getSkillId() != skillId || order.getSkillLevel() != skillLvl)
+        log.warn(player + " used summon order with a different skill: skillId {}->{}; skillLvl {}->{}.", skillId, order.getSkillId(), skillLvl,
+          order.getSkillLevel());
+      ThreadPoolManager.getInstance().execute(() -> summon.getController().useSkill(order));
+    }
+  }
 }

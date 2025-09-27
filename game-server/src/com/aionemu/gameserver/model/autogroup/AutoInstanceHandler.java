@@ -8,15 +8,15 @@ import com.aionemu.gameserver.world.WorldMapInstance;
  */
 public interface AutoInstanceHandler {
 
-	void onInstanceCreate(WorldMapInstance instance);
+  void onInstanceCreate(WorldMapInstance instance);
 
-	AGQuestion addLookingForParty(LookingForParty lookingForParty);
+  AGQuestion addLookingForParty(LookingForParty lookingForParty);
 
-	void onEnterInstance(Player player);
+  void onEnterInstance(Player player);
 
-	void onLeaveInstance(Player player);
+  void onLeaveInstance(Player player);
 
-	void onPressEnter(Player player);
+  void onPressEnter(Player player);
 
-	void unregister(Player player);
+  void unregister(Player player);
 }

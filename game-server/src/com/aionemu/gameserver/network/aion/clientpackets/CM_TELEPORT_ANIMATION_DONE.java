@@ -22,30 +22,30 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_TELEPORT_ANIMATION_DONE extends AionClientPacket {
 
-	public CM_TELEPORT_ANIMATION_DONE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_TELEPORT_ANIMATION_DONE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-	}
+  @Override
+  protected void readImpl() {
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		Future<?> task = player.getController().getAndRemoveTask(TaskId.TELEPORT);
-		if (task instanceof RunnableFuture && !task.isDone())
-			try {
-				RunnableFuture<?> spawnTask = (RunnableFuture<?>) task;
-				spawnTask.run(); // run now since it's not started yet
-				spawnTask.get(); // get to throw exception, if any
-			} catch (InterruptedException | ExecutionException e) {
-				LoggerFactory.getLogger(CM_TELEPORT_ANIMATION_DONE.class).error("", e.getCause());
-				if (!player.isSpawned()) {
-					PacketSendUtility.sendPacket(player, new SM_PLAYER_INFO(player));
-					World.getInstance().spawn(player);
-				}
-			}
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    Future<?> task = player.getController().getAndRemoveTask(TaskId.TELEPORT);
+    if (task instanceof RunnableFuture && !task.isDone())
+      try {
+        RunnableFuture<?> spawnTask = (RunnableFuture<?>) task;
+        spawnTask.run(); // run now since it's not started yet
+        spawnTask.get(); // get to throw exception, if any
+      } catch (InterruptedException | ExecutionException e) {
+        LoggerFactory.getLogger(CM_TELEPORT_ANIMATION_DONE.class).error("", e.getCause());
+        if (!player.isSpawned()) {
+          PacketSendUtility.sendPacket(player, new SM_PLAYER_INFO(player));
+          World.getInstance().spawn(player);
+        }
+      }
+  }
 
 }

@@ -9,17 +9,17 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_WEATHER extends AionServerPacket {
 
-	private WeatherEntry[] weatherEntries;
+  private WeatherEntry[] weatherEntries;
 
-	public SM_WEATHER(WeatherEntry[] weatherEntries) {
-		this.weatherEntries = weatherEntries;
-	}
+  public SM_WEATHER(WeatherEntry[] weatherEntries) {
+    this.weatherEntries = weatherEntries;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(0x00);// unk
-		writeC(weatherEntries.length);
-		for (WeatherEntry entry : weatherEntries)
-			writeC(entry.getCode());
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(0x00);// unk
+    writeC(weatherEntries.length);
+    for (WeatherEntry entry : weatherEntries)
+      writeC(entry.getCode());
+  }
 }

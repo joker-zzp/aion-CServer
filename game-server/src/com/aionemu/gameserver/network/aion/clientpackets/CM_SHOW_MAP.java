@@ -15,30 +15,30 @@ import com.aionemu.gameserver.services.conquerorAndProtectorSystem.ConquerorAndP
  */
 public class CM_SHOW_MAP extends AionClientPacket {
 
-	private static final Logger log = LoggerFactory.getLogger(CM_SHOW_MAP.class);
-	private byte action;
+  private static final Logger log = LoggerFactory.getLogger(CM_SHOW_MAP.class);
+  private byte action;
 
-	public CM_SHOW_MAP(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_SHOW_MAP(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		action = readC();
-	}
+  @Override
+  protected void readImpl() {
+    action = readC();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		switch (action) {
-			case 0:
-				ConquerorAndProtectorService.getInstance().intruderScan(player);
-				break;
-			case 1:
-				// TODO unk
-				break;
-			default:
-				log.warn(player + " sent unknown show map action type: " + action);
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    switch (action) {
+      case 0:
+        ConquerorAndProtectorService.getInstance().intruderScan(player);
+        break;
+      case 1:
+        // TODO unk
+        break;
+      default:
+        log.warn(player + " sent unknown show map action type: " + action);
+    }
+  }
 }

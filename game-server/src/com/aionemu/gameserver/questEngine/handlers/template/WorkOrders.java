@@ -25,81 +25,81 @@ import com.aionemu.gameserver.services.item.ItemService;
  */
 public class WorkOrders extends AbstractTemplateQuestHandler {
 
-	private final Set<Integer> startNpcIds = new HashSet<>();
-	private final List<QuestItems> giveComponents = new ArrayList<>();
-	private final int recipeId;
+  private final Set<Integer> startNpcIds = new HashSet<>();
+  private final List<QuestItems> giveComponents = new ArrayList<>();
+  private final int recipeId;
 
-	public WorkOrders(int questId, List<Integer> startNpcIds, List<QuestItems> giveComponents, int recipeId) {
-		super(questId);
-		this.startNpcIds.addAll(startNpcIds);
-		this.giveComponents.addAll(giveComponents);
-		this.recipeId = recipeId;
-	}
+  public WorkOrders(int questId, List<Integer> startNpcIds, List<QuestItems> giveComponents, int recipeId) {
+    super(questId);
+    this.startNpcIds.addAll(startNpcIds);
+    this.giveComponents.addAll(giveComponents);
+    this.recipeId = recipeId;
+  }
 
-	@Override
-	public void register() {
-		for (Integer startNpcId : startNpcIds) {
-			qe.registerQuestNpc(startNpcId).addOnQuestStart(questId);
-			qe.registerQuestNpc(startNpcId).addOnTalkEvent(questId);
-		}
-	}
+  @Override
+  public void register() {
+    for (Integer startNpcId : startNpcIds) {
+      qe.registerQuestNpc(startNpcId).addOnQuestStart(questId);
+      qe.registerQuestNpc(startNpcId).addOnTalkEvent(questId);
+    }
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		int dialogActionId = env.getDialogActionId();
-		int targetId = env.getTargetId();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    int dialogActionId = env.getDialogActionId();
+    int targetId = env.getTargetId();
 
-		if (startNpcIds.contains(targetId)) {
-			if (qs == null || qs.isStartable()) {
-				switch (dialogActionId) {
-					case QUEST_SELECT:
-						return sendQuestDialog(env, DialogPage.ASK_QUEST_ACCEPT_WINDOW.id());
-					case QUEST_ACCEPT_1:
-						if (RecipeService.validateNewRecipe(player, recipeId) != null) {
-							if (QuestService.startQuest(env)) {
-								for (QuestItems qi : giveComponents)
-									ItemService.addItem(player, qi.getItemId(), qi.getCount(), true);
-								RecipeService.addRecipe(player, recipeId, false);
-								closeDialogWindow(env);
-								return true;
-							}
-						}
-						return false;
-					case COMBINE_TASK:
-						env.setQuestId(0);
-						return sendQuestDialog(env, DialogPage.COMBINETASK_WINDOW.id());
-				}
-			} else if (qs.getStatus() == QuestStatus.START) {
-				if (dialogActionId == QUEST_SELECT) {
-					int var = qs.getQuestVarById(0);
-					if (QuestService.collectItemCheck(env, false)) {
-						changeQuestStep(env, var, var, true); // reward
-						QuestService.removeQuestWorkItems(player, qs);
-						return sendQuestDialog(env, DialogPage.SELECT_QUEST_REWARD_WINDOW1.id());
-					} else {
-						return sendQuestSelectionDialog(env);
-					}
-				}
-			} else if (qs.getStatus() == QuestStatus.REWARD) {
-				CollectItems collectItems = DataManager.QUEST_DATA.getQuestById(questId).getCollectItems();
-				long count = 0;
-				for (CollectItem collectItem : collectItems.getCollectItem()) {
-					count = player.getInventory().getItemCountByItemId(collectItem.getItemId());
-					if (count > 0)
-						player.getInventory().decreaseByItemId(collectItem.getItemId(), count);
-				}
-				player.getRecipeList().deleteRecipe(player, recipeId);
-				if (dialogActionId == USE_OBJECT) {
-					QuestService.finishQuest(env);
-					env.setQuestId(questId);
-					return sendQuestDialog(env, 1008);
-				} else {
-					return sendQuestEndDialog(env);
-				}
-			}
-		}
-		return false;
-	}
+    if (startNpcIds.contains(targetId)) {
+      if (qs == null || qs.isStartable()) {
+        switch (dialogActionId) {
+          case QUEST_SELECT:
+            return sendQuestDialog(env, DialogPage.ASK_QUEST_ACCEPT_WINDOW.id());
+          case QUEST_ACCEPT_1:
+            if (RecipeService.validateNewRecipe(player, recipeId) != null) {
+              if (QuestService.startQuest(env)) {
+                for (QuestItems qi : giveComponents)
+                  ItemService.addItem(player, qi.getItemId(), qi.getCount(), true);
+                RecipeService.addRecipe(player, recipeId, false);
+                closeDialogWindow(env);
+                return true;
+              }
+            }
+            return false;
+          case COMBINE_TASK:
+            env.setQuestId(0);
+            return sendQuestDialog(env, DialogPage.COMBINETASK_WINDOW.id());
+        }
+      } else if (qs.getStatus() == QuestStatus.START) {
+        if (dialogActionId == QUEST_SELECT) {
+          int var = qs.getQuestVarById(0);
+          if (QuestService.collectItemCheck(env, false)) {
+            changeQuestStep(env, var, var, true); // reward
+            QuestService.removeQuestWorkItems(player, qs);
+            return sendQuestDialog(env, DialogPage.SELECT_QUEST_REWARD_WINDOW1.id());
+          } else {
+            return sendQuestSelectionDialog(env);
+          }
+        }
+      } else if (qs.getStatus() == QuestStatus.REWARD) {
+        CollectItems collectItems = DataManager.QUEST_DATA.getQuestById(questId).getCollectItems();
+        long count = 0;
+        for (CollectItem collectItem : collectItems.getCollectItem()) {
+          count = player.getInventory().getItemCountByItemId(collectItem.getItemId());
+          if (count > 0)
+            player.getInventory().decreaseByItemId(collectItem.getItemId(), count);
+        }
+        player.getRecipeList().deleteRecipe(player, recipeId);
+        if (dialogActionId == USE_OBJECT) {
+          QuestService.finishQuest(env);
+          env.setQuestId(questId);
+          return sendQuestDialog(env, 1008);
+        } else {
+          return sendQuestEndDialog(env);
+        }
+      }
+    }
+    return false;
+  }
 }

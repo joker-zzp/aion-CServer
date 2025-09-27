@@ -16,26 +16,26 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("repelling_flame_cannon")
 public class RepellingFlameCannonAI extends NpcAI {
 
-	private Future<?> skillTask;
+  private Future<?> skillTask;
 
-	public RepellingFlameCannonAI(Npc owner) {
-		super(owner);
-	}
+  public RepellingFlameCannonAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public float modifyDamage(Creature attacker, float damage, Effect effect) {
-		return 0;
-	}
+  @Override
+  public float modifyDamage(Creature attacker, float damage, Effect effect) {
+    return 0;
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		skillTask = ThreadPoolManager.getInstance().scheduleAtFixedRate(() -> AIActions.useSkill(this, 21648), 1000, 1000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    skillTask = ThreadPoolManager.getInstance().scheduleAtFixedRate(() -> AIActions.useSkill(this, 21648), 1000, 1000);
+  }
 
-	@Override
-	protected void handleDespawned() {
-		skillTask.cancel(true);
-		super.handleDespawned();
-	}
+  @Override
+  protected void handleDespawned() {
+    skillTask.cancel(true);
+    super.handleDespawned();
+  }
 }

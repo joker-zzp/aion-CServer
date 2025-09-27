@@ -10,22 +10,22 @@ import javax.xml.bind.annotation.XmlAttribute;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ArcadeLevel {
 
-	@XmlAttribute
-	private int level;
-	@XmlAttribute
-	private String icon;
-	@XmlAttribute(name = "upgrade_chance")
-	private float upgradeChance;
+  @XmlAttribute
+  private int level;
+  @XmlAttribute
+  private String icon;
+  @XmlAttribute(name = "upgrade_chance")
+  private float upgradeChance;
 
-	public int getLevel() {
-		return level;
-	}
+  public int getLevel() {
+    return level;
+  }
 
-	public String getIcon() {
-		return icon;
-	}
+  public String getIcon() {
+    return icon;
+  }
 
-	public float getUpgradeChance() {
-		return upgradeChance;
-	}
+  public float getUpgradeChance() {
+    return upgradeChance;
+  }
 }

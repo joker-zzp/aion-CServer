@@ -12,13 +12,13 @@ import com.aionemu.gameserver.model.stats.container.StatEnum;
 @AIName("base_protector")
 public class BaseProtectorAI extends SiegeNpcAI {
 
-	public BaseProtectorAI(Npc owner) {
-		super(owner);
-	}
+  public BaseProtectorAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void modifyOwnerStat(Stat2 stat) {
-		if (stat.getStat() == StatEnum.MAXHP && getOwner().getLevel() >= 65) // Avoid adjusting low-level zones
-			stat.setBaseRate(SiegeConfig.BASE_PROTECTOR_HEALTH_MULTIPLIER);
-	}
+  @Override
+  public void modifyOwnerStat(Stat2 stat) {
+    if (stat.getStat() == StatEnum.MAXHP && getOwner().getLevel() >= 65) // Avoid adjusting low-level zones
+      stat.setBaseRate(SiegeConfig.BASE_PROTECTOR_HEALTH_MULTIPLIER);
+  }
 }

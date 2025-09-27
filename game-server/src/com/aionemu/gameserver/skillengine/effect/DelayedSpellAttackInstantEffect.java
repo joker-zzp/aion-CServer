@@ -19,25 +19,25 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @XmlType(name = "DelayedSpellAttackInstantEffect")
 public class DelayedSpellAttackInstantEffect extends DamageEffect {
 
-	@XmlAttribute
-	protected int delay;
+  @XmlAttribute
+  protected int delay;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		int valueWithDelta = calculateBaseValue(effect);
-		if (element != SkillElement.NONE)
-			valueWithDelta *= effect.getEffector().getGameStats().getKnowledge().getCurrent() / 100;
+  @Override
+  public void applyEffect(Effect effect) {
+    int valueWithDelta = calculateBaseValue(effect);
+    if (element != SkillElement.NONE)
+      valueWithDelta *= effect.getEffector().getGameStats().getKnowledge().getCurrent() / 100;
 
-		AttackUtil.calculateSkillResult(effect, valueWithDelta, this, true); // ignores shields on retail
-		final int finalPosition = this.position;
-		ThreadPoolManager.getInstance().schedule(() ->  {
-				effect.getEffected().getController().onAttack(effect, TYPE.DELAYDAMAGE, effect.getReserveds(finalPosition).getValue(), true,
-					LOG.DELAYEDSPELLATKINSTANT, hopType);
-				effect.getEffector().getObserveController().notifyAttackObservers(effect.getEffected(), effect.getSkillId());
-		}, delay);
-	}
+    AttackUtil.calculateSkillResult(effect, valueWithDelta, this, true); // ignores shields on retail
+    final int finalPosition = this.position;
+    ThreadPoolManager.getInstance().schedule(() ->  {
+        effect.getEffected().getController().onAttack(effect, TYPE.DELAYDAMAGE, effect.getReserveds(finalPosition).getValue(), true,
+          LOG.DELAYEDSPELLATKINSTANT, hopType);
+        effect.getEffector().getObserveController().notifyAttackObservers(effect.getEffected(), effect.getSkillId());
+    }, delay);
+  }
 
-	@Override
-	public void calculateDamage(Effect effect) {
-	}
+  @Override
+  public void calculateDamage(Effect effect) {
+  }
 }

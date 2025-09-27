@@ -14,37 +14,37 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_CHALLENGE_LIST extends AionClientPacket {
 
-	public CM_CHALLENGE_LIST(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_CHALLENGE_LIST(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	int action;
-	int taskOwner;
-	int ownerType;
-	int playerId;
-	int dateSince;
+  int action;
+  int taskOwner;
+  int ownerType;
+  int playerId;
+  int dateSince;
 
-	@Override
-	protected void readImpl() {
-		action = readUC();
-		taskOwner = readD();
-		ownerType = readUC();
-		playerId = readD();
-		dateSince = readD();
-	}
+  @Override
+  protected void readImpl() {
+    action = readUC();
+    taskOwner = readD();
+    ownerType = readUC();
+    playerId = readD();
+    dateSince = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (ownerType == 1) {
-			if (player.getLegion() == null) {
-				AuditLogger.log(player, "tried to receive legion challenge task without legion");
-				return;
-			}
-			ChallengeTaskService.getInstance().showTaskList(player, ChallengeType.LEGION, taskOwner);
-		} else {
-			ChallengeTaskService.getInstance().showTaskList(player, ChallengeType.TOWN, taskOwner);
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (ownerType == 1) {
+      if (player.getLegion() == null) {
+        AuditLogger.log(player, "tried to receive legion challenge task without legion");
+        return;
+      }
+      ChallengeTaskService.getInstance().showTaskList(player, ChallengeType.LEGION, taskOwner);
+    } else {
+      ChallengeTaskService.getInstance().showTaskList(player, ChallengeType.TOWN, taskOwner);
+    }
+  }
 
 }

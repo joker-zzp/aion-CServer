@@ -16,28 +16,28 @@ import com.aionemu.gameserver.model.templates.gather.GatherableTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GatherableData {
 
-	@XmlElement(name = "gatherable_template")
-	private List<GatherableTemplate> gatherables;
+  @XmlElement(name = "gatherable_template")
+  private List<GatherableTemplate> gatherables;
 
-	@XmlTransient
-	private final Map<Integer, GatherableTemplate> gatherableData = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, GatherableTemplate> gatherableData = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (GatherableTemplate gatherable : gatherables) {
-			if (gatherable.getMaterials() != null)
-				gatherable.getMaterials().getMaterial().sort(null);
-			if (gatherable.getExtraMaterials() != null)
-				gatherable.getExtraMaterials().getMaterial().sort(null);
-			gatherableData.put(gatherable.getTemplateId(), gatherable);
-		}
-		gatherables = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (GatherableTemplate gatherable : gatherables) {
+      if (gatherable.getMaterials() != null)
+        gatherable.getMaterials().getMaterial().sort(null);
+      if (gatherable.getExtraMaterials() != null)
+        gatherable.getExtraMaterials().getMaterial().sort(null);
+      gatherableData.put(gatherable.getTemplateId(), gatherable);
+    }
+    gatherables = null;
+  }
 
-	public int size() {
-		return gatherableData.size();
-	}
+  public int size() {
+    return gatherableData.size();
+  }
 
-	public GatherableTemplate getGatherableTemplate(int id) {
-		return gatherableData.get(id);
-	}
+  public GatherableTemplate getGatherableTemplate(int id) {
+    return gatherableData.get(id);
+  }
 }

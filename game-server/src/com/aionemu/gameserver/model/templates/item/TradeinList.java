@@ -14,11 +14,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "TradeinList", propOrder = { "tradeinItem" })
 public class TradeinList {
 
-	@XmlElement(name = "tradein_item")
-	protected List<TradeinItem> tradeinItem;
+  @XmlElement(name = "tradein_item")
+  protected List<TradeinItem> tradeinItem;
 
-	public List<TradeinItem> getTradeinItem() {
-		return this.tradeinItem;
-	}
+  public List<TradeinItem> getTradeinItem() {
+    return this.tradeinItem;
+  }
 
 }

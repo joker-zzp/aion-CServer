@@ -19,60 +19,60 @@ import com.aionemu.gameserver.utils.PositionUtil;
  */
 public class _47100WardsAndWardOrbs extends AbstractQuestHandler {
 
-	public _47100WardsAndWardOrbs() {
-		super(47100);
-	}
+  public _47100WardsAndWardOrbs() {
+    super(47100);
+  }
 
-	@Override
-	public void register() {
-		qe.addHandlerSideQuestDrop(questId, 700970, 182211036, 5, 100);
-		qe.registerQuestNpc(700970).addOnTalkEvent(questId);
-		qe.registerQuestNpc(799881).addOnTalkEvent(questId);
-	}
+  @Override
+  public void register() {
+    qe.addHandlerSideQuestDrop(questId, 700970, 182211036, 5, 100);
+    qe.registerQuestNpc(700970).addOnTalkEvent(questId);
+    qe.registerQuestNpc(799881).addOnTalkEvent(questId);
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		int dialogActionId = env.getDialogActionId();
-		int targetId = env.getTargetId();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    int dialogActionId = env.getDialogActionId();
+    int targetId = env.getTargetId();
 
-		if (qs == null || qs.isStartable()) {
-			if (targetId == 0) {
-				if (dialogActionId == QUEST_ACCEPT_1) {
-					QuestService.startQuest(env);
-					return closeDialogWindow(env);
-				}
-			}
-		}
+    if (qs == null || qs.isStartable()) {
+      if (targetId == 0) {
+        if (dialogActionId == QUEST_ACCEPT_1) {
+          QuestService.startQuest(env);
+          return closeDialogWindow(env);
+        }
+      }
+    }
 
-		if (qs != null && qs.getStatus() == QuestStatus.START) {
-			if (targetId == 700970) {
-				if (player.isInGroup()) {
-					PlayerGroup group = player.getPlayerGroup();
-					if (group.getMembers().stream().anyMatch(member -> member.isMentor() && PositionUtil.isInRange(player, member, GroupConfig.GROUP_MAX_DISTANCE)))
-						return true;
-					PacketSendUtility.sendPacket(player, STR_MSG_DailyQuest_Ask_Mentee());
-				}
-			}
-			if (targetId == 799881) {
-				if (dialogActionId == QUEST_SELECT) {
-					if (qs.getQuestVarById(0) == 0) {
-						return sendQuestDialog(env, 2375);
-					}
-				} else if (dialogActionId == CHECK_USER_HAS_QUEST_ITEM) {
-					return checkQuestItems(env, 0, 1, true, 5, 2716);
-				}
-			}
-		} else if (qs != null && qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 799881) {
-				if (dialogActionId == USE_OBJECT) {
-					return sendQuestDialog(env, 5);
-				} else {
-					return sendQuestEndDialog(env);
-				}
-			}
-		}
-		return false;
-	}
+    if (qs != null && qs.getStatus() == QuestStatus.START) {
+      if (targetId == 700970) {
+        if (player.isInGroup()) {
+          PlayerGroup group = player.getPlayerGroup();
+          if (group.getMembers().stream().anyMatch(member -> member.isMentor() && PositionUtil.isInRange(player, member, GroupConfig.GROUP_MAX_DISTANCE)))
+            return true;
+          PacketSendUtility.sendPacket(player, STR_MSG_DailyQuest_Ask_Mentee());
+        }
+      }
+      if (targetId == 799881) {
+        if (dialogActionId == QUEST_SELECT) {
+          if (qs.getQuestVarById(0) == 0) {
+            return sendQuestDialog(env, 2375);
+          }
+        } else if (dialogActionId == CHECK_USER_HAS_QUEST_ITEM) {
+          return checkQuestItems(env, 0, 1, true, 5, 2716);
+        }
+      }
+    } else if (qs != null && qs.getStatus() == QuestStatus.REWARD) {
+      if (targetId == 799881) {
+        if (dialogActionId == USE_OBJECT) {
+          return sendQuestDialog(env, 5);
+        } else {
+          return sendQuestEndDialog(env);
+        }
+      }
+    }
+    return false;
+  }
 }

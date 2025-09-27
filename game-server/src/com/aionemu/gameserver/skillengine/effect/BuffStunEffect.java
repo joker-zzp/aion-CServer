@@ -13,8 +13,8 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "BuffStunEffect")
 public class BuffStunEffect extends StunEffect {
 
-	@Override
-	public void calculate(Effect effect) {
-		effect.addSuccessEffect(this);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    effect.addSuccessEffect(this);
+  }
 }

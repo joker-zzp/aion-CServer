@@ -20,96 +20,96 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public class _11032EverythingsBetterWithTentacles extends AbstractQuestHandler {
 
-	public _11032EverythingsBetterWithTentacles() {
-		super(11032);
-	}
+  public _11032EverythingsBetterWithTentacles() {
+    super(11032);
+  }
 
-	@Override
-	public void register() {
-		int[] npcs = { 798959 };
-		for (int npc : npcs)
-			qe.registerQuestNpc(npc).addOnTalkEvent(questId);
-		qe.registerQuestItem(182206726, questId);
-		qe.registerQuestNpc(798959).addOnQuestStart(questId);
-	}
+  @Override
+  public void register() {
+    int[] npcs = { 798959 };
+    for (int npc : npcs)
+      qe.registerQuestNpc(npc).addOnTalkEvent(questId);
+    qe.registerQuestItem(182206726, questId);
+    qe.registerQuestNpc(798959).addOnQuestStart(questId);
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		if (sendQuestNoneDialog(env, 798959, 4762))
-			return true;
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    if (sendQuestNoneDialog(env, 798959, 4762))
+      return true;
 
-		final Player player = env.getPlayer();
+    final Player player = env.getPlayer();
 
-		QuestState qs = env.getPlayer().getQuestStateList().getQuestState(questId);
-		if (qs == null)
-			return false;
-		int var = qs.getQuestVarById(0);
-		if (qs.getStatus() == QuestStatus.REWARD) {
-			if (env.getTargetId() == 798959) {
-				if (env.getDialogActionId() == USE_OBJECT)
-					return sendQuestDialog(env, 10002);
-				else if (env.getDialogActionId() == SELECT_QUEST_REWARD)
-					return sendQuestDialog(env, 5);
-				else
-					return sendQuestEndDialog(env);
-			}
-			return false;
-		}
-		if (qs.getStatus() == QuestStatus.START) {
-			switch (env.getTargetId()) {
-				case 798959:
-					switch (env.getDialogActionId()) {
-						case QUEST_SELECT:
-							if (var == 0)
-								return sendQuestDialog(env, 1011);
-							else if (var == 1)
-								return sendQuestDialog(env, 1352);
-							return false;
-						case CHECK_USER_HAS_QUEST_ITEM:
-							if (var == 0) {
-								if (QuestService.collectItemCheck(env, true)) {
-									qs.setQuestVarById(0, var + 1);
-									updateQuestStatus(env);
-									PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-									return true;
-								} else
-									return sendQuestDialog(env, 10001);
-							}
-							return false;
-						case SETPRO2:
-							if (var == 1) {
-								if (!giveQuestItem(env, 182206726, 1))
-									return true;
-								qs.setQuestVarById(0, var + 1);
-								updateQuestStatus(env);
-							}
-							return true;
-					}
-			}
-		}
-		return false;
-	}
+    QuestState qs = env.getPlayer().getQuestStateList().getQuestState(questId);
+    if (qs == null)
+      return false;
+    int var = qs.getQuestVarById(0);
+    if (qs.getStatus() == QuestStatus.REWARD) {
+      if (env.getTargetId() == 798959) {
+        if (env.getDialogActionId() == USE_OBJECT)
+          return sendQuestDialog(env, 10002);
+        else if (env.getDialogActionId() == SELECT_QUEST_REWARD)
+          return sendQuestDialog(env, 5);
+        else
+          return sendQuestEndDialog(env);
+      }
+      return false;
+    }
+    if (qs.getStatus() == QuestStatus.START) {
+      switch (env.getTargetId()) {
+        case 798959:
+          switch (env.getDialogActionId()) {
+            case QUEST_SELECT:
+              if (var == 0)
+                return sendQuestDialog(env, 1011);
+              else if (var == 1)
+                return sendQuestDialog(env, 1352);
+              return false;
+            case CHECK_USER_HAS_QUEST_ITEM:
+              if (var == 0) {
+                if (QuestService.collectItemCheck(env, true)) {
+                  qs.setQuestVarById(0, var + 1);
+                  updateQuestStatus(env);
+                  PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+                  return true;
+                } else
+                  return sendQuestDialog(env, 10001);
+              }
+              return false;
+            case SETPRO2:
+              if (var == 1) {
+                if (!giveQuestItem(env, 182206726, 1))
+                  return true;
+                qs.setQuestVarById(0, var + 1);
+                updateQuestStatus(env);
+              }
+              return true;
+          }
+      }
+    }
+    return false;
+  }
 
-	@Override
-	public HandlerResult onItemUseEvent(final QuestEnv env, Item item) {
-		final Player player = env.getPlayer();
-		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		final int id = item.getItemTemplate().getTemplateId();
-		final int itemObjId = item.getObjectId();
+  @Override
+  public HandlerResult onItemUseEvent(final QuestEnv env, Item item) {
+    final Player player = env.getPlayer();
+    final QuestState qs = player.getQuestStateList().getQuestState(questId);
+    final int id = item.getItemTemplate().getTemplateId();
+    final int itemObjId = item.getObjectId();
 
-		if (id != 182206726)
-			return HandlerResult.UNKNOWN;
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 1000, 0, 0), true);
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+    if (id != 182206726)
+      return HandlerResult.UNKNOWN;
+    PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 1000, 0, 0), true);
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-			@Override
-			public void run() {
-				PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 0, 1, 0), true);
-				removeQuestItem(env, 182206726, 1);
-				qs.setStatus(QuestStatus.REWARD);
-				updateQuestStatus(env);
-			}
-		}, 1000);
-		return HandlerResult.SUCCESS;
-	}
+      @Override
+      public void run() {
+        PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 0, 1, 0), true);
+        removeQuestItem(env, 182206726, 1);
+        qs.setStatus(QuestStatus.REWARD);
+        updateQuestStatus(env);
+      }
+    }, 1000);
+    return HandlerResult.SUCCESS;
+  }
 }

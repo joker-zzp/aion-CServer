@@ -9,13 +9,13 @@ import com.aionemu.gameserver.utils.chathandlers.ConsoleCommand;
  */
 public class Partyrecall extends ConsoleCommand {
 
-	public Partyrecall() {
-		super("partyrecall");
-	}
+  public Partyrecall() {
+    super("partyrecall");
+  }
 
-	@Override
-	public void execute(Player admin, String... params) {
-		PacketSendUtility.sendMessage(admin, "Command not implemented.");
-		return;
-	}
+  @Override
+  public void execute(Player admin, String... params) {
+    PacketSendUtility.sendMessage(admin, "Command not implemented.");
+    return;
+  }
 }

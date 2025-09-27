@@ -12,20 +12,20 @@ import com.aionemu.gameserver.skillengine.model.SkillTemplate;
 @AIName("eternal_bastion_siege_ram")
 public class EternalBastionSiegeRamAI extends EternalBastionAssaulterNpcAI {
 
-	public EternalBastionSiegeRamAI(Npc owner) {
-		super(owner);
-	}
+  public EternalBastionSiegeRamAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleCreatureAggro(Creature creature) {
-		if (creature instanceof Npc) {
-			getOwner().getAggroList().addHate(creature, 500000);
-			SkillEngine.getInstance().getSkill(getOwner(), 20778, 1, getTarget()).useSkill();
-		}
-	}
+  @Override
+  protected void handleCreatureAggro(Creature creature) {
+    if (creature instanceof Npc) {
+      getOwner().getAggroList().addHate(creature, 500000);
+      SkillEngine.getInstance().getSkill(getOwner(), 20778, 1, getTarget()).useSkill();
+    }
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		SkillEngine.getInstance().getSkill(getOwner(), 20778, 1, getTarget()).useSkill();
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    SkillEngine.getInstance().getSkill(getOwner(), 20778, 1, getTarget()).useSkill();
+  }
 }

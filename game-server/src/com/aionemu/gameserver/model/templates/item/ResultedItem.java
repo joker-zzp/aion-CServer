@@ -21,54 +21,54 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 @XmlType(name = "ResultedItem")
 public class ResultedItem {
 
-	@XmlAttribute(name = "id")
-	private int itemId;
-	@XmlAttribute(name = "min_count")
-	private int minCount = 1;
-	@XmlAttribute(name = "max_count")
-	private int maxCount;
-	@XmlAttribute(name = "race")
-	private Race race = Race.PC_ALL;
-	@XmlList
-	@XmlAttribute(name = "player_classes")
-	private List<PlayerClass> playerClasses;
+  @XmlAttribute(name = "id")
+  private int itemId;
+  @XmlAttribute(name = "min_count")
+  private int minCount = 1;
+  @XmlAttribute(name = "max_count")
+  private int maxCount;
+  @XmlAttribute(name = "race")
+  private Race race = Race.PC_ALL;
+  @XmlList
+  @XmlAttribute(name = "player_classes")
+  private List<PlayerClass> playerClasses;
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		StaticData staticData = StaticDataListener.get(u);
-		ItemData itemData = staticData != null ? staticData.itemData : DataManager.ITEM_DATA;
-		if (itemData.getItemTemplate(itemId) == null)
-			throw new IllegalArgumentException("Decomposable reward item ID is invalid: " + itemId);
-		if (minCount <= 0)
-			throw new IllegalArgumentException("Decomposable reward item [" + itemId + "] min_count (" + minCount + ") must be greater than 0");
-		if (maxCount == 0)
-			maxCount = minCount;
-		else if (maxCount < minCount)
-			throw new IllegalArgumentException(
-					"Decomposable reward item [" + itemId + "] max_count (" + maxCount + ") must be unset or greater than min_count (" + minCount + ")");
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    StaticData staticData = StaticDataListener.get(u);
+    ItemData itemData = staticData != null ? staticData.itemData : DataManager.ITEM_DATA;
+    if (itemData.getItemTemplate(itemId) == null)
+      throw new IllegalArgumentException("Decomposable reward item ID is invalid: " + itemId);
+    if (minCount <= 0)
+      throw new IllegalArgumentException("Decomposable reward item [" + itemId + "] min_count (" + minCount + ") must be greater than 0");
+    if (maxCount == 0)
+      maxCount = minCount;
+    else if (maxCount < minCount)
+      throw new IllegalArgumentException(
+          "Decomposable reward item [" + itemId + "] max_count (" + maxCount + ") must be unset or greater than min_count (" + minCount + ")");
+  }
 
-	public int getItemId() {
-		return itemId;
-	}
+  public int getItemId() {
+    return itemId;
+  }
 
-	public int getMinCount() {
-		return minCount;
-	}
+  public int getMinCount() {
+    return minCount;
+  }
 
-	public int getMaxCount() {
-		return maxCount;
-	}
+  public int getMaxCount() {
+    return maxCount;
+  }
 
-	public final Race getRace() {
-		return race;
-	}
+  public final Race getRace() {
+    return race;
+  }
 
-	public List<PlayerClass> getPlayerClasses() {
-		return playerClasses;
-	}
+  public List<PlayerClass> getPlayerClasses() {
+    return playerClasses;
+  }
 
-	public boolean isObtainableFor(Player player) {
-		return (playerClasses == null || playerClasses.contains(player.getPlayerClass()))
-			&& (race == Race.PC_ALL || race == player.getRace());
-	}
+  public boolean isObtainableFor(Player player) {
+    return (playerClasses == null || playerClasses.contains(player.getPlayerClass()))
+      && (race == Race.PC_ALL || race == player.getRace());
+  }
 }

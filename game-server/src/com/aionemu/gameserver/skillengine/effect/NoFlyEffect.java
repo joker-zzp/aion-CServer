@@ -15,28 +15,28 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "NoFlyEffect")
 public class NoFlyEffect extends EffectTemplate {
 
-	@Override
-	public void calculate(Effect effect) {
-		// Affects only players (for now as we dont have flying Npc's)
-		if (effect.getEffected() instanceof Player)
-			super.calculate(effect, StatEnum.NOFLY_RESISTANCE, null);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    // Affects only players (for now as we dont have flying Npc's)
+    if (effect.getEffected() instanceof Player)
+      super.calculate(effect, StatEnum.NOFLY_RESISTANCE, null);
+  }
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void startEffect(Effect effect) {
-		((Player) effect.getEffected()).getFlyController().endFly(true);
+  @Override
+  public void startEffect(Effect effect) {
+    ((Player) effect.getEffected()).getFlyController().endFly(true);
 
-		effect.setAbnormal(AbnormalState.NOFLY);
-		effect.getEffected().getEffectController().setAbnormal(AbnormalState.NOFLY);
-	}
+    effect.setAbnormal(AbnormalState.NOFLY);
+    effect.getEffected().getEffectController().setAbnormal(AbnormalState.NOFLY);
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.NOFLY);
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.NOFLY);
+  }
 }

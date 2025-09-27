@@ -10,31 +10,31 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
 // TODO Rename
 public class SM_ABYSS_RANK_UPDATE extends AionServerPacket {
 
-	private final Player player;
-	private final int action;
+  private final Player player;
+  private final int action;
 
-	public SM_ABYSS_RANK_UPDATE(int action, Player player) {
-		this.action = action;
-		this.player = player;
-	}
+  public SM_ABYSS_RANK_UPDATE(int action, Player player) {
+    this.action = action;
+    this.player = player;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(action);
-		writeD(player.getObjectId());
-		switch (action) {
-			case 0: // Abyss rank change
-				writeD(player.getAbyssRank().getRank().getId());
-				break;
-			case 1: // Team objectId
-				writeD(player.getCurrentTeamId());
-				break;
-			case 2: // Mentor status change
-				if (player.isMentor())
-					writeD(1);
-				else
-					writeD(0);
-		}
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(action);
+    writeD(player.getObjectId());
+    switch (action) {
+      case 0: // Abyss rank change
+        writeD(player.getAbyssRank().getRank().getId());
+        break;
+      case 1: // Team objectId
+        writeD(player.getCurrentTeamId());
+        break;
+      case 2: // Mentor status change
+        if (player.isMentor())
+          writeD(1);
+        else
+          writeD(0);
+    }
+  }
 
 }

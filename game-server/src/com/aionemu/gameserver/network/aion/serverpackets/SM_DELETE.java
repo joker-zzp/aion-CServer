@@ -12,36 +12,36 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_DELETE extends AionServerPacket {
 
-	/**
-	 * Object that is no longer visible.
-	 */
-	private final int objectId;
+  /**
+   * Object that is no longer visible.
+   */
+  private final int objectId;
 
-	/**
-	 * Animation that will be seen before the object disappears.
-	 */
-	private final int animationId;
+  /**
+   * Animation that will be seen before the object disappears.
+   */
+  private final int animationId;
 
-	public SM_DELETE(VisibleObject object) {
-		this(object, ObjectDeleteAnimation.FADE_OUT, true);
-	}
+  public SM_DELETE(VisibleObject object) {
+    this(object, ObjectDeleteAnimation.FADE_OUT, true);
+  }
 
-	public SM_DELETE(VisibleObject object, boolean inRange) {
-		this(object, ObjectDeleteAnimation.FADE_OUT, inRange);
-	}
+  public SM_DELETE(VisibleObject object, boolean inRange) {
+    this(object, ObjectDeleteAnimation.FADE_OUT, inRange);
+  }
 
-	public SM_DELETE(VisibleObject object, ObjectDeleteAnimation animation) {
-		this(object, animation, true);
-	}
+  public SM_DELETE(VisibleObject object, ObjectDeleteAnimation animation) {
+    this(object, animation, true);
+  }
 
-	private SM_DELETE(VisibleObject object, ObjectDeleteAnimation animation, boolean inRange) {
-		this.objectId = object.getObjectId();
-		this.animationId = inRange ? animation.getId() : ObjectDeleteAnimation.NONE.getId();
-	}
+  private SM_DELETE(VisibleObject object, ObjectDeleteAnimation animation, boolean inRange) {
+    this.objectId = object.getObjectId();
+    this.animationId = inRange ? animation.getId() : ObjectDeleteAnimation.NONE.getId();
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(objectId);
-		writeC(animationId);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(objectId);
+    writeC(animationId);
+  }
 }

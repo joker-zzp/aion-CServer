@@ -16,37 +16,37 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 @XmlType(name = "SelfFlyingCondition")
 public class SelfFlyingCondition extends Condition {
 
-	@XmlAttribute(required = true)
-	protected FlyingRestriction restriction;
+  @XmlAttribute(required = true)
+  protected FlyingRestriction restriction;
 
-	@Override
-	public boolean validate(Skill env) {
-		if (env.getEffector() == null)
-			return false;
+  @Override
+  public boolean validate(Skill env) {
+    if (env.getEffector() == null)
+      return false;
 
-		switch (restriction) {
-			case FLY:
-				return env.getEffector().isInFlyingState();
-			case GROUND:
-				return !env.getEffector().isInFlyingState();
-		}
+    switch (restriction) {
+      case FLY:
+        return env.getEffector().isInFlyingState();
+      case GROUND:
+        return !env.getEffector().isInFlyingState();
+    }
 
-		return true;
-	}
+    return true;
+  }
 
-	@Override
-	public boolean validate(Effect effect) {
-		if (effect.getEffector() == null)
-			return false;
+  @Override
+  public boolean validate(Effect effect) {
+    if (effect.getEffector() == null)
+      return false;
 
-		switch (restriction) {
-			case FLY:
-				return effect.getEffector().isInFlyingState();
-			case GROUND:
-				return !effect.getEffector().isInFlyingState();
-		}
+    switch (restriction) {
+      case FLY:
+        return effect.getEffector().isInFlyingState();
+      case GROUND:
+        return !effect.getEffector().isInFlyingState();
+    }
 
-		return true;
-	}
+    return true;
+  }
 
 }

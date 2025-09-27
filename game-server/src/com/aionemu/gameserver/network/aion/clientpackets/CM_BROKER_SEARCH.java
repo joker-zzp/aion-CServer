@@ -16,34 +16,34 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_BROKER_SEARCH extends AionClientPacket {
 
-	private int brokerObjId;
-	private byte sortType;
-	private int page;
-	private int mask;
-	private List<Integer> itemList;
+  private int brokerObjId;
+  private byte sortType;
+  private int page;
+  private int mask;
+  private List<Integer> itemList;
 
-	public CM_BROKER_SEARCH(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_BROKER_SEARCH(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		brokerObjId = readD();
-		sortType = readC(); // 1 - name; 2 - level; 4 - totalPrice; 6 - price for piece
-		page = readUH();
-		mask = readUH();
-		int itemCount = readUH();
-		itemList = new ArrayList<>(itemCount);
-		for (int index = 0; index < itemCount; index++)
-			itemList.add(readD());
-	}
+  @Override
+  protected void readImpl() {
+    brokerObjId = readD();
+    sortType = readC(); // 1 - name; 2 - level; 4 - totalPrice; 6 - price for piece
+    page = readUH();
+    mask = readUH();
+    int itemCount = readUH();
+    itemList = new ArrayList<>(itemCount);
+    for (int index = 0; index < itemCount; index++)
+      itemList.add(readD());
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player.isTargetingNpcWithFunction(brokerObjId, DialogAction.OPEN_VENDOR))
-			BrokerService.getInstance().showRequestedItems(player, mask, sortType, page, itemList);
-		else
-			AuditLogger.log(player, "tried to search for items in broker without targeting a broker");
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player.isTargetingNpcWithFunction(brokerObjId, DialogAction.OPEN_VENDOR))
+      BrokerService.getInstance().showRequestedItems(player, mask, sortType, page, itemList);
+    else
+      AuditLogger.log(player, "tried to search for items in broker without targeting a broker");
+  }
 }

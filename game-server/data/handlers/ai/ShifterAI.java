@@ -13,13 +13,13 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("shifter")
 public class ShifterAI extends ActionItemNpcAI {
 
-	public ShifterAI(Npc owner) {
-		super(owner);
-	}
+  public ShifterAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		super.handleUseItemFinish(player);
-		PacketSendUtility.broadcastPacket(player, new SM_EMOTION(getOwner(), EmotionType.EMOTE, 144, 0), true);
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    super.handleUseItemFinish(player);
+    PacketSendUtility.broadcastPacket(player, new SM_EMOTION(getOwner(), EmotionType.EMOTE, 144, 0), true);
+  }
 }

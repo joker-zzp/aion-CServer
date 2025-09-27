@@ -16,21 +16,21 @@ import ai.ActionItemNpcAI;
 @AIName("door3")
 public class Door3AI extends ActionItemNpcAI {
 
-	public Door3AI(Npc owner) {
-		super(owner);
-	}
+  public Door3AI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		if (player.getInventory().getItemCountByItemId(185000091) > 0) {
-			super.handleDialogStart(player);
-		} else {
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), DialogPage.NO_RIGHT.id()));
-		}
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    if (player.getInventory().getItemCountByItemId(185000091) > 0) {
+      super.handleDialogStart(player);
+    } else {
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), DialogPage.NO_RIGHT.id()));
+    }
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		AIActions.deleteOwner(this);
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    AIActions.deleteOwner(this);
+  }
 }

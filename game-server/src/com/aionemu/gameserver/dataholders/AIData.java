@@ -16,24 +16,24 @@ import com.aionemu.gameserver.model.templates.ai.AITemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AIData {
 
-	@XmlElement(name = "ai", type = AITemplate.class)
-	private List<AITemplate> templates;
+  @XmlElement(name = "ai", type = AITemplate.class)
+  private List<AITemplate> templates;
 
-	@XmlTransient
-	private final Map<Integer, AITemplate> aiTemplate = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, AITemplate> aiTemplate = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		aiTemplate.clear();
-		for (AITemplate template : templates)
-			aiTemplate.put(template.getNpcId(), template);
-		templates = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    aiTemplate.clear();
+    for (AITemplate template : templates)
+      aiTemplate.put(template.getNpcId(), template);
+    templates = null;
+  }
 
-	public int size() {
-		return aiTemplate.size();
-	}
+  public int size() {
+    return aiTemplate.size();
+  }
 
-	public AITemplate getAiTemplate(int npcId) {
-		return aiTemplate.get(npcId);
-	}
+  public AITemplate getAiTemplate(int npcId) {
+    return aiTemplate.get(npcId);
+  }
 }

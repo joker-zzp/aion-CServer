@@ -17,23 +17,23 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class ZoneCollisionMaterialActor extends AbstractMaterialSkillActor {
 
-	public ZoneCollisionMaterialActor(Creature creature, Spatial geometry, List<MaterialSkill> matchingSkills, CheckType checkType) {
-		super(creature, geometry, CollisionIntention.MATERIAL.getId(), checkType, TaskId.ZONE_MATERIAL_ACTION, matchingSkills);
-	}
+  public ZoneCollisionMaterialActor(Creature creature, Spatial geometry, List<MaterialSkill> matchingSkills, CheckType checkType) {
+    super(creature, geometry, CollisionIntention.MATERIAL.getId(), checkType, TaskId.ZONE_MATERIAL_ACTION, matchingSkills);
+  }
 
-	@Override
-	public void onMoved(CollisionResults collisionResults) {
-		boolean oldTouched = isTouched;
-		isTouched = collisionResults.size() > 0;
-		if (oldTouched != isTouched) {
-			if (isTouched)
-				act();
-			else
-				abort();
-			if (GeoDataConfig.GEO_MATERIALS_SHOWDETAILS && creature instanceof Player player && player.isStaff()) {
-				Spatial geom = collisionResults.size() > 0 ? collisionResults.getClosestCollision().getGeometry() : geometry;
-				PacketSendUtility.sendMessage(player, (isTouched ? "Touched " : "Untouched ") + geom.getName());
-			}
-		}
-	}
+  @Override
+  public void onMoved(CollisionResults collisionResults) {
+    boolean oldTouched = isTouched;
+    isTouched = collisionResults.size() > 0;
+    if (oldTouched != isTouched) {
+      if (isTouched)
+        act();
+      else
+        abort();
+      if (GeoDataConfig.GEO_MATERIALS_SHOWDETAILS && creature instanceof Player player && player.isStaff()) {
+        Spatial geom = collisionResults.size() > 0 ? collisionResults.getClosestCollision().getGeometry() : geometry;
+        PacketSendUtility.sendMessage(player, (isTouched ? "Touched " : "Untouched ") + geom.getName());
+      }
+    }
+  }
 }

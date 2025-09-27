@@ -13,23 +13,23 @@ import ai.SummonerAI;
 @AIName("captain_jarka")
 public class CaptainJarkaAI extends SummonerAI {
 
-	public CaptainJarkaAI(Npc owner) {
-		super(owner);
-	}
+  public CaptainJarkaAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDied() {
-		super.handleDied();
-		// spawn smoke on death
-		WorldPosition currentPos = getPosition();
-		Npc smoke = (Npc) spawn(282465, currentPos.getX(), currentPos.getY(), currentPos.getZ(), (byte) 0);
-		smoke.getController().delete();
+  @Override
+  protected void handleDied() {
+    super.handleDied();
+    // spawn smoke on death
+    WorldPosition currentPos = getPosition();
+    Npc smoke = (Npc) spawn(282465, currentPos.getX(), currentPos.getY(), currentPos.getZ(), (byte) 0);
+    smoke.getController().delete();
 
-		// delete all npcs in range
-		getKnownList().forEachNpc(npc -> {
-			if (PositionUtil.isInRange(getOwner(), npc, 15))
-				npc.getController().delete();
-		});
-	}
+    // delete all npcs in range
+    getKnownList().forEachNpc(npc -> {
+      if (PositionUtil.isInRange(getOwner(), npc, 15))
+        npc.getController().delete();
+    });
+  }
 
 }

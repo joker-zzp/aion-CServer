@@ -16,31 +16,31 @@ import com.aionemu.gameserver.questEngine.model.QuestEnv;
 @XmlType(name = "NpcIdCondition")
 public class NpcIdCondition extends QuestCondition {
 
-	@XmlAttribute(required = true)
-	protected int values;
+  @XmlAttribute(required = true)
+  protected int values;
 
-	@Override
-	public boolean doCheck(QuestEnv env) {
-		int id = 0;
-		VisibleObject visibleObject = env.getVisibleObject();
-		if (visibleObject instanceof Npc) {
-			id = ((Npc) visibleObject).getNpcId();
-		}
-		switch (getOp()) {
-			case EQUAL:
-				return id == values;
-			case GREATER:
-				return id > values;
-			case GREATER_EQUAL:
-				return id >= values;
-			case LESSER:
-				return id < values;
-			case LESSER_EQUAL:
-				return id <= values;
-			case NOT_EQUAL:
-				return id != values;
-			default:
-				return false;
-		}
-	}
+  @Override
+  public boolean doCheck(QuestEnv env) {
+    int id = 0;
+    VisibleObject visibleObject = env.getVisibleObject();
+    if (visibleObject instanceof Npc) {
+      id = ((Npc) visibleObject).getNpcId();
+    }
+    switch (getOp()) {
+      case EQUAL:
+        return id == values;
+      case GREATER:
+        return id > values;
+      case GREATER_EQUAL:
+        return id >= values;
+      case LESSER:
+        return id < values;
+      case LESSER_EQUAL:
+        return id <= values;
+      case NOT_EQUAL:
+        return id != values;
+      default:
+        return false;
+    }
+  }
 }

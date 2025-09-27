@@ -14,52 +14,52 @@ import com.aionemu.gameserver.model.Race;
 @XmlType(name = "Hotspot")
 public class HotspotTemplate {
 
-	@XmlAttribute(name = "id")
-	protected int id;
+  @XmlAttribute(name = "id")
+  protected int id;
 
-	@XmlAttribute(name = "worldId")
-	protected int worldId;
+  @XmlAttribute(name = "worldId")
+  protected int worldId;
 
-	@XmlAttribute(name = "x")
-	protected float x;
+  @XmlAttribute(name = "x")
+  protected float x;
 
-	@XmlAttribute(name = "y")
-	protected float y;
+  @XmlAttribute(name = "y")
+  protected float y;
 
-	@XmlAttribute(name = "z")
-	protected float z;
+  @XmlAttribute(name = "z")
+  protected float z;
 
-	@XmlAttribute(name = "race")
-	protected Race race;
+  @XmlAttribute(name = "race")
+  protected Race race;
 
-	@XmlAttribute(name = "price")
-	protected long price;
+  @XmlAttribute(name = "price")
+  protected long price;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public int getWorldId() {
-		return worldId;
-	}
+  public int getWorldId() {
+    return worldId;
+  }
 
-	public float getX() {
-		return x;
-	}
+  public float getX() {
+    return x;
+  }
 
-	public float getY() {
-		return y;
-	}
+  public float getY() {
+    return y;
+  }
 
-	public float getZ() {
-		return z;
-	}
+  public float getZ() {
+    return z;
+  }
 
-	public Race getRace() {
-		return race;
-	}
+  public Race getRace() {
+    return race;
+  }
 
-	public long getPrice() {
-		return price;
-	}
+  public long getPrice() {
+    return price;
+  }
 }

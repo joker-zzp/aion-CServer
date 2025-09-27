@@ -9,52 +9,52 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "Road")
 public class RoadTemplate {
 
-	@XmlAttribute(name = "name")
-	protected String name;
+  @XmlAttribute(name = "name")
+  protected String name;
 
-	@XmlAttribute(name = "map")
-	protected int map;
+  @XmlAttribute(name = "map")
+  protected int map;
 
-	@XmlAttribute(name = "radius")
-	protected float radius;
+  @XmlAttribute(name = "radius")
+  protected float radius;
 
-	@XmlElement(name = "center")
-	protected RoadPoint center;
+  @XmlElement(name = "center")
+  protected RoadPoint center;
 
-	@XmlElement(name = "p1")
-	protected RoadPoint p1;
+  @XmlElement(name = "p1")
+  protected RoadPoint p1;
 
-	@XmlElement(name = "p2")
-	protected RoadPoint p2;
+  @XmlElement(name = "p2")
+  protected RoadPoint p2;
 
-	@XmlElement(name = "roadexit")
-	protected RoadExit roadExit;
+  @XmlElement(name = "roadexit")
+  protected RoadExit roadExit;
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public int getMap() {
-		return map;
-	}
+  public int getMap() {
+    return map;
+  }
 
-	public float getRadius() {
-		return radius;
-	}
+  public float getRadius() {
+    return radius;
+  }
 
-	public RoadPoint getCenter() {
-		return center;
-	}
+  public RoadPoint getCenter() {
+    return center;
+  }
 
-	public RoadPoint getP1() {
-		return p1;
-	}
+  public RoadPoint getP1() {
+    return p1;
+  }
 
-	public RoadPoint getP2() {
-		return p2;
-	}
+  public RoadPoint getP2() {
+    return p2;
+  }
 
-	public RoadExit getRoadExit() {
-		return roadExit;
-	}
+  public RoadExit getRoadExit() {
+    return roadExit;
+  }
 }

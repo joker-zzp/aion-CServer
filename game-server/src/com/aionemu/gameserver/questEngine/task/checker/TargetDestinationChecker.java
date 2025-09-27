@@ -8,15 +8,15 @@ import com.aionemu.gameserver.utils.PositionUtil;
  */
 public class TargetDestinationChecker extends DestinationChecker {
 
-	protected final Creature target;
+  protected final Creature target;
 
-	public TargetDestinationChecker(Creature follower, Creature target) {
-		super(follower);
-		this.target = target;
-	}
+  public TargetDestinationChecker(Creature follower, Creature target) {
+    super(follower);
+    this.target = target;
+  }
 
-	@Override
-	public boolean check() {
-		return PositionUtil.isInRange(target, follower, 20);
-	}
+  @Override
+  public boolean check() {
+    return PositionUtil.isInRange(target, follower, 20);
+  }
 }

@@ -15,55 +15,55 @@ import com.aionemu.gameserver.utils.PositionUtil;
  */
 public class FollowEventHandler {
 
-	/**
-	 * @param npcAI
-	 * @param creature
-	 */
-	public static void follow(NpcAI npcAI, Creature creature) {
-		if (npcAI.setStateIfNot(AIState.FOLLOWING)) {
-			npcAI.getOwner().setTarget(creature);
-			EmoteManager.emoteStartFollowing(npcAI.getOwner());
-		}
-	}
+  /**
+   * @param npcAI
+   * @param creature
+   */
+  public static void follow(NpcAI npcAI, Creature creature) {
+    if (npcAI.setStateIfNot(AIState.FOLLOWING)) {
+      npcAI.getOwner().setTarget(creature);
+      EmoteManager.emoteStartFollowing(npcAI.getOwner());
+    }
+  }
 
-	/**
-	 * @param npcAI
-	 * @param creature
-	 */
-	public static void creatureMoved(NpcAI npcAI, Creature creature) {
-		if (npcAI.isInState(AIState.FOLLOWING)) {
-			if (npcAI.getOwner().isTargeting(creature.getObjectId()) && !creature.isDead()) {
-				checkFollowTarget(npcAI, creature);
-			}
-		}
-	}
+  /**
+   * @param npcAI
+   * @param creature
+   */
+  public static void creatureMoved(NpcAI npcAI, Creature creature) {
+    if (npcAI.isInState(AIState.FOLLOWING)) {
+      if (npcAI.getOwner().isTargeting(creature.getObjectId()) && !creature.isDead()) {
+        checkFollowTarget(npcAI, creature);
+      }
+    }
+  }
 
-	/**
-	 * @param creature
-	 */
-	public static void checkFollowTarget(NpcAI npcAI, Creature creature) {
-		if (!isInRange(npcAI, creature)) {
-			npcAI.onGeneralEvent(AIEventType.TARGET_TOOFAR);
-		}
-	}
+  /**
+   * @param creature
+   */
+  public static void checkFollowTarget(NpcAI npcAI, Creature creature) {
+    if (!isInRange(npcAI, creature)) {
+      npcAI.onGeneralEvent(AIEventType.TARGET_TOOFAR);
+    }
+  }
 
-	public static boolean isInRange(AbstractAI<? extends Creature> ai, VisibleObject object) {
-		if (object == null) {
-			return false;
-		}
-		return PositionUtil.isInRange(ai.getOwner(), object, 2, false);
-	}
+  public static boolean isInRange(AbstractAI<? extends Creature> ai, VisibleObject object) {
+    if (object == null) {
+      return false;
+    }
+    return PositionUtil.isInRange(ai.getOwner(), object, 2, false);
+  }
 
-	/**
-	 * @param npcAI
-	 * @param creature
-	 */
-	public static void stopFollow(NpcAI npcAI, Creature creature) {
-		if (npcAI.setStateIfNot(AIState.IDLE)) {
-			npcAI.getOwner().setTarget(null);
-			npcAI.getOwner().getMoveController().abortMove();
-			AIActions.scheduleRespawn(npcAI);
-			AIActions.deleteOwner(npcAI);
-		}
-	}
+  /**
+   * @param npcAI
+   * @param creature
+   */
+  public static void stopFollow(NpcAI npcAI, Creature creature) {
+    if (npcAI.setStateIfNot(AIState.IDLE)) {
+      npcAI.getOwner().setTarget(null);
+      npcAI.getOwner().getMoveController().abortMove();
+      AIActions.scheduleRespawn(npcAI);
+      AIActions.deleteOwner(npcAI);
+    }
+  }
 }

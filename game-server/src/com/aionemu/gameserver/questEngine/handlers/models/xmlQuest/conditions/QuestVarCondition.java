@@ -15,34 +15,34 @@ import com.aionemu.gameserver.questEngine.model.QuestState;
 @XmlType(name = "QuestVarCondition")
 public class QuestVarCondition extends QuestCondition {
 
-	@XmlAttribute(required = true)
-	protected int value;
-	@XmlAttribute(name = "var_id", required = true)
-	protected int varId;
+  @XmlAttribute(required = true)
+  protected int value;
+  @XmlAttribute(name = "var_id", required = true)
+  protected int varId;
 
-	@Override
-	public boolean doCheck(QuestEnv env) {
-		QuestState qs = env.getPlayer().getQuestStateList().getQuestState(env.getQuestId());
-		if (qs == null) {
-			return false;
-		}
-		int var = qs.getQuestVars().getVarById(varId);
-		switch (getOp()) {
-			case EQUAL:
-				return var == value;
-			case GREATER:
-				return var > value;
-			case GREATER_EQUAL:
-				return var >= value;
-			case LESSER:
-				return var < value;
-			case LESSER_EQUAL:
-				return var <= value;
-			case NOT_EQUAL:
-				return var != value;
-			default:
-				return false;
-		}
-	}
+  @Override
+  public boolean doCheck(QuestEnv env) {
+    QuestState qs = env.getPlayer().getQuestStateList().getQuestState(env.getQuestId());
+    if (qs == null) {
+      return false;
+    }
+    int var = qs.getQuestVars().getVarById(varId);
+    switch (getOp()) {
+      case EQUAL:
+        return var == value;
+      case GREATER:
+        return var > value;
+      case GREATER_EQUAL:
+        return var >= value;
+      case LESSER:
+        return var < value;
+      case LESSER_EQUAL:
+        return var <= value;
+      case NOT_EQUAL:
+        return var != value;
+      default:
+        return false;
+    }
+  }
 
 }

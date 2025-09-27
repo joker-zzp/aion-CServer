@@ -16,21 +16,21 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("krprisoners")
 public class KromedesPrisonersAI extends NpcAI {
 
-	public KromedesPrisonersAI(Npc owner) {
-		super(owner);
-	}
+  public KromedesPrisonersAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		if (dialogActionId == SETPRO1) {
-			AIActions.deleteOwner(this);
-		} else if (dialogActionId == SELECT1_1)
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1012));
-		return true;
-	}
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    if (dialogActionId == SETPRO1) {
+      AIActions.deleteOwner(this);
+    } else if (dialogActionId == SELECT1_1)
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1012));
+    return true;
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
+  }
 }

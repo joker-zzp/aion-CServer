@@ -12,14 +12,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ComboProduct")
 public class ComboProduct {
 
-	@XmlAttribute
-	protected int itemid;
+  @XmlAttribute
+  protected int itemid;
 
-	/**
-	 * @return the itemid
-	 */
-	public int getItemId() {
-		return itemid;
-	}
+  /**
+   * @return the itemid
+   */
+  public int getItemId() {
+    return itemid;
+  }
 
 }

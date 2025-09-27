@@ -5,21 +5,21 @@ package com.aionemu.gameserver.controllers.observer;
  */
 public class StartMovingListener extends ActionObserver {
 
-	private boolean effectorMoved = false;
+  private boolean effectorMoved = false;
 
-	public StartMovingListener() {
-		super(ObserverType.MOVE);
-	}
+  public StartMovingListener() {
+    super(ObserverType.MOVE);
+  }
 
-	/**
-	 * @return the effectorMoved
-	 */
-	public boolean isEffectorMoved() {
-		return effectorMoved;
-	}
+  /**
+   * @return the effectorMoved
+   */
+  public boolean isEffectorMoved() {
+    return effectorMoved;
+  }
 
-	@Override
-	public void moved() {
-		effectorMoved = true;
-	}
+  @Override
+  public void moved() {
+    effectorMoved = true;
+  }
 }

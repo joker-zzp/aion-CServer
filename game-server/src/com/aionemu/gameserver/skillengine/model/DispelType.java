@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum DispelType {
 
-	EFFECTID,
-	EFFECTIDRANGE,
-	EFFECTTYPE,
-	SLOTTYPE;
+  EFFECTID,
+  EFFECTIDRANGE,
+  EFFECTTYPE,
+  SLOTTYPE;
 
 }

@@ -11,32 +11,32 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_ALLIANCE_INFO;
  */
 public class LeagueJoinEvent implements TeamEvent {
 
-	private final League league;
-	private final PlayerAlliance invitedAlliance;
+  private final League league;
+  private final PlayerAlliance invitedAlliance;
 
-	public LeagueJoinEvent(League league, PlayerAlliance invitedAlliance) {
-		this.league = league;
-		this.invitedAlliance = invitedAlliance;
-	}
+  public LeagueJoinEvent(League league, PlayerAlliance invitedAlliance) {
+    this.league = league;
+    this.invitedAlliance = invitedAlliance;
+  }
 
-	/**
-	 * Entered alliance should not be in league yet
-	 */
-	@Override
-	public boolean checkCondition() {
-		return !league.hasMember(invitedAlliance.getObjectId());
-	}
+  /**
+   * Entered alliance should not be in league yet
+   */
+  @Override
+  public boolean checkCondition() {
+    return !league.hasMember(invitedAlliance.getObjectId());
+  }
 
-	@Override
-	public void handleEvent() {
-		league.addMember(new LeagueMember(invitedAlliance, league.size()));
-		league.forEach(alliance -> {
-			if (alliance.equals(invitedAlliance)) {
-				alliance.sendPackets(new SM_ALLIANCE_INFO(alliance, SM_ALLIANCE_INFO.LEAGUE_ALLIANCE_ENTERED, league.getCaptain().getName()));
-			} else {
-				alliance.sendPackets(new SM_ALLIANCE_INFO(alliance, SM_ALLIANCE_INFO.LEAGUE_JOINED_ALLIANCE, invitedAlliance.getLeaderObject().getName()));
-			}
-		});
-	}
+  @Override
+  public void handleEvent() {
+    league.addMember(new LeagueMember(invitedAlliance, league.size()));
+    league.forEach(alliance -> {
+      if (alliance.equals(invitedAlliance)) {
+        alliance.sendPackets(new SM_ALLIANCE_INFO(alliance, SM_ALLIANCE_INFO.LEAGUE_ALLIANCE_ENTERED, league.getCaptain().getName()));
+      } else {
+        alliance.sendPackets(new SM_ALLIANCE_INFO(alliance, SM_ALLIANCE_INFO.LEAGUE_JOINED_ALLIANCE, invitedAlliance.getLeaderObject().getName()));
+      }
+    });
+  }
 
 }

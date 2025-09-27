@@ -10,19 +10,19 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum MailPartType {
 
-	CUSTOM,
-	SENDER,
-	TITLE,
-	HEADER,
-	BODY,
-	TAIL;
+  CUSTOM,
+  SENDER,
+  TITLE,
+  HEADER,
+  BODY,
+  TAIL;
 
-	public String value() {
-		return name();
-	}
+  public String value() {
+    return name();
+  }
 
-	public static MailPartType fromValue(String v) {
-		return valueOf(v);
-	}
+  public static MailPartType fromValue(String v) {
+    return valueOf(v);
+  }
 
 }

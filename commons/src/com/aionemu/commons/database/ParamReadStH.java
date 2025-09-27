@@ -12,11 +12,11 @@ import java.sql.SQLException;
  */
 public interface ParamReadStH extends ReadStH {
 
-	/**
-	 * Enables coder to manually modify statement parameters.
-	 * 
-	 * @param stmt
-	 * @throws SQLException
-	 */
-	public void setParams(PreparedStatement stmt) throws SQLException;
+  /**
+   * Enables coder to manually modify statement parameters.
+   * 
+   * @param stmt
+   * @throws SQLException
+   */
+  public void setParams(PreparedStatement stmt) throws SQLException;
 }

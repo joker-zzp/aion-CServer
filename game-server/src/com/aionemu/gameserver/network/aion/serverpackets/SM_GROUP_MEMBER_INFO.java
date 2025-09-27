@@ -18,126 +18,126 @@ import com.aionemu.gameserver.world.WorldPosition;
  */
 public class SM_GROUP_MEMBER_INFO extends AionServerPacket {
 
-	private int groupId;
-	private Player player;
-	private GroupEvent event;
-	private int slot;
-	private List<Effect> abnormalEffects;
+  private int groupId;
+  private Player player;
+  private GroupEvent event;
+  private int slot;
+  private List<Effect> abnormalEffects;
 
-	public SM_GROUP_MEMBER_INFO(PlayerGroup group, Player player, GroupEvent event, int slot) {
-		this.groupId = group.getTeamId();
-		this.player = player;
-		this.event = event;
-		this.slot = slot;
-		switch (event) {
-			case ENTER:
-			case UPDATE:
-				abnormalEffects = player.getEffectController().getAbnormalEffectsToShow();
-				break;
-			case UPDATE_EFFECTS:
-				abnormalEffects = player.getEffectController().getAbnormalEffectsToTargetSlot(slot);
-				break;
-		}
-	}
+  public SM_GROUP_MEMBER_INFO(PlayerGroup group, Player player, GroupEvent event, int slot) {
+    this.groupId = group.getTeamId();
+    this.player = player;
+    this.event = event;
+    this.slot = slot;
+    switch (event) {
+      case ENTER:
+      case UPDATE:
+        abnormalEffects = player.getEffectController().getAbnormalEffectsToShow();
+        break;
+      case UPDATE_EFFECTS:
+        abnormalEffects = player.getEffectController().getAbnormalEffectsToTargetSlot(slot);
+        break;
+    }
+  }
 
-	public SM_GROUP_MEMBER_INFO(PlayerGroup group, Player player, GroupEvent event) {
-		this(group, player, event, 0);
-	}
+  public SM_GROUP_MEMBER_INFO(PlayerGroup group, Player player, GroupEvent event) {
+    this(group, player, event, 0);
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		PlayerLifeStats pls = player.getLifeStats();
-		PlayerCommonData pcd = player.getCommonData();
-		WorldPosition wp = player.getPosition();
+  @Override
+  protected void writeImpl(AionConnection con) {
+    PlayerLifeStats pls = player.getLifeStats();
+    PlayerCommonData pcd = player.getCommonData();
+    WorldPosition wp = player.getPosition();
 
-		if (event == GroupEvent.ENTER && !player.isOnline()) {
-			event = GroupEvent.ENTER_OFFLINE;
-		}
+    if (event == GroupEvent.ENTER && !player.isOnline()) {
+      event = GroupEvent.ENTER_OFFLINE;
+    }
 
-		writeD(groupId);
-		writeD(player.getObjectId());
-		if (player.isOnline()) {
-			writeD(pls.getMaxHp());
-			writeD(pls.getCurrentHp());
-			writeD(pls.getMaxMp());
-			writeD(pls.getCurrentMp());
-			writeD(pls.getMaxFp()); // maxflighttime
-			writeD(pls.getCurrentFp()); // currentflighttime
-		} else {
-			writeD(0);
-			writeD(0);
-			writeD(0);
-			writeD(0);
-			writeD(0);
-			writeD(0);
-		}
+    writeD(groupId);
+    writeD(player.getObjectId());
+    if (player.isOnline()) {
+      writeD(pls.getMaxHp());
+      writeD(pls.getCurrentHp());
+      writeD(pls.getMaxMp());
+      writeD(pls.getCurrentMp());
+      writeD(pls.getMaxFp()); // maxflighttime
+      writeD(pls.getCurrentFp()); // currentflighttime
+    } else {
+      writeD(0);
+      writeD(0);
+      writeD(0);
+      writeD(0);
+      writeD(0);
+      writeD(0);
+    }
 
-		writeD(0);// unk 3.5
-		writeD(wp.getMapId());
-		writeD(wp.getMapId() + wp.getInstanceId() - 1);
-		writeF(wp.getX());
-		writeF(wp.getY());
-		writeF(wp.getZ());
-		writeC(pcd.getPlayerClass().getClassId()); // class id
-		writeC(pcd.getGender().getGenderId()); // gender id
-		writeC(pcd.getLevel()); // level
+    writeD(0);// unk 3.5
+    writeD(wp.getMapId());
+    writeD(wp.getMapId() + wp.getInstanceId() - 1);
+    writeF(wp.getX());
+    writeF(wp.getY());
+    writeF(wp.getZ());
+    writeC(pcd.getPlayerClass().getClassId()); // class id
+    writeC(pcd.getGender().getGenderId()); // gender id
+    writeC(pcd.getLevel()); // level
 
-		writeC(event.getId()); // something events
-		writeC(1); // unk, always 0x01 since removal of Sarpan & Tiamarana
-		writeC(player.getFlyState()); // isFly
-		writeC(player.isMentor() ? 0x01 : 0x00);
+    writeC(event.getId()); // something events
+    writeC(1); // unk, always 0x01 since removal of Sarpan & Tiamarana
+    writeC(player.getFlyState()); // isFly
+    writeC(player.isMentor() ? 0x01 : 0x00);
 
-		switch (event) {
-			case MOVEMENT:
-			case DISCONNECTED:
-			case LEAVE:
-				break;
-			case ENTER_OFFLINE:
-			case JOIN:
-				writeS(pcd.getName()); // name
-				break;
-			case UPDATE_EFFECTS:
-				writeD(0x00); // unk
-				writeD(0x00); // unk
-				writeC(slot);
-				writeH(abnormalEffects.size()); // Abnormal effects of slot type
-				for (Effect effect : abnormalEffects) {
-					writeD(effect.getEffectorId()); // casterid
-					writeH(effect.getSkillId()); // spellid
-					writeC(effect.getSkillLevel()); // spell level
-					writeC(effect.getTargetSlot().ordinal()); // unk ?
-					writeD(effect.getRemainingTimeToDisplay()); // estimatedtime
-				}
+    switch (event) {
+      case MOVEMENT:
+      case DISCONNECTED:
+      case LEAVE:
+        break;
+      case ENTER_OFFLINE:
+      case JOIN:
+        writeS(pcd.getName()); // name
+        break;
+      case UPDATE_EFFECTS:
+        writeD(0x00); // unk
+        writeD(0x00); // unk
+        writeC(slot);
+        writeH(abnormalEffects.size()); // Abnormal effects of slot type
+        for (Effect effect : abnormalEffects) {
+          writeD(effect.getEffectorId()); // casterid
+          writeH(effect.getSkillId()); // spellid
+          writeC(effect.getSkillLevel()); // spell level
+          writeC(effect.getTargetSlot().ordinal()); // unk ?
+          writeD(effect.getRemainingTimeToDisplay()); // estimatedtime
+        }
 
-				for (SkillTargetSlot targetSlot : SkillTargetSlot.values()) {
-					if ((slot & targetSlot.getId()) == 1)
-						writeD(0x00); // TODO: remaining time ?
-					else
-						writeD(0x00);
-				}
-				break;
-			case ENTER:
-			case UPDATE:
-				writeS(pcd.getName()); // name
-				writeD(0x00); // unk
-				writeD(0x00); // unk
-				writeC(SkillTargetSlot.FULLSLOTS);
-				writeH(abnormalEffects.size()); // Abnormal effects
-				for (Effect effect : abnormalEffects) {
-					writeD(effect.getEffectorId()); // casterid
-					writeH(effect.getSkillId()); // spellid
-					writeC(effect.getSkillLevel()); // spell level
-					writeC(effect.getTargetSlot().ordinal()); // unk ?
-					writeD(effect.getRemainingTimeToDisplay()); // estimatedtime
-				}
-				for (SkillTargetSlot targetSlot : SkillTargetSlot.values()) {
-					if ((SkillTargetSlot.FULLSLOTS & targetSlot.getId()) == 1)
-						writeD(0x00); // TODO: remaining time ?
-					else
-						writeD(0x00);
-				}
-				break;
-		}
-	}
+        for (SkillTargetSlot targetSlot : SkillTargetSlot.values()) {
+          if ((slot & targetSlot.getId()) == 1)
+            writeD(0x00); // TODO: remaining time ?
+          else
+            writeD(0x00);
+        }
+        break;
+      case ENTER:
+      case UPDATE:
+        writeS(pcd.getName()); // name
+        writeD(0x00); // unk
+        writeD(0x00); // unk
+        writeC(SkillTargetSlot.FULLSLOTS);
+        writeH(abnormalEffects.size()); // Abnormal effects
+        for (Effect effect : abnormalEffects) {
+          writeD(effect.getEffectorId()); // casterid
+          writeH(effect.getSkillId()); // spellid
+          writeC(effect.getSkillLevel()); // spell level
+          writeC(effect.getTargetSlot().ordinal()); // unk ?
+          writeD(effect.getRemainingTimeToDisplay()); // estimatedtime
+        }
+        for (SkillTargetSlot targetSlot : SkillTargetSlot.values()) {
+          if ((SkillTargetSlot.FULLSLOTS & targetSlot.getId()) == 1)
+            writeD(0x00); // TODO: remaining time ?
+          else
+            writeD(0x00);
+        }
+        break;
+    }
+  }
 
 }

@@ -6,18 +6,18 @@ import com.aionemu.gameserver.services.SiegeService;
 
 public class SiegeBossDeathListener extends OnDieEventListener {
 
-	private final Siege<?> siege;
+  private final Siege<?> siege;
 
-	public SiegeBossDeathListener(Siege<?> siege) {
-		this.siege = siege;
-	}
+  public SiegeBossDeathListener(Siege<?> siege) {
+    this.siege = siege;
+  }
 
-	@Override
-	public void onAfterEvent(GeneralAIEvent event) {
-		if (event.isHandled()) {
-			siege.setBossKilled(true);
-			SiegeService.getInstance().stopSiege(siege.getSiegeLocationId());
-		}
-	}
+  @Override
+  public void onAfterEvent(GeneralAIEvent event) {
+    if (event.isHandled()) {
+      siege.setBossKilled(true);
+      SiegeService.getInstance().stopSiege(siege.getSiegeLocationId());
+    }
+  }
 
 }

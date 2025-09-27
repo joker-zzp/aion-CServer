@@ -9,12 +9,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "FirstTargetAttribute")
 @XmlEnum
 public enum FirstTargetAttribute {
-	TARGETORME,
-	ME,
-	MYPET,
-	MYMASTER,
-	TARGET,
-	PASSIVE,
-	TARGET_MYPARTY_NONVISIBLE,
-	POINT
+  TARGETORME,
+  ME,
+  MYPET,
+  MYMASTER,
+  TARGET,
+  PASSIVE,
+  TARGET_MYPARTY_NONVISIBLE,
+  POINT
 }

@@ -12,30 +12,30 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class LeagueInviteEvent extends RequestResponseHandler<Player> {
 
-	private final Player invited;
+  private final Player invited;
 
-	public LeagueInviteEvent(Player requester, Player invited) {
-		super(requester);
-		this.invited = invited;
-	}
+  public LeagueInviteEvent(Player requester, Player invited) {
+    super(requester);
+    this.invited = invited;
+  }
 
-	@Override
-	public void acceptRequest(Player requester, Player responder) {
-		if (LeagueService.canInvite(requester, invited)) {
-			League league = requester.getPlayerAlliance().getLeague();
+  @Override
+  public void acceptRequest(Player requester, Player responder) {
+    if (LeagueService.canInvite(requester, invited)) {
+      League league = requester.getPlayerAlliance().getLeague();
 
-			if (league == null) {
-				league = LeagueService.createLeague(requester);
-			}
-			if (!invited.isInLeague()) {
-				LeagueService.addAlliance(league, invited.getPlayerAlliance());
-			}
-		}
-	}
+      if (league == null) {
+        league = LeagueService.createLeague(requester);
+      }
+      if (!invited.isInLeague()) {
+        LeagueService.addAlliance(league, invited.getPlayerAlliance());
+      }
+    }
+  }
 
-	@Override
-	public void denyRequest(Player requester, Player responder) {
-		PacketSendUtility.sendPacket(requester, SM_SYSTEM_MESSAGE.STR_PARTY_ALLIANCE_HE_REJECT_INVITATION(responder.getName()));
-	}
+  @Override
+  public void denyRequest(Player requester, Player responder) {
+    PacketSendUtility.sendPacket(requester, SM_SYSTEM_MESSAGE.STR_PARTY_ALLIANCE_HE_REJECT_INVITATION(responder.getName()));
+  }
 
 }

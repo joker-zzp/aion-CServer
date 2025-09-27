@@ -27,65 +27,65 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "BufEffect")
 public abstract class BufEffect extends EffectTemplate {
 
-	@XmlAttribute
-	protected boolean maxstat;
+  @XmlAttribute
+  protected boolean maxstat;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	/**
-	 * Will be called from effect controller when effect starts
-	 */
-	@Override
-	public void startEffect(Effect effect) {
-		Creature effected = effect.getEffected();
-		CreatureGameStats<? extends Creature> cgs = effected.getGameStats();
+  /**
+   * Will be called from effect controller when effect starts
+   */
+  @Override
+  public void startEffect(Effect effect) {
+    Creature effected = effect.getEffected();
+    CreatureGameStats<? extends Creature> cgs = effected.getGameStats();
 
-		List<IStatFunction> modifiers = getModifiers(effect);
+    List<IStatFunction> modifiers = getModifiers(effect);
 
-		if (modifiers.size() > 0)
-			cgs.addEffect(effect, modifiers);
+    if (modifiers.size() > 0)
+      cgs.addEffect(effect, modifiers);
 
-		if (maxstat)
-			effected.getLifeStats().synchronizeWithMaxStats();
-	}
+    if (maxstat)
+      effected.getLifeStats().synchronizeWithMaxStats();
+  }
 
-	/**
-	 * @param effect
-	 * @return
-	 */
-	protected List<IStatFunction> getModifiers(Effect effect) {
-		int skillId = effect.getSkillId();
-		int skillLvl = effect.getSkillLevel();
+  /**
+   * @param effect
+   * @return
+   */
+  protected List<IStatFunction> getModifiers(Effect effect) {
+    int skillId = effect.getSkillId();
+    int skillLvl = effect.getSkillLevel();
 
-		List<IStatFunction> modifiers = new ArrayList<>();
+    List<IStatFunction> modifiers = new ArrayList<>();
 
-		if (change == null)
-			return modifiers;
+    if (change == null)
+      return modifiers;
 
-		for (Change changeItem : change) {
-			if (changeItem.getStat() == null) {
-				LoggerFactory.getLogger(BufEffect.class).warn("Skill stat has wrong name for skillid: " + skillId);
-				continue;
-			}
+    for (Change changeItem : change) {
+      if (changeItem.getStat() == null) {
+        LoggerFactory.getLogger(BufEffect.class).warn("Skill stat has wrong name for skillid: " + skillId);
+        continue;
+      }
 
-			int valueWithDelta = changeItem.getValue() + changeItem.getDelta() * skillLvl;
+      int valueWithDelta = changeItem.getValue() + changeItem.getDelta() * skillLvl;
 
-			Conditions conditions = changeItem.getConditions();
-			switch (changeItem.getFunc()) {
-				case ADD:
-					modifiers.add(new StatAddFunction(changeItem.getStat(), valueWithDelta, true).withConditions(conditions));
-					break;
-				case PERCENT:
-					modifiers.add(new StatRateFunction(changeItem.getStat(), valueWithDelta, true).withConditions(conditions));
-					break;
-				case REPLACE:
-					modifiers.add(new StatSetFunction(changeItem.getStat(), valueWithDelta).withConditions(conditions));
-					break;
-			}
-		}
-		return modifiers;
-	}
+      Conditions conditions = changeItem.getConditions();
+      switch (changeItem.getFunc()) {
+        case ADD:
+          modifiers.add(new StatAddFunction(changeItem.getStat(), valueWithDelta, true).withConditions(conditions));
+          break;
+        case PERCENT:
+          modifiers.add(new StatRateFunction(changeItem.getStat(), valueWithDelta, true).withConditions(conditions));
+          break;
+        case REPLACE:
+          modifiers.add(new StatSetFunction(changeItem.getStat(), valueWithDelta).withConditions(conditions));
+          break;
+      }
+    }
+    return modifiers;
+  }
 }

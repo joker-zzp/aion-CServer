@@ -12,32 +12,32 @@ import com.aionemu.gameserver.world.knownlist.NpcKnownList;
  */
 public class Servant extends SummonedObject<Creature> {
 
-	private NpcObjectType objectType;
+  private NpcObjectType objectType;
 
-	public Servant(NpcController controller, SpawnTemplate spawnTemplate, byte level, Creature creator) {
-		super(controller, spawnTemplate, level, creator);
-		setMasterName("");
-		setKnownlist(new NpcKnownList(this));
-		setEffectController(new EffectController(this));
-	}
+  public Servant(NpcController controller, SpawnTemplate spawnTemplate, byte level, Creature creator) {
+    super(controller, spawnTemplate, level, creator);
+    setMasterName("");
+    setKnownlist(new NpcKnownList(this));
+    setEffectController(new EffectController(this));
+  }
 
-	@Override
-	protected void setupStatContainers() {
-		setGameStats(new ServantGameStats(this));
-		setLifeStats(new NpcLifeStats(this));
-	}
+  @Override
+  protected void setupStatContainers() {
+    setGameStats(new ServantGameStats(this));
+    setLifeStats(new NpcLifeStats(this));
+  }
 
-	@Override
-	public NpcObjectType getNpcObjectType() {
-		return objectType;
-	}
+  @Override
+  public NpcObjectType getNpcObjectType() {
+    return objectType;
+  }
 
-	public void setNpcObjectType(NpcObjectType objectType) {
-		this.objectType = objectType;
-	}
+  public void setNpcObjectType(NpcObjectType objectType) {
+    this.objectType = objectType;
+  }
 
-	public void setUpStats() {
-		((ServantGameStats) getGameStats()).setUpStats();
-	}
+  public void setUpStats() {
+    ((ServantGameStats) getGameStats()).setUpStats();
+  }
 
 }

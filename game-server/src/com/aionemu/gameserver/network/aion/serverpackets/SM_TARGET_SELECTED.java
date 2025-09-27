@@ -10,33 +10,33 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_TARGET_SELECTED extends AionServerPacket {
 
-	private int targetObjId;
-	private int level;
-	private int maxHp, currentHp;
-	private int maxMp, currentMp;
+  private int targetObjId;
+  private int level;
+  private int maxHp, currentHp;
+  private int maxMp, currentMp;
 
-	public SM_TARGET_SELECTED(VisibleObject target) {
-		if (target != null) {
-			this.targetObjId = target.getObjectId();
-			if (target instanceof Creature) {
-				Creature creature = (Creature) target;
-				this.level = creature.getLevel();
-				this.maxHp = creature.getLifeStats().getMaxHp();
-				this.currentHp = creature.getLifeStats().getCurrentHp();
-				this.maxMp = creature.getLifeStats().getMaxMp();
-				this.currentMp = creature.getLifeStats().getCurrentMp();
-			}
-		}
-	}
+  public SM_TARGET_SELECTED(VisibleObject target) {
+    if (target != null) {
+      this.targetObjId = target.getObjectId();
+      if (target instanceof Creature) {
+        Creature creature = (Creature) target;
+        this.level = creature.getLevel();
+        this.maxHp = creature.getLifeStats().getMaxHp();
+        this.currentHp = creature.getLifeStats().getCurrentHp();
+        this.maxMp = creature.getLifeStats().getMaxMp();
+        this.currentMp = creature.getLifeStats().getCurrentMp();
+      }
+    }
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(targetObjId);
-		writeH(level);
-		writeD(maxHp);
-		writeD(currentHp);
-		writeD(maxMp);// new 4.0
-		writeD(currentMp);// new 4.0
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(targetObjId);
+    writeH(level);
+    writeD(maxHp);
+    writeD(currentHp);
+    writeD(maxMp);// new 4.0
+    writeD(currentMp);// new 4.0
+  }
 
 }

@@ -8,30 +8,30 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public abstract class ListPart<Type> extends ArrayList<Type> {
 
-	private final int partNo;
-	private boolean isLast;
+  private final int partNo;
+  private boolean isLast;
 
-	protected ListPart(int partNo, boolean isLast) {
-		this.partNo = partNo;
-		this.isLast = isLast;
-	}
+  protected ListPart(int partNo, boolean isLast) {
+    this.partNo = partNo;
+    this.isLast = isLast;
+  }
 
-	public int getPartNo() {
-		return partNo;
-	}
+  public int getPartNo() {
+    return partNo;
+  }
 
-	public boolean isFirst() {
-		return partNo == 1;
-	}
+  public boolean isFirst() {
+    return partNo == 1;
+  }
 
-	public boolean isLast() {
-		return isLast;
-	}
+  public boolean isLast() {
+    return isLast;
+  }
 
-	protected void setLast(boolean isLast) {
-		this.isLast = isLast;
-	}
+  protected void setLast(boolean isLast) {
+    this.isLast = isLast;
+  }
 
-	protected abstract boolean fits(Type element);
+  protected abstract boolean fits(Type element);
 
 }

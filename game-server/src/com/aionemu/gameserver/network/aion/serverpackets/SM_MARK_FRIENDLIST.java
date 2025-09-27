@@ -8,11 +8,11 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_MARK_FRIENDLIST extends AionServerPacket {
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(con.getActivePlayer().getObjectId());
-		writeC(1);
-		writeH(0);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(con.getActivePlayer().getObjectId());
+    writeC(1);
+    writeH(0);
+  }
 
 }

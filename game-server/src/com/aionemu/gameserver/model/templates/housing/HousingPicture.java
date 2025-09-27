@@ -11,10 +11,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "HousingPicture")
 public class HousingPicture extends PlaceableHouseObject {
 
-	@Override
-	public byte getTypeId() {
-		// TODO Not sniffed yet
-		return 0;
-	}
+  @Override
+  public byte getTypeId() {
+    // TODO Not sniffed yet
+    return 0;
+  }
 
 }

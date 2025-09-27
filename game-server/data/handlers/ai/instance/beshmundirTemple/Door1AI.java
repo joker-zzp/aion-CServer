@@ -19,25 +19,25 @@ import ai.ActionItemNpcAI;
 @AIName("door1")
 public class Door1AI extends ActionItemNpcAI {
 
-	public Door1AI(Npc owner) {
-		super(owner);
-	}
+  public Door1AI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		int questId = player.getRace() == Race.ELYOS ? 30208 : 30308;
-		// Only one player in group has to have this quest
-		for (Player member : player.isInGroup() ? player.getPlayerGroup().getOnlineMembers() : Arrays.asList(player)) {
-			if (member.getQuestStateList().hasQuest(questId)) {
-				super.handleDialogStart(player);
-				return;
-			}
-		}
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), DialogPage.NO_RIGHT.id()));
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    int questId = player.getRace() == Race.ELYOS ? 30208 : 30308;
+    // Only one player in group has to have this quest
+    for (Player member : player.isInGroup() ? player.getPlayerGroup().getOnlineMembers() : Arrays.asList(player)) {
+      if (member.getQuestStateList().hasQuest(questId)) {
+        super.handleDialogStart(player);
+        return;
+      }
+    }
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), DialogPage.NO_RIGHT.id()));
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		AIActions.deleteOwner(this);
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    AIActions.deleteOwner(this);
+  }
 }

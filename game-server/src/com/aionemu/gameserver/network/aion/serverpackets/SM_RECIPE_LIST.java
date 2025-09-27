@@ -10,18 +10,18 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_RECIPE_LIST extends AionServerPacket {
 
-	private final Set<Integer> recipeIds;
+  private final Set<Integer> recipeIds;
 
-	public SM_RECIPE_LIST(Set<Integer> recipeIds) {
-		this.recipeIds = recipeIds;
-	}
+  public SM_RECIPE_LIST(Set<Integer> recipeIds) {
+    this.recipeIds = recipeIds;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeH(recipeIds.size());
-		for (int id : recipeIds) {
-			writeD(id);
-			writeC(0);
-		}
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeH(recipeIds.size());
+    for (int id : recipeIds) {
+      writeD(id);
+      writeC(0);
+    }
+  }
 }

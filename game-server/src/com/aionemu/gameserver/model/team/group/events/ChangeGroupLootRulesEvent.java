@@ -10,18 +10,18 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_GROUP_INFO;
  */
 public class ChangeGroupLootRulesEvent extends AlwaysTrueTeamEvent {
 
-	private final PlayerGroup group;
-	private final LootGroupRules lootGroupRules;
+  private final PlayerGroup group;
+  private final LootGroupRules lootGroupRules;
 
-	public ChangeGroupLootRulesEvent(PlayerGroup group, LootGroupRules lootGroupRules) {
-		this.group = group;
-		this.lootGroupRules = lootGroupRules;
-	}
+  public ChangeGroupLootRulesEvent(PlayerGroup group, LootGroupRules lootGroupRules) {
+    this.group = group;
+    this.lootGroupRules = lootGroupRules;
+  }
 
-	@Override
-	public void handleEvent() {
-		group.setLootGroupRules(lootGroupRules);
-		group.sendPackets(new SM_GROUP_INFO(group));
-	}
+  @Override
+  public void handleEvent() {
+    group.setLootGroupRules(lootGroupRules);
+    group.sendPackets(new SM_GROUP_INFO(group));
+  }
 
 }

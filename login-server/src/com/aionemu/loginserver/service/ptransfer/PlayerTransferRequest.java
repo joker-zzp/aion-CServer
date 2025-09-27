@@ -7,18 +7,18 @@ import com.aionemu.loginserver.model.Account;
  */
 public class PlayerTransferRequest {
 
-	public PlayerTransferStatus status;
-	public byte serverId;
-	public byte targetServerId;
-	public Account targetAccount;
-	public byte[] db;
-	public String name;
-	public int targetAccountId;
-	public Account account;
-	public Account saccount;
-	public int taskId;
+  public PlayerTransferStatus status;
+  public byte serverId;
+  public byte targetServerId;
+  public Account targetAccount;
+  public byte[] db;
+  public String name;
+  public int targetAccountId;
+  public Account account;
+  public Account saccount;
+  public int taskId;
 
-	public PlayerTransferRequest(PlayerTransferStatus status) {
-		this.status = status;
-	}
+  public PlayerTransferRequest(PlayerTransferStatus status) {
+    this.status = status;
+  }
 }

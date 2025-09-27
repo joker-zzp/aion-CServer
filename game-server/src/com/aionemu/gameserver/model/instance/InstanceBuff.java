@@ -30,77 +30,77 @@ import com.aionemu.gameserver.world.WorldMapInstance;
  */
 public class InstanceBuff implements StatOwner {
 
-	private final List<IStatFunction> functions = new ArrayList<>();
-	private final InstanceBonusAttr instanceBonusAttr;
-	private Future<?> task;
-	private long endTime;
+  private final List<IStatFunction> functions = new ArrayList<>();
+  private final InstanceBonusAttr instanceBonusAttr;
+  private Future<?> task;
+  private long endTime;
 
-	public InstanceBuff(int buffId) {
-		instanceBonusAttr = DataManager.INSTANCE_BUFF_DATA.getInstanceBonusattr(buffId);
-	}
+  public InstanceBuff(int buffId) {
+    instanceBonusAttr = DataManager.INSTANCE_BUFF_DATA.getInstanceBonusattr(buffId);
+  }
 
-	public void applyEffect(Player player, int time) {
+  public void applyEffect(Player player, int time) {
 
-		if (isActive() || instanceBonusAttr == null) {
-			return;
-		}
-		if (time != 0) {
-			task = ThreadPoolManager.getInstance().schedule(new InstanceBuffTask(player), time);
-		}
-		endTime = System.currentTimeMillis() + time;
-		for (InstancePenaltyAttr instancePenaltyAttr : instanceBonusAttr.getPenaltyAttr()) {
-			StatEnum stat = instancePenaltyAttr.getStat();
-			int statToModified = player.getGameStats().getStat(stat, 0).getBase();
-			int value = instancePenaltyAttr.getValue();
-			int valueModified = instancePenaltyAttr.getFunc().equals(Func.PERCENT) ? (statToModified * value / 100) : (value);
-			functions.add(new StatAddFunction(stat, valueModified, true));
-		}
-		player.getGameStats().addEffect(this, functions);
-	}
+    if (isActive() || instanceBonusAttr == null) {
+      return;
+    }
+    if (time != 0) {
+      task = ThreadPoolManager.getInstance().schedule(new InstanceBuffTask(player), time);
+    }
+    endTime = System.currentTimeMillis() + time;
+    for (InstancePenaltyAttr instancePenaltyAttr : instanceBonusAttr.getPenaltyAttr()) {
+      StatEnum stat = instancePenaltyAttr.getStat();
+      int statToModified = player.getGameStats().getStat(stat, 0).getBase();
+      int value = instancePenaltyAttr.getValue();
+      int valueModified = instancePenaltyAttr.getFunc().equals(Func.PERCENT) ? (statToModified * value / 100) : (value);
+      functions.add(new StatAddFunction(stat, valueModified, true));
+    }
+    player.getGameStats().addEffect(this, functions);
+  }
 
-	public void endEffect(Player player) {
-		functions.clear();
-		if (isActive()) {
-			task.cancel(true);
-		}
-		player.getGameStats().endEffect(this);
-		notify(player);
-	}
+  public void endEffect(Player player) {
+    functions.clear();
+    if (isActive()) {
+      task.cancel(true);
+    }
+    player.getGameStats().endEffect(this);
+    notify(player);
+  }
 
-	private void notify(Player player) {
-		WorldMapInstance wmi = player.getWorldMapInstance();
-		InstanceScore<?> score = wmi.getInstanceHandler().getInstanceScore();
-		if (score instanceof HarmonyArenaScore harmonyScore) {
-			wmi.forEachPlayer(p -> PacketSendUtility.sendPacket(p, new SM_INSTANCE_SCORE(wmi.getMapId(),
-				new HarmonyScoreWriter(harmonyScore, InstanceScoreType.UPDATE_PLAYER_BUFF_STATUS, player), harmonyScore.getTime())));
-		} else if (score instanceof PvPArenaScore arenaScore) {
-			wmi.forEachPlayer(
-				p -> PacketSendUtility.sendPacket(p, new SM_INSTANCE_SCORE(wmi.getMapId(), new ArenaScoreWriter(arenaScore, p.getObjectId(), false))));
-		}
-		PacketSendUtility.sendPacket(player, new SM_ABNORMAL_STATE(Collections.emptyList(), player.getEffectController().getAbnormals(), 0));
-	}
+  private void notify(Player player) {
+    WorldMapInstance wmi = player.getWorldMapInstance();
+    InstanceScore<?> score = wmi.getInstanceHandler().getInstanceScore();
+    if (score instanceof HarmonyArenaScore harmonyScore) {
+      wmi.forEachPlayer(p -> PacketSendUtility.sendPacket(p, new SM_INSTANCE_SCORE(wmi.getMapId(),
+        new HarmonyScoreWriter(harmonyScore, InstanceScoreType.UPDATE_PLAYER_BUFF_STATUS, player), harmonyScore.getTime())));
+    } else if (score instanceof PvPArenaScore arenaScore) {
+      wmi.forEachPlayer(
+        p -> PacketSendUtility.sendPacket(p, new SM_INSTANCE_SCORE(wmi.getMapId(), new ArenaScoreWriter(arenaScore, p.getObjectId(), false))));
+    }
+    PacketSendUtility.sendPacket(player, new SM_ABNORMAL_STATE(Collections.emptyList(), player.getEffectController().getAbnormals(), 0));
+  }
 
-	public int getRemainingTime() {
-		return (int) Math.max(0, endTime - System.currentTimeMillis());
-	}
+  public int getRemainingTime() {
+    return (int) Math.max(0, endTime - System.currentTimeMillis());
+  }
 
-	private class InstanceBuffTask implements Runnable {
+  private class InstanceBuffTask implements Runnable {
 
-		private final Player player;
+    private final Player player;
 
-		public InstanceBuffTask(Player player) {
-			this.player = player;
-		}
+    public InstanceBuffTask(Player player) {
+      this.player = player;
+    }
 
-		@Override
-		public void run() {
-			endEffect(player);
-		}
+    @Override
+    public void run() {
+      endEffect(player);
+    }
 
-	}
+  }
 
-	public boolean isActive() {
-		return task != null && !task.isDone();
-	}
+  public boolean isActive() {
+    return task != null && !task.isDone();
+  }
 
 }

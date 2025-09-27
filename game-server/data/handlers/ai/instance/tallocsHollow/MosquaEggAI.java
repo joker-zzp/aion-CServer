@@ -15,46 +15,46 @@ import ai.AggressiveNpcAI;
 @AIName("mosquaegg")
 public class MosquaEggAI extends AggressiveNpcAI {
 
-	private Future<?> supraklawSpawnTask;
+  private Future<?> supraklawSpawnTask;
 
-	public MosquaEggAI(Npc owner) {
-		super(owner);
-	}
+  public MosquaEggAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		supraklawSpawnTask = ThreadPoolManager.getInstance().schedule(() -> {
-			spawn(217132, getPosition().getX(), getPosition().getY(), getPosition().getZ(), getPosition().getHeading());
-			getOwner().getController().delete();
-		}, 17000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    supraklawSpawnTask = ThreadPoolManager.getInstance().schedule(() -> {
+      spawn(217132, getPosition().getX(), getPosition().getY(), getPosition().getZ(), getPosition().getHeading());
+      getOwner().getController().delete();
+    }, 17000);
+  }
 
-	@Override
-	protected void handleDespawned() {
-		super.handleDespawned();
-		cancelSpawnTask();
-	}
+  @Override
+  protected void handleDespawned() {
+    super.handleDespawned();
+    cancelSpawnTask();
+  }
 
-	@Override
-	protected void handleDied() {
-		super.handleDied();
-		cancelSpawnTask();
-	}
+  @Override
+  protected void handleDied() {
+    super.handleDied();
+    cancelSpawnTask();
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_DECAY, REWARD_AP_XP_DP_LOOT, REWARD_LOOT -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_DECAY, REWARD_AP_XP_DP_LOOT, REWARD_LOOT -> false;
+      default -> super.ask(question);
+    };
+  }
 
-	private void cancelSpawnTask() {
-		if (supraklawSpawnTask != null && !supraklawSpawnTask.isDone()) {
-			supraklawSpawnTask.cancel(true);
-			supraklawSpawnTask = null;
-		}
-	}
+  private void cancelSpawnTask() {
+    if (supraklawSpawnTask != null && !supraklawSpawnTask.isDone()) {
+      supraklawSpawnTask.cancel(true);
+      supraklawSpawnTask = null;
+    }
+  }
 
 }

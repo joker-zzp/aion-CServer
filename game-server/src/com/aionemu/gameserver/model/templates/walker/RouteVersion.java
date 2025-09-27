@@ -9,11 +9,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "RouteVersion")
 public class RouteVersion {
 
-	@XmlAttribute(required = true)
-	protected String id;
+  @XmlAttribute(required = true)
+  protected String id;
 
-	public String getId() {
-		return id;
-	}
+  public String getId() {
+    return id;
+  }
 
 }

@@ -8,8 +8,8 @@ import com.aionemu.gameserver.model.team.PlayerTeamMember;
  */
 public class PlayerGroupMember extends PlayerTeamMember {
 
-	public PlayerGroupMember(Player player) {
-		super(player);
-	}
+  public PlayerGroupMember(Player player) {
+    super(player);
+  }
 
 }

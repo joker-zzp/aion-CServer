@@ -16,37 +16,37 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "CollectItems", propOrder = { "collectItem" })
 public class CollectItems {
 
-	@XmlElement(name = "collect_item")
-	protected List<CollectItem> collectItem;
+  @XmlElement(name = "collect_item")
+  protected List<CollectItem> collectItem;
 
-	@XmlAttribute(name = "start_check")
-	protected Boolean startCheck;
+  @XmlAttribute(name = "start_check")
+  protected Boolean startCheck;
 
-	/**
-	 * Gets the value of the collectItem property.
-	 * <p>
-	 * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to the returned list will be
-	 * present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for the collectItem property.
-	 * <p>
-	 * For example, to add a new item, do as follows:
-	 * 
-	 * <pre>
-	 * getCollectItem().add(newItem);
-	 * </pre>
-	 * <p>
-	 * Objects of the following type(s) are allowed in the list {@link CollectItem }
-	 */
-	public List<CollectItem> getCollectItem() {
-		if (collectItem == null) {
-			collectItem = new ArrayList<>();
-		}
-		return this.collectItem;
-	}
+  /**
+   * Gets the value of the collectItem property.
+   * <p>
+   * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to the returned list will be
+   * present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for the collectItem property.
+   * <p>
+   * For example, to add a new item, do as follows:
+   * 
+   * <pre>
+   * getCollectItem().add(newItem);
+   * </pre>
+   * <p>
+   * Objects of the following type(s) are allowed in the list {@link CollectItem }
+   */
+  public List<CollectItem> getCollectItem() {
+    if (collectItem == null) {
+      collectItem = new ArrayList<>();
+    }
+    return this.collectItem;
+  }
 
-	public boolean getStartCheck() {
-		if (startCheck == null)
-			return false;
-		return startCheck;
-	}
+  public boolean getStartCheck() {
+    if (startCheck == null)
+      return false;
+    return startCheck;
+  }
 
 }

@@ -14,25 +14,25 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_BROKER_CANCEL_REGISTERED extends AionClientPacket {
 
-	private int brokerObjId;
-	private int brokerItemId;
+  private int brokerObjId;
+  private int brokerItemId;
 
-	public CM_BROKER_CANCEL_REGISTERED(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_BROKER_CANCEL_REGISTERED(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		brokerObjId = readD();
-		brokerItemId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    brokerObjId = readD();
+    brokerItemId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player.isTargetingNpcWithFunction(brokerObjId, DialogAction.OPEN_VENDOR))
-			BrokerService.getInstance().cancelRegisteredItem(player, brokerItemId);
-		else
-			AuditLogger.log(player, "tried to unregister his registered broker item without targeting a broker");
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player.isTargetingNpcWithFunction(brokerObjId, DialogAction.OPEN_VENDOR))
+      BrokerService.getInstance().cancelRegisteredItem(player, brokerItemId);
+    else
+      AuditLogger.log(player, "tried to unregister his registered broker item without targeting a broker");
+  }
 }

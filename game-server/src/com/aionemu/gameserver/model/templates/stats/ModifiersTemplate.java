@@ -23,23 +23,23 @@ import com.aionemu.gameserver.model.stats.calc.functions.StatSubFunction;
 @XmlRootElement(name = "modifiers")
 public class ModifiersTemplate {
 
-	@XmlElements({ @XmlElement(name = "sub", type = StatSubFunction.class), @XmlElement(name = "add", type = StatAddFunction.class),
-		@XmlElement(name = "rate", type = StatRateFunction.class), @XmlElement(name = "set", type = StatSetFunction.class),
-		@XmlElement(name = "abs", type = StatAbsFunction.class) })
-	private List<StatFunction> modifiers;
+  @XmlElements({ @XmlElement(name = "sub", type = StatSubFunction.class), @XmlElement(name = "add", type = StatAddFunction.class),
+    @XmlElement(name = "rate", type = StatRateFunction.class), @XmlElement(name = "set", type = StatSetFunction.class),
+    @XmlElement(name = "abs", type = StatAbsFunction.class) })
+  private List<StatFunction> modifiers;
 
-	@XmlAttribute
-	private float chance = 100f;
+  @XmlAttribute
+  private float chance = 100f;
 
-	public List<StatFunction> getModifiers() {
-		return modifiers;
-	}
+  public List<StatFunction> getModifiers() {
+    return modifiers;
+  }
 
-	/**
-	 * @return the chance
-	 */
-	public float getChance() {
-		return chance;
-	}
+  /**
+   * @return the chance
+   */
+  public float getChance() {
+    return chance;
+  }
 
 }

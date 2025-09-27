@@ -10,25 +10,25 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  */
 public class DecorateAction extends AbstractItemAction {
 
-	@XmlAttribute(name = "id")
-	private Integer partId;
+  @XmlAttribute(name = "id")
+  private Integer partId;
 
-	@Override
-	public boolean canAct(Player player, Item parentItem, Item targetItem, Object... params) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+  @Override
+  public boolean canAct(Player player, Item parentItem, Item targetItem, Object... params) {
+    // TODO Auto-generated method stub
+    return false;
+  }
 
-	@Override
-	public void act(Player player, Item parentItem, Item targetItem, Object... params) {
-		// TODO Auto-generated method stub
+  @Override
+  public void act(Player player, Item parentItem, Item targetItem, Object... params) {
+    // TODO Auto-generated method stub
 
-	}
+  }
 
-	public int getTemplateId() {
-		if (partId == null) // Addons missing in client
-			return 0;
-		return partId;
-	}
+  public int getTemplateId() {
+    if (partId == null) // Addons missing in client
+      return 0;
+    return partId;
+  }
 
 }

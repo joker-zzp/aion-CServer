@@ -16,30 +16,30 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "StunEffect")
 public class StunEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void calculate(Effect effect) {
-		super.calculate(effect, StatEnum.STUN_RESISTANCE, null);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    super.calculate(effect, StatEnum.STUN_RESISTANCE, null);
+  }
 
-	@Override
-	public void startEffect(Effect effect) {
-		final Creature effected = effect.getEffected();
-		effected.getController().cancelCurrentSkill(effect.getEffector());
-		if (effected instanceof Player player) {
-			player.getFlyController().onStopGliding();
-			player.getMoveController().abortMove();
-		}
-		effect.getEffected().getEffectController().setAbnormal(AbnormalState.STUN);
-		effect.setAbnormal(AbnormalState.STUN);
-	}
+  @Override
+  public void startEffect(Effect effect) {
+    final Creature effected = effect.getEffected();
+    effected.getController().cancelCurrentSkill(effect.getEffector());
+    if (effected instanceof Player player) {
+      player.getFlyController().onStopGliding();
+      player.getMoveController().abortMove();
+    }
+    effect.getEffected().getEffectController().setAbnormal(AbnormalState.STUN);
+    effect.setAbnormal(AbnormalState.STUN);
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.STUN);
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.STUN);
+  }
 }

@@ -19,56 +19,56 @@ import com.aionemu.gameserver.utils.stats.AbyssRankEnum;
  */
 public class AbyssPointsService {
 
-	private static final Logger log = LoggerFactory.getLogger(AbyssPointsService.class);
+  private static final Logger log = LoggerFactory.getLogger(AbyssPointsService.class);
 
-	public static void addAp(Player player, VisibleObject obj, int value) {
-		if (value > 30000) {
-			log.warn("WARN BIG COUNT AP: " + value + " for " + player + " from " + obj);
-		}
-		addAp(player, value);
-		SiegeService.getInstance().onAbyssPointsAdded(player, obj, value);
-	}
+  public static void addAp(Player player, VisibleObject obj, int value) {
+    if (value > 30000) {
+      log.warn("WARN BIG COUNT AP: " + value + " for " + player + " from " + obj);
+    }
+    addAp(player, value);
+    SiegeService.getInstance().onAbyssPointsAdded(player, obj, value);
+  }
 
-	public static void addAp(Player player, int value) {
-		if (player == null)
-			return;
+  public static void addAp(Player player, int value) {
+    if (player == null)
+      return;
 
-		// Notify player of AP gained (This should happen before setAp happens.)
-		if (value > 0)
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_COMBAT_MY_ABYSS_POINT_GAIN(value));
-		else
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_USE_ABYSSPOINT(value * -1));
+    // Notify player of AP gained (This should happen before setAp happens.)
+    if (value > 0)
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_COMBAT_MY_ABYSS_POINT_GAIN(value));
+    else
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_USE_ABYSSPOINT(value * -1));
 
-		// Set the new AP value
-		setAp(player, value);
+    // Set the new AP value
+    setAp(player, value);
 
-		// Add Abyss Points to Legion
-		if (player.isLegionMember() && value > 0) {
-			player.getLegion().addContributionPoints(value);
-			PacketSendUtility.broadcastToLegion(player.getLegion(), new SM_LEGION_EDIT(0x03, player.getLegion()));
-		}
-	}
+    // Add Abyss Points to Legion
+    if (player.isLegionMember() && value > 0) {
+      player.getLegion().addContributionPoints(value);
+      PacketSendUtility.broadcastToLegion(player.getLegion(), new SM_LEGION_EDIT(0x03, player.getLegion()));
+    }
+  }
 
-	public static void setAp(Player player, int value) {
-		if (player == null)
-			return;
+  public static void setAp(Player player, int value) {
+    if (player == null)
+      return;
 
-		AbyssRank rank = player.getAbyssRank();
+    AbyssRank rank = player.getAbyssRank();
 
-		AbyssRankEnum oldAbyssRank = rank.getRank();
-		rank.addAp(value);
+    AbyssRankEnum oldAbyssRank = rank.getRank();
+    rank.addAp(value);
 
-		onRankChanged(player, value != 0, oldAbyssRank != rank.getRank(), null);
-	}
+    onRankChanged(player, value != 0, oldAbyssRank != rank.getRank(), null);
+  }
 
-	public static void onRankChanged(Player player, boolean abyssPointChanged, boolean abyssRankChanged, Integer newRankingListPosition) {
-		if (abyssPointChanged || abyssRankChanged || newRankingListPosition != null)
-			PacketSendUtility.sendPacket(player, new SM_ABYSS_RANK(player, newRankingListPosition));
-		if (abyssRankChanged) {
-			PacketSendUtility.broadcastPacket(player, new SM_ABYSS_RANK_UPDATE(0, player));
-			player.getEquipment().checkRankLimitItems();
-			AbyssSkillService.updateSkills(player);
-		}
-	}
+  public static void onRankChanged(Player player, boolean abyssPointChanged, boolean abyssRankChanged, Integer newRankingListPosition) {
+    if (abyssPointChanged || abyssRankChanged || newRankingListPosition != null)
+      PacketSendUtility.sendPacket(player, new SM_ABYSS_RANK(player, newRankingListPosition));
+    if (abyssRankChanged) {
+      PacketSendUtility.broadcastPacket(player, new SM_ABYSS_RANK_UPDATE(0, player));
+      player.getEquipment().checkRankLimitItems();
+      AbyssSkillService.updateSkills(player);
+    }
+  }
 
 }

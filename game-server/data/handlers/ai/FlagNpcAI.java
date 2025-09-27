@@ -12,13 +12,13 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @AIName("flag")
 public class FlagNpcAI extends NpcAI {
 
-	public FlagNpcAI(Npc owner) {
-		super(owner);
-	}
+  public FlagNpcAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public float modifyDamage(Creature attacker, float damage, Effect effect) {
-		return 0;
-	}
+  @Override
+  public float modifyDamage(Creature attacker, float damage, Effect effect) {
+    return 0;
+  }
 
 }

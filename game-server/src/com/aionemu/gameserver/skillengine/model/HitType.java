@@ -9,11 +9,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "HitType")
 @XmlEnum
 public enum HitType {
-	EVERYHIT,
-	NMLATK,
-	MAHIT,
-	PHHIT,
-	FEAR,
-	SKILL,
-	BACKATK
+  EVERYHIT,
+  NMLATK,
+  MAHIT,
+  PHHIT,
+  FEAR,
+  SKILL,
+  BACKATK
 }

@@ -12,22 +12,22 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("siege_mine")
 public class MineAI extends SiegeNpcAI {
 
-	public MineAI(Npc owner) {
-		super(owner);
-	}
+  public MineAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleCreatureAggro(Creature creature) {
+  @Override
+  protected void handleCreatureAggro(Creature creature) {
 
-		AIActions.useSkill(this, 18407);
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+    AIActions.useSkill(this, 18407);
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-			@Override
-			public void run() {
-				AIActions.deleteOwner(MineAI.this);
-			}
+      @Override
+      public void run() {
+        AIActions.deleteOwner(MineAI.this);
+      }
 
-		}, 1500);
-	}
+    }, 1500);
+  }
 
 }

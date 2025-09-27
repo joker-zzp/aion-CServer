@@ -16,19 +16,19 @@ import com.aionemu.gameserver.services.QuestService;
 @XmlType(name = "CollectItemQuestOperation", propOrder = { "_true", "_false" })
 public class CollectItemQuestOperation extends QuestOperation {
 
-	@XmlElement(name = "true", required = true)
-	protected QuestOperations _true;
-	@XmlElement(name = "false", required = true)
-	protected QuestOperations _false;
-	@XmlAttribute(required = true)
-	protected Boolean removeItems;
+  @XmlElement(name = "true", required = true)
+  protected QuestOperations _true;
+  @XmlElement(name = "false", required = true)
+  protected QuestOperations _false;
+  @XmlAttribute(required = true)
+  protected Boolean removeItems;
 
-	@Override
-	public void doOperate(QuestEnv env) {
-		if (QuestService.collectItemCheck(env, removeItems == null ? true : false))
-			_true.operate(env);
-		else
-			_false.operate(env);
-	}
+  @Override
+  public void doOperate(QuestEnv env) {
+    if (QuestService.collectItemCheck(env, removeItems == null ? true : false))
+      _true.operate(env);
+    else
+      _false.operate(env);
+  }
 
 }

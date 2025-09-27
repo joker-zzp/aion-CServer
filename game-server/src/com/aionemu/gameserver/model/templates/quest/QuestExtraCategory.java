@@ -9,10 +9,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "QuestExtraCategory")
 @XmlEnum
 public enum QuestExtraCategory {
-	NONE,
-	COIN_QUEST,
-	DRACONIC_RECIPE_QUEST, // not use 3.9
-	DEVANION_QUEST,
-	GOLD_QUEST;
+  NONE,
+  COIN_QUEST,
+  DRACONIC_RECIPE_QUEST, // not use 3.9
+  DEVANION_QUEST,
+  GOLD_QUEST;
 
 }

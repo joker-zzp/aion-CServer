@@ -31,16 +31,16 @@ import com.aionemu.gameserver.model.templates.rewards.BonusType;
 @XmlType(name = "QuestBonuses")
 public class QuestBonuses {
 
-	@XmlAttribute(required = true)
-	private BonusType type;
-	@XmlAttribute
-	private int level;
+  @XmlAttribute(required = true)
+  private BonusType type;
+  @XmlAttribute
+  private int level;
 
-	public BonusType getType() {
-		return type;
-	}
+  public BonusType getType() {
+    return type;
+  }
 
-	public int getLevel() {
-		return level;
-	}
+  public int getLevel() {
+    return level;
+  }
 }

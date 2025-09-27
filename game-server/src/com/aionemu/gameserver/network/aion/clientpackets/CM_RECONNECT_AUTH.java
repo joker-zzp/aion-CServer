@@ -14,17 +14,17 @@ import com.aionemu.gameserver.network.loginserver.LoginServer;
  */
 public class CM_RECONNECT_AUTH extends AionClientPacket {
 
-	public CM_RECONNECT_AUTH(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_RECONNECT_AUTH(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-	}
+  @Override
+  protected void readImpl() {
+  }
 
-	@Override
-	protected void runImpl() {
-		AionConnection client = getConnection();
-		LoginServer.getInstance().requestAuthReconnection(client.getAccount().getId(), client);
-	}
+  @Override
+  protected void runImpl() {
+    AionConnection client = getConnection();
+    LoginServer.getInstance().requestAuthReconnection(client.getAccount().getId(), client);
+  }
 }

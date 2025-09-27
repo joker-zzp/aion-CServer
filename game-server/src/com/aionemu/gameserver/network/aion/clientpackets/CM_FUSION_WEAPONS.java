@@ -14,27 +14,27 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_FUSION_WEAPONS extends AionClientPacket {
 
-	public CM_FUSION_WEAPONS(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_FUSION_WEAPONS(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	private int npcObjId;
-	private int mainWeaponObjId;
-	private int fuseWeaponObjId;
+  private int npcObjId;
+  private int mainWeaponObjId;
+  private int fuseWeaponObjId;
 
-	@Override
-	protected void readImpl() {
-		npcObjId = readD();
-		mainWeaponObjId = readD();
-		fuseWeaponObjId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    npcObjId = readD();
+    mainWeaponObjId = readD();
+    fuseWeaponObjId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player.isTargetingNpcWithFunction(npcObjId, DialogAction.COMPOUND_WEAPON))
-			ArmsfusionService.fusionWeapons(getConnection().getActivePlayer(), mainWeaponObjId, fuseWeaponObjId);
-		else
-			AuditLogger.log(player, "tried to fuse weapons without targeting an armsfusion officer");
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player.isTargetingNpcWithFunction(npcObjId, DialogAction.COMPOUND_WEAPON))
+      ArmsfusionService.fusionWeapons(getConnection().getActivePlayer(), mainWeaponObjId, fuseWeaponObjId);
+    else
+      AuditLogger.log(player, "tried to fuse weapons without targeting an armsfusion officer");
+  }
 }

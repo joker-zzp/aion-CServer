@@ -17,25 +17,25 @@ import com.aionemu.gameserver.model.templates.world.WeatherTable;
 @XmlRootElement(name = "weather")
 public class MapWeatherData {
 
-	@XmlElement(name = "map", required = true)
-	private List<WeatherTable> weatherData;
+  @XmlElement(name = "map", required = true)
+  private List<WeatherTable> weatherData;
 
-	@XmlTransient
-	private final Map<Integer, WeatherTable> mapWeather = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, WeatherTable> mapWeather = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (WeatherTable table : weatherData) {
-			mapWeather.put(table.getMapId(), table);
-		}
-		weatherData = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (WeatherTable table : weatherData) {
+      mapWeather.put(table.getMapId(), table);
+    }
+    weatherData = null;
+  }
 
-	public WeatherTable getWeather(int mapId) {
-		return mapWeather.get(mapId);
-	}
+  public WeatherTable getWeather(int mapId) {
+    return mapWeather.get(mapId);
+  }
 
-	public int size() {
-		return mapWeather.size();
-	}
+  public int size() {
+    return mapWeather.size();
+  }
 
 }

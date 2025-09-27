@@ -10,24 +10,24 @@ import com.aionemu.gameserver.network.loginserver.LsServerPacket;
  */
 public class SM_ACCOUNT_DISCONNECTED extends LsServerPacket {
 
-	/**
-	 * AccountId of account that is no longer on GameServer.
-	 */
-	private final int accountId;
+  /**
+   * AccountId of account that is no longer on GameServer.
+   */
+  private final int accountId;
 
-	/**
-	 * Constructs new instance of <tt>SM_ACCOUNT_DISCONNECTED </tt> packet.
-	 * 
-	 * @param accountId
-	 *          account id
-	 */
-	public SM_ACCOUNT_DISCONNECTED(int accountId) {
-		super(0x03);
-		this.accountId = accountId;
-	}
+  /**
+   * Constructs new instance of <tt>SM_ACCOUNT_DISCONNECTED </tt> packet.
+   * 
+   * @param accountId
+   *          account id
+   */
+  public SM_ACCOUNT_DISCONNECTED(int accountId) {
+    super(0x03);
+    this.accountId = accountId;
+  }
 
-	@Override
-	protected void writeImpl(LoginServerConnection con) {
-		writeD(accountId);
-	}
+  @Override
+  protected void writeImpl(LoginServerConnection con) {
+    writeD(accountId);
+  }
 }

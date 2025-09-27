@@ -19,32 +19,32 @@ import com.aionemu.gameserver.skillengine.model.EffectReserved.ResourceType;
 @XmlType(name = "FpAttackInstantEffect")
 public class FpAttackInstantEffect extends EffectTemplate {
 
-	@XmlAttribute
-	protected boolean percent;
+  @XmlAttribute
+  protected boolean percent;
 
-	@Override
-	public void calculate(Effect effect) {
-		// Only players have FP
-		if (effect.getEffected() instanceof Player) {
-			Player player = (Player) effect.getEffected();
-			int maxFP = player.getLifeStats().getMaxFp();
-			int newValue = value;
-			// Support for values in percentage
-			if (percent)
-				newValue = (maxFP * value) / 100;
+  @Override
+  public void calculate(Effect effect) {
+    // Only players have FP
+    if (effect.getEffected() instanceof Player) {
+      Player player = (Player) effect.getEffected();
+      int maxFP = player.getLifeStats().getMaxFp();
+      int newValue = value;
+      // Support for values in percentage
+      if (percent)
+        newValue = (maxFP * value) / 100;
 
-			effect.setReserveds(new EffectReserved(position, newValue, ResourceType.FP, true), false);
+      effect.setReserveds(new EffectReserved(position, newValue, ResourceType.FP, true), false);
 
-			super.calculate(effect, null, null);
-		}
-	}
+      super.calculate(effect, null, null);
+    }
+  }
 
-	@Override
-	public void applyEffect(Effect effect) {
-		// Restriction to players because lack of FP on other Creatures
-		if (!(effect.getEffected() instanceof Player))
-			return;
-		Player player = (Player) effect.getEffected();
-		player.getLifeStats().reduceFp(TYPE.FP_DAMAGE, effect.getReserveds(position).getValue(), effect.getSkillId(), SM_ATTACK_STATUS.LOG.FPATTACK);
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    // Restriction to players because lack of FP on other Creatures
+    if (!(effect.getEffected() instanceof Player))
+      return;
+    Player player = (Player) effect.getEffected();
+    player.getLifeStats().reduceFp(TYPE.FP_DAMAGE, effect.getReserveds(position).getValue(), effect.getSkillId(), SM_ATTACK_STATUS.LOG.FPATTACK);
+  }
 }

@@ -19,22 +19,22 @@ import com.aionemu.gameserver.model.templates.cosmeticitems.CosmeticItemTemplate
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CosmeticItemsData {
 
-	@XmlElement(name = "cosmetic_item", type = CosmeticItemTemplate.class)
-	private List<CosmeticItemTemplate> templates;
-	private final Map<String, CosmeticItemTemplate> cosmeticItemTemplates = new HashMap<>();
+  @XmlElement(name = "cosmetic_item", type = CosmeticItemTemplate.class)
+  private List<CosmeticItemTemplate> templates;
+  private final Map<String, CosmeticItemTemplate> cosmeticItemTemplates = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (CosmeticItemTemplate template : templates) {
-			cosmeticItemTemplates.put(template.getCosmeticName(), template);
-		}
-		templates = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (CosmeticItemTemplate template : templates) {
+      cosmeticItemTemplates.put(template.getCosmeticName(), template);
+    }
+    templates = null;
+  }
 
-	public int size() {
-		return cosmeticItemTemplates.size();
-	}
+  public int size() {
+    return cosmeticItemTemplates.size();
+  }
 
-	public CosmeticItemTemplate getCosmeticItemsTemplate(String str) {
-		return cosmeticItemTemplates.get(str);
-	}
+  public CosmeticItemTemplate getCosmeticItemsTemplate(String str) {
+    return cosmeticItemTemplates.get(str);
+  }
 }

@@ -10,6 +10,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum MaterialActCondition {
 
-	SUNNY,
-	NIGHT;
+  SUNNY,
+  NIGHT;
 }

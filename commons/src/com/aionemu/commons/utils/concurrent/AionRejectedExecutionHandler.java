@@ -12,18 +12,18 @@ import org.slf4j.LoggerFactory;
  */
 public final class AionRejectedExecutionHandler implements RejectedExecutionHandler {
 
-	private static final Logger log = LoggerFactory.getLogger(AionRejectedExecutionHandler.class);
+  private static final Logger log = LoggerFactory.getLogger(AionRejectedExecutionHandler.class);
 
-	@Override
-	public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-		if (executor.isShutdown())
-			return;
+  @Override
+  public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+    if (executor.isShutdown())
+      return;
 
-		log.warn(r + " from " + executor, new RejectedExecutionException());
+    log.warn(r + " from " + executor, new RejectedExecutionException());
 
-		if (Thread.currentThread().getPriority() > Thread.NORM_PRIORITY)
-			new Thread(r).start();
-		else
-			r.run();
-	}
+    if (Thread.currentThread().getPriority() > Thread.NORM_PRIORITY)
+      new Thread(r).start();
+    else
+      r.run();
+  }
 }

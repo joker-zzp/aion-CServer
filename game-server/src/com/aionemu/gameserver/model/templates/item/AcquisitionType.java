@@ -9,18 +9,18 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "acquisitionType")
 @XmlEnum
 public enum AcquisitionType {
-	AP(0),
-	ABYSS(1),
-	REWARD(2), // They are the same now
-	COUPON(2);
+  AP(0),
+  ABYSS(1),
+  REWARD(2), // They are the same now
+  COUPON(2);
 
-	private int id;
+  private int id;
 
-	private AcquisitionType(int id) {
-		this.id = id;
-	}
+  private AcquisitionType(int id) {
+    this.id = id;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 }

@@ -16,27 +16,27 @@ import com.aionemu.gameserver.skillengine.model.SkillType;
 @XmlType(name = "SilenceEffect")
 public class SilenceEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void calculate(Effect effect) {
-		super.calculate(effect, StatEnum.SILENCE_RESISTANCE, null);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    super.calculate(effect, StatEnum.SILENCE_RESISTANCE, null);
+  }
 
-	@Override
-	public void startEffect(Effect effect) {
-		final Creature effected = effect.getEffected();
-		effect.setAbnormal(AbnormalState.SILENCE);
-		effected.getEffectController().setAbnormal(AbnormalState.SILENCE);
-		if (effected.getCastingSkill() != null && effected.getCastingSkill().getSkillTemplate().getType() == SkillType.MAGICAL)
-			effected.getController().cancelCurrentSkill(effect.getEffector());
-	}
+  @Override
+  public void startEffect(Effect effect) {
+    final Creature effected = effect.getEffected();
+    effect.setAbnormal(AbnormalState.SILENCE);
+    effected.getEffectController().setAbnormal(AbnormalState.SILENCE);
+    if (effected.getCastingSkill() != null && effected.getCastingSkill().getSkillTemplate().getType() == SkillType.MAGICAL)
+      effected.getController().cancelCurrentSkill(effect.getEffector());
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.SILENCE);
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.SILENCE);
+  }
 }

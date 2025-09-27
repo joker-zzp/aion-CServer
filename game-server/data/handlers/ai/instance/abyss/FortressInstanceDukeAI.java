@@ -15,32 +15,32 @@ import ai.AggressiveNpcAI;
 @AIName("fortress_instance_duke")
 public class FortressInstanceDukeAI extends AggressiveNpcAI {
 
-	public FortressInstanceDukeAI(Npc owner) {
-		super(owner);
-	}
+  public FortressInstanceDukeAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		if (skillTemplate.getSkillId() == 18003)
-			spawn(284978, getOwner().getX(), getOwner().getY(), getOwner().getZ(), getOwner().getHeading());
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    if (skillTemplate.getSkillId() == 18003)
+      spawn(284978, getOwner().getX(), getOwner().getY(), getOwner().getZ(), getOwner().getHeading());
+  }
 
-	private void deleteSummons() {
-		getPosition().getWorldMapInstance().forEachNpc(npc -> {
-			if (npc.getNpcId() >= 284978 && npc.getNpcId() <= 284981)
-				npc.getController().delete();
-		});
-	}
+  private void deleteSummons() {
+    getPosition().getWorldMapInstance().forEachNpc(npc -> {
+      if (npc.getNpcId() >= 284978 && npc.getNpcId() <= 284981)
+        npc.getController().delete();
+    });
+  }
 
-	@Override
-	protected void handleDied() {
-		super.handleDied();
-		deleteSummons();
-	}
+  @Override
+  protected void handleDied() {
+    super.handleDied();
+    deleteSummons();
+  }
 
-	@Override
-	protected void handleDespawned() {
-		super.handleDespawned();
-		deleteSummons();
-	}
+  @Override
+  protected void handleDespawned() {
+    super.handleDespawned();
+    deleteSummons();
+  }
 }

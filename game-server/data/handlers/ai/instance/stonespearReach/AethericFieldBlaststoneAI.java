@@ -17,38 +17,38 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("atheric_field_blaststone")
 public class AethericFieldBlaststoneAI extends NpcAI {
 
-	public AethericFieldBlaststoneAI(Npc owner) {
-		super(owner);
-	}
+  public AethericFieldBlaststoneAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void handleSpawned() {
-		super.handleSpawned();
-		if (getNpcId() == 856305) {
-			getOwner().getSpawn().setWalkerId("301500000_clown_path");
-			WalkManager.startWalking(this);
-			getOwner().setState(CreatureState.WALK_MODE);
-			PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getOwner().getObjectId()));
-		}
-	}
+  @Override
+  public void handleSpawned() {
+    super.handleSpawned();
+    if (getNpcId() == 856305) {
+      getOwner().getSpawn().setWalkerId("301500000_clown_path");
+      WalkManager.startWalking(this);
+      getOwner().setState(CreatureState.WALK_MODE);
+      PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getOwner().getObjectId()));
+    }
+  }
 
-	@Override
-	public void handleDied() {
-		super.handleDied();
-		getOwner().getController().delete();
-	}
+  @Override
+  public void handleDied() {
+    super.handleDied();
+    getOwner().getController().delete();
+  }
 
-	@Override
-	protected void handleMoveArrived() {
-		super.handleMoveArrived();
-		MoveEventHandler.onMoveArrived(this);
-	}
+  @Override
+  protected void handleMoveArrived() {
+    super.handleMoveArrived();
+    MoveEventHandler.onMoveArrived(this);
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT, REWARD_LOOT, ALLOW_DECAY -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT, REWARD_LOOT, ALLOW_DECAY -> false;
+      default -> super.ask(question);
+    };
+  }
 }

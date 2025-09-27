@@ -21,59 +21,59 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public class TalkEventHandler {
 
-	public static void onTalk(NpcAI npcAI, Creature creature) {
-		onSimpleTalk(npcAI, creature);
+  public static void onTalk(NpcAI npcAI, Creature creature) {
+    onSimpleTalk(npcAI, creature);
 
-		if (creature instanceof Player player) {
-			if (QuestEngine.getInstance().onDialog(new QuestEnv(npcAI.getOwner(), player, 0, DialogAction.USE_OBJECT)))
-				return;
-			// only player villagers can use villager npcs in oriel/pernon
-			switch (npcAI.getOwner().getObjectTemplate().getTitleId()) {
-				case 462877:
-					int playerTownId = TownService.getInstance().getTownResidence(player);
-					int currentTownId = TownService.getInstance().getTownIdByPosition(player);
-					if (playerTownId != currentTownId) {
-						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(npcAI.getOwner().getObjectId(), 44));
-					} else {
-						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(npcAI.getOwner().getObjectId(), 10));
-					}
-					return;
-				default:
-					int dialogPageId = DialogService.isInteractionAllowed(player, npcAI.getOwner()) ? 10 : 1011;
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(npcAI.getOwner().getObjectId(), dialogPageId));
-					break;
-			}
-		}
+    if (creature instanceof Player player) {
+      if (QuestEngine.getInstance().onDialog(new QuestEnv(npcAI.getOwner(), player, 0, DialogAction.USE_OBJECT)))
+        return;
+      // only player villagers can use villager npcs in oriel/pernon
+      switch (npcAI.getOwner().getObjectTemplate().getTitleId()) {
+        case 462877:
+          int playerTownId = TownService.getInstance().getTownResidence(player);
+          int currentTownId = TownService.getInstance().getTownIdByPosition(player);
+          if (playerTownId != currentTownId) {
+            PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(npcAI.getOwner().getObjectId(), 44));
+          } else {
+            PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(npcAI.getOwner().getObjectId(), 10));
+          }
+          return;
+        default:
+          int dialogPageId = DialogService.isInteractionAllowed(player, npcAI.getOwner()) ? 10 : 1011;
+          PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(npcAI.getOwner().getObjectId(), dialogPageId));
+          break;
+      }
+    }
 
-	}
+  }
 
-	public static void onSimpleTalk(NpcAI npcAI, Creature creature) {
-		if (npcAI.getOwner().getObjectTemplate().isDialogNpc()) {
-			npcAI.setSubStateIfNot(AISubState.TALK);
-			npcAI.getOwner().setTarget(creature);
-		}
-	}
+  public static void onSimpleTalk(NpcAI npcAI, Creature creature) {
+    if (npcAI.getOwner().getObjectTemplate().isDialogNpc()) {
+      npcAI.setSubStateIfNot(AISubState.TALK);
+      npcAI.getOwner().setTarget(creature);
+    }
+  }
 
-	public static void onFinishTalk(NpcAI npcAI, Creature creature) {
-		Npc owner = npcAI.getOwner();
-		if (owner.isTargeting(creature.getObjectId())) {
-			if (npcAI.getState() == AIState.FOLLOWING) {
-				npcAI.think();
-			} else {
-				owner.setTarget(null);
-				ThreadPoolManager.getInstance().schedule(() -> {
-					if (owner.getTarget() == null) {
-						npcAI.think();
-						ThreadPoolManager.getInstance().schedule(() -> {
-							if (owner.getTarget() == null && !owner.getMoveController().isInMove() && owner.isAtSpawnLocation()) {
-								owner.getPosition().setH(owner.getSpawn().getHeading());
-								PacketSendUtility.broadcastPacket(owner, new SM_HEADING_UPDATE(owner));
-							}
-						}, 500);
-					}
-				}, 750);
-			}
-		}
-	}
+  public static void onFinishTalk(NpcAI npcAI, Creature creature) {
+    Npc owner = npcAI.getOwner();
+    if (owner.isTargeting(creature.getObjectId())) {
+      if (npcAI.getState() == AIState.FOLLOWING) {
+        npcAI.think();
+      } else {
+        owner.setTarget(null);
+        ThreadPoolManager.getInstance().schedule(() -> {
+          if (owner.getTarget() == null) {
+            npcAI.think();
+            ThreadPoolManager.getInstance().schedule(() -> {
+              if (owner.getTarget() == null && !owner.getMoveController().isInMove() && owner.isAtSpawnLocation()) {
+                owner.getPosition().setH(owner.getSpawn().getHeading());
+                PacketSendUtility.broadcastPacket(owner, new SM_HEADING_UPDATE(owner));
+              }
+            }, 500);
+          }
+        }, 750);
+      }
+    }
+  }
 
 }

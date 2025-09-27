@@ -9,13 +9,13 @@ import com.aionemu.gameserver.network.chatserver.CsServerPacket;
  */
 public class SM_CS_AUTH extends CsServerPacket {
 
-	public SM_CS_AUTH() {
-		super(0x00);
-	}
+  public SM_CS_AUTH() {
+    super(0x00);
+  }
 
-	@Override
-	protected void writeImpl(ChatServerConnection con) {
-		writeC(NetworkConfig.GAMESERVER_ID);
-		writeS(NetworkConfig.CHAT_PASSWORD);
-	}
+  @Override
+  protected void writeImpl(ChatServerConnection con) {
+    writeC(NetworkConfig.GAMESERVER_ID);
+    writeS(NetworkConfig.CHAT_PASSWORD);
+  }
 }

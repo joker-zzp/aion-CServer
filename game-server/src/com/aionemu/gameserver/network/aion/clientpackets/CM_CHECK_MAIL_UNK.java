@@ -10,22 +10,22 @@ import com.aionemu.gameserver.network.aion.AionConnection.State;
  */
 public class CM_CHECK_MAIL_UNK extends AionClientPacket {
 
-	/**
-	 * @param opcode
-	 * @param state
-	 * @param restStates
-	 */
-	public CM_CHECK_MAIL_UNK(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * @param opcode
+   * @param state
+   * @param restStates
+   */
+  public CM_CHECK_MAIL_UNK(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
+  @Override
+  protected void readImpl() {
 
-	}
+  }
 
-	@Override
-	protected void runImpl() {
-		// TODO???
-	}
+  @Override
+  protected void runImpl() {
+    // TODO???
+  }
 }

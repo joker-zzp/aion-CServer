@@ -21,23 +21,23 @@ import com.aionemu.gameserver.model.templates.curingzones.CuringTemplate;
 @XmlRootElement(name = "curing_objects")
 public class CuringObjectsData {
 
-	@XmlElement(name = "curing_object")
-	protected List<CuringTemplate> curingObject;
-	@XmlTransient
-	private List<CuringTemplate> curingObjects = new ArrayList<>();
+  @XmlElement(name = "curing_object")
+  protected List<CuringTemplate> curingObject;
+  @XmlTransient
+  private List<CuringTemplate> curingObjects = new ArrayList<>();
 
-	void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
-		for (CuringTemplate template : curingObject) {
-			curingObjects.add(template);
-		}
-	}
+  void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
+    for (CuringTemplate template : curingObject) {
+      curingObjects.add(template);
+    }
+  }
 
-	public int size() {
-		return curingObjects.size();
-	}
+  public int size() {
+    return curingObjects.size();
+  }
 
-	public List<CuringTemplate> getCuringObject() {
-		return curingObjects;
-	}
+  public List<CuringTemplate> getCuringObject() {
+    return curingObjects;
+  }
 
 }

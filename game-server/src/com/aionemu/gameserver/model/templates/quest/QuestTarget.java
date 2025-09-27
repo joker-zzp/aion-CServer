@@ -7,8 +7,8 @@ import javax.xml.bind.annotation.XmlEnum;
  */
 @XmlEnum
 public enum QuestTarget {
-	NONE,
-	AREA,
-	LEAGUE,
-	ALLIANCE
+  NONE,
+  AREA,
+  LEAGUE,
+  ALLIANCE
 }

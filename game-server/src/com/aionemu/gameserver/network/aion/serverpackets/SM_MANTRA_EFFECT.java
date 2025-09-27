@@ -9,18 +9,18 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_MANTRA_EFFECT extends AionServerPacket {
 
-	private Creature effector;
-	private int subEffectId;
+  private Creature effector;
+  private int subEffectId;
 
-	public SM_MANTRA_EFFECT(Creature effector, int subEffectId) {
-		this.effector = effector;
-		this.subEffectId = subEffectId;
-	}
+  public SM_MANTRA_EFFECT(Creature effector, int subEffectId) {
+    this.effector = effector;
+    this.subEffectId = subEffectId;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(0x00);// unk
-		writeD(effector.getObjectId());
-		writeH(subEffectId);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(0x00);// unk
+    writeD(effector.getObjectId());
+    writeH(subEffectId);
+  }
 }

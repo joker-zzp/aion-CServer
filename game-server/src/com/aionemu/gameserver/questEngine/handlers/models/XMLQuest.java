@@ -16,24 +16,24 @@ import com.aionemu.gameserver.questEngine.QuestEngine;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "QuestScriptData")
 @XmlSeeAlso({ CraftingRewardsData.class, FountainRewardsData.class, ItemCollectingData.class, ItemOrdersData.class, KillInWorldData.class,
-	KillInZoneData.class, KillSpawnedData.class, MentorMonsterHuntData.class, MonsterHuntData.class, RelicRewardsData.class, ReportOnLevelUpData.class,
-	ReportToData.class, ReportToManyData.class, SkillUseData.class, WorkOrdersData.class, XmlQuestData.class })
+  KillInZoneData.class, KillSpawnedData.class, MentorMonsterHuntData.class, MonsterHuntData.class, RelicRewardsData.class, ReportOnLevelUpData.class,
+  ReportToData.class, ReportToManyData.class, SkillUseData.class, WorkOrdersData.class, XmlQuestData.class })
 public abstract class XMLQuest {
 
-	@XmlAttribute(name = "id", required = true)
-	protected int id;
+  @XmlAttribute(name = "id", required = true)
+  protected int id;
 
-	@XmlAttribute(name = "movie")
-	protected int questMovie;
+  @XmlAttribute(name = "movie")
+  protected int questMovie;
 
-	@XmlAttribute(name = "mission")
-	protected boolean mission;
-	
-	public int getId() {
-		return id;
-	}
+  @XmlAttribute(name = "mission")
+  protected boolean mission;
+  
+  public int getId() {
+    return id;
+  }
 
-	public abstract void register(QuestEngine questEngine);
+  public abstract void register(QuestEngine questEngine);
 
-	public abstract Set<Integer> getAlternativeNpcs(int npcId);
+  public abstract Set<Integer> getAlternativeNpcs(int npcId);
 }

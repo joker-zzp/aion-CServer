@@ -25,47 +25,47 @@ import ai.ChestAI;
 @AIName("hidden_cake")
 public class HiddenBirthdayCakeAI extends ChestAI {
 
-	private final static Logger log = LoggerFactory.getLogger("EVENT_LOG");
-	private final static AtomicInteger collectedCakes = new AtomicInteger();
-	private final static int JEST_SPAWN_CHANCE = 25;
-	private final static int[] JEST_SPAWN_IDS = { 210341, 214732, 210595 };
-	private static volatile long lastLogTime = System.currentTimeMillis();
-	private static volatile int lastCakeCount;
+  private final static Logger log = LoggerFactory.getLogger("EVENT_LOG");
+  private final static AtomicInteger collectedCakes = new AtomicInteger();
+  private final static int JEST_SPAWN_CHANCE = 25;
+  private final static int[] JEST_SPAWN_IDS = { 210341, 214732, 210595 };
+  private static volatile long lastLogTime = System.currentTimeMillis();
+  private static volatile int lastCakeCount;
 
-	public HiddenBirthdayCakeAI(Npc owner) {
-		super(owner);
-	}
+  public HiddenBirthdayCakeAI(Npc owner) {
+    super(owner);
+  }
 
-	private void logCollectedCakes(int cakes) {
-		int deviation = cakes - lastCakeCount;
-		long currentTime = System.currentTimeMillis();
-		if (currentTime - lastLogTime >= 3600 * 1000) { // Only log once every hour
-			log.info("[EVENT] Total cakes collected: {}; Cakes collected during the last hour: {}.", cakes, deviation);
-			lastCakeCount = cakes;
-			lastLogTime = currentTime;
-		}
-	}
+  private void logCollectedCakes(int cakes) {
+    int deviation = cakes - lastCakeCount;
+    long currentTime = System.currentTimeMillis();
+    if (currentTime - lastLogTime >= 3600 * 1000) { // Only log once every hour
+      log.info("[EVENT] Total cakes collected: {}; Cakes collected during the last hour: {}.", cakes, deviation);
+      lastCakeCount = cakes;
+      lastLogTime = currentTime;
+    }
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		if (player.isInPlayerMode(PlayerMode.RIDE))
-			player.unsetPlayerMode(PlayerMode.RIDE);
-		super.handleDialogStart(player);
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    if (player.isInPlayerMode(PlayerMode.RIDE))
+      player.unsetPlayerMode(PlayerMode.RIDE);
+    super.handleDialogStart(player);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		if (getOwner().isInState(CreatureState.DEAD))
-			return;
-		logCollectedCakes(collectedCakes.incrementAndGet());
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    if (getOwner().isInState(CreatureState.DEAD))
+      return;
+    logCollectedCakes(collectedCakes.incrementAndGet());
 
-		if (Rnd.chance() < JEST_SPAWN_CHANCE) {
-			Npc npc = (Npc) spawn(Rnd.get(JEST_SPAWN_IDS), getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
-			npc.getController().addTask(TaskId.DESPAWN,
-				ThreadPoolManager.getInstance().schedule(() -> npc.getController().deleteIfAliveOrCancelRespawn(), 2, TimeUnit.MINUTES));
-			PacketSendUtility.sendPacket(player,
-				SM_SYSTEM_MESSAGE.STR_MSG_TOYPET_FEED_FOOD_NOT_LOVEFLAVOR(npc.getObjectTemplate().getL10n(), getObjectTemplate().getL10n()));
-		}
-		super.handleUseItemFinish(player);
-	}
+    if (Rnd.chance() < JEST_SPAWN_CHANCE) {
+      Npc npc = (Npc) spawn(Rnd.get(JEST_SPAWN_IDS), getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
+      npc.getController().addTask(TaskId.DESPAWN,
+        ThreadPoolManager.getInstance().schedule(() -> npc.getController().deleteIfAliveOrCancelRespawn(), 2, TimeUnit.MINUTES));
+      PacketSendUtility.sendPacket(player,
+        SM_SYSTEM_MESSAGE.STR_MSG_TOYPET_FEED_FOOD_NOT_LOVEFLAVOR(npc.getObjectTemplate().getL10n(), getObjectTemplate().getL10n()));
+    }
+    super.handleUseItemFinish(player);
+  }
 }

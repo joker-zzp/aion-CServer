@@ -12,39 +12,39 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "HouseSpawn")
 public class HouseSpawn {
 
-	@XmlAttribute(name = "x", required = true)
-	protected float x;
+  @XmlAttribute(name = "x", required = true)
+  protected float x;
 
-	@XmlAttribute(name = "y", required = true)
-	protected float y;
+  @XmlAttribute(name = "y", required = true)
+  protected float y;
 
-	@XmlAttribute(name = "z", required = true)
-	protected float z;
+  @XmlAttribute(name = "z", required = true)
+  protected float z;
 
-	@XmlAttribute(name = "h")
-	protected byte h;
+  @XmlAttribute(name = "h")
+  protected byte h;
 
-	@XmlAttribute(name = "type", required = true)
-	protected SpawnType type;
+  @XmlAttribute(name = "type", required = true)
+  protected SpawnType type;
 
-	public float getX() {
-		return x;
-	}
+  public float getX() {
+    return x;
+  }
 
-	public float getY() {
-		return y;
-	}
+  public float getY() {
+    return y;
+  }
 
-	public float getZ() {
-		return z;
-	}
+  public float getZ() {
+    return z;
+  }
 
-	public byte getH() {
-		return h;
-	}
+  public byte getH() {
+    return h;
+  }
 
-	public SpawnType getType() {
-		return type;
-	}
+  public SpawnType getType() {
+    return type;
+  }
 
 }

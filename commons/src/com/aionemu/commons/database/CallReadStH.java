@@ -8,9 +8,9 @@ import java.sql.SQLException;
  */
 public interface CallReadStH extends ReadStH {
 
-	/**
-	 * @param stmt
-	 * @throws SQLException
-	 */
-	public void setParams(CallableStatement stmt) throws SQLException;
+  /**
+   * @param stmt
+   * @throws SQLException
+   */
+  public void setParams(CallableStatement stmt) throws SQLException;
 }

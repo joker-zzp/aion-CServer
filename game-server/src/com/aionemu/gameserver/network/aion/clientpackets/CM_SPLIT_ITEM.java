@@ -12,30 +12,30 @@ import com.aionemu.gameserver.services.item.ItemSplitService;
  */
 public class CM_SPLIT_ITEM extends AionClientPacket {
 
-	int sourceItemObjId;
-	byte sourceStorageType;
-	long itemAmount;
-	int destinationItemObjId;
-	byte destinationStorageType;
-	short slotNum;
+  int sourceItemObjId;
+  byte sourceStorageType;
+  long itemAmount;
+  int destinationItemObjId;
+  byte destinationStorageType;
+  short slotNum;
 
-	public CM_SPLIT_ITEM(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_SPLIT_ITEM(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		sourceItemObjId = readD();
-		itemAmount = readQ();
-		sourceStorageType = readC();
-		destinationItemObjId = readD();
-		destinationStorageType = readC();
-		slotNum = readH();
-	}
+  @Override
+  protected void readImpl() {
+    sourceItemObjId = readD();
+    itemAmount = readQ();
+    sourceStorageType = readC();
+    destinationItemObjId = readD();
+    destinationStorageType = readC();
+    slotNum = readH();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		ItemSplitService.splitItem(player, sourceItemObjId, destinationItemObjId, itemAmount, slotNum, sourceStorageType, destinationStorageType);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    ItemSplitService.splitItem(player, sourceItemObjId, destinationItemObjId, itemAmount, slotNum, sourceStorageType, destinationStorageType);
+  }
 }

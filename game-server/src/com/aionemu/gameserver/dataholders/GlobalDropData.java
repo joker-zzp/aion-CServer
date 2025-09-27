@@ -24,60 +24,60 @@ import com.aionemu.gameserver.model.templates.npc.NpcTemplate;
 @XmlRootElement(name = "global_rules")
 public class GlobalDropData {
 
-	@XmlElement(name = "gd_rule")
-	private List<GlobalRule> globalDropRules;
+  @XmlElement(name = "gd_rule")
+  private List<GlobalRule> globalDropRules;
 
-	public void processRules(Collection<NpcTemplate> npcs) {
-		List<NpcTemplate> npcList = new ArrayList<>(npcs);
-		for (GlobalRule gr : globalDropRules) {
-			if (gr.getGlobalRuleNpcNames() != null) {
-				List<GlobalDropNpc> allowedNpcs = getAllowedNpcs(gr, npcList);
-				if (!allowedNpcs.isEmpty()) {
-					gr.setNpcs(new GlobalDropNpcs());
-					gr.getGlobalRuleNpcs().addNpcs(allowedNpcs);
-					gr.getGlobalRuleNpcNames().getGlobalDropNpcNames().clear();
-				}
-			}
-		}
-	}
+  public void processRules(Collection<NpcTemplate> npcs) {
+    List<NpcTemplate> npcList = new ArrayList<>(npcs);
+    for (GlobalRule gr : globalDropRules) {
+      if (gr.getGlobalRuleNpcNames() != null) {
+        List<GlobalDropNpc> allowedNpcs = getAllowedNpcs(gr, npcList);
+        if (!allowedNpcs.isEmpty()) {
+          gr.setNpcs(new GlobalDropNpcs());
+          gr.getGlobalRuleNpcs().addNpcs(allowedNpcs);
+          gr.getGlobalRuleNpcNames().getGlobalDropNpcNames().clear();
+        }
+      }
+    }
+  }
 
-	private List<GlobalDropNpc> getAllowedNpcs(GlobalRule rule, List<NpcTemplate> npcs) {
-		List<GlobalDropNpc> allowedNpcs = new ArrayList<>();
-		if (rule.getGlobalRuleNpcs() != null) {
-			allowedNpcs = rule.getGlobalRuleNpcs().getGlobalDropNpcs();
-		}
-		if (rule.getGlobalRuleNpcNames() != null) {
-			for (GlobalDropNpcName gdNpcName : rule.getGlobalRuleNpcNames().getGlobalDropNpcNames()) {
-				List<NpcTemplate> matchedNpcs = new ArrayList<>();
-				if (gdNpcName.getFunction().equals(StringFunction.CONTAINS))
-					matchedNpcs = npcs.stream().filter(npc -> npc.getName().contains(gdNpcName.getValue().toLowerCase())).collect(Collectors.toList());
-				else if (gdNpcName.getFunction().equals(StringFunction.END_WITH))
-					matchedNpcs = npcs.stream().filter(npc -> npc.getName().endsWith(gdNpcName.getValue().toLowerCase())).collect(Collectors.toList());
-				else if (gdNpcName.getFunction().equals(StringFunction.START_WITH))
-					matchedNpcs = npcs.stream().filter(npc -> npc.getName().startsWith(gdNpcName.getValue().toLowerCase())).collect(Collectors.toList());
-				else if (gdNpcName.getFunction().equals(StringFunction.EQUALS)) {
-					matchedNpcs = npcs.stream().filter(npc -> npc.getName().equalsIgnoreCase(gdNpcName.getValue())).collect(Collectors.toList());
-				}
-				for (NpcTemplate npc : matchedNpcs) {
-					GlobalDropNpc gdNpc = new GlobalDropNpc();
-					gdNpc.setNpcId(npc.getTemplateId());
-					if (!allowedNpcs.contains(gdNpc)) {
-						allowedNpcs.add(gdNpc);
-					}
-				}
-			}
-		}
-		return allowedNpcs;
-	}
+  private List<GlobalDropNpc> getAllowedNpcs(GlobalRule rule, List<NpcTemplate> npcs) {
+    List<GlobalDropNpc> allowedNpcs = new ArrayList<>();
+    if (rule.getGlobalRuleNpcs() != null) {
+      allowedNpcs = rule.getGlobalRuleNpcs().getGlobalDropNpcs();
+    }
+    if (rule.getGlobalRuleNpcNames() != null) {
+      for (GlobalDropNpcName gdNpcName : rule.getGlobalRuleNpcNames().getGlobalDropNpcNames()) {
+        List<NpcTemplate> matchedNpcs = new ArrayList<>();
+        if (gdNpcName.getFunction().equals(StringFunction.CONTAINS))
+          matchedNpcs = npcs.stream().filter(npc -> npc.getName().contains(gdNpcName.getValue().toLowerCase())).collect(Collectors.toList());
+        else if (gdNpcName.getFunction().equals(StringFunction.END_WITH))
+          matchedNpcs = npcs.stream().filter(npc -> npc.getName().endsWith(gdNpcName.getValue().toLowerCase())).collect(Collectors.toList());
+        else if (gdNpcName.getFunction().equals(StringFunction.START_WITH))
+          matchedNpcs = npcs.stream().filter(npc -> npc.getName().startsWith(gdNpcName.getValue().toLowerCase())).collect(Collectors.toList());
+        else if (gdNpcName.getFunction().equals(StringFunction.EQUALS)) {
+          matchedNpcs = npcs.stream().filter(npc -> npc.getName().equalsIgnoreCase(gdNpcName.getValue())).collect(Collectors.toList());
+        }
+        for (NpcTemplate npc : matchedNpcs) {
+          GlobalDropNpc gdNpc = new GlobalDropNpc();
+          gdNpc.setNpcId(npc.getTemplateId());
+          if (!allowedNpcs.contains(gdNpc)) {
+            allowedNpcs.add(gdNpc);
+          }
+        }
+      }
+    }
+    return allowedNpcs;
+  }
 
-	/**
-	 * Gets the value of the globalDrop property.
-	 */
-	public List<GlobalRule> getAllRules() {
-		return globalDropRules;
-	}
+  /**
+   * Gets the value of the globalDrop property.
+   */
+  public List<GlobalRule> getAllRules() {
+    return globalDropRules;
+  }
 
-	public int size() {
-		return globalDropRules.size();
-	}
+  public int size() {
+    return globalDropRules.size();
+  }
 }

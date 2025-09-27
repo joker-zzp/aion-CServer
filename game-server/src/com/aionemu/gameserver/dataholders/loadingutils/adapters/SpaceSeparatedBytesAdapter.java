@@ -9,24 +9,24 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 public class SpaceSeparatedBytesAdapter extends XmlAdapter<String, byte[]> {
 
-	@Override
-	public String marshal(byte[] v) {
-		StringBuilder sb = new StringBuilder(v.length * 3);
-		for (int i = 0; i < v.length; i++) {
-			if (i > 0)
-				sb.append(' ');
-			sb.append(v[i]);
-		}
-		return sb.toString();
-	}
+  @Override
+  public String marshal(byte[] v) {
+    StringBuilder sb = new StringBuilder(v.length * 3);
+    for (int i = 0; i < v.length; i++) {
+      if (i > 0)
+        sb.append(' ');
+      sb.append(v[i]);
+    }
+    return sb.toString();
+  }
 
-	@Override
-	public byte[] unmarshal(String v) {
-		String[] values = v.split(" ");
-		byte[] bytes = new byte[values.length];
-		for (int i = 0; i < values.length; i++) {
-			bytes[i] = Byte.parseByte(values[i]);
-		}
-		return bytes;
-	}
+  @Override
+  public byte[] unmarshal(String v) {
+    String[] values = v.split(" ");
+    byte[] bytes = new byte[values.length];
+    for (int i = 0; i < values.length; i++) {
+      bytes[i] = Byte.parseByte(values[i]);
+    }
+    return bytes;
+  }
 }

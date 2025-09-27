@@ -12,23 +12,23 @@ import com.aionemu.loginserver.network.gameserver.GsClientPacket;
  */
 public class CM_ACCOUNT_AUTH extends GsClientPacket {
 
-	/**
-	 * SessionKey that GameServer needs to check if is valid at Loginserver side.
-	 */
-	private SessionKey sessionKey;
+  /**
+   * SessionKey that GameServer needs to check if is valid at Loginserver side.
+   */
+  private SessionKey sessionKey;
 
-	@Override
-	protected void readImpl() {
-		int accountId = readD();
-		int loginOk = readD();
-		int playOk1 = readD();
-		int playOk2 = readD();
+  @Override
+  protected void readImpl() {
+    int accountId = readD();
+    int loginOk = readD();
+    int playOk1 = readD();
+    int playOk2 = readD();
 
-		sessionKey = new SessionKey(accountId, loginOk, playOk1, playOk2);
-	}
+    sessionKey = new SessionKey(accountId, loginOk, playOk1, playOk2);
+  }
 
-	@Override
-	protected void runImpl() {
-		AccountController.checkAuth(sessionKey, this.getConnection());
-	}
+  @Override
+  protected void runImpl() {
+    AccountController.checkAuth(sessionKey, this.getConnection());
+  }
 }

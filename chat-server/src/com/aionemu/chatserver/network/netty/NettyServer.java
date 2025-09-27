@@ -25,44 +25,44 @@ import com.aionemu.commons.network.ServerCfg;
  */
 public class NettyServer {
 
-	private static final Logger log = LoggerFactory.getLogger(NettyServer.class);
-	private static final NettyServer instance = new NettyServer();
-	private final ChannelFactory aionClientChannelFactory;
-	private final ChannelGroup aionClientChannelGroup;
-	private final NioServer nioServer;
+  private static final Logger log = LoggerFactory.getLogger(NettyServer.class);
+  private static final NettyServer instance = new NettyServer();
+  private final ChannelFactory aionClientChannelFactory;
+  private final ChannelGroup aionClientChannelGroup;
+  private final NioServer nioServer;
 
-	public static NettyServer getInstance() {
-		return instance;
-	}
+  public static NettyServer getInstance() {
+    return instance;
+  }
 
-	private NettyServer() {
-		aionClientChannelFactory = new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool(),
-			NetworkConfig.NIO_READ_WRITE_THREADS + 1);
-		aionClientChannelGroup = new DefaultChannelGroup(NettyServer.class.getName());
-		aionClientChannelGroup.add(initChannel(new ServerCfg(NetworkConfig.CLIENT_SOCKET_ADDRESS, "Aion game clients", null)));
+  private NettyServer() {
+    aionClientChannelFactory = new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool(),
+      NetworkConfig.NIO_READ_WRITE_THREADS + 1);
+    aionClientChannelGroup = new DefaultChannelGroup(NettyServer.class.getName());
+    aionClientChannelGroup.add(initChannel(new ServerCfg(NetworkConfig.CLIENT_SOCKET_ADDRESS, "Aion game clients", null)));
 
-		nioServer = new NioServer(NetworkConfig.NIO_READ_WRITE_THREADS,
-			new ServerCfg(NetworkConfig.GAMESERVER_SOCKET_ADDRESS, "game servers", new GsConnectionFactoryImpl()));
-		nioServer.connect(Executors.newSingleThreadExecutor());
-	}
+    nioServer = new NioServer(NetworkConfig.NIO_READ_WRITE_THREADS,
+      new ServerCfg(NetworkConfig.GAMESERVER_SOCKET_ADDRESS, "game servers", new GsConnectionFactoryImpl()));
+    nioServer.connect(Executors.newSingleThreadExecutor());
+  }
 
-	private Channel initChannel(ServerCfg gameClientConfig) {
-		ServerBootstrap bootstrap = new ServerBootstrap(aionClientChannelFactory);
-		bootstrap.setPipelineFactory(new LoginToClientPipeLineFactory(new ClientPacketHandler()));
-		bootstrap.setOption("child.bufferFactory", HeapChannelBufferFactory.getInstance(ByteOrder.LITTLE_ENDIAN));
-		bootstrap.setOption("child.tcpNoDelay", true);
-		bootstrap.setOption("child.keepAlive", true);
-		bootstrap.setOption("child.reuseAddress", true);
-		bootstrap.setOption("child.connectTimeoutMillis", 100);
-		bootstrap.setOption("readWriteFair", true);
-		Channel channel = bootstrap.bind(gameClientConfig.address());
-		log.info("Listening on " + gameClientConfig.getAddressInfo() + " for " + gameClientConfig.clientDescription());
-		return channel;
-	}
+  private Channel initChannel(ServerCfg gameClientConfig) {
+    ServerBootstrap bootstrap = new ServerBootstrap(aionClientChannelFactory);
+    bootstrap.setPipelineFactory(new LoginToClientPipeLineFactory(new ClientPacketHandler()));
+    bootstrap.setOption("child.bufferFactory", HeapChannelBufferFactory.getInstance(ByteOrder.LITTLE_ENDIAN));
+    bootstrap.setOption("child.tcpNoDelay", true);
+    bootstrap.setOption("child.keepAlive", true);
+    bootstrap.setOption("child.reuseAddress", true);
+    bootstrap.setOption("child.connectTimeoutMillis", 100);
+    bootstrap.setOption("readWriteFair", true);
+    Channel channel = bootstrap.bind(gameClientConfig.address());
+    log.info("Listening on " + gameClientConfig.getAddressInfo() + " for " + gameClientConfig.clientDescription());
+    return channel;
+  }
 
-	public void shutdownAll() {
-		aionClientChannelGroup.close().awaitUninterruptibly();
-		aionClientChannelFactory.releaseExternalResources();
-		nioServer.shutdown();
-	}
+  public void shutdownAll() {
+    aionClientChannelGroup.close().awaitUninterruptibly();
+    aionClientChannelFactory.releaseExternalResources();
+    nioServer.shutdown();
+  }
 }

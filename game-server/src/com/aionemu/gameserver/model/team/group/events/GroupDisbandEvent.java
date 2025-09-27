@@ -9,18 +9,18 @@ import com.aionemu.gameserver.model.team.group.PlayerGroup;
  */
 public class GroupDisbandEvent extends AlwaysTrueTeamEvent {
 
-	private final PlayerGroup group;
+  private final PlayerGroup group;
 
-	/**
-	 * @param group
-	 */
-	public GroupDisbandEvent(PlayerGroup group) {
-		this.group = group;
-	}
+  /**
+   * @param group
+   */
+  public GroupDisbandEvent(PlayerGroup group) {
+    this.group = group;
+  }
 
-	@Override
-	public void handleEvent() {
-		group.forEach(member -> group.onEvent(new PlayerGroupLeavedEvent(group, member, LeaveReson.DISBAND)));
-	}
+  @Override
+  public void handleEvent() {
+    group.forEach(member -> group.onEvent(new PlayerGroupLeavedEvent(group, member, LeaveReson.DISBAND)));
+  }
 
 }

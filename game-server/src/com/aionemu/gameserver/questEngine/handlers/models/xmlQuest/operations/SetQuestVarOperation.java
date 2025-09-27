@@ -19,19 +19,19 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @XmlType(name = "SetQuestVarOperation")
 public class SetQuestVarOperation extends QuestOperation {
 
-	@XmlAttribute(name = "var_id", required = true)
-	protected int varId;
-	@XmlAttribute(required = true)
-	protected int value;
+  @XmlAttribute(name = "var_id", required = true)
+  protected int varId;
+  @XmlAttribute(required = true)
+  protected int value;
 
-	@Override
-	public void doOperate(QuestEnv env) {
-		Player player = env.getPlayer();
-		int questId = env.getQuestId();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (qs != null) {
-			qs.getQuestVars().setVarById(varId, value);
-			PacketSendUtility.sendPacket(player, new SM_QUEST_ACTION(ActionType.UPDATE, qs));
-		}
-	}
+  @Override
+  public void doOperate(QuestEnv env) {
+    Player player = env.getPlayer();
+    int questId = env.getQuestId();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    if (qs != null) {
+      qs.getQuestVars().setVarById(varId, value);
+      PacketSendUtility.sendPacket(player, new SM_QUEST_ACTION(ActionType.UPDATE, qs));
+    }
+  }
 }

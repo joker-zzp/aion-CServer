@@ -12,15 +12,15 @@ import ai.NoActionAI;
 @AIName("drakanbarricade")
 public class DrakanBarricadeAI extends NoActionAI {
 
-	public DrakanBarricadeAI(Npc owner) {
-		super(owner);
-	}
+  public DrakanBarricadeAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		if (question == AIQuestion.REWARD_LOOT)
-			return false;
-		return super.ask(question);
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    if (question == AIQuestion.REWARD_LOOT)
+      return false;
+    return super.ask(question);
+  }
 
 }

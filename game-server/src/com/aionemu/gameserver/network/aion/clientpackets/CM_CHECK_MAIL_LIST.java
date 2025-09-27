@@ -12,22 +12,22 @@ import com.aionemu.gameserver.services.mail.MailService;
  */
 public class CM_CHECK_MAIL_LIST extends AionClientPacket {
 
-	public boolean expressOnly;
+  public boolean expressOnly;
 
-	public CM_CHECK_MAIL_LIST(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_CHECK_MAIL_LIST(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		expressOnly = readC() == 1;
-	}
+  @Override
+  protected void readImpl() {
+    expressOnly = readC() == 1;
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player != null)
-			MailService.sendMailList(player, expressOnly, false);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player != null)
+      MailService.sendMailList(player, expressOnly, false);
+  }
 
 }

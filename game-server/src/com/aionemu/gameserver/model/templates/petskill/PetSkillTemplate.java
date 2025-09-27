@@ -12,31 +12,31 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "pet_skill")
 public class PetSkillTemplate {
 
-	@XmlAttribute(name = "skill_id")
-	protected int skillId;
-	@XmlAttribute(name = "pet_id")
-	protected int petId;
-	@XmlAttribute(name = "order_skill")
-	protected int orderSkill;
+  @XmlAttribute(name = "skill_id")
+  protected int skillId;
+  @XmlAttribute(name = "pet_id")
+  protected int petId;
+  @XmlAttribute(name = "order_skill")
+  protected int orderSkill;
 
-	/**
-	 * @return the skillId
-	 */
-	public int getSkillId() {
-		return skillId;
-	}
+  /**
+   * @return the skillId
+   */
+  public int getSkillId() {
+    return skillId;
+  }
 
-	/**
-	 * @return the petId
-	 */
-	public int getPetId() {
-		return petId;
-	}
+  /**
+   * @return the petId
+   */
+  public int getPetId() {
+    return petId;
+  }
 
-	/**
-	 * @return the orderSkill
-	 */
-	public int getOrderSkill() {
-		return orderSkill;
-	}
+  /**
+   * @return the orderSkill
+   */
+  public int getOrderSkill() {
+    return orderSkill;
+  }
 }

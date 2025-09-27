@@ -16,35 +16,35 @@ import com.aionemu.gameserver.skillengine.condition.Conditions;
 @XmlType(name = "Change")
 public class Change {
 
-	@XmlAttribute(required = true)
-	private StatEnum stat;
-	@XmlAttribute(required = true)
-	private Func func;
-	@XmlAttribute(required = true)
-	private int value;
-	@XmlAttribute
-	private int delta;
-	@XmlElement(name = "conditions")
-	private Conditions conditions;
+  @XmlAttribute(required = true)
+  private StatEnum stat;
+  @XmlAttribute(required = true)
+  private Func func;
+  @XmlAttribute(required = true)
+  private int value;
+  @XmlAttribute
+  private int delta;
+  @XmlElement(name = "conditions")
+  private Conditions conditions;
 
-	public final StatEnum getStat() {
-		return stat;
-	}
+  public final StatEnum getStat() {
+    return stat;
+  }
 
-	public final Func getFunc() {
-		return func;
-	}
+  public final Func getFunc() {
+    return func;
+  }
 
-	public final int getValue() {
-		return value;
-	}
+  public final int getValue() {
+    return value;
+  }
 
-	public final int getDelta() {
-		return delta;
-	}
+  public final int getDelta() {
+    return delta;
+  }
 
-	public final Conditions getConditions() {
-		return conditions;
-	}
+  public final Conditions getConditions() {
+    return conditions;
+  }
 
 }

@@ -7,6 +7,6 @@ import javax.xml.bind.annotation.XmlEnum;
  */
 @XmlEnum
 public enum CPType {
-	CONQUEROR,
-	PROTECTOR
+  CONQUEROR,
+  PROTECTOR
 }

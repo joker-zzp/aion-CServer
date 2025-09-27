@@ -13,17 +13,17 @@ import com.aionemu.gameserver.utils.stats.AbyssRankEnum;
 @AIName("governor_advance_corridor")
 public class GovernorCorridorAI extends AdvanceCorridorAI {
 
-	public GovernorCorridorAI(Npc owner) {
-		super(owner);
-		despawnInMin = 5;
-	}
+  public GovernorCorridorAI(Npc owner) {
+    super(owner);
+    despawnInMin = 5;
+  }
 
-	@Override
-	public void handleDialogStart(Player player) {
-		if (player.getAbyssRank().getRank() != AbyssRankEnum.SUPREME_COMMANDER) {
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_TELEPOTER_GAB1_USER05());
-			return;
-		}
-		super.handleDialogStart(player);
-	}
+  @Override
+  public void handleDialogStart(Player player) {
+    if (player.getAbyssRank().getRank() != AbyssRankEnum.SUPREME_COMMANDER) {
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_TELEPOTER_GAB1_USER05());
+      return;
+    }
+    super.handleDialogStart(player);
+  }
 }

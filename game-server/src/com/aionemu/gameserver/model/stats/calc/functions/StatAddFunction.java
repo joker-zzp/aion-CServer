@@ -9,30 +9,30 @@ import com.aionemu.gameserver.utils.stats.CalculationType;
  */
 public class StatAddFunction extends StatFunction {
 
-	public StatAddFunction() {
-	}
+  public StatAddFunction() {
+  }
 
-	public StatAddFunction(StatEnum name, int value, boolean bonus) {
-		super(name, value, bonus);
-	}
+  public StatAddFunction(StatEnum name, int value, boolean bonus) {
+    super(name, value, bonus);
+  }
 
-	@Override
-	public void apply(Stat2 stat, CalculationType... calculationTypes) {
-		if (isBonus()) {
-			stat.addToBonus(getValue());
-		} else {
-			stat.addToBase(getValue());
-		}
-	}
+  @Override
+  public void apply(Stat2 stat, CalculationType... calculationTypes) {
+    if (isBonus()) {
+      stat.addToBonus(getValue());
+    } else {
+      stat.addToBase(getValue());
+    }
+  }
 
-	@Override
-	public int getPriority() {
-		return isBonus() ? 60 : 30;
-	}
+  @Override
+  public int getPriority() {
+    return isBonus() ? 60 : 30;
+  }
 
-	@Override
-	public String toString() {
-		return "StatAddFunction [" + super.toString() + "]";
-	}
+  @Override
+  public String toString() {
+    return "StatAddFunction [" + super.toString() + "]";
+  }
 
 }

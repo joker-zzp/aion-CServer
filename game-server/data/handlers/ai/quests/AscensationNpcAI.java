@@ -13,13 +13,13 @@ import ai.AggressiveNpcAI;
 @AIName("ascensationquestnpc")
 public class AscensationNpcAI extends AggressiveNpcAI {
 
-	public AscensationNpcAI(Npc owner) {
-		super(owner);
-	}
+  public AscensationNpcAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public float modifyOwnerDamage(float damage, Creature effected, Effect effect) {
-		return 1;
-	}
+  @Override
+  public float modifyOwnerDamage(float damage, Creature effected, Effect effect) {
+    return 1;
+  }
 
 }

@@ -18,27 +18,27 @@ import ai.GeneralNpcAI;
 @AIName("shulackdrudge")
 public class ShulackDrudgeAI extends GeneralNpcAI {
 
-	public ShulackDrudgeAI(Npc owner) {
-		super(owner);
-	}
+  public ShulackDrudgeAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDialogFinish(Player player) {
-		addItems(player);
-		super.handleDialogFinish(player);
-	}
+  @Override
+  protected void handleDialogFinish(Player player) {
+    addItems(player);
+    super.handleDialogFinish(player);
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
+  }
 
-	private void addItems(Player player) {
-		int itemId = player.getRace() == Race.ELYOS ? 182212606 : 182212607;
-		Item dredgionSupplies = player.getInventory().getFirstItemByItemId(itemId);
-		if (dredgionSupplies == null) {
-			ItemService.addItem(player, itemId, 1);
-			getOwner().overrideNpcType(CreatureType.PEACE);
-		}
-	}
+  private void addItems(Player player) {
+    int itemId = player.getRace() == Race.ELYOS ? 182212606 : 182212607;
+    Item dredgionSupplies = player.getInventory().getFirstItemByItemId(itemId);
+    if (dredgionSupplies == null) {
+      ItemService.addItem(player, itemId, 1);
+      getOwner().overrideNpcType(CreatureType.PEACE);
+    }
+  }
 }

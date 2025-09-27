@@ -102,10 +102,10 @@ public final class Matrix4f implements Cloneable {
      * Create a new Matrix4f, given data in column-major format.
      *
      * @param array
-	 *		An array of 16 floats in column-major format (translation in elements 12, 13 and 14).
+   *    An array of 16 floats in column-major format (translation in elements 12, 13 and 14).
      */
     public Matrix4f(float[] array) {
-    	set(array, false);
+      set(array, false);
     }
 
     /**
@@ -526,7 +526,7 @@ public final class Matrix4f implements Cloneable {
         float[] tmp = new float[16];
         get(tmp, true);
         Matrix4f mat = new Matrix4f(tmp);
-    	return mat;
+      return mat;
     }
 
     /**
@@ -570,7 +570,7 @@ public final class Matrix4f implements Cloneable {
      * @return matrix data as a FloatBuffer.
      */
     public FloatBuffer toFloatBuffer() {
-    	return toFloatBuffer(false);
+      return toFloatBuffer(false);
     }
 
     /**
@@ -584,10 +584,10 @@ public final class Matrix4f implements Cloneable {
      *         convenience.
      */
     public FloatBuffer toFloatBuffer(boolean columnMajor) {
-    	FloatBuffer fb = BufferUtils.createFloatBuffer(16);
-    	fillFloatBuffer(fb, columnMajor);
-    	fb.rewind();
-    	return fb;
+      FloatBuffer fb = BufferUtils.createFloatBuffer(16);
+      fillFloatBuffer(fb, columnMajor);
+      fb.rewind();
+      return fb;
     }
     
     /**
@@ -597,7 +597,7 @@ public final class Matrix4f implements Cloneable {
      * @return matrix data as a FloatBuffer.
      */
     public FloatBuffer fillFloatBuffer(FloatBuffer fb) {
-    	return fillFloatBuffer(fb, false);
+      return fillFloatBuffer(fb, false);
     }
 
     /**
@@ -615,16 +615,16 @@ public final class Matrix4f implements Cloneable {
      */
     public FloatBuffer fillFloatBuffer(FloatBuffer fb, boolean columnMajor) {
         if(columnMajor) {
-    	    fb.put(m00).put(m10).put(m20).put(m30);
-	        fb.put(m01).put(m11).put(m21).put(m31);
-	        fb.put(m02).put(m12).put(m22).put(m32);
-	        fb.put(m03).put(m13).put(m23).put(m33);
-	    } else {
-	        fb.put(m00).put(m01).put(m02).put(m03);
-	        fb.put(m10).put(m11).put(m12).put(m13);
-	        fb.put(m20).put(m21).put(m22).put(m23);
-	        fb.put(m30).put(m31).put(m32).put(m33);
-	    }
+          fb.put(m00).put(m10).put(m20).put(m30);
+          fb.put(m01).put(m11).put(m21).put(m31);
+          fb.put(m02).put(m12).put(m22).put(m32);
+          fb.put(m03).put(m13).put(m23).put(m33);
+      } else {
+          fb.put(m00).put(m01).put(m02).put(m03);
+          fb.put(m10).put(m11).put(m12).put(m13);
+          fb.put(m20).put(m21).put(m22).put(m23);
+          fb.put(m30).put(m31).put(m32).put(m33);
+      }
         return fb;
     }
 
@@ -634,12 +634,12 @@ public final class Matrix4f implements Cloneable {
             f[ 4] = m01; f[ 5] = m11; f[ 6] = m21; f[ 7] = m31;
             f[ 8] = m02; f[ 9] = m12; f[10] = m22; f[11] = m32;
             f[12] = m03; f[13] = m13; f[14] = m23; f[15] = m33;
-	    } else {
+      } else {
             f[ 0] = m00; f[ 1] = m01; f[ 2] = m02; f[ 3] = m03;
             f[ 4] = m10; f[ 5] = m11; f[ 6] = m12; f[ 7] = m13;
             f[ 8] = m20; f[ 9] = m21; f[10] = m22; f[11] = m23;
             f[12] = m30; f[13] = m31; f[14] = m32; f[15] = m33;
-	    }
+      }
     }
     
     /**
@@ -648,29 +648,29 @@ public final class Matrix4f implements Cloneable {
      * @return this data as a FloatBuffer.
      */
     public Matrix4f readFloatBuffer(FloatBuffer fb) {
-    	return readFloatBuffer(fb, false);
+      return readFloatBuffer(fb, false);
     }
 
     /**
      * <code>readFloatBuffer</code> reads value for this matrix from a FloatBuffer.
      * @param fb the buffer to read from, must be correct size
      * @param columnMajor if true, this buffer should be filled with column
-     * 		major data, otherwise it will be filled row major.
+     *     major data, otherwise it will be filled row major.
      * @return this data as a FloatBuffer.
      */
     public Matrix4f readFloatBuffer(FloatBuffer fb, boolean columnMajor) {
-    	
-    	if(columnMajor) {
-    		m00 = fb.get(); m10 = fb.get(); m20 = fb.get(); m30 = fb.get();
-    		m01 = fb.get(); m11 = fb.get(); m21 = fb.get(); m31 = fb.get();
-    		m02 = fb.get(); m12 = fb.get(); m22 = fb.get(); m32 = fb.get();
-    		m03 = fb.get(); m13 = fb.get(); m23 = fb.get(); m33 = fb.get();
-    	} else {
-    		m00 = fb.get(); m01 = fb.get(); m02 = fb.get(); m03 = fb.get();
-    		m10 = fb.get(); m11 = fb.get(); m12 = fb.get(); m13 = fb.get();
-    		m20 = fb.get(); m21 = fb.get(); m22 = fb.get(); m23 = fb.get();
-    		m30 = fb.get(); m31 = fb.get(); m32 = fb.get(); m33 = fb.get();
-    	}
+      
+      if(columnMajor) {
+        m00 = fb.get(); m10 = fb.get(); m20 = fb.get(); m30 = fb.get();
+        m01 = fb.get(); m11 = fb.get(); m21 = fb.get(); m31 = fb.get();
+        m02 = fb.get(); m12 = fb.get(); m22 = fb.get(); m32 = fb.get();
+        m03 = fb.get(); m13 = fb.get(); m23 = fb.get(); m33 = fb.get();
+      } else {
+        m00 = fb.get(); m01 = fb.get(); m02 = fb.get(); m03 = fb.get();
+        m10 = fb.get(); m11 = fb.get(); m12 = fb.get(); m13 = fb.get();
+        m20 = fb.get(); m21 = fb.get(); m22 = fb.get(); m23 = fb.get();
+        m30 = fb.get(); m31 = fb.get(); m32 = fb.get(); m33 = fb.get();
+      }
         return this;
     }
 
@@ -800,16 +800,16 @@ public final class Matrix4f implements Cloneable {
     }
     
     public Matrix4f mult(float scalar) {
-    	Matrix4f out = new Matrix4f();
-    	out.set(this);
-    	out.multLocal(scalar);
-    	return out;
+      Matrix4f out = new Matrix4f();
+      out.set(this);
+      out.multLocal(scalar);
+      return out;
     }
     
     public Matrix4f mult(float scalar, Matrix4f store) {
-    	store.set(this);
-    	store.multLocal(scalar);
-    	return store;
+      store.set(this);
+      store.multLocal(scalar);
+      return store;
     }
 
     /**
@@ -1312,24 +1312,24 @@ public final class Matrix4f implements Cloneable {
     }
     
     public Matrix4f add(Matrix4f mat) {
-    	Matrix4f result = new Matrix4f();
-    	result.m00 = this.m00 + mat.m00;
-    	result.m01 = this.m01 + mat.m01;
-    	result.m02 = this.m02 + mat.m02;
-    	result.m03 = this.m03 + mat.m03;
-    	result.m10 = this.m10 + mat.m10;
-    	result.m11 = this.m11 + mat.m11;
-    	result.m12 = this.m12 + mat.m12;
-    	result.m13 = this.m13 + mat.m13;
-    	result.m20 = this.m20 + mat.m20;
-    	result.m21 = this.m21 + mat.m21;
-    	result.m22 = this.m22 + mat.m22;
-    	result.m23 = this.m23 + mat.m23;
-    	result.m30 = this.m30 + mat.m30;
-    	result.m31 = this.m31 + mat.m31;
-    	result.m32 = this.m32 + mat.m32;
-    	result.m33 = this.m33 + mat.m33;
-    	return result;
+      Matrix4f result = new Matrix4f();
+      result.m00 = this.m00 + mat.m00;
+      result.m01 = this.m01 + mat.m01;
+      result.m02 = this.m02 + mat.m02;
+      result.m03 = this.m03 + mat.m03;
+      result.m10 = this.m10 + mat.m10;
+      result.m11 = this.m11 + mat.m11;
+      result.m12 = this.m12 + mat.m12;
+      result.m13 = this.m13 + mat.m13;
+      result.m20 = this.m20 + mat.m20;
+      result.m21 = this.m21 + mat.m21;
+      result.m22 = this.m22 + mat.m22;
+      result.m23 = this.m23 + mat.m23;
+      result.m30 = this.m30 + mat.m30;
+      result.m31 = this.m31 + mat.m31;
+      result.m32 = this.m32 + mat.m32;
+      result.m33 = this.m33 + mat.m33;
+      return result;
     }
 
     /**
@@ -1823,28 +1823,28 @@ public final class Matrix4f implements Cloneable {
     }
 
     static boolean equalIdentity(Matrix4f mat) {
-		if (Math.abs(mat.m00 - 1) > 1e-4) return false;
-		if (Math.abs(mat.m11 - 1) > 1e-4) return false;
-		if (Math.abs(mat.m22 - 1) > 1e-4) return false;
-		if (Math.abs(mat.m33 - 1) > 1e-4) return false;
+    if (Math.abs(mat.m00 - 1) > 1e-4) return false;
+    if (Math.abs(mat.m11 - 1) > 1e-4) return false;
+    if (Math.abs(mat.m22 - 1) > 1e-4) return false;
+    if (Math.abs(mat.m33 - 1) > 1e-4) return false;
 
-		if (Math.abs(mat.m01) > 1e-4) return false;
-		if (Math.abs(mat.m02) > 1e-4) return false;
-		if (Math.abs(mat.m03) > 1e-4) return false;
+    if (Math.abs(mat.m01) > 1e-4) return false;
+    if (Math.abs(mat.m02) > 1e-4) return false;
+    if (Math.abs(mat.m03) > 1e-4) return false;
 
-		if (Math.abs(mat.m10) > 1e-4) return false;
-		if (Math.abs(mat.m12) > 1e-4) return false;
-		if (Math.abs(mat.m13) > 1e-4) return false;
+    if (Math.abs(mat.m10) > 1e-4) return false;
+    if (Math.abs(mat.m12) > 1e-4) return false;
+    if (Math.abs(mat.m13) > 1e-4) return false;
 
-		if (Math.abs(mat.m20) > 1e-4) return false;
-		if (Math.abs(mat.m21) > 1e-4) return false;
-		if (Math.abs(mat.m23) > 1e-4) return false;
+    if (Math.abs(mat.m20) > 1e-4) return false;
+    if (Math.abs(mat.m21) > 1e-4) return false;
+    if (Math.abs(mat.m23) > 1e-4) return false;
 
-		if (Math.abs(mat.m30) > 1e-4) return false;
-		if (Math.abs(mat.m31) > 1e-4) return false;
-		if (Math.abs(mat.m32) > 1e-4) return false;
+    if (Math.abs(mat.m30) > 1e-4) return false;
+    if (Math.abs(mat.m31) > 1e-4) return false;
+    if (Math.abs(mat.m32) > 1e-4) return false;
 
-		return true;
+    return true;
     }
     
     @Override

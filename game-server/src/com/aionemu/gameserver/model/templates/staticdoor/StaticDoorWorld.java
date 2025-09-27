@@ -15,31 +15,31 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "World")
 public class StaticDoorWorld {
 
-	@XmlAttribute(name = "world")
-	private int worldId;
-	@XmlElement(name = "staticdoor")
-	private List<StaticDoorTemplate> templates;
-	@XmlTransient
-	private Map<Integer, StaticDoorTemplate> templatesByStaticId;
+  @XmlAttribute(name = "world")
+  private int worldId;
+  @XmlElement(name = "staticdoor")
+  private List<StaticDoorTemplate> templates;
+  @XmlTransient
+  private Map<Integer, StaticDoorTemplate> templatesByStaticId;
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		templatesByStaticId = new HashMap<>();
-		for (StaticDoorTemplate template : templates) {
-			if (templatesByStaticId.putIfAbsent(template.getId(), template) != null)
-				throw new IllegalArgumentException("Duplicate door template for world " + worldId + ", id: " + template.getId());
-		}
-		templates = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    templatesByStaticId = new HashMap<>();
+    for (StaticDoorTemplate template : templates) {
+      if (templatesByStaticId.putIfAbsent(template.getId(), template) != null)
+        throw new IllegalArgumentException("Duplicate door template for world " + worldId + ", id: " + template.getId());
+    }
+    templates = null;
+  }
 
-	public int getWorldId() {
-		return worldId;
-	}
+  public int getWorldId() {
+    return worldId;
+  }
 
-	public Collection<StaticDoorTemplate> getStaticDoors() {
-		return templatesByStaticId.values();
-	}
+  public Collection<StaticDoorTemplate> getStaticDoors() {
+    return templatesByStaticId.values();
+  }
 
-	public StaticDoorTemplate getStaticDoor(int staticId) {
-		return templatesByStaticId.get(staticId);
-	}
+  public StaticDoorTemplate getStaticDoor(int staticId) {
+    return templatesByStaticId.get(staticId);
+  }
 }

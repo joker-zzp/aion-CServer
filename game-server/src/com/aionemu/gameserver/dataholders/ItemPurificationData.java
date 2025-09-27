@@ -17,36 +17,36 @@ import com.aionemu.gameserver.model.templates.item.purification.PurificationResu
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ItemPurificationData {
 
-	@XmlElement(name = "item_purification")
-	protected List<ItemPurificationTemplate> itemPurificationTemplates;
-	@XmlTransient
-	private Map<Integer, ItemPurificationTemplate> itemPurificationSets;
-	@XmlTransient
-	private Map<Integer, Map<Integer, PurificationResult>> possibleResultItems;
+  @XmlElement(name = "item_purification")
+  protected List<ItemPurificationTemplate> itemPurificationTemplates;
+  @XmlTransient
+  private Map<Integer, ItemPurificationTemplate> itemPurificationSets;
+  @XmlTransient
+  private Map<Integer, Map<Integer, PurificationResult>> possibleResultItems;
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		itemPurificationSets = new HashMap<>();
-		possibleResultItems = new HashMap<>();
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    itemPurificationSets = new HashMap<>();
+    possibleResultItems = new HashMap<>();
 
-		for (ItemPurificationTemplate purificationTemplate : itemPurificationTemplates) {
-			itemPurificationSets.put(purificationTemplate.getBaseItemId(), purificationTemplate);
+    for (ItemPurificationTemplate purificationTemplate : itemPurificationTemplates) {
+      itemPurificationSets.put(purificationTemplate.getBaseItemId(), purificationTemplate);
 
-			possibleResultItems.put(purificationTemplate.getBaseItemId(), new HashMap<>());
-			for (PurificationResult resultItem : purificationTemplate.getPurificationResults())
-				possibleResultItems.get(purificationTemplate.getBaseItemId()).put(resultItem.getResultItemId(), resultItem);
-		}
-		itemPurificationTemplates = null;
-	}
+      possibleResultItems.put(purificationTemplate.getBaseItemId(), new HashMap<>());
+      for (PurificationResult resultItem : purificationTemplate.getPurificationResults())
+        possibleResultItems.get(purificationTemplate.getBaseItemId()).put(resultItem.getResultItemId(), resultItem);
+    }
+    itemPurificationTemplates = null;
+  }
 
-	public ItemPurificationTemplate getItemPurificationTemplate(int itemSetId) {
-		return itemPurificationSets.get(itemSetId);
-	}
+  public ItemPurificationTemplate getItemPurificationTemplate(int itemSetId) {
+    return itemPurificationSets.get(itemSetId);
+  }
 
-	public Map<Integer, PurificationResult> getResultItemMap(int baseItemId) {
-		return possibleResultItems.get(baseItemId);
-	}
+  public Map<Integer, PurificationResult> getResultItemMap(int baseItemId) {
+    return possibleResultItems.get(baseItemId);
+  }
 
-	public int size() {
-		return itemPurificationSets.size();
-	}
+  public int size() {
+    return itemPurificationSets.size();
+  }
 }

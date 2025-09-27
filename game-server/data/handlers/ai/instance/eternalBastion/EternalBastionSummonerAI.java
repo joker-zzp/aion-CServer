@@ -12,15 +12,15 @@ import ai.SummonerAI;
 @AIName("eternal_bastion_summoner")
 public class EternalBastionSummonerAI extends SummonerAI {
 
-	public EternalBastionSummonerAI(Npc owner) {
-		super(owner);
-	}
+  public EternalBastionSummonerAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case REWARD_LOOT, REWARD_AP -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case REWARD_LOOT, REWARD_AP -> false;
+      default -> super.ask(question);
+    };
+  }
 }

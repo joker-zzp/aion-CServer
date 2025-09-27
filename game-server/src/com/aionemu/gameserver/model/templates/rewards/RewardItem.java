@@ -5,24 +5,24 @@ package com.aionemu.gameserver.model.templates.rewards;
  */
 public class RewardItem {
 
-	private final int id;
-	private final long count;
+  private final int id;
+  private final long count;
 
-	public RewardItem(int id, long count) {
-		this.id = id;
-		this.count = count;
-	}
+  public RewardItem(int id, long count) {
+    this.id = id;
+    this.count = count;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public long getCount() {
-		return count;
-	}
+  public long getCount() {
+    return count;
+  }
 
-	@Override
-	public String toString() {
-		return "RewardItem [id=" + id + ", count=" + count + "]";
-	}
+  @Override
+  public String toString() {
+    return "RewardItem [id=" + id + ", count=" + count + "]";
+  }
 }

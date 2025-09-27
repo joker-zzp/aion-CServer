@@ -16,38 +16,38 @@ import com.aionemu.gameserver.services.item.ItemPacketService.ItemAddType;
  */
 public class SM_WAREHOUSE_ADD_ITEM extends AionServerPacket {
 
-	private int warehouseType;
-	private List<Item> items;
-	private Player player;
-	private ItemAddType addType;
+  private int warehouseType;
+  private List<Item> items;
+  private Player player;
+  private ItemAddType addType;
 
-	public SM_WAREHOUSE_ADD_ITEM(Item item, int warehouseType, Player player, ItemAddType addType) {
-		this.player = player;
-		this.warehouseType = warehouseType;
-		this.items = Collections.singletonList(item);
-		this.addType = addType;
-	}
+  public SM_WAREHOUSE_ADD_ITEM(Item item, int warehouseType, Player player, ItemAddType addType) {
+    this.player = player;
+    this.warehouseType = warehouseType;
+    this.items = Collections.singletonList(item);
+    this.addType = addType;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(warehouseType);
-		writeH(addType.getMask());
-		writeH(items.size());
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(warehouseType);
+    writeH(addType.getMask());
+    writeH(items.size());
 
-		for (Item item : items)
-			writeItemInfo(item);
-	}
+    for (Item item : items)
+      writeItemInfo(item);
+  }
 
-	private void writeItemInfo(Item item) {
-		ItemTemplate itemTemplate = item.getItemTemplate();
+  private void writeItemInfo(Item item) {
+    ItemTemplate itemTemplate = item.getItemTemplate();
 
-		writeD(item.getObjectId());
-		writeD(itemTemplate.getTemplateId());
-		writeC(0); // some item info (4 - weapon, 7 - armor, 8 - rings, 17 - bottles)
-		writeS(itemTemplate.getL10n());
+    writeD(item.getObjectId());
+    writeD(itemTemplate.getTemplateId());
+    writeC(0); // some item info (4 - weapon, 7 - armor, 8 - rings, 17 - bottles)
+    writeS(itemTemplate.getL10n());
 
-		ItemInfoBlob.getFullBlob(player, item).writeMe(getBuf());
+    ItemInfoBlob.getFullBlob(player, item).writeMe(getBuf());
 
-		writeH((int) (item.getEquipmentSlot() & 0xFFFF));
-	}
+    writeH((int) (item.getEquipmentSlot() & 0xFFFF));
+  }
 }

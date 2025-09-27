@@ -8,29 +8,29 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_GROUP_DATA_EXCHANGE extends AionServerPacket {
 
-	private byte[] byteData;
-	private int action;
-	private int unk2;
+  private byte[] byteData;
+  private int action;
+  private int unk2;
 
-	public SM_GROUP_DATA_EXCHANGE(byte[] byteData, int action, int unk2) {
-		this.action = action;
-		this.byteData = byteData;
-		this.unk2 = unk2;
-	}
+  public SM_GROUP_DATA_EXCHANGE(byte[] byteData, int action, int unk2) {
+    this.action = action;
+    this.byteData = byteData;
+    this.unk2 = unk2;
+  }
 
-	public SM_GROUP_DATA_EXCHANGE(byte[] byteData) {
-		this.action = 1;
-		this.byteData = byteData;
-	}
+  public SM_GROUP_DATA_EXCHANGE(byte[] byteData) {
+    this.action = 1;
+    this.byteData = byteData;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(action); // action
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(action); // action
 
-		if (action != 1)
-			writeC(unk2); // unk
+    if (action != 1)
+      writeC(unk2); // unk
 
-		writeD(byteData.length);
-		writeB(byteData);
-	}
+    writeD(byteData.length);
+    writeB(byteData);
+  }
 }

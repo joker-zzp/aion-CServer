@@ -19,22 +19,22 @@ import com.aionemu.gameserver.questEngine.model.QuestState;
 @XmlType(name = "QuestNpc", propOrder = { "dialog" })
 public class QuestNpc {
 
-	@XmlElement(name = "dialog")
-	protected List<QuestDialog> dialog;
-	
-	@XmlAttribute(required = true)
-	protected int id;
+  @XmlElement(name = "dialog")
+  protected List<QuestDialog> dialog;
+  
+  @XmlAttribute(required = true)
+  protected int id;
 
-	public boolean operate(QuestEnv env, QuestState qs) {
-		int npcId = -1;
-		if (env.getVisibleObject() instanceof Npc)
-			npcId = ((Npc) env.getVisibleObject()).getNpcId();
-		if (npcId != id)
-			return false;
-		for (QuestDialog questDialog : dialog) {
-			if (questDialog.operate(env, qs))
-				return true;
-		}
-		return false;
-	}
+  public boolean operate(QuestEnv env, QuestState qs) {
+    int npcId = -1;
+    if (env.getVisibleObject() instanceof Npc)
+      npcId = ((Npc) env.getVisibleObject()).getNpcId();
+    if (npcId != id)
+      return false;
+    for (QuestDialog questDialog : dialog) {
+      if (questDialog.operate(env, qs))
+        return true;
+    }
+    return false;
+  }
 }

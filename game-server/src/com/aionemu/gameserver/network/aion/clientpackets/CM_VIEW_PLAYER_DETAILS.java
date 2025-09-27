@@ -15,27 +15,27 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_VIEW_PLAYER_DETAILS;
  */
 public class CM_VIEW_PLAYER_DETAILS extends AionClientPacket {
 
-	private int targetObjectId;
+  private int targetObjectId;
 
-	public CM_VIEW_PLAYER_DETAILS(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_VIEW_PLAYER_DETAILS(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		targetObjectId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    targetObjectId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		Player target = player.getKnownList().getPlayer(targetObjectId);
-		if (target == null)
-			return;
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    Player target = player.getKnownList().getPlayer(targetObjectId);
+    if (target == null)
+      return;
 
-		if (!target.getPlayerSettings().isInDeniedStatus(DeniedStatus.VIEW_DETAILS) || player.hasAccess(AdminConfig.VIEW_PLAYER_DETAILS))
-			sendPacket(new SM_VIEW_PLAYER_DETAILS(target.getEquipment().getEquippedItemsWithoutStigma(), target));
-		else
-			sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_REJECTED_WATCH(target.getName()));
-	}
+    if (!target.getPlayerSettings().isInDeniedStatus(DeniedStatus.VIEW_DETAILS) || player.hasAccess(AdminConfig.VIEW_PLAYER_DETAILS))
+      sendPacket(new SM_VIEW_PLAYER_DETAILS(target.getEquipment().getEquippedItemsWithoutStigma(), target));
+    else
+      sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_REJECTED_WATCH(target.getName()));
+  }
 }

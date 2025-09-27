@@ -27,119 +27,119 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @XmlType(name = "HideEffect")
 public class HideEffect extends BufEffect {
 
-	@XmlAttribute
-	protected CreatureVisualState state;
-	@XmlAttribute(name = "bufcount")
-	protected int buffCount;
-	@XmlAttribute
-	protected int type = 0;
+  @XmlAttribute
+  protected CreatureVisualState state;
+  @XmlAttribute(name = "bufcount")
+  protected int buffCount;
+  @XmlAttribute
+  protected int type = 0;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		super.endEffect(effect);
+  @Override
+  public void endEffect(Effect effect) {
+    super.endEffect(effect);
 
-		final Creature effected = effect.getEffected();
-		effected.unsetVisualState(state);
-		effected.getEffectController().unsetAbnormal(AbnormalState.HIDE);
-		effected.getController().onHideEnd();
-		PacketSendUtility.broadcastPacketAndReceive(effected, new SM_PLAYER_STATE(effected)); // update visibility
-	}
+    final Creature effected = effect.getEffected();
+    effected.unsetVisualState(state);
+    effected.getEffectController().unsetAbnormal(AbnormalState.HIDE);
+    effected.getController().onHideEnd();
+    PacketSendUtility.broadcastPacketAndReceive(effected, new SM_PLAYER_STATE(effected)); // update visibility
+  }
 
-	@Override
-	public void startEffect(final Effect effect) {
-		super.startEffect(effect);
+  @Override
+  public void startEffect(final Effect effect) {
+    super.startEffect(effect);
 
-		final Creature effected = effect.getEffected();
-		effected.getEffectController().setAbnormal(AbnormalState.HIDE);
-		effect.setAbnormal(AbnormalState.HIDE);
+    final Creature effected = effect.getEffected();
+    effected.getEffectController().setAbnormal(AbnormalState.HIDE);
+    effect.setAbnormal(AbnormalState.HIDE);
 
-		effected.setVisualState(state);
+    effected.setVisualState(state);
 
-		// Cancel targeted enemy cast
-		AttackUtil.cancelCastOn(effected);
+    // Cancel targeted enemy cast
+    AttackUtil.cancelCastOn(effected);
 
-		// send all to set new 'effected' visual state (remove all visual targetting from 'effected')
-		PacketSendUtility.broadcastPacketAndReceive(effected, new SM_PLAYER_STATE(effected));
+    // send all to set new 'effected' visual state (remove all visual targetting from 'effected')
+    PacketSendUtility.broadcastPacketAndReceive(effected, new SM_PLAYER_STATE(effected));
 
-		ThreadPoolManager.getInstance().schedule(() -> {
-			// do on all who targetting on 'effected' (set target null, cancel attack skill, cancel npc pursuit)
-			AttackUtil.removeTargetFrom(effected, true);
-		}, 500);
+    ThreadPoolManager.getInstance().schedule(() -> {
+      // do on all who targetting on 'effected' (set target null, cancel attack skill, cancel npc pursuit)
+      AttackUtil.removeTargetFrom(effected, true);
+    }, 500);
 
-		effected.getController().onHide();
-		// for player adding: Remove Hide when using any item action . when requesting dialog to any npc . when being attacked . when attacking
-		if (effected instanceof Player) {
+    effected.getController().onHide();
+    // for player adding: Remove Hide when using any item action . when requesting dialog to any npc . when being attacked . when attacking
+    if (effected instanceof Player) {
 
-			// Remove Hide when use skill / item skill
-			effect.addObserver(effected, new ActionObserver(ObserverType.STARTSKILLCAST) {
+      // Remove Hide when use skill / item skill
+      effect.addObserver(effected, new ActionObserver(ObserverType.STARTSKILLCAST) {
 
-				private int buffNumber = 0;
+        private int buffNumber = 0;
 
-				@Override
-				public void startSkillCast(Skill skill) {
-					// TODO find better way
-					if (skill.getSkillMethod() == SkillMethod.ITEM) {
-						if (skill.getItemTemplate().isPotion() || skill.getSkillTemplate().getDuration() > 0)
-							effect.endEffect();
-						return;
-					}
-					boolean isShapeChange = skill.getSkillTemplate().getEffects().hasAnyEffectType(EffectType.SHAPECHANGE);
-					if (isShapeChange || !skill.isSelfBuff() || ++buffNumber >= buffCount)
-						effect.endEffect();
-				}
-			});
-			effect.addObserver(effected, new ActionObserver(ObserverType.ATTACK) {
+        @Override
+        public void startSkillCast(Skill skill) {
+          // TODO find better way
+          if (skill.getSkillMethod() == SkillMethod.ITEM) {
+            if (skill.getItemTemplate().isPotion() || skill.getSkillTemplate().getDuration() > 0)
+              effect.endEffect();
+            return;
+          }
+          boolean isShapeChange = skill.getSkillTemplate().getEffects().hasAnyEffectType(EffectType.SHAPECHANGE);
+          if (isShapeChange || !skill.isSelfBuff() || ++buffNumber >= buffCount)
+            effect.endEffect();
+        }
+      });
+      effect.addObserver(effected, new ActionObserver(ObserverType.ATTACK) {
 
-				@Override
-				public void attack(Creature creature, int skillId) {
-					effect.endEffect();
-				}
-			});
-			effect.addObserver(effected, new ActionObserver(ObserverType.ITEMUSE) {
+        @Override
+        public void attack(Creature creature, int skillId) {
+          effect.endEffect();
+        }
+      });
+      effect.addObserver(effected, new ActionObserver(ObserverType.ITEMUSE) {
 
-				@Override
-				public void itemused(Item item) {
-					// [4.5] Buff items do not affect Hide II. Hide I is cancelled.
-					ItemActions actions = item.getItemTemplate().getActions();
-					if (actions != null) {
-						if (buffCount == 0 || actions.getSkillUseAction() == null)
-							effect.endEffect();
-					}
-				}
-			});
+        @Override
+        public void itemused(Item item) {
+          // [4.5] Buff items do not affect Hide II. Hide I is cancelled.
+          ItemActions actions = item.getItemTemplate().getActions();
+          if (actions != null) {
+            if (buffCount == 0 || actions.getSkillUseAction() == null)
+              effect.endEffect();
+          }
+        }
+      });
 
-			// type >= 1, hide is maintained even after damage
-			if (type == 0)
-				effect.setCancelOnDmg(true);
-		} else { // effected is npc
-			if (type == 0) { // type >= 1, hide is maintained even after damage
-				effect.setCancelOnDmg(true);
+      // type >= 1, hide is maintained even after damage
+      if (type == 0)
+        effect.setCancelOnDmg(true);
+    } else { // effected is npc
+      if (type == 0) { // type >= 1, hide is maintained even after damage
+        effect.setCancelOnDmg(true);
 
-				// Remove Hide when attacking
-				effect.addObserver(effected, new ActionObserver(ObserverType.ATTACK) {
+        // Remove Hide when attacking
+        effect.addObserver(effected, new ActionObserver(ObserverType.ATTACK) {
 
-					@Override
-					public void attack(Creature creature, int skillId) {
-						effect.endEffect();
-					}
+          @Override
+          public void attack(Creature creature, int skillId) {
+            effect.endEffect();
+          }
 
-				});
+        });
 
-				// Remove Hide when use skill
-				effect.addObserver(effected, new ActionObserver(ObserverType.STARTSKILLCAST) {
+        // Remove Hide when use skill
+        effect.addObserver(effected, new ActionObserver(ObserverType.STARTSKILLCAST) {
 
-					@Override
-					public void startSkillCast(Skill skill) {
-						effect.endEffect();
-					}
+          @Override
+          public void startSkillCast(Skill skill) {
+            effect.endEffect();
+          }
 
-				});
-			}
-		}
-	}
+        });
+      }
+    }
+  }
 }

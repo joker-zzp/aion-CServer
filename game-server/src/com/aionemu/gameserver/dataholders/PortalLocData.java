@@ -17,26 +17,26 @@ import com.aionemu.gameserver.model.templates.portal.PortalLoc;
 @XmlRootElement(name = "portal_locs")
 public class PortalLocData {
 
-	@XmlElement(name = "portal_loc")
-	protected List<PortalLoc> portalLoc;
+  @XmlElement(name = "portal_loc")
+  protected List<PortalLoc> portalLoc;
 
-	@XmlTransient
-	private final Map<Integer, PortalLoc> portalLocs = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, PortalLoc> portalLocs = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
-		for (PortalLoc loc : portalLoc) {
-			portalLocs.put(loc.getLocId(), loc);
+  void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
+    for (PortalLoc loc : portalLoc) {
+      portalLocs.put(loc.getLocId(), loc);
 
-		}
-		portalLoc = null;
-	}
+    }
+    portalLoc = null;
+  }
 
-	public int size() {
-		return portalLocs.size();
-	}
+  public int size() {
+    return portalLocs.size();
+  }
 
-	public PortalLoc getPortalLoc(int locId) {
-		return portalLocs.get(locId);
-	}
+  public PortalLoc getPortalLoc(int locId) {
+    return portalLocs.get(locId);
+  }
 
 }

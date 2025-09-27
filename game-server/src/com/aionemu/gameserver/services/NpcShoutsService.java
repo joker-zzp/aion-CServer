@@ -25,97 +25,97 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public class NpcShoutsService {
 
-	private Map<Integer, Long> shoutCooldowns;
+  private Map<Integer, Long> shoutCooldowns;
 
-	private NpcShoutsService() {
-		shoutCooldowns = new ConcurrentHashMap<>();
-	}
+  private NpcShoutsService() {
+    shoutCooldowns = new ConcurrentHashMap<>();
+  }
 
-	public void registerShoutTask(Npc npc) {
-		int worldId = npc.getSpawn().getWorldId();
+  public void registerShoutTask(Npc npc) {
+    int worldId = npc.getSpawn().getWorldId();
 
-		List<NpcShout> shouts = DataManager.NPC_SHOUT_DATA.getNpcShouts(worldId, npc.getNpcId(), ShoutEventType.IDLE);
-		if (shouts == null || shouts.isEmpty())
-			return;
+    List<NpcShout> shouts = DataManager.NPC_SHOUT_DATA.getNpcShouts(worldId, npc.getNpcId(), ShoutEventType.IDLE);
+    if (shouts == null || shouts.isEmpty())
+      return;
 
-		int pollDelay = Rnd.get(180, 360) * 1000;
-		for (NpcShout shout : shouts) {
-			if (shout.getPollDelay() != 0 && shout.getPollDelay() < pollDelay)
-				pollDelay = shout.getPollDelay();
-		}
+    int pollDelay = Rnd.get(180, 360) * 1000;
+    for (NpcShout shout : shouts) {
+      if (shout.getPollDelay() != 0 && shout.getPollDelay() < pollDelay)
+        pollDelay = shout.getPollDelay();
+    }
 
-		npc.getController().addTask(TaskId.SHOUT, ThreadPoolManager.getInstance().scheduleAtFixedRate(new NpcShoutTask(npc, shouts), 0, pollDelay));
-	}
+    npc.getController().addTask(TaskId.SHOUT, ThreadPoolManager.getInstance().scheduleAtFixedRate(new NpcShoutTask(npc, shouts), 0, pollDelay));
+  }
 
-	public void removeShoutCooldown(Npc npc) {
-		shoutCooldowns.remove(npc.getObjectId());
-	}
+  public void removeShoutCooldown(Npc npc) {
+    shoutCooldowns.remove(npc.getObjectId());
+  }
 
-	public boolean mayShout(Npc npc) {
-		Long cd = shoutCooldowns.get(npc.getObjectId());
-		return cd == null || System.currentTimeMillis() >= cd;
-	}
+  public boolean mayShout(Npc npc) {
+    Long cd = shoutCooldowns.get(npc.getObjectId());
+    return cd == null || System.currentTimeMillis() >= cd;
+  }
 
-	public void shoutRandom(Npc sender, Player target, List<NpcShout> shouts, int shoutCooldown) {
-		if (shouts == null || shouts.isEmpty())
-			return;
-		shout(sender, target, Rnd.get(shouts), shoutCooldown);
-	}
+  public void shoutRandom(Npc sender, Player target, List<NpcShout> shouts, int shoutCooldown) {
+    if (shouts == null || shouts.isEmpty())
+      return;
+    shout(sender, target, Rnd.get(shouts), shoutCooldown);
+  }
 
-	public void shout(Npc sender, Player target, NpcShout shout, int shoutCooldown) {
-		if (sender == null || shout == null)
-			return;
+  public void shout(Npc sender, Player target, NpcShout shout, int shoutCooldown) {
+    if (sender == null || shout == null)
+      return;
 
-		if (shout.getPattern() != null && !sender.getAi().onPatternShout(shout.getWhen(), shout.getPattern(), shout.getSkillNo()))
-			return;
+    if (shout.getPattern() != null && !sender.getAi().onPatternShout(shout.getWhen(), shout.getPattern(), shout.getSkillNo()))
+      return;
 
-		int shoutRange = sender.getObjectTemplate().getMinimumShoutRange();
-		if (target != null && !PositionUtil.isInRange(target, sender, shoutRange))
-			return;
+    int shoutRange = sender.getObjectTemplate().getMinimumShoutRange();
+    if (target != null && !PositionUtil.isInRange(target, sender, shoutRange))
+      return;
 
-		String param = shout.getParam();
-		if (sender.getTarget() != null && "target".equals(param))
-			param = sender.getTarget().getObjectTemplate().getName();
+    String param = shout.getParam();
+    if (sender.getTarget() != null && "target".equals(param))
+      param = sender.getTarget().getObjectTemplate().getName();
 
-		if (shoutCooldown > 0 && target != null && "quest".equals(shout.getPattern()))
-			shoutCooldown = 0;
+    if (shoutCooldown > 0 && target != null && "quest".equals(shout.getPattern()))
+      shoutCooldown = 0;
 
-		SM_SYSTEM_MESSAGE message = new SM_SYSTEM_MESSAGE(ChatType.NPC, sender, shout.getStringId(), param);
+    SM_SYSTEM_MESSAGE message = new SM_SYSTEM_MESSAGE(ChatType.NPC, sender, shout.getStringId(), param);
 
-		if (target != null) {
-			PacketSendUtility.sendPacket(target, message);
-		} else {
-			PacketSendUtility.broadcastPacket(sender, message, player -> PositionUtil.isInRange(player, sender, shoutRange));
-		}
-		if (shoutCooldown <= 0)
-			removeShoutCooldown(sender);
-		else
-			shoutCooldowns.put(sender.getObjectId(), System.currentTimeMillis() + shoutCooldown * 1000 - 50); // 50ms offset to avoid tight cooldown conflicts
-	}
+    if (target != null) {
+      PacketSendUtility.sendPacket(target, message);
+    } else {
+      PacketSendUtility.broadcastPacket(sender, message, player -> PositionUtil.isInRange(player, sender, shoutRange));
+    }
+    if (shoutCooldown <= 0)
+      removeShoutCooldown(sender);
+    else
+      shoutCooldowns.put(sender.getObjectId(), System.currentTimeMillis() + shoutCooldown * 1000 - 50); // 50ms offset to avoid tight cooldown conflicts
+  }
 
-	public static final NpcShoutsService getInstance() {
-		return SingletonHolder.instance;
-	}
+  public static final NpcShoutsService getInstance() {
+    return SingletonHolder.instance;
+  }
 
-	private static class SingletonHolder {
+  private static class SingletonHolder {
 
-		protected static final NpcShoutsService instance = new NpcShoutsService();
-	}
+    protected static final NpcShoutsService instance = new NpcShoutsService();
+  }
 
-	private class NpcShoutTask implements Runnable {
+  private class NpcShoutTask implements Runnable {
 
-		private Npc npc;
-		private List<NpcShout> shouts;
+    private Npc npc;
+    private List<NpcShout> shouts;
 
-		NpcShoutTask(Npc npc, List<NpcShout> shouts) {
-			this.npc = npc;
-			this.shouts = shouts;
-		}
+    NpcShoutTask(Npc npc, List<NpcShout> shouts) {
+      this.npc = npc;
+      this.shouts = shouts;
+    }
 
-		@Override
-		public void run() {
-			if (npc.getPosition().isMapRegionActive() && npc.getAi().ask(AIQuestion.CAN_SHOUT))
-				shoutRandom(npc, null, shouts, 0);
-		}
-	}
+    @Override
+    public void run() {
+      if (npc.getPosition().isMapRegionActive() && npc.getAi().ask(AIQuestion.CAN_SHOUT))
+        shoutRandom(npc, null, shouts, 0);
+    }
+  }
 }

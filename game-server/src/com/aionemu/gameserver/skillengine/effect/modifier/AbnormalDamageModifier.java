@@ -10,17 +10,17 @@ import com.aionemu.gameserver.skillengine.model.Effect;
  */
 public class AbnormalDamageModifier extends ActionModifier {
 
-	@XmlAttribute(required = true)
-	protected AbnormalState state;
+  @XmlAttribute(required = true)
+  protected AbnormalState state;
 
-	@Override
-	public int analyze(Effect effect) {
-		return (value + effect.getSkillLevel() * delta);
-	}
+  @Override
+  public int analyze(Effect effect) {
+    return (value + effect.getSkillLevel() * delta);
+  }
 
-	@Override
-	public boolean check(Effect effect) {
-		return effect.getEffected().getEffectController().isAbnormalSet(state);
-	}
+  @Override
+  public boolean check(Effect effect) {
+    return effect.getEffected().getEffectController().isAbnormalSet(state);
+  }
 
 }

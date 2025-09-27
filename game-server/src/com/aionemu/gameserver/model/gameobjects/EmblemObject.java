@@ -8,13 +8,13 @@ import com.aionemu.gameserver.model.templates.housing.HousingEmblem;
  */
 public class EmblemObject extends HouseObject<HousingEmblem> {
 
-	public EmblemObject(HouseRegistry registry, int objId, int templateId) {
-		super(registry, objId, templateId);
-	}
+  public EmblemObject(HouseRegistry registry, int objId, int templateId) {
+    super(registry, objId, templateId);
+  }
 
-	@Override
-	public boolean canExpireNow() {
-		return false;
-	}
+  @Override
+  public boolean canExpireNow() {
+    return false;
+  }
 
 }

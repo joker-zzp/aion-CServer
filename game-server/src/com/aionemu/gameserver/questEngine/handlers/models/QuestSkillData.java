@@ -14,31 +14,31 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "QuestSkillData")
 public class QuestSkillData {
 
-	@XmlAttribute(name = "ids", required = true)
-	protected List<Integer> skillIds;
-	
-	@XmlAttribute(name = "start_var")
-	protected int startVar;
-	
-	@XmlAttribute(name = "end_var")
-	protected int endVar;
-	
-	@XmlAttribute(name = "var_num")
-	protected int varNum;
+  @XmlAttribute(name = "ids", required = true)
+  protected List<Integer> skillIds;
+  
+  @XmlAttribute(name = "start_var")
+  protected int startVar;
+  
+  @XmlAttribute(name = "end_var")
+  protected int endVar;
+  
+  @XmlAttribute(name = "var_num")
+  protected int varNum;
 
-	public List<Integer> getSkillIds() {
-		return skillIds;
-	}
+  public List<Integer> getSkillIds() {
+    return skillIds;
+  }
 
-	public int getVarNum() {
-		return varNum;
-	}
+  public int getVarNum() {
+    return varNum;
+  }
 
-	public int getStartVar() {
-		return startVar;
-	}
+  public int getStartVar() {
+    return startVar;
+  }
 
-	public int getEndVar() {
-		return endVar;
-	}
+  public int getEndVar() {
+    return endVar;
+  }
 }

@@ -14,28 +14,28 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_CHARACTER_LIST;
  */
 public class CM_CHARACTER_LIST extends AionClientPacket {
 
-	/**
-	 * PlayOk2 - we dont care...
-	 */
-	private int playOk2;
+  /**
+   * PlayOk2 - we dont care...
+   */
+  private int playOk2;
 
-	/**
-	 * Constructs new instance of <tt>CM_CHARACTER_LIST </tt> packet.
-	 * 
-	 * @param opcode
-	 */
-	public CM_CHARACTER_LIST(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * Constructs new instance of <tt>CM_CHARACTER_LIST </tt> packet.
+   * 
+   * @param opcode
+   */
+  public CM_CHARACTER_LIST(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		playOk2 = readD();
-	}
+  @Override
+  protected void readImpl() {
+    playOk2 = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		sendPacket(new SM_ACCOUNT_PROPERTIES());
-		sendPacket(new SM_CHARACTER_LIST(playOk2));
-	}
+  @Override
+  protected void runImpl() {
+    sendPacket(new SM_ACCOUNT_PROPERTIES());
+    sendPacket(new SM_CHARACTER_LIST(playOk2));
+  }
 }

@@ -20,19 +20,19 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @XmlType(name = "SetQuestStatusOperation")
 public class SetQuestStatusOperation extends QuestOperation {
 
-	@XmlAttribute(required = true)
-	protected QuestStatus status;
+  @XmlAttribute(required = true)
+  protected QuestStatus status;
 
-	@Override
-	public void doOperate(QuestEnv env) {
-		Player player = env.getPlayer();
-		int questId = env.getQuestId();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (qs != null) {
-			qs.setStatus(status);
-			PacketSendUtility.sendPacket(player, new SM_QUEST_ACTION(ActionType.UPDATE, qs));
-			if (qs.getStatus() == QuestStatus.COMPLETE)
-				player.getController().updateNearbyQuests();
-		}
-	}
+  @Override
+  public void doOperate(QuestEnv env) {
+    Player player = env.getPlayer();
+    int questId = env.getQuestId();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    if (qs != null) {
+      qs.setStatus(status);
+      PacketSendUtility.sendPacket(player, new SM_QUEST_ACTION(ActionType.UPDATE, qs));
+      if (qs.getStatus() == QuestStatus.COMPLETE)
+        player.getController().updateNearbyQuests();
+    }
+  }
 }

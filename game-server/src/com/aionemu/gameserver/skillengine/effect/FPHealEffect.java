@@ -14,23 +14,23 @@ import com.aionemu.gameserver.skillengine.model.HealType;
 @XmlType(name = "FPHealEffect")
 public class FPHealEffect extends HealOverTimeEffect {
 
-	@Override
-	public void startEffect(Effect effect) {
-		super.startEffect(effect, HealType.FP);
-	}
+  @Override
+  public void startEffect(Effect effect) {
+    super.startEffect(effect, HealType.FP);
+  }
 
-	@Override
-	public void onPeriodicAction(Effect effect) {
-		super.onPeriodicAction(effect, HealType.FP);
-	}
+  @Override
+  public void onPeriodicAction(Effect effect) {
+    super.onPeriodicAction(effect, HealType.FP);
+  }
 
-	@Override
-	public int getCurrentStatValue(Effect effect) {
-		return effect.getEffected().getLifeStats().getCurrentFp();
-	}
+  @Override
+  public int getCurrentStatValue(Effect effect) {
+    return effect.getEffected().getLifeStats().getCurrentFp();
+  }
 
-	@Override
-	public int getMaxStatValue(Effect effect) {
-		return effect.getEffected().getLifeStats().getMaxFp();
-	}
+  @Override
+  public int getMaxStatValue(Effect effect) {
+    return effect.getEffected().getLifeStats().getMaxFp();
+  }
 }

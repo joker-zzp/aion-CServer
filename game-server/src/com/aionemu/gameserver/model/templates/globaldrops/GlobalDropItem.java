@@ -19,43 +19,43 @@ import com.aionemu.gameserver.model.Chance;
 @XmlType(name = "GlobalDropItem")
 public class GlobalDropItem implements Chance {
 
-	@XmlAttribute(name = "id", required = true)
-	private int itemId;
-	@XmlAttribute(name = "min_count")
-	private int minCount = 1;
-	@XmlAttribute(name = "max_count")
-	private int maxCount;
-	@XmlAttribute(name = "chance")
-	private float chance = 100f;
+  @XmlAttribute(name = "id", required = true)
+  private int itemId;
+  @XmlAttribute(name = "min_count")
+  private int minCount = 1;
+  @XmlAttribute(name = "max_count")
+  private int maxCount;
+  @XmlAttribute(name = "chance")
+  private float chance = 100f;
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		StaticData staticData = StaticDataListener.get(u);
-		ItemData itemData = staticData != null ? staticData.itemData : DataManager.ITEM_DATA;
-		if (itemData.getItemTemplate(itemId) == null)
-			throw new IllegalArgumentException("Global drop item ID " + itemId + " is invalid");
-		if (minCount <= 0)
-			throw new IllegalArgumentException("Global drop item [" + itemId + "] min_count (" + minCount + ") must be greater than 0");
-		if (maxCount == 0)
-			maxCount = minCount;
-		else if (maxCount < minCount)
-			throw new IllegalArgumentException(
-				"Global drop item [" + itemId + "] max_count (" + maxCount + ") must be greater than or equal to min_count (" + minCount + ")");
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    StaticData staticData = StaticDataListener.get(u);
+    ItemData itemData = staticData != null ? staticData.itemData : DataManager.ITEM_DATA;
+    if (itemData.getItemTemplate(itemId) == null)
+      throw new IllegalArgumentException("Global drop item ID " + itemId + " is invalid");
+    if (minCount <= 0)
+      throw new IllegalArgumentException("Global drop item [" + itemId + "] min_count (" + minCount + ") must be greater than 0");
+    if (maxCount == 0)
+      maxCount = minCount;
+    else if (maxCount < minCount)
+      throw new IllegalArgumentException(
+        "Global drop item [" + itemId + "] max_count (" + maxCount + ") must be greater than or equal to min_count (" + minCount + ")");
+  }
 
-	public int getId() {
-		return itemId;
-	}
+  public int getId() {
+    return itemId;
+  }
 
-	public int getMinCount() {
-		return minCount;
-	}
+  public int getMinCount() {
+    return minCount;
+  }
 
-	public int getMaxCount() {
-		return maxCount;
-	}
+  public int getMaxCount() {
+    return maxCount;
+  }
 
-	@Override
-	public float getChance() {
-		return chance;
-	}
+  @Override
+  public float getChance() {
+    return chance;
+  }
 }

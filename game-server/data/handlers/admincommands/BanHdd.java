@@ -12,24 +12,24 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
  */
 public class BanHdd extends AdminCommand {
 
-	private static String SYNTAX = "用法: //banhdd <硬盘序列号> <分钟数|0 - 永久>";
+  private static String SYNTAX = "用法: //banhdd <硬盘序列号> <分钟数|0 - 永久>";
 
-	public BanHdd() {
-		super("banhdd");
-	}
+  public BanHdd() {
+    super("banhdd");
+  }
 
-	@Override
-	public void execute(Player player, String... params) {
-		try {
-			String hddSerial = params[0];
-			Integer timeMins = Integer.parseInt(params[1]);
-			if (timeMins == 0)
-				timeMins = 10 * 365 * 24 * 60;
-			Timestamp banTime = new Timestamp(System.currentTimeMillis() + timeMins * 60 * 1000);
-			HDDBanService.getInstance().addBan(hddSerial, banTime);
-		} catch (Exception e) {
-			PacketSendUtility.sendMessage(player, SYNTAX);
-		}
-	}
+  @Override
+  public void execute(Player player, String... params) {
+    try {
+      String hddSerial = params[0];
+      Integer timeMins = Integer.parseInt(params[1]);
+      if (timeMins == 0)
+        timeMins = 10 * 365 * 24 * 60;
+      Timestamp banTime = new Timestamp(System.currentTimeMillis() + timeMins * 60 * 1000);
+      HDDBanService.getInstance().addBan(hddSerial, banTime);
+    } catch (Exception e) {
+      PacketSendUtility.sendMessage(player, SYNTAX);
+    }
+  }
 
 }

@@ -12,19 +12,19 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "FullRewardItem")
 public class FullRewardItem extends IdLevelReward {
 
-	@XmlAttribute(name = "count")
-	private long count;
+  @XmlAttribute(name = "count")
+  private long count;
 
-	@XmlAttribute(name = "chance")
-	private float chance;
+  @XmlAttribute(name = "chance")
+  private float chance;
 
-	@Override
-	public long getCount() {
-		return count;
-	}
+  @Override
+  public long getCount() {
+    return count;
+  }
 
-	@Override
-	public float getChance() {
-		return chance;
-	}
+  @Override
+  public float getChance() {
+    return chance;
+  }
 }

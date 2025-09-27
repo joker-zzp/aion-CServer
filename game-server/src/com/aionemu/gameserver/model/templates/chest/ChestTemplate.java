@@ -15,16 +15,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Chest")
 public class ChestTemplate {
 
-	@XmlAttribute(name = "npc_id")
-	protected int npcId;
-	@XmlElement(name = "key_item")
-	protected List<KeyItem> keyItems;
+  @XmlAttribute(name = "npc_id")
+  protected int npcId;
+  @XmlElement(name = "key_item")
+  protected List<KeyItem> keyItems;
 
-	public int getNpcId() {
-		return npcId;
-	}
+  public int getNpcId() {
+    return npcId;
+  }
 
-	public List<KeyItem> getKeyItems() {
-		return keyItems;
-	}
+  public List<KeyItem> getKeyItems() {
+    return keyItems;
+  }
 }

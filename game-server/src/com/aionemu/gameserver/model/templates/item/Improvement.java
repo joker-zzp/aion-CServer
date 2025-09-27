@@ -12,46 +12,46 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Improvement")
 public class Improvement {
 
-	@XmlAttribute(name = "way", required = true)
-	private int way;
+  @XmlAttribute(name = "way", required = true)
+  private int way;
 
-	@XmlAttribute(name = "price2")
-	private int price2;
+  @XmlAttribute(name = "price2")
+  private int price2;
 
-	@XmlAttribute(name = "price1")
-	private int price1;
+  @XmlAttribute(name = "price1")
+  private int price1;
 
-	@XmlAttribute(name = "burn_defend")
-	private int burnDefend;
+  @XmlAttribute(name = "burn_defend")
+  private int burnDefend;
 
-	@XmlAttribute(name = "burn_attack")
-	private int burnAttack;
+  @XmlAttribute(name = "burn_attack")
+  private int burnAttack;
 
-	@XmlAttribute(name = "level")
-	private int level;
+  @XmlAttribute(name = "level")
+  private int level;
 
-	public int getLevel() {
-		return level;
-	}
+  public int getLevel() {
+    return level;
+  }
 
-	public int getChargeWay() {
-		return way;
-	}
+  public int getChargeWay() {
+    return way;
+  }
 
-	public int getPrice1() {
-		return price1;
-	}
+  public int getPrice1() {
+    return price1;
+  }
 
-	public int getPrice2() {
-		return price2;
-	}
+  public int getPrice2() {
+    return price2;
+  }
 
-	public int getBurnAttack() {
-		return burnAttack;
-	}
+  public int getBurnAttack() {
+    return burnAttack;
+  }
 
-	public int getBurnDefend() {
-		return burnDefend;
-	}
+  public int getBurnDefend() {
+    return burnDefend;
+  }
 
 }

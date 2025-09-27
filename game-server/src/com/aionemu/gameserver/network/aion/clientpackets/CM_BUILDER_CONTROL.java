@@ -14,7 +14,7 @@ import com.aionemu.gameserver.network.aion.AionConnection.State;
  */
 public class CM_BUILDER_CONTROL extends AbstractGmCommandPacket {
 
-	public CM_BUILDER_CONTROL(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_BUILDER_CONTROL(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 }

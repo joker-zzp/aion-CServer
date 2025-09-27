@@ -13,17 +13,17 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_FRIEND_LIST;
  */
 public class CM_SHOW_FRIENDLIST extends AionClientPacket {
 
-	public CM_SHOW_FRIENDLIST(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_SHOW_FRIENDLIST(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-	}
+  @Override
+  protected void readImpl() {
+  }
 
-	@Override
-	protected void runImpl() {
-		sendPacket(new SM_FRIEND_LIST());
-	}
+  @Override
+  protected void runImpl() {
+    sendPacket(new SM_FRIEND_LIST());
+  }
 
 }

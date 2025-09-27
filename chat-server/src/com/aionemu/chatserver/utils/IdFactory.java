@@ -11,25 +11,25 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class IdFactory {
 
-	private static final IdFactory instance = new IdFactory();
+  private static final IdFactory instance = new IdFactory();
 
-	private final BitSet idList = new BitSet();
-	private final ReentrantLock lock = new ReentrantLock();
-	private final AtomicInteger nextMinId = new AtomicInteger(1);
+  private final BitSet idList = new BitSet();
+  private final ReentrantLock lock = new ReentrantLock();
+  private final AtomicInteger nextMinId = new AtomicInteger(1);
 
-	public static IdFactory getInstance() {
-		return instance;
-	}
+  public static IdFactory getInstance() {
+    return instance;
+  }
 
-	public int nextId() {
-		try {
-			lock.lock();
-			int nextId = idList.nextClearBit(nextMinId.intValue());
-			idList.set(nextId);
-			nextMinId.incrementAndGet();
-			return nextId;
-		} finally {
-			lock.unlock();
-		}
-	}
+  public int nextId() {
+    try {
+      lock.lock();
+      int nextId = idList.nextClearBit(nextMinId.intValue());
+      idList.set(nextId);
+      nextMinId.incrementAndGet();
+      return nextId;
+    } finally {
+      lock.unlock();
+    }
+  }
 }

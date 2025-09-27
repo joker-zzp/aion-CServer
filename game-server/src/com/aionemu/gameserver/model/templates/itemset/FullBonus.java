@@ -17,28 +17,28 @@ import com.aionemu.gameserver.model.templates.stats.ModifiersTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class FullBonus {
 
-	@XmlElement(name = "modifiers", required = false)
-	protected ModifiersTemplate modifiers;
+  @XmlElement(name = "modifiers", required = false)
+  protected ModifiersTemplate modifiers;
 
-	private int totalnumberofitems;
+  private int totalnumberofitems;
 
-	public List<StatFunction> getModifiers() {
-		return modifiers != null ? modifiers.getModifiers() : null;
-	}
+  public List<StatFunction> getModifiers() {
+    return modifiers != null ? modifiers.getModifiers() : null;
+  }
 
-	/**
-	 * @return Value of the number of items in the set
-	 */
-	public int getCount() {
-		return totalnumberofitems;
-	}
+  /**
+   * @return Value of the number of items in the set
+   */
+  public int getCount() {
+    return totalnumberofitems;
+  }
 
-	/**
-	 * Sets number of items in the set (when this bonus applies)
-	 * 
-	 * @param number
-	 */
-	public void setNumberOfItems(int number) {
-		this.totalnumberofitems = number;
-	}
+  /**
+   * Sets number of items in the set (when this bonus applies)
+   * 
+   * @param number
+   */
+  public void setNumberOfItems(int number) {
+    this.totalnumberofitems = number;
+  }
 }

@@ -11,36 +11,36 @@ import com.aionemu.gameserver.taskmanager.AbstractPeriodicTaskManager;
  */
 public class PlayerMoveTaskManager extends AbstractPeriodicTaskManager {
 
-	private final Map<Integer, Creature> movingPlayers = new ConcurrentHashMap<>();
+  private final Map<Integer, Creature> movingPlayers = new ConcurrentHashMap<>();
 
-	private PlayerMoveTaskManager() {
-		super(200);
-	}
+  private PlayerMoveTaskManager() {
+    super(200);
+  }
 
-	public void addPlayer(Creature player) {
-		movingPlayers.put(player.getObjectId(), player);
-	}
+  public void addPlayer(Creature player) {
+    movingPlayers.put(player.getObjectId(), player);
+  }
 
-	public void removePlayer(Creature player) {
-		movingPlayers.remove(player.getObjectId());
-	}
+  public void removePlayer(Creature player) {
+    movingPlayers.remove(player.getObjectId());
+  }
 
-	@Override
-	public void run() {
-		for (Creature player : movingPlayers.values()) {
-			if (player.isSpawned())
-				player.getMoveController().moveToDestination();
-			else
-				removePlayer(player);
-		}
-	}
+  @Override
+  public void run() {
+    for (Creature player : movingPlayers.values()) {
+      if (player.isSpawned())
+        player.getMoveController().moveToDestination();
+      else
+        removePlayer(player);
+    }
+  }
 
-	public static final PlayerMoveTaskManager getInstance() {
-		return SingletonHolder.INSTANCE;
-	}
+  public static final PlayerMoveTaskManager getInstance() {
+    return SingletonHolder.INSTANCE;
+  }
 
-	private static final class SingletonHolder {
+  private static final class SingletonHolder {
 
-		private static final PlayerMoveTaskManager INSTANCE = new PlayerMoveTaskManager();
-	}
+    private static final PlayerMoveTaskManager INSTANCE = new PlayerMoveTaskManager();
+  }
 }

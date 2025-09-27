@@ -8,7 +8,7 @@ import com.aionemu.chatserver.model.Race;
  */
 public class LfgChannel extends RaceChannel {
 
-	public LfgChannel(int gameServerId, Race race) {
-		super(ChannelType.LFG, gameServerId, race);
-	}
+  public LfgChannel(int gameServerId, Race race) {
+    super(ChannelType.LFG, gameServerId, race);
+  }
 }

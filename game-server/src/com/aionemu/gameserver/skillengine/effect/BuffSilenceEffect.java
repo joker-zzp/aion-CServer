@@ -13,8 +13,8 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "BuffSilenceEffect")
 public class BuffSilenceEffect extends SilenceEffect {
 
-	@Override
-	public void calculate(Effect effect) {
-		effect.addSuccessEffect(this);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    effect.addSuccessEffect(this);
+  }
 }

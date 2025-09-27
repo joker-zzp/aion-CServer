@@ -12,19 +12,19 @@ import com.aionemu.gameserver.network.aion.iteminfo.ItemInfoBlob.ItemBlobType;
  */
 public class ArmorInfoBlobEntry extends ItemBlobEntry {
 
-	ArmorInfoBlobEntry() {
-		super(ItemBlobType.SLOTS_ARMOR);
-	}
+  ArmorInfoBlobEntry() {
+    super(ItemBlobType.SLOTS_ARMOR);
+  }
 
-	@Override
-	public void writeThisBlob(ByteBuffer buf) {
-		writeQ(buf, ItemSlot.getSlotFor(ownerItem.getItemTemplate().getItemSlot()).getSlotIdMask());
-		writeQ(buf, 0); // TODO! secondary slot?
-		writeDyeInfo(buf, ownerItem.getItemColor()); // 4 bytes
-	}
+  @Override
+  public void writeThisBlob(ByteBuffer buf) {
+    writeQ(buf, ItemSlot.getSlotFor(ownerItem.getItemTemplate().getItemSlot()).getSlotIdMask());
+    writeQ(buf, 0); // TODO! secondary slot?
+    writeDyeInfo(buf, ownerItem.getItemColor()); // 4 bytes
+  }
 
-	@Override
-	public int getSize() {
-		return 20;
-	}
+  @Override
+  public int getSize() {
+    return 20;
+  }
 }

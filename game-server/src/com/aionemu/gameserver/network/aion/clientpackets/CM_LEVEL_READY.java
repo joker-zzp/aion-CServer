@@ -31,77 +31,77 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_LEVEL_READY extends AionClientPacket {
 
-	public CM_LEVEL_READY(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_LEVEL_READY(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-	}
+  @Override
+  protected void readImpl() {
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
 
-		if (activePlayer.getActiveHouse() != null)
-			sendPacket(new SM_HOUSE_OBJECTS(activePlayer.getActiveHouse().getRegistry().getSpawnedObjects()));
-		if (activePlayer.isInInstance()) {
-			sendPacket(new SM_INSTANCE_COUNT_INFO(activePlayer.getWorldId(), activePlayer.getInstanceId()));
-		}
-		sendPacket(new SM_PLAYER_INFO(activePlayer));
-		activePlayer.getController().startProtectionActiveTask();
-		sendPacket(new SM_ACCOUNT_PROPERTIES());
-		sendPacket(new SM_MOTION(activePlayer.getObjectId(), activePlayer.getMotions().getActiveMotions()));
+    if (activePlayer.getActiveHouse() != null)
+      sendPacket(new SM_HOUSE_OBJECTS(activePlayer.getActiveHouse().getRegistry().getSpawnedObjects()));
+    if (activePlayer.isInInstance()) {
+      sendPacket(new SM_INSTANCE_COUNT_INFO(activePlayer.getWorldId(), activePlayer.getInstanceId()));
+    }
+    sendPacket(new SM_PLAYER_INFO(activePlayer));
+    activePlayer.getController().startProtectionActiveTask();
+    sendPacket(new SM_ACCOUNT_PROPERTIES());
+    sendPacket(new SM_MOTION(activePlayer.getObjectId(), activePlayer.getMotions().getActiveMotions()));
 
-		WindstreamTemplate template = DataManager.WINDSTREAM_DATA.getStreamTemplate(activePlayer.getPosition().getMapId());
-		if (template != null)
-			for (Location2D location : template.getLocations().getLocation()) {
-				sendPacket(new SM_WINDSTREAM_ANNOUNCE(location.getFlyPathType().getId(), template.getMapId(), location.getId(), location.getState()));
-			}
+    WindstreamTemplate template = DataManager.WINDSTREAM_DATA.getStreamTemplate(activePlayer.getPosition().getMapId());
+    if (template != null)
+      for (Location2D location : template.getLocations().getLocation()) {
+        sendPacket(new SM_WINDSTREAM_ANNOUNCE(location.getFlyPathType().getId(), template.getMapId(), location.getId(), location.getState()));
+      }
 
-		// Spawn player into the world.
-		World.getInstance().spawn(activePlayer);
+    // Spawn player into the world.
+    World.getInstance().spawn(activePlayer);
 
-		if (activePlayer.isInFlyState(FlyState.FLYING)) // notify client if we are still flying (client always ends flying after teleport)
-			activePlayer.getFlyController().startFly(true, true);
+    if (activePlayer.isInFlyState(FlyState.FLYING)) // notify client if we are still flying (client always ends flying after teleport)
+      activePlayer.getFlyController().startFly(true, true);
 
-		// SM_SHIELD_EFFECT, SM_ABYSS_ARTIFACT_INFO3
-		if (activePlayer.isInSiegeWorld()) {
-			SiegeService.getInstance().onEnterSiegeWorld(activePlayer);
-		}
+    // SM_SHIELD_EFFECT, SM_ABYSS_ARTIFACT_INFO3
+    if (activePlayer.isInSiegeWorld()) {
+      SiegeService.getInstance().onEnterSiegeWorld(activePlayer);
+    }
 
-		// SM_CONQUEROR_PROTECTOR
-		ConquerorAndProtectorService.getInstance().onEnterMap(activePlayer);
+    // SM_CONQUEROR_PROTECTOR
+    ConquerorAndProtectorService.getInstance().onEnterMap(activePlayer);
 
-		// SM_RIFT_ANNOUNCE
-		RiftInformer.sendRiftsInfo(activePlayer);
+    // SM_RIFT_ANNOUNCE
+    RiftInformer.sendRiftsInfo(activePlayer);
 
-		// SM_UPGRADE_ARCADE
-		if (EventsConfig.ENABLE_EVENT_ARCADE)
-			sendPacket(new SM_UPGRADE_ARCADE(true));
+    // SM_UPGRADE_ARCADE
+    if (EventsConfig.ENABLE_EVENT_ARCADE)
+      sendPacket(new SM_UPGRADE_ARCADE(true));
 
-		// SM_NEARBY_QUESTS
-		activePlayer.getController().updateNearbyQuests();
+    // SM_NEARBY_QUESTS
+    activePlayer.getController().updateNearbyQuests();
 
-		// SM_QUEST_REPEAT
-		activePlayer.getController().updateRepeatableQuests();
+    // SM_QUEST_REPEAT
+    activePlayer.getController().updateRepeatableQuests();
 
-		// Loading weather for the player's region
-		WeatherService.getInstance().loadWeather(activePlayer);
+    // Loading weather for the player's region
+    WeatherService.getInstance().loadWeather(activePlayer);
 
-		QuestEngine.getInstance().onEnterWorld(activePlayer);
+    QuestEngine.getInstance().onEnterWorld(activePlayer);
 
-		activePlayer.getController().onEnterWorld();
-		InstanceService.onEnterInstance(activePlayer);
-		activePlayer.getEffectController().updatePlayerEffectIcons(null);
-		sendPacket(SM_CUBE_UPDATE.cubeSize(StorageType.CUBE, activePlayer));
+    activePlayer.getController().onEnterWorld();
+    InstanceService.onEnterInstance(activePlayer);
+    activePlayer.getEffectController().updatePlayerEffectIcons(null);
+    sendPacket(SM_CUBE_UPDATE.cubeSize(StorageType.CUBE, activePlayer));
 
-		Pet pet = activePlayer.getPet();
-		if (pet != null && !pet.isSpawned())
-			World.getInstance().spawn(pet);
-		activePlayer.setPortAnimation(ArrivalAnimation.NONE);
+    Pet pet = activePlayer.getPet();
+    if (pet != null && !pet.isSpawned())
+      World.getInstance().spawn(pet);
+    activePlayer.setPortAnimation(ArrivalAnimation.NONE);
 
-		TownService.getInstance().onEnterWorld(activePlayer);
-		EventService.getInstance().onEnterMap(activePlayer);
-	}
+    TownService.getInstance().onEnterWorld(activePlayer);
+    EventService.getInstance().onEnterMap(activePlayer);
+  }
 }

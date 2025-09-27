@@ -18,35 +18,35 @@ import com.aionemu.gameserver.model.templates.stats.ModifiersTemplate;
 @XmlAccessorType(XmlAccessType.NONE)
 public class TitleTemplate implements StatOwner, L10n {
 
-	@XmlAttribute(name = "id", required = true)
-	private int titleId;
-	@XmlElement(name = "modifiers")
-	protected ModifiersTemplate modifiers;
-	@XmlAttribute(name = "race", required = true)
-	private Race race;
-	@XmlAttribute(name = "nameId")
-	private int nameId;
-	@XmlAttribute(name = "desc")
-	private String description;
+  @XmlAttribute(name = "id", required = true)
+  private int titleId;
+  @XmlElement(name = "modifiers")
+  protected ModifiersTemplate modifiers;
+  @XmlAttribute(name = "race", required = true)
+  private Race race;
+  @XmlAttribute(name = "nameId")
+  private int nameId;
+  @XmlAttribute(name = "desc")
+  private String description;
 
-	public int getTitleId() {
-		return titleId;
-	}
+  public int getTitleId() {
+    return titleId;
+  }
 
-	public Race getRace() {
-		return race;
-	}
+  public Race getRace() {
+    return race;
+  }
 
-	@Override
-	public int getL10nId() {
-		return nameId;
-	}
+  @Override
+  public int getL10nId() {
+    return nameId;
+  }
 
-	public String getDesc() {
-		return description;
-	}
+  public String getDesc() {
+    return description;
+  }
 
-	public List<StatFunction> getModifiers() {
-		return modifiers == null ? null : modifiers.getModifiers();
-	}
+  public List<StatFunction> getModifiers() {
+    return modifiers == null ? null : modifiers.getModifiers();
+  }
 }

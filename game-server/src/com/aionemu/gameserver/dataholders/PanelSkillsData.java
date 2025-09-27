@@ -16,24 +16,24 @@ import com.aionemu.gameserver.model.templates.panels.SkillPanel;
 @XmlRootElement(name = "polymorph_panels")
 public class PanelSkillsData {
 
-	@XmlElement(name = "panel")
-	protected List<SkillPanel> templates;
+  @XmlElement(name = "panel")
+  protected List<SkillPanel> templates;
 
-	@XmlTransient
-	private final Map<Integer, SkillPanel> skillPanels = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, SkillPanel> skillPanels = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
-		for (SkillPanel panel : templates) {
-			skillPanels.put(panel.getPanelId(), panel);
-		}
-		templates = null;
-	}
+  void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
+    for (SkillPanel panel : templates) {
+      skillPanels.put(panel.getPanelId(), panel);
+    }
+    templates = null;
+  }
 
-	public SkillPanel getSkillPanel(int id) {
-		return skillPanels.get(id);
-	}
+  public SkillPanel getSkillPanel(int id) {
+    return skillPanels.get(id);
+  }
 
-	public int size() {
-		return skillPanels.size();
-	}
+  public int size() {
+    return skillPanels.size();
+  }
 }

@@ -4,9 +4,9 @@ import javax.xml.bind.annotation.XmlEnum;
 
 @XmlEnum
 public enum StringFunction {
-	START_WITH,
-	END_WITH,
-	CONTAINS,
-	EQUALS;
+  START_WITH,
+  END_WITH,
+  CONTAINS,
+  EQUALS;
 
 }

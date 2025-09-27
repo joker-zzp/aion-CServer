@@ -7,7 +7,7 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  */
 public interface InstancePositionHandler {
 
-	void initialize(int mapId, int instanceId);
+  void initialize(int mapId, int instanceId);
 
-	void port(Player player, int zone, int position);
+  void port(Player player, int zone, int position);
 }

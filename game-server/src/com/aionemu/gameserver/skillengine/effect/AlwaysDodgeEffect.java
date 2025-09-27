@@ -15,24 +15,24 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "AlwaysDodgeEffect")
 public class AlwaysDodgeEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void startEffect(final Effect effect) {
-		effect.addObserver(effect.getEffected(), new AttackStatusObserver(value, AttackStatus.DODGE) {
+  @Override
+  public void startEffect(final Effect effect) {
+    effect.addObserver(effect.getEffected(), new AttackStatusObserver(value, AttackStatus.DODGE) {
 
-			@Override
-			public boolean checkStatus(AttackStatus status) {
-				if (status == AttackStatus.DODGE) {
-					if (--value <= 0)
-						effect.endEffect();
-					return true;
-				}
-				return false;
-			}
-		});
-	}
+      @Override
+      public boolean checkStatus(AttackStatus status) {
+        if (status == AttackStatus.DODGE) {
+          if (--value <= 0)
+            effect.endEffect();
+          return true;
+        }
+        return false;
+      }
+    });
+  }
 }

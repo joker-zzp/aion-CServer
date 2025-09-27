@@ -13,49 +13,49 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
  */
 public class _2488PretorsInBeluslan extends AbstractQuestHandler {
 
-	public _2488PretorsInBeluslan() {
-		super(2488);
-	}
+  public _2488PretorsInBeluslan() {
+    super(2488);
+  }
 
-	@Override
-	public void register() {
-		qe.registerQuestNpc(204053).addOnQuestStart(questId);
-		qe.registerQuestNpc(204208).addOnTalkEvent(questId);
-		qe.registerQuestNpc(204702).addOnTalkEvent(questId);
-	}
+  @Override
+  public void register() {
+    qe.registerQuestNpc(204053).addOnQuestStart(questId);
+    qe.registerQuestNpc(204208).addOnTalkEvent(questId);
+    qe.registerQuestNpc(204702).addOnTalkEvent(questId);
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		int dialogActionId = env.getDialogActionId();
-		int targetId = env.getTargetId();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    int dialogActionId = env.getDialogActionId();
+    int targetId = env.getTargetId();
 
-		if (qs == null || qs.isStartable()) {
-			if (targetId == 204053) {
-				if (dialogActionId == QUEST_SELECT) {
-					return sendQuestDialog(env, 1011);
-				} else {
-					return sendQuestStartDialog(env);
-				}
-			}
-		} else if (qs.getStatus() == QuestStatus.START) {
-			if (targetId == 204208) {
-				if (dialogActionId == QUEST_SELECT) {
-					return sendQuestDialog(env, 1352);
-				} else if (dialogActionId == SETPRO1) {
-					qs.setQuestVar(1);
-					return defaultCloseDialog(env, 1, 1, true, false);
-				}
-			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 204702) {
-				if (dialogActionId == USE_OBJECT) {
-					return sendQuestDialog(env, 2375);
-				}
-				return sendQuestEndDialog(env);
-			}
-		}
-		return false;
-	}
+    if (qs == null || qs.isStartable()) {
+      if (targetId == 204053) {
+        if (dialogActionId == QUEST_SELECT) {
+          return sendQuestDialog(env, 1011);
+        } else {
+          return sendQuestStartDialog(env);
+        }
+      }
+    } else if (qs.getStatus() == QuestStatus.START) {
+      if (targetId == 204208) {
+        if (dialogActionId == QUEST_SELECT) {
+          return sendQuestDialog(env, 1352);
+        } else if (dialogActionId == SETPRO1) {
+          qs.setQuestVar(1);
+          return defaultCloseDialog(env, 1, 1, true, false);
+        }
+      }
+    } else if (qs.getStatus() == QuestStatus.REWARD) {
+      if (targetId == 204702) {
+        if (dialogActionId == USE_OBJECT) {
+          return sendQuestDialog(env, 2375);
+        }
+        return sendQuestEndDialog(env);
+      }
+    }
+    return false;
+  }
 }

@@ -11,26 +11,26 @@ import com.aionemu.chatserver.network.netty.handler.ClientChannelHandler;
  */
 public class SM_CHANNEL_MESSAGE extends AbstractServerPacket {
 
-	private final Message message;
+  private final Message message;
 
-	public SM_CHANNEL_MESSAGE(Message message) {
-		super((byte) 0x1A);
-		this.message = message;
-	}
+  public SM_CHANNEL_MESSAGE(Message message) {
+    super((byte) 0x1A);
+    this.message = message;
+  }
 
-	@Override
-	protected void writeImpl(ClientChannelHandler cHandler, ChannelBuffer buf) {
-		writeC(buf, getOpCode());
-		writeC(buf, 0x00);
-		writeD(buf, 0x00);
-		writeD(buf, 0x00);
-		writeD(buf, message.getChannel().getChannelId());
-		writeD(buf, message.getSender().getClientId());
-		writeD(buf, 0x00);
-		writeC(buf, 0x00);
-		writeH(buf, message.getSender().getIdentifier().length / 2);
-		writeB(buf, message.getSender().getIdentifier());
-		writeH(buf, message.size() / 2);
-		writeB(buf, message.getText());
-	}
+  @Override
+  protected void writeImpl(ClientChannelHandler cHandler, ChannelBuffer buf) {
+    writeC(buf, getOpCode());
+    writeC(buf, 0x00);
+    writeD(buf, 0x00);
+    writeD(buf, 0x00);
+    writeD(buf, message.getChannel().getChannelId());
+    writeD(buf, message.getSender().getClientId());
+    writeD(buf, 0x00);
+    writeC(buf, 0x00);
+    writeH(buf, message.getSender().getIdentifier().length / 2);
+    writeB(buf, message.getSender().getIdentifier());
+    writeH(buf, message.size() / 2);
+    writeB(buf, message.getText());
+  }
 }

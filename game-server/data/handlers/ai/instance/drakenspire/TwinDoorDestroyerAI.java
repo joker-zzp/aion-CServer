@@ -16,44 +16,44 @@ import ai.GeneralNpcAI;
 @AIName("twin_door_destroyer")
 public class TwinDoorDestroyerAI extends GeneralNpcAI {
 
-	private AtomicBoolean isGateReached = new AtomicBoolean();
+  private AtomicBoolean isGateReached = new AtomicBoolean();
 
-	public TwinDoorDestroyerAI(Npc owner) {
-		super(owner);
-	}
+  public TwinDoorDestroyerAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void handleSpawned() {
-		super.handleSpawned();
-		removeTrap();
-		PacketSendUtility.broadcastMessage(getOwner(), 1501309, 2500);
-	}
+  @Override
+  public void handleSpawned() {
+    super.handleSpawned();
+    removeTrap();
+    PacketSendUtility.broadcastMessage(getOwner(), 1501309, 2500);
+  }
 
-	@Override
-	public void handleMoveArrived() {
-		super.handleMoveArrived();
-		if (getOwner().getMoveController().isStop()) {
-			if (isGateReached.compareAndSet(false, true)) {
-				PacketSendUtility.broadcastMessage(getOwner(), 1501310);
-				scheduleGateAttack();
-			}
-		}
-	}
+  @Override
+  public void handleMoveArrived() {
+    super.handleMoveArrived();
+    if (getOwner().getMoveController().isStop()) {
+      if (isGateReached.compareAndSet(false, true)) {
+        PacketSendUtility.broadcastMessage(getOwner(), 1501310);
+        scheduleGateAttack();
+      }
+    }
+  }
 
-	private void removeTrap() {
-		ThreadPoolManager.getInstance().schedule(() -> {
-			for (Npc npc : getOwner().getPosition().getWorldMapInstance().getNpcs(207128, 207129))
-				npc.getController().delete();
-		}, 1500);
-	}
+  private void removeTrap() {
+    ThreadPoolManager.getInstance().schedule(() -> {
+      for (Npc npc : getOwner().getPosition().getWorldMapInstance().getNpcs(207128, 207129))
+        npc.getController().delete();
+    }, 1500);
+  }
 
-	private void scheduleGateAttack() {
-		ThreadPoolManager.getInstance().schedule(() -> {
-			for (Npc npc : getOwner().getPosition().getWorldMapInstance().getNpcs(731580)) {
-				if (isInRange(npc, 10))
-					SkillEngine.getInstance().getSkill(npc, 20840, 1, npc).useWithoutPropSkill();
-			}
-			PacketSendUtility.broadcastMessage(getOwner(), 1501311);
-		}, 3500);
-	}
+  private void scheduleGateAttack() {
+    ThreadPoolManager.getInstance().schedule(() -> {
+      for (Npc npc : getOwner().getPosition().getWorldMapInstance().getNpcs(731580)) {
+        if (isInRange(npc, 10))
+          SkillEngine.getInstance().getSkill(npc, 20840, 1, npc).useWithoutPropSkill();
+      }
+      PacketSendUtility.broadcastMessage(getOwner(), 1501311);
+    }, 3500);
+  }
 }

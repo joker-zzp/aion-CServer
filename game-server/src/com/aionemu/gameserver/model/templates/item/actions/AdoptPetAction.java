@@ -10,34 +10,34 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  */
 public class AdoptPetAction extends AbstractItemAction {
 
-	@XmlAttribute(name = "petId")
-	private int petId;
+  @XmlAttribute(name = "petId")
+  private int petId;
 
-	@XmlAttribute(name = "minutes")
-	private int expireMinutes;
+  @XmlAttribute(name = "minutes")
+  private int expireMinutes;
 
-	@XmlAttribute(name = "sidekick")
-	private Boolean isSideKick = false;
+  @XmlAttribute(name = "sidekick")
+  private Boolean isSideKick = false;
 
-	@Override
-	public boolean canAct(Player player, Item parentItem, Item targetItem, Object... params) {
-		return false;
-	}
+  @Override
+  public boolean canAct(Player player, Item parentItem, Item targetItem, Object... params) {
+    return false;
+  }
 
-	@Override
-	public void act(Player player, Item parentItem, Item targetItem, Object... params) {
-	}
+  @Override
+  public void act(Player player, Item parentItem, Item targetItem, Object... params) {
+  }
 
-	public int getPetId() {
-		return petId;
-	}
+  public int getPetId() {
+    return petId;
+  }
 
-	public int getExpireMinutes() {
-		return expireMinutes;
-	}
+  public int getExpireMinutes() {
+    return expireMinutes;
+  }
 
-	public Boolean isSideKick() {
-		return isSideKick;
-	}
+  public Boolean isSideKick() {
+    return isSideKick;
+  }
 
 }

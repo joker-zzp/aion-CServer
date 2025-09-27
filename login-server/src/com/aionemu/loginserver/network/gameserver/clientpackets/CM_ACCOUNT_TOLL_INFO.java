@@ -8,17 +8,17 @@ import com.aionemu.loginserver.network.gameserver.GsClientPacket;
  */
 public class CM_ACCOUNT_TOLL_INFO extends GsClientPacket {
 
-	private int accountId;
-	private long toll;
+  private int accountId;
+  private long toll;
 
-	@Override
-	protected void readImpl() {
-		accountId = readD();
-		toll = readQ();
-	}
+  @Override
+  protected void readImpl() {
+    accountId = readD();
+    toll = readQ();
+  }
 
-	@Override
-	protected void runImpl() {
-		PremiumDAO.updatePoints(accountId, toll, 0);
-	}
+  @Override
+  protected void runImpl() {
+    PremiumDAO.updatePoints(accountId, toll, 0);
+  }
 }

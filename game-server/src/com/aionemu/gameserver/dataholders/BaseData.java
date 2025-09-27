@@ -16,14 +16,14 @@ import com.aionemu.gameserver.model.templates.base.BaseTemplate;
 @XmlRootElement(name = "base_locations")
 public class BaseData {
 
-	@XmlElement(name = "base_location")
-	private List<BaseTemplate> baseTemplates;
+  @XmlElement(name = "base_location")
+  private List<BaseTemplate> baseTemplates;
 
-	public int size() {
-		return baseTemplates.size();
-	}
+  public int size() {
+    return baseTemplates.size();
+  }
 
-	public List<BaseTemplate> getAllBaseTemplates() {
-		return baseTemplates;
-	}
+  public List<BaseTemplate> getAllBaseTemplates() {
+    return baseTemplates;
+  }
 }

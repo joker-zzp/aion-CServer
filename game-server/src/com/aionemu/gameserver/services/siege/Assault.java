@@ -19,59 +19,59 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public abstract class Assault<SiegeType extends Siege<?>> {
 
-	private final AtomicBoolean isStarted = new AtomicBoolean();
-	protected final SiegeLocation siegeLocation;
-	protected final SiegeNpc boss;
-	protected final int locationId;
-	protected final int worldId;
+  private final AtomicBoolean isStarted = new AtomicBoolean();
+  protected final SiegeLocation siegeLocation;
+  protected final SiegeNpc boss;
+  protected final int locationId;
+  protected final int worldId;
 
-	protected Future<?> dredgionTask, spawnTask;
+  protected Future<?> dredgionTask, spawnTask;
 
-	public Assault(SiegeType siege) {
-		this.siegeLocation = siege.getSiegeLocation();
-		this.boss = siege.getBoss();
-		this.locationId = siege.getSiegeLocationId();
-		this.worldId = siege.getSiegeLocation().getWorldId();
-	}
+  public Assault(SiegeType siege) {
+    this.siegeLocation = siege.getSiegeLocation();
+    this.boss = siege.getBoss();
+    this.locationId = siege.getSiegeLocationId();
+    this.worldId = siege.getSiegeLocation().getWorldId();
+  }
 
-	public int getWorldId() {
-		return worldId;
-	}
+  public int getWorldId() {
+    return worldId;
+  }
 
-	public void startAssault(int delay) {
-		if (isStarted.compareAndSet(false, true))
-			dredgionTask = ThreadPoolManager.getInstance().schedule(this::handleAssault, delay, TimeUnit.SECONDS);
-	}
+  public void startAssault(int delay) {
+    if (isStarted.compareAndSet(false, true))
+      dredgionTask = ThreadPoolManager.getInstance().schedule(this::handleAssault, delay, TimeUnit.SECONDS);
+  }
 
-	public void finishAssault(boolean captured) {
-		if (dredgionTask != null && !dredgionTask.isDone())
-			dredgionTask.cancel(true);
-		if (spawnTask != null && !spawnTask.isDone())
-			spawnTask.cancel(true);
+  public void finishAssault(boolean captured) {
+    if (dredgionTask != null && !dredgionTask.isDone())
+      dredgionTask.cancel(true);
+    if (spawnTask != null && !spawnTask.isDone())
+      spawnTask.cancel(true);
 
-		onAssaultFinish(captured && siegeLocation.getRace() == SiegeRace.BALAUR);
-	}
+    onAssaultFinish(captured && siegeLocation.getRace() == SiegeRace.BALAUR);
+  }
 
-	protected abstract void onAssaultFinish(boolean captured);
+  protected abstract void onAssaultFinish(boolean captured);
 
-	protected abstract void handleAssault();
+  protected abstract void handleAssault();
 
-	protected void spawnAssaulter(Assaulter a, SiegeNpc target) {
-		int headingOffset = a.getHeadingOffset() * 10;
-		float randomDirection = Rnd.get(-headingOffset, headingOffset) / 10f + target.getSpawn().getHeading();
-		double radian = Math.toRadians(randomDirection * 3d);
-		float x1 = (float) (target.getX() + Math.cos(radian) * a.getDistanceOffset());
-		float y1 = (float) (target.getY() + Math.sin(radian) * a.getDistanceOffset());
+  protected void spawnAssaulter(Assaulter a, SiegeNpc target) {
+    int headingOffset = a.getHeadingOffset() * 10;
+    float randomDirection = Rnd.get(-headingOffset, headingOffset) / 10f + target.getSpawn().getHeading();
+    double radian = Math.toRadians(randomDirection * 3d);
+    float x1 = (float) (target.getX() + Math.cos(radian) * a.getDistanceOffset());
+    float y1 = (float) (target.getY() + Math.sin(radian) * a.getDistanceOffset());
 
-		Npc spawned = (Npc) SpawnEngine.spawnObject(SpawnEngine.newSiegeSpawn(getWorldId(), a.getNpcId(), locationId, SiegeRace.BALAUR,
-			SiegeModType.ASSAULT, x1, y1, target.getZ() + 0.5f, (byte) 0), 1);
-		spawned.getAggroList().addHate(target, 100000);
-	}
+    Npc spawned = (Npc) SpawnEngine.spawnObject(SpawnEngine.newSiegeSpawn(getWorldId(), a.getNpcId(), locationId, SiegeRace.BALAUR,
+      SiegeModType.ASSAULT, x1, y1, target.getZ() + 0.5f, (byte) 0), 1);
+    spawned.getAggroList().addHate(target, 100000);
+  }
 
-	protected String getBossNpcL10n() {
-		if (boss != null && boss.getObjectTemplate() != null)
-			return boss.getObjectTemplate().getL10n();
-		return "";
-	}
+  protected String getBossNpcL10n() {
+    if (boss != null && boss.getObjectTemplate() != null)
+      return boss.getObjectTemplate().getL10n();
+    return "";
+  }
 
 }

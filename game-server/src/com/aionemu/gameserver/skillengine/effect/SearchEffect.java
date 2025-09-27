@@ -18,31 +18,31 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @XmlType(name = "SearchEffect")
 public class SearchEffect extends EffectTemplate {
 
-	@XmlAttribute
-	protected CreatureSeeState state;
+  @XmlAttribute
+  protected CreatureSeeState state;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		Creature effected = effect.getEffected();
+  @Override
+  public void endEffect(Effect effect) {
+    Creature effected = effect.getEffected();
 
-		effected.unsetSeeState(state);
-		effected.updateKnownlist();
+    effected.unsetSeeState(state);
+    effected.updateKnownlist();
 
-		PacketSendUtility.broadcastPacketAndReceive(effected, new SM_PLAYER_STATE(effected));
-	}
+    PacketSendUtility.broadcastPacketAndReceive(effected, new SM_PLAYER_STATE(effected));
+  }
 
-	@Override
-	public void startEffect(final Effect effect) {
-		Creature effected = effect.getEffected();
+  @Override
+  public void startEffect(final Effect effect) {
+    Creature effected = effect.getEffected();
 
-		effected.setSeeState(state);
-		effected.updateKnownlist();
+    effected.setSeeState(state);
+    effected.updateKnownlist();
 
-		PacketSendUtility.broadcastPacketAndReceive(effected, new SM_PLAYER_STATE(effected));
-	}
+    PacketSendUtility.broadcastPacketAndReceive(effected, new SM_PLAYER_STATE(effected));
+  }
 }

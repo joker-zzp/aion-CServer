@@ -19,46 +19,46 @@ import ai.GeneralNpcAI;
 @AIName("orissans_summon")
 public class OrissansSummonAI extends GeneralNpcAI {
 
-	private final AtomicBoolean isActive = new AtomicBoolean();
+  private final AtomicBoolean isActive = new AtomicBoolean();
 
-	public OrissansSummonAI(Npc owner) {
-		super(owner);
-	}
+  public OrissansSummonAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public float modifyDamage(Creature attacker, float damage, Effect effect) {
-		if (attacker != getOwner() && attacker instanceof Npc) {
-			if (isActive.compareAndSet(false, true)) {
-				ThreadPoolManager.getInstance().schedule(() -> {
-					if (getNpcId() == 855699) {
-						AIActions.targetSelf(this);
-						AIActions.useSkill(this, 21638, 67);
-					} else {
-						AIActions.targetCreature(this, attacker);
-						AIActions.useSkill(this, 21639, 13);
-					}
-				}, 1000);
-			}
-			return 10000;
-		}
-		return damage;
-	}
+  @Override
+  public float modifyDamage(Creature attacker, float damage, Effect effect) {
+    if (attacker != getOwner() && attacker instanceof Npc) {
+      if (isActive.compareAndSet(false, true)) {
+        ThreadPoolManager.getInstance().schedule(() -> {
+          if (getNpcId() == 855699) {
+            AIActions.targetSelf(this);
+            AIActions.useSkill(this, 21638, 67);
+          } else {
+            AIActions.targetCreature(this, attacker);
+            AIActions.useSkill(this, 21639, 13);
+          }
+        }, 1000);
+      }
+      return 10000;
+    }
+    return damage;
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		getOwner().getController().die();
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    getOwner().getController().die();
+  }
 
-	@Override
-	protected void handleBackHome() {
-	}
+  @Override
+  protected void handleBackHome() {
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case IS_IMMUNE_TO_ABNORMAL_STATES -> true;
-			case REWARD_AP_XP_DP_LOOT -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case IS_IMMUNE_TO_ABNORMAL_STATES -> true;
+      case REWARD_AP_XP_DP_LOOT -> false;
+      default -> super.ask(question);
+    };
+  }
 }

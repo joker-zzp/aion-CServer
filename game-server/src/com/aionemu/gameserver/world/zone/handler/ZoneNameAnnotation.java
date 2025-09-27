@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface ZoneNameAnnotation {
 
-	String value();
+  String value();
 
-	int questId() default 0;
+  int questId() default 0;
 }

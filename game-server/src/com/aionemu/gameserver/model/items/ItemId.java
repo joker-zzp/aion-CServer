@@ -5,8 +5,8 @@ package com.aionemu.gameserver.model.items;
  */
 public class ItemId {
 
-	public static final int KINAH = 182400001;
+  public static final int KINAH = 182400001;
 
-	private ItemId() {
-	}
+  private ItemId() {
+  }
 }

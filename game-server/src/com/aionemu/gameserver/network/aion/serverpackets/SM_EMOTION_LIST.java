@@ -9,32 +9,32 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
 
 public class SM_EMOTION_LIST extends AionServerPacket {
 
-	byte action;
-	Collection<Emotion> emotions;
+  byte action;
+  Collection<Emotion> emotions;
 
-	/**
-	 * @param action
-	 */
-	public SM_EMOTION_LIST(byte action, Collection<Emotion> emotions) {
-		this.action = action;
-		this.emotions = emotions;
-	}
+  /**
+   * @param action
+   */
+  public SM_EMOTION_LIST(byte action, Collection<Emotion> emotions) {
+    this.action = action;
+    this.emotions = emotions;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(action);
-		if (con.getActivePlayer().hasPermission(MembershipConfig.EMOTIONS_ALL)) {
-			writeH(86);
-			for (int i = 0; i < 86; i++) {
-				writeD(64 + i);
-				writeH(0x00);
-			}
-		} else {
-			writeH(emotions.size());
-			for (Emotion emotion : emotions) {
-				writeD(emotion.getId());
-				writeH(emotion.secondsUntilExpiration());
-			}
-		}
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(action);
+    if (con.getActivePlayer().hasPermission(MembershipConfig.EMOTIONS_ALL)) {
+      writeH(86);
+      for (int i = 0; i < 86; i++) {
+        writeD(64 + i);
+        writeH(0x00);
+      }
+    } else {
+      writeH(emotions.size());
+      for (Emotion emotion : emotions) {
+        writeD(emotion.getId());
+        writeH(emotion.secondsUntilExpiration());
+      }
+    }
+  }
 }

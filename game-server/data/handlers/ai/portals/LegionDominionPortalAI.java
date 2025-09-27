@@ -26,97 +26,97 @@ import com.aionemu.gameserver.world.WorldMapInstance;
 @AIName("legion_dominion_portal")
 public class LegionDominionPortalAI extends PortalDialogAI {
 
-	public LegionDominionPortalAI(Npc owner) {
-		super(owner);
-	}
+  public LegionDominionPortalAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		if (dialogActionId != SETPRO1) {
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
-			return true;
-		}
-		ZonedDateTime now = ServerTime.now();
-		if (now.getDayOfWeek() == DayOfWeek.WEDNESDAY && now.getHour() >= 8 && now.getHour() <= 10) {
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_INSTANCE_CLOSED_TIME(301500000));
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
-			return true;
-		}
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    if (dialogActionId != SETPRO1) {
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
+      return true;
+    }
+    ZonedDateTime now = ServerTime.now();
+    if (now.getDayOfWeek() == DayOfWeek.WEDNESDAY && now.getHour() >= 8 && now.getHour() <= 10) {
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_INSTANCE_CLOSED_TIME(301500000));
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
+      return true;
+    }
 
-		if (player.getLevel() < 65) {
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CANT_INSTANCE_ENTER_LEVEL());
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
-			return true;
-		}
+    if (player.getLevel() < 65) {
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CANT_INSTANCE_ENTER_LEVEL());
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
+      return true;
+    }
 
-		if (player.isInAlliance() && !player.isInLeague()) {
-			PortalPath portalPath = DataManager.PORTAL2_DATA.getPortalDialogPath(getNpcId(), dialogActionId, player);
-			WorldMapInstance instance = InstanceService.getRegisteredInstance(301500000, player.getPlayerAlliance().getObjectId());
-			if (portalPath == null) {
-				PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_NEW_MAP_INFO_CANT_FIND_INSTANCE());
-				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
-				return true;
-			}
-			if (instance == null) {
-				if (hasCd(player)) {
-					return true;
-				}
-				// only alliance leader can open this instance
-				if (player.getPlayerAlliance().isSomeCaptain(player) && player.getLegion() != null && player.getLegion().getCurrentLegionDominion() > 0) {
-					if (!LegionConfig.REQUIRE_KEY_FOR_STONESPEAR_REACH || player.getInventory().decreaseByItemId(185000230, 1)) {
-						PortalService.port(portalPath, player, getOwner());
-						return true;
-					} else {
-						PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_INSTANCE_CANT_ENTER_WITHOUT_ITEM());
-						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
-						return true;
-					}
-				} else {
-					PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CANT_INSTANCE_NOT_LEADER());
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
-					return true;
-				}
-			} else if (!instance.isRegistered(player.getObjectId())) {
-				if (hasCd(player)) {
-					return true;
-				}
-				InstanceHandler handler = instance.getInstanceHandler();
+    if (player.isInAlliance() && !player.isInLeague()) {
+      PortalPath portalPath = DataManager.PORTAL2_DATA.getPortalDialogPath(getNpcId(), dialogActionId, player);
+      WorldMapInstance instance = InstanceService.getRegisteredInstance(301500000, player.getPlayerAlliance().getObjectId());
+      if (portalPath == null) {
+        PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_NEW_MAP_INFO_CANT_FIND_INSTANCE());
+        PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
+        return true;
+      }
+      if (instance == null) {
+        if (hasCd(player)) {
+          return true;
+        }
+        // only alliance leader can open this instance
+        if (player.getPlayerAlliance().isSomeCaptain(player) && player.getLegion() != null && player.getLegion().getCurrentLegionDominion() > 0) {
+          if (!LegionConfig.REQUIRE_KEY_FOR_STONESPEAR_REACH || player.getInventory().decreaseByItemId(185000230, 1)) {
+            PortalService.port(portalPath, player, getOwner());
+            return true;
+          } else {
+            PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_INSTANCE_CANT_ENTER_WITHOUT_ITEM());
+            PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
+            return true;
+          }
+        } else {
+          PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CANT_INSTANCE_NOT_LEADER());
+          PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
+          return true;
+        }
+      } else if (!instance.isRegistered(player.getObjectId())) {
+        if (hasCd(player)) {
+          return true;
+        }
+        InstanceHandler handler = instance.getInstanceHandler();
 
-				if (handler != null && handler.canEnter(player)) {
-					PortalService.port(portalPath, player, getOwner());
-				} else {
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
-					return true;
-				}
-			} else if (instance.isRegistered(player.getObjectId())) {
-				InstanceHandler handler = instance.getInstanceHandler();
+        if (handler != null && handler.canEnter(player)) {
+          PortalService.port(portalPath, player, getOwner());
+        } else {
+          PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
+          return true;
+        }
+      } else if (instance.isRegistered(player.getObjectId())) {
+        InstanceHandler handler = instance.getInstanceHandler();
 
-				if (handler != null && handler.canEnter(player)) {
-					PortalService.port(portalPath, player, getOwner());
-				} else {
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
-					return true;
-				}
-				return true;
-			} else {
-				PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CANT_INSTANCE_ENTER_STATE());
-				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
-				return true;
-			}
-		} else {
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_ENTER_ONLY_FORCE_DON());
-		}
+        if (handler != null && handler.canEnter(player)) {
+          PortalService.port(portalPath, player, getOwner());
+        } else {
+          PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
+          return true;
+        }
+        return true;
+      } else {
+        PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CANT_INSTANCE_ENTER_STATE());
+        PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
+        return true;
+      }
+    } else {
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_ENTER_ONLY_FORCE_DON());
+    }
 
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
-		return true;
-	}
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0, questId));
+    return true;
+  }
 
-	private boolean hasCd(Player player) {
-		if (player.getPortalCooldownList().isPortalUseDisabled(301500000)) {
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CANNOT_MAKE_INSTANCE_COOL_TIME());
-			return true;
-		}
-		return false;
-	}
+  private boolean hasCd(Player player) {
+    if (player.getPortalCooldownList().isPortalUseDisabled(301500000)) {
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CANNOT_MAKE_INSTANCE_COOL_TIME());
+      return true;
+    }
+    return false;
+  }
 }

@@ -14,41 +14,41 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("siege_shieldnpc")
 public class ShieldNpcAI extends SiegeNpcAI {
 
-	public ShieldNpcAI(Npc owner) {
-		super(owner);
-	}
+  public ShieldNpcAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean canThink() {
-		// prevent field stone from resetting
-		return getOwner().getRace() != Race.CONSTRUCT;
-	}
+  @Override
+  public boolean canThink() {
+    // prevent field stone from resetting
+    return getOwner().getRace() != Race.CONSTRUCT;
+  }
 
-	@Override
-	protected void handleDespawned() {
-		updateFortressShieldStatus(false);
-		super.handleDespawned();
-	}
+  @Override
+  protected void handleDespawned() {
+    updateFortressShieldStatus(false);
+    super.handleDespawned();
+  }
 
-	@Override
-	protected void handleSpawned() {
-		updateFortressShieldStatus(true);
-		super.handleSpawned();
-	}
+  @Override
+  protected void handleSpawned() {
+    updateFortressShieldStatus(true);
+    super.handleSpawned();
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case REWARD_AP_XP_DP_LOOT, REWARD_AP -> true;
-			case REWARD_LOOT, ALLOW_RESPAWN -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case REWARD_AP_XP_DP_LOOT, REWARD_AP -> true;
+      case REWARD_LOOT, ALLOW_RESPAWN -> false;
+      default -> super.ask(question);
+    };
+  }
 
-	private void updateFortressShieldStatus(boolean hasShield) {
-		int siegeLocationId = getSpawnTemplate().getSiegeId();
-		SiegeService.getInstance().getFortress(siegeLocationId).setUnderShield(hasShield);
-		PacketSendUtility.broadcastToMap(getPosition().getWorldMapInstance(), new SM_SHIELD_EFFECT(siegeLocationId));
-	}
+  private void updateFortressShieldStatus(boolean hasShield) {
+    int siegeLocationId = getSpawnTemplate().getSiegeId();
+    SiegeService.getInstance().getFortress(siegeLocationId).setUnderShield(hasShield);
+    PacketSendUtility.broadcastToMap(getPosition().getWorldMapInstance(), new SM_SHIELD_EFFECT(siegeLocationId));
+  }
 
 }

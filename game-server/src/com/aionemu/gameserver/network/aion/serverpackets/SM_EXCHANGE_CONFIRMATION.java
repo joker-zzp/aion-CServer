@@ -8,14 +8,14 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_EXCHANGE_CONFIRMATION extends AionServerPacket {
 
-	private int action;
+  private int action;
 
-	public SM_EXCHANGE_CONFIRMATION(int action) {
-		this.action = action;
-	}
+  public SM_EXCHANGE_CONFIRMATION(int action) {
+    this.action = action;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(action);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(action);
+  }
 }

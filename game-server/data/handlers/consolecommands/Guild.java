@@ -19,22 +19,22 @@ import com.aionemu.gameserver.world.World;
  */
 public class Guild extends ConsoleCommand {
 
-	public Guild() {
-		super("guild", "Displays info about given player's legion.");
-	}
+  public Guild() {
+    super("guild", "Displays info about given player's legion.");
+  }
 
-	@Override
-	protected void execute(Player admin, String... params) {
-		Player target = params.length > 0 ? World.getInstance().getPlayer(params[0]) : null;
-		if (target != null) {
-			Legion legion = target.getLegion();
-			if (target.getLegion() != null) {
-				PacketSendUtility.sendPacket(admin, new SM_GM_SHOW_LEGION_INFO(legion));
-				List<LegionMemberEx> allMembers = LegionService.getInstance().loadLegionMemberExList(legion, null);
-				SplitList<LegionMemberEx> legionMemberSplitList = new FixedElementCountSplitList<>(allMembers, true, 80);
-				legionMemberSplitList.forEach(part -> PacketSendUtility.sendPacket(admin,
-					new SM_GM_SHOW_LEGION_MEMBERLIST(part, part.isFirst(), part.isLast())));
-			}
-		}
-	}
+  @Override
+  protected void execute(Player admin, String... params) {
+    Player target = params.length > 0 ? World.getInstance().getPlayer(params[0]) : null;
+    if (target != null) {
+      Legion legion = target.getLegion();
+      if (target.getLegion() != null) {
+        PacketSendUtility.sendPacket(admin, new SM_GM_SHOW_LEGION_INFO(legion));
+        List<LegionMemberEx> allMembers = LegionService.getInstance().loadLegionMemberExList(legion, null);
+        SplitList<LegionMemberEx> legionMemberSplitList = new FixedElementCountSplitList<>(allMembers, true, 80);
+        legionMemberSplitList.forEach(part -> PacketSendUtility.sendPacket(admin,
+          new SM_GM_SHOW_LEGION_MEMBERLIST(part, part.isFirst(), part.isLast())));
+      }
+    }
+  }
 }

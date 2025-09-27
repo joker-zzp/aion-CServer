@@ -12,31 +12,31 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "PortalItem")
 public class PortalItem {
 
-	@XmlAttribute(name = "id")
-	protected int id;
-	@XmlAttribute(name = "itemid")
-	protected int itemid;
-	@XmlAttribute(name = "quantity")
-	protected int quantity;
+  @XmlAttribute(name = "id")
+  protected int id;
+  @XmlAttribute(name = "itemid")
+  protected int itemid;
+  @XmlAttribute(name = "quantity")
+  protected int quantity;
 
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+  /**
+   * @return the id
+   */
+  public int getId() {
+    return id;
+  }
 
-	/**
-	 * @return the itemid
-	 */
-	public int getItemid() {
-		return itemid;
-	}
+  /**
+   * @return the itemid
+   */
+  public int getItemid() {
+    return itemid;
+  }
 
-	/**
-	 * @return the quantity
-	 */
-	public int getQuantity() {
-		return quantity;
-	}
+  /**
+   * @return the quantity
+   */
+  public int getQuantity() {
+    return quantity;
+  }
 }

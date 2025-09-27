@@ -12,13 +12,13 @@ import ai.AggressiveNpcAI;
 @AIName("aggrorunner")
 public class WalkAggroRunnerAI extends AggressiveNpcAI {
 
-	public WalkAggroRunnerAI(Npc owner) {
-		super(owner);
-	}
+  public WalkAggroRunnerAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleMoveArrived() {
-		super.handleMoveArrived();
-		getOwner().setState(CreatureState.WEAPON_EQUIPPED);
-	}
+  @Override
+  protected void handleMoveArrived() {
+    super.handleMoveArrived();
+    getOwner().setState(CreatureState.WEAPON_EQUIPPED);
+  }
 }

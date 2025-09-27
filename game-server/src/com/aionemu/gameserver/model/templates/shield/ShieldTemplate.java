@@ -9,38 +9,38 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "Shield")
 public class ShieldTemplate {
 
-	@XmlAttribute(name = "name")
-	protected String name;
+  @XmlAttribute(name = "name")
+  protected String name;
 
-	@XmlAttribute(name = "map")
-	protected int map;
+  @XmlAttribute(name = "map")
+  protected int map;
 
-	@XmlAttribute(name = "id")
-	protected int id;
+  @XmlAttribute(name = "id")
+  protected int id;
 
-	@XmlAttribute(name = "radius")
-	protected float radius;
+  @XmlAttribute(name = "radius")
+  protected float radius;
 
-	@XmlElement(name = "center")
-	protected ShieldPoint center;
+  @XmlElement(name = "center")
+  protected ShieldPoint center;
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public int getMap() {
-		return map;
-	}
+  public int getMap() {
+    return map;
+  }
 
-	public float getRadius() {
-		return radius;
-	}
+  public float getRadius() {
+    return radius;
+  }
 
-	public ShieldPoint getCenter() {
-		return center;
-	}
+  public ShieldPoint getCenter() {
+    return center;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 }

@@ -15,17 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "MercenarySpawn")
 public class MercenarySpawn {
 
-	@XmlAttribute(name = "siege_id")
-	private int siegeId;
-	@XmlElement(name = "mercenary_race")
-	private List<MercenaryRace> mercenaryRaces;
+  @XmlAttribute(name = "siege_id")
+  private int siegeId;
+  @XmlElement(name = "mercenary_race")
+  private List<MercenaryRace> mercenaryRaces;
 
-	public int getSiegeId() {
-		return siegeId;
-	}
+  public int getSiegeId() {
+    return siegeId;
+  }
 
-	public List<MercenaryRace> getMercenaryRaces() {
-		return mercenaryRaces;
-	}
+  public List<MercenaryRace> getMercenaryRaces() {
+    return mercenaryRaces;
+  }
 
 }

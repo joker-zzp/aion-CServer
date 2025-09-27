@@ -11,24 +11,24 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "WeaponDualEffect")
 public class WeaponDualEffect extends BufEffect {
 
-	@Override
-	public void startEffect(Effect effect) {
-		if (effect.getEffected() instanceof Player p) {
-			p.getGameStats().setSkillEfficiency(skillEfficiency / 100f);
-			p.getGameStats().setMaxDamageChance(maxDamageChance + effect.getSkillLevel() * maxDamageDelta);
-			p.getGameStats().setMinDamageRatio((value + effect.getSkillLevel() * delta) / 100f);
-			p.getGameStats().updateStatsVisually();
-		}
-	}
+  @Override
+  public void startEffect(Effect effect) {
+    if (effect.getEffected() instanceof Player p) {
+      p.getGameStats().setSkillEfficiency(skillEfficiency / 100f);
+      p.getGameStats().setMaxDamageChance(maxDamageChance + effect.getSkillLevel() * maxDamageDelta);
+      p.getGameStats().setMinDamageRatio((value + effect.getSkillLevel() * delta) / 100f);
+      p.getGameStats().updateStatsVisually();
+    }
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		if (effect.getEffected() instanceof Player p) {
-			p.getGameStats().setSkillEfficiency(0);
-			p.getGameStats().setMaxDamageChance(0);
-			p.getGameStats().setMinDamageRatio(0);
-			p.getGameStats().updateStatsVisually();
-		}
-		super.endEffect(effect);
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    if (effect.getEffected() instanceof Player p) {
+      p.getGameStats().setSkillEfficiency(0);
+      p.getGameStats().setMaxDamageChance(0);
+      p.getGameStats().setMinDamageRatio(0);
+      p.getGameStats().updateStatsVisually();
+    }
+    super.endEffect(effect);
+  }
 }

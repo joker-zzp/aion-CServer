@@ -8,14 +8,14 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_SUMMON_OWNER_REMOVE extends AionServerPacket {
 
-	private int summonObjId;
+  private int summonObjId;
 
-	public SM_SUMMON_OWNER_REMOVE(int summonObjId) {
-		this.summonObjId = summonObjId;
-	}
+  public SM_SUMMON_OWNER_REMOVE(int summonObjId) {
+    this.summonObjId = summonObjId;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(summonObjId);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(summonObjId);
+  }
 }

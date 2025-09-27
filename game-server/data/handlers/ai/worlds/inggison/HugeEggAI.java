@@ -15,26 +15,26 @@ import ai.GeneralNpcAI;
 @AIName("hugeegg")
 public class HugeEggAI extends GeneralNpcAI {
 
-	public HugeEggAI(Npc owner) {
-		super(owner);
-	}
+  public HugeEggAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean canThink() {
-		return false;
-	}
+  @Override
+  public boolean canThink() {
+    return false;
+  }
 
-	@Override
-	public float modifyDamage(Creature attacker, float damage, Effect effect) {
-		return 1;
-	}
+  @Override
+  public float modifyDamage(Creature attacker, float damage, Effect effect) {
+    return 1;
+  }
 
-	@Override
-	protected void handleDied() {
-		super.handleDied();
-		if (Rnd.nextBoolean()) {
-			spawn(217097, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
-			AIActions.deleteOwner(this);
-		}
-	}
+  @Override
+  protected void handleDied() {
+    super.handleDied();
+    if (Rnd.nextBoolean()) {
+      spawn(217097, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
+      AIActions.deleteOwner(this);
+    }
+  }
 }

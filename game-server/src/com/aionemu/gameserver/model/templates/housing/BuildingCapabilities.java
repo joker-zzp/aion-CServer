@@ -14,46 +14,46 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "caps")
 public class BuildingCapabilities {
 
-	@XmlAttribute(required = true)
-	protected boolean addon;
+  @XmlAttribute(required = true)
+  protected boolean addon;
 
-	@XmlAttribute(required = true)
-	protected int emblemId;
+  @XmlAttribute(required = true)
+  protected int emblemId;
 
-	@XmlAttribute(required = true)
-	protected boolean floor;
+  @XmlAttribute(required = true)
+  protected boolean floor;
 
-	@XmlAttribute(required = true)
-	protected boolean room;
+  @XmlAttribute(required = true)
+  protected boolean room;
 
-	@XmlAttribute(required = true)
-	protected int interior;
+  @XmlAttribute(required = true)
+  protected int interior;
 
-	@XmlAttribute(required = true)
-	protected int exterior;
+  @XmlAttribute(required = true)
+  protected int exterior;
 
-	public boolean canHaveAddon() {
-		return addon;
-	}
+  public boolean canHaveAddon() {
+    return addon;
+  }
 
-	public int getEmblemId() {
-		return emblemId;
-	}
+  public int getEmblemId() {
+    return emblemId;
+  }
 
-	public boolean canChangeFloor() {
-		return floor;
-	}
+  public boolean canChangeFloor() {
+    return floor;
+  }
 
-	public boolean canChangeRoom() {
-		return room;
-	}
+  public boolean canChangeRoom() {
+    return room;
+  }
 
-	public int canChangeInterior() {
-		return interior;
-	}
+  public int canChangeInterior() {
+    return interior;
+  }
 
-	public int canChangeExterior() {
-		return exterior;
-	}
+  public int canChangeExterior() {
+    return exterior;
+  }
 
 }

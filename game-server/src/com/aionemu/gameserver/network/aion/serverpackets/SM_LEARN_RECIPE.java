@@ -8,15 +8,15 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_LEARN_RECIPE extends AionServerPacket {
 
-	private int recipeId;
+  private int recipeId;
 
-	public SM_LEARN_RECIPE(int recipeId) {
-		this.recipeId = recipeId;
-	}
+  public SM_LEARN_RECIPE(int recipeId) {
+    this.recipeId = recipeId;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(recipeId);
-		writeC(0); // 4.0
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(recipeId);
+    writeC(0); // 4.0
+  }
 }

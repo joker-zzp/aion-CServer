@@ -19,21 +19,21 @@ import com.aionemu.gameserver.questEngine.handlers.template.KillSpawned;
 @XmlType(name = "KillSpawnedData", propOrder = "monster")
 public class KillSpawnedData extends MonsterHuntData {
 
-	@XmlElement(name = "monster")
-	protected List<Monster> monster;
+  @XmlElement(name = "monster")
+  protected List<Monster> monster;
 
-	@Override
-	public void register(QuestEngine questEngine) {
-		questEngine.addQuestHandler(new KillSpawned(id, startNpcIds, endNpcIds, monster));
-	}
+  @Override
+  public void register(QuestEngine questEngine) {
+    questEngine.addQuestHandler(new KillSpawned(id, startNpcIds, endNpcIds, monster));
+  }
 
-	@Override
-	public Set<Integer> getAlternativeNpcs(int npcId) {
-		for (Monster m : monster) {
-			List<Integer> npcIds = m.getNpcIds();
-			if (npcIds != null && npcIds.size() > 1 && npcIds.contains(npcId))
-				return npcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
-		}
-		return super.getAlternativeNpcs(npcId);
-	}
+  @Override
+  public Set<Integer> getAlternativeNpcs(int npcId) {
+    for (Monster m : monster) {
+      List<Integer> npcIds = m.getNpcIds();
+      if (npcIds != null && npcIds.size() > 1 && npcIds.contains(npcId))
+        return npcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
+    }
+    return super.getAlternativeNpcs(npcId);
+  }
 }

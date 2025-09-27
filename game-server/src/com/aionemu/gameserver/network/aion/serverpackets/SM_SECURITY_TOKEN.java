@@ -8,16 +8,16 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_SECURITY_TOKEN extends AionServerPacket {
 
-	private byte[] token;
+  private byte[] token;
 
-	public SM_SECURITY_TOKEN(byte[] token) {
-		this.token = token;
-	}
+  public SM_SECURITY_TOKEN(byte[] token) {
+    this.token = token;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(0x0);// NA(0),EU(3)
-		writeB(token);
-		writeB(new byte[token.length]);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(0x0);// NA(0),EU(3)
+    writeB(token);
+    writeB(new byte[token.length]);
+  }
 }

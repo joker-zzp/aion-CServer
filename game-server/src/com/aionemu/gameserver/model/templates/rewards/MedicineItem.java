@@ -8,9 +8,9 @@ import com.aionemu.commons.utils.Rnd;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MedicineItem extends IdLevelReward {
 
-	@Override
-	public long getCount() {
-		return Rnd.get(1, 3);
-	}
+  @Override
+  public long getCount() {
+    return Rnd.get(1, 3);
+  }
 
 }

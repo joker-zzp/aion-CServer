@@ -20,26 +20,26 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "AbstractAbsoluteStatEffect")
 public abstract class AbstractAbsoluteStatEffect extends BufEffect {
 
-	@XmlAttribute(name = "statsetid")
-	private int statSetId;
+  @XmlAttribute(name = "statsetid")
+  private int statSetId;
 
-	/**
-	 * @param effect
-	 * @return
-	 */
-	@Override
-	protected List<IStatFunction> getModifiers(Effect effect) {
-		List<IStatFunction> modifiers = new ArrayList<>();
-		modifiers.addAll(getModifiersSet().getModifiers());
+  /**
+   * @param effect
+   * @return
+   */
+  @Override
+  protected List<IStatFunction> getModifiers(Effect effect) {
+    List<IStatFunction> modifiers = new ArrayList<>();
+    modifiers.addAll(getModifiersSet().getModifiers());
 
-		return modifiers;
-	}
+    return modifiers;
+  }
 
-	/**
-	 * @return the statSetId
-	 */
-	public ModifiersTemplate getModifiersSet() {
-		return DataManager.ABSOLUTE_STATS_DATA.getTemplate(statSetId);
-	}
+  /**
+   * @return the statSetId
+   */
+  public ModifiersTemplate getModifiersSet() {
+    return DataManager.ABSOLUTE_STATS_DATA.getTemplate(statSetId);
+  }
 
 }

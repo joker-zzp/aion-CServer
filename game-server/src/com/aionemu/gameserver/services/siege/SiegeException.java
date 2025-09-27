@@ -2,20 +2,20 @@ package com.aionemu.gameserver.services.siege;
 
 public class SiegeException extends RuntimeException {
 
-	private static final long serialVersionUID = 8834569185793190327L;
+  private static final long serialVersionUID = 8834569185793190327L;
 
-	public SiegeException() {
-	}
+  public SiegeException() {
+  }
 
-	public SiegeException(String message) {
-		super(message);
-	}
+  public SiegeException(String message) {
+    super(message);
+  }
 
-	public SiegeException(String message, Throwable cause) {
-		super(message, cause);
-	}
+  public SiegeException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-	public SiegeException(Throwable cause) {
-		super(cause);
-	}
+  public SiegeException(Throwable cause) {
+    super(cause);
+  }
 }

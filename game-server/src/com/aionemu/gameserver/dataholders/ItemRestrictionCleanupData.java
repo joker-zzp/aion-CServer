@@ -17,18 +17,18 @@ import com.aionemu.gameserver.model.templates.restriction.ItemCleanupTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ItemRestrictionCleanupData {
 
-	@XmlElement(name = "cleanup")
-	private List<ItemCleanupTemplate> bplist;
+  @XmlElement(name = "cleanup")
+  private List<ItemCleanupTemplate> bplist;
 
-	public int size() {
-		return getList().size();
-	}
+  public int size() {
+    return getList().size();
+  }
 
-	public List<ItemCleanupTemplate> getList() {
-		return bplist == null ? Collections.emptyList() : bplist;
-	}
+  public List<ItemCleanupTemplate> getList() {
+    return bplist == null ? Collections.emptyList() : bplist;
+  }
 
-	public boolean hasAccountOrLegionWhStorabilityDisabled(int itemId) {
-		return bplist.stream().anyMatch(t -> t.getId() == itemId && (t.resultAccountWH() == 0 || t.resultLegionWH() == 0));
-	}
+  public boolean hasAccountOrLegionWhStorabilityDisabled(int itemId) {
+    return bplist.stream().anyMatch(t -> t.getId() == itemId && (t.resultAccountWH() == 0 || t.resultLegionWH() == 0));
+  }
 }

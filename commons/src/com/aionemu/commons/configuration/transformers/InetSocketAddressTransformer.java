@@ -13,14 +13,14 @@ import com.aionemu.commons.configuration.TransformationTypeInfo;
  */
 public class InetSocketAddressTransformer extends PropertyTransformer<InetSocketAddress> {
 
-	/**
-	 * Shared instance of this transformer. It's thread-safe so no need of multiple instances
-	 */
-	public static final InetSocketAddressTransformer SHARED_INSTANCE = new InetSocketAddressTransformer();
+  /**
+   * Shared instance of this transformer. It's thread-safe so no need of multiple instances
+   */
+  public static final InetSocketAddressTransformer SHARED_INSTANCE = new InetSocketAddressTransformer();
 
-	@Override
-	protected InetSocketAddress parseObject(String value, TransformationTypeInfo typeInfo) throws Exception {
-		URI uri = new URI(null, value, null, null, null);
-		return new InetSocketAddress(uri.getHost(), uri.getPort());
-	}
+  @Override
+  protected InetSocketAddress parseObject(String value, TransformationTypeInfo typeInfo) throws Exception {
+    URI uri = new URI(null, value, null, null, null);
+    return new InetSocketAddress(uri.getHost(), uri.getPort());
+  }
 }

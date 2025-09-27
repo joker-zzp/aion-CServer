@@ -12,10 +12,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "AssembledItem")
 public class AssembledItem {
 
-	@XmlAttribute(name = "id", required = true)
-	private int id;
+  @XmlAttribute(name = "id", required = true)
+  private int id;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 }

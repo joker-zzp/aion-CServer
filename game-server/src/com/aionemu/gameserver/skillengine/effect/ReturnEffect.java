@@ -15,14 +15,14 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "ReturnEffect")
 public class ReturnEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		TeleportService.moveToBindLocation((Player) effect.getEffector());
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    TeleportService.moveToBindLocation((Player) effect.getEffector());
+  }
 
-	@Override
-	public void calculate(Effect effect) {
-		if (effect.getEffected().isSpawned())
-			effect.addSuccessEffect(this);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    if (effect.getEffected().isSpawned())
+      effect.addSuccessEffect(this);
+  }
 }

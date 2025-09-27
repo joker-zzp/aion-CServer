@@ -19,21 +19,21 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @XmlType(name = "TargetChangeEffect")
 public class TargetChangeEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		Creature effected = effect.getEffected();
-		if (effected instanceof Player) {
-			Player player = (Player) effected;
-			VisibleObject target = null;
-			switch (delta) {
-				// case 0: Shimmerbomb sets target to null
-				case 1:
-					target = effect.getEffector();
-					break;
-			}
-			player.setTarget(target);
-			PacketSendUtility.sendPacket(player, new SM_TARGET_SELECTED(target));
-			PacketSendUtility.broadcastPacket(player, new SM_TARGET_UPDATE(player));
-		}
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    Creature effected = effect.getEffected();
+    if (effected instanceof Player) {
+      Player player = (Player) effected;
+      VisibleObject target = null;
+      switch (delta) {
+        // case 0: Shimmerbomb sets target to null
+        case 1:
+          target = effect.getEffector();
+          break;
+      }
+      player.setTarget(target);
+      PacketSendUtility.sendPacket(player, new SM_TARGET_SELECTED(target));
+      PacketSendUtility.broadcastPacket(player, new SM_TARGET_UPDATE(player));
+    }
+  }
 }

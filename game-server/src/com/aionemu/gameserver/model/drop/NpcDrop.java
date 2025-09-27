@@ -20,30 +20,30 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class NpcDrop {
 
-	@XmlElement(name = "drop_group")
-	private List<DropGroup> dropGroup;
-	@XmlAttribute(name = "npc_id", required = true)
-	private int npcId;
+  @XmlElement(name = "drop_group")
+  private List<DropGroup> dropGroup;
+  @XmlAttribute(name = "npc_id", required = true)
+  private int npcId;
 
-	public List<DropGroup> getDropGroup() {
-		return dropGroup;
-	}
+  public List<DropGroup> getDropGroup() {
+    return dropGroup;
+  }
 
-	/**
-	 * Gets the value of the npcId property.
-	 */
-	public int getNpcId() {
-		return npcId;
-	}
+  /**
+   * Gets the value of the npcId property.
+   */
+  public int getNpcId() {
+    return npcId;
+  }
 
-	public int dropCalculator(Set<DropItem> result, int index, DropModifiers dropModifiers, Collection<Player> groupMembers) {
-		if (dropGroup == null || dropGroup.isEmpty())
-			return index;
-		for (DropGroup dg : dropGroup) {
-			if (dg.getRace() == Race.PC_ALL || dg.getRace() == dropModifiers.getDropRace()) {
-				index = dg.tryAddDropItems(result, index, dropModifiers, groupMembers);
-			}
-		}
-		return index;
-	}
+  public int dropCalculator(Set<DropItem> result, int index, DropModifiers dropModifiers, Collection<Player> groupMembers) {
+    if (dropGroup == null || dropGroup.isEmpty())
+      return index;
+    for (DropGroup dg : dropGroup) {
+      if (dg.getRace() == Race.PC_ALL || dg.getRace() == dropModifiers.getDropRace()) {
+        index = dg.tryAddDropItems(result, index, dropModifiers, groupMembers);
+      }
+    }
+    return index;
+  }
 }

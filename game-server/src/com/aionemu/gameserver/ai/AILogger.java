@@ -11,21 +11,21 @@ import com.aionemu.gameserver.model.gameobjects.Creature;
  */
 public class AILogger {
 
-	private static final Logger log = LoggerFactory.getLogger(AILogger.class);
+  private static final Logger log = LoggerFactory.getLogger(AILogger.class);
 
-	public static final void info(AbstractAI<? extends Creature> ai, String message) {
-		if (ai.isLogging()) {
-			log.info("[AI] " + ai.getOwner().getObjectId() + " - " + message);
-		}
-	}
+  public static final void info(AbstractAI<? extends Creature> ai, String message) {
+    if (ai.isLogging()) {
+      log.info("[AI] " + ai.getOwner().getObjectId() + " - " + message);
+    }
+  }
 
-	/**
-	 * @param owner
-	 * @param message
-	 */
-	public static void moveinfo(Creature owner, String message) {
-		if (AIConfig.MOVE_DEBUG && owner.getAi().isLogging()) {
-			log.info("[AI] " + owner.getObjectId() + " - " + message);
-		}
-	}
+  /**
+   * @param owner
+   * @param message
+   */
+  public static void moveinfo(Creature owner, String message) {
+    if (AIConfig.MOVE_DEBUG && owner.getAi().isLogging()) {
+      log.info("[AI] " + owner.getObjectId() + " - " + message);
+    }
+  }
 }

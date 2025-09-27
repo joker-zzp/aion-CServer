@@ -19,20 +19,20 @@ import com.aionemu.gameserver.world.geo.GeoService;
 @XmlType(name = "DashEffect")
 public class DashEffect extends DamageEffect {
 
-	@Override
-	public void calculate(Effect effect) {
-		Creature effected = effect.getEffected();
-		if (effected.equals(effect.getSkill().getFirstTarget())) { // move only once for Dash-AoE (e.g 2705)
-			effect.setDashStatus(DashStatus.DASH);
-			byte h = PositionUtil.getHeadingTowards(effect.getEffector(), effected);
-			double radian = Math.toRadians(PositionUtil.convertHeadingToAngle(h));
-			float distance = effect.getEffector().getObjectTemplate().getBoundRadius().getMaxOfFrontAndSide() + effected.getObjectTemplate().getBoundRadius().getMaxOfFrontAndSide() + 1;
-			final float x1 = (float) Math.cos(Math.PI + radian) * distance;
-			final float y1 = (float) Math.sin(Math.PI + radian) * distance;
-			Vector3f closestCollision = GeoService.getInstance().getClosestCollision(effect.getEffected(),effected.getX() + x1, effected.getY() + y1, effected.getZ());
-			effect.getSkill().setTargetPosition(closestCollision.getX(), closestCollision.getY(), closestCollision.getZ(), h);
-			World.getInstance().updatePosition(effect.getEffector(), closestCollision.getX(), closestCollision.getY(), closestCollision.getZ(), h);
-		}
-		super.calculate(effect);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    Creature effected = effect.getEffected();
+    if (effected.equals(effect.getSkill().getFirstTarget())) { // move only once for Dash-AoE (e.g 2705)
+      effect.setDashStatus(DashStatus.DASH);
+      byte h = PositionUtil.getHeadingTowards(effect.getEffector(), effected);
+      double radian = Math.toRadians(PositionUtil.convertHeadingToAngle(h));
+      float distance = effect.getEffector().getObjectTemplate().getBoundRadius().getMaxOfFrontAndSide() + effected.getObjectTemplate().getBoundRadius().getMaxOfFrontAndSide() + 1;
+      final float x1 = (float) Math.cos(Math.PI + radian) * distance;
+      final float y1 = (float) Math.sin(Math.PI + radian) * distance;
+      Vector3f closestCollision = GeoService.getInstance().getClosestCollision(effect.getEffected(),effected.getX() + x1, effected.getY() + y1, effected.getZ());
+      effect.getSkill().setTargetPosition(closestCollision.getX(), closestCollision.getY(), closestCollision.getZ(), h);
+      World.getInstance().updatePosition(effect.getEffector(), closestCollision.getX(), closestCollision.getY(), closestCollision.getZ(), h);
+    }
+    super.calculate(effect);
+  }
 }

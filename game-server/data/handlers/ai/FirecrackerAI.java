@@ -9,7 +9,7 @@ import com.aionemu.gameserver.model.gameobjects.Npc;
 @AIName("firecracker")
 public class FirecrackerAI extends GeneralNpcAI {
 
-	public FirecrackerAI(Npc owner) {
-		super(owner);
-	}
+  public FirecrackerAI(Npc owner) {
+    super(owner);
+  }
 }

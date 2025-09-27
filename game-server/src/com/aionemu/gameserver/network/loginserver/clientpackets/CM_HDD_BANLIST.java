@@ -11,24 +11,24 @@ import com.aionemu.gameserver.services.ban.HDDBanService;
  */
 public class CM_HDD_BANLIST extends LsClientPacket {
 
-	private static final Logger log = LoggerFactory.getLogger(CM_HDD_BANLIST.class);
-	private int count;
+  private static final Logger log = LoggerFactory.getLogger(CM_HDD_BANLIST.class);
+  private int count;
 
-	public CM_HDD_BANLIST(int opCode) {
-		super(opCode);
-	}
+  public CM_HDD_BANLIST(int opCode) {
+    super(opCode);
+  }
 
-	@Override
-	protected void readImpl() {
-		count = readD();
-		for (int a = 0; a < count; a++) {
-			HDDBanService.getInstance().loadBan(readS(), readQ());
-		}
-	}
+  @Override
+  protected void readImpl() {
+    count = readD();
+    for (int a = 0; a < count; a++) {
+      HDDBanService.getInstance().loadBan(readS(), readQ());
+    }
+  }
 
-	@Override
-	protected void runImpl() {
-		log.info("Loaded " + count + " HDD ban entries.");
-	}
+  @Override
+  protected void runImpl() {
+    log.info("Loaded " + count + " HDD ban entries.");
+  }
 
 }

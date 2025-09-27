@@ -15,21 +15,21 @@ import ai.OneDmgNoActionAI;
 @AIName("surkana")
 public class SurkanaAI extends OneDmgNoActionAI {
 
-	public SurkanaAI(Npc owner) {
-		super(owner);
-	}
+  public SurkanaAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleAttack(Creature creature) {
-		super.handleAttack(creature);
-		// roomaggro
-		checkForSupport(creature);
-	}
+  @Override
+  protected void handleAttack(Creature creature) {
+    super.handleAttack(creature);
+    // roomaggro
+    checkForSupport(creature);
+  }
 
-	private void checkForSupport(Creature creature) {
-		getKnownList().forEachNpc(npc -> {
-			if (!npc.isDead() && isInRange(npc, 25))
-				npc.getAi().onCreatureEvent(AIEventType.CREATURE_AGGRO, creature);
-		});
-	}
+  private void checkForSupport(Creature creature) {
+    getKnownList().forEachNpc(npc -> {
+      if (!npc.isDead() && isInRange(npc, 25))
+        npc.getAi().onCreatureEvent(AIEventType.CREATURE_AGGRO, creature);
+    });
+  }
 }

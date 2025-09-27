@@ -10,20 +10,20 @@ import com.aionemu.gameserver.network.aion.iteminfo.ItemInfoBlob.ItemBlobType;
  */
 public class BonusInfoBlobEntry extends ItemBlobEntry {
 
-	public BonusInfoBlobEntry() {
-		super(ItemBlobType.STAT_BONUSES);
-	}
+  public BonusInfoBlobEntry() {
+    super(ItemBlobType.STAT_BONUSES);
+  }
 
-	@Override
-	public void writeThisBlob(ByteBuffer buf) {
-		writeH(buf, modifier.getName().getItemStoneMask());
-		writeD(buf, modifier.getValue() * modifier.getName().getSign());
-		writeC(buf, modifier instanceof StatRateFunction ? 1 : 0);
-	}
+  @Override
+  public void writeThisBlob(ByteBuffer buf) {
+    writeH(buf, modifier.getName().getItemStoneMask());
+    writeD(buf, modifier.getValue() * modifier.getName().getSign());
+    writeC(buf, modifier instanceof StatRateFunction ? 1 : 0);
+  }
 
-	@Override
-	public int getSize() {
-		return 7;
-	}
+  @Override
+  public int getSize() {
+    return 7;
+  }
 
 }

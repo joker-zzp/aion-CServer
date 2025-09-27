@@ -7,27 +7,27 @@ import com.aionemu.gameserver.model.templates.assemblednpc.AssembledNpcTemplate.
  */
 public class AssembledNpcPart {
 
-	private Integer object;
-	private AssembledNpcPartTemplate template;
+  private Integer object;
+  private AssembledNpcPartTemplate template;
 
-	public AssembledNpcPart(Integer object, AssembledNpcPartTemplate template) {
-		this.object = object;
-		this.template = template;
-	}
+  public AssembledNpcPart(Integer object, AssembledNpcPartTemplate template) {
+    this.object = object;
+    this.template = template;
+  }
 
-	public Integer getObject() {
-		return object;
-	}
+  public Integer getObject() {
+    return object;
+  }
 
-	public AssembledNpcPartTemplate getAssembledNpcPartTemplate() {
-		return template;
-	}
+  public AssembledNpcPartTemplate getAssembledNpcPartTemplate() {
+    return template;
+  }
 
-	public int getNpcId() {
-		return template.getNpcId();
-	}
+  public int getNpcId() {
+    return template.getNpcId();
+  }
 
-	public int getStaticId() {
-		return template.getStaticId();
-	}
+  public int getStaticId() {
+    return template.getStaticId();
+  }
 }

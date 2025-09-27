@@ -14,25 +14,25 @@ import ai.GeneralNpcAI;
 @AIName("spark_of_darkness")
 public class SparkOfDarknessAI extends GeneralNpcAI {
 
-	public SparkOfDarknessAI(Npc owner) {
-		super(owner);
-	}
+  public SparkOfDarknessAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		startEventTask();
-		startLifeTask();
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    startEventTask();
+    startLifeTask();
+  }
 
-	private void startEventTask() {
-		ThreadPoolManager.getInstance().schedule(() -> {
-			if (!isDead())
-				SkillEngine.getInstance().getSkill(getOwner(), 19554, 1, getOwner()).useNoAnimationSkill();
-		}, 500);
-	}
+  private void startEventTask() {
+    ThreadPoolManager.getInstance().schedule(() -> {
+      if (!isDead())
+        SkillEngine.getInstance().getSkill(getOwner(), 19554, 1, getOwner()).useNoAnimationSkill();
+    }, 500);
+  }
 
-	private void startLifeTask() {
-		ThreadPoolManager.getInstance().schedule(() -> AIActions.deleteOwner(SparkOfDarknessAI.this), 6500);
-	}
+  private void startLifeTask() {
+    ThreadPoolManager.getInstance().schedule(() -> AIActions.deleteOwner(SparkOfDarknessAI.this), 6500);
+  }
 }

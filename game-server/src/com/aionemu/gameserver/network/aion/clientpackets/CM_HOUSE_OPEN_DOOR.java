@@ -20,44 +20,44 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class CM_HOUSE_OPEN_DOOR extends AionClientPacket {
 
-	private int address;
-	private boolean leave;
+  private int address;
+  private boolean leave;
 
-	public CM_HOUSE_OPEN_DOOR(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_HOUSE_OPEN_DOOR(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		address = readD();
-		leave = readC() != 0;
-	}
+  @Override
+  protected void readImpl() {
+    address = readD();
+    leave = readC() != 0;
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player == null)
-			return;
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player == null)
+      return;
 
-		House house = HousingService.getInstance().getHouseByAddress(address);
-		if (house == null)
-			return;
+    House house = HousingService.getInstance().getHouseByAddress(address);
+    if (house == null)
+      return;
 
-		if (leave) {
-			if (house.getAddress().getExitMapId() != null) {
-				TeleportService.teleportTo(player, house.getAddress().getExitMapId(), house.getAddress().getExitX(), house.getAddress().getExitY(),
-					house.getAddress().getExitZ(), (byte) 0, TeleportAnimation.FADE_OUT_BEAM);
-			} else {
-				house.getController().teleportNearHouseDoor(player, true);
-			}
-		} else {
-			if (player.hasAccess(AdminConfig.HOUSE_SHOW_ADDRESS))
-				PacketSendUtility.sendMessage(player, "House address: " + address);
-			if (!house.canEnter(player)) {
-				PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_HOUSING_CANT_ENTER_NO_RIGHT2());
-				return;
-			}
-			house.getController().teleportNearHouseDoor(player, false);
-		}
-	}
+    if (leave) {
+      if (house.getAddress().getExitMapId() != null) {
+        TeleportService.teleportTo(player, house.getAddress().getExitMapId(), house.getAddress().getExitX(), house.getAddress().getExitY(),
+          house.getAddress().getExitZ(), (byte) 0, TeleportAnimation.FADE_OUT_BEAM);
+      } else {
+        house.getController().teleportNearHouseDoor(player, true);
+      }
+    } else {
+      if (player.hasAccess(AdminConfig.HOUSE_SHOW_ADDRESS))
+        PacketSendUtility.sendMessage(player, "House address: " + address);
+      if (!house.canEnter(player)) {
+        PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_HOUSING_CANT_ENTER_NO_RIGHT2());
+        return;
+      }
+      house.getController().teleportNearHouseDoor(player, false);
+    }
+  }
 }

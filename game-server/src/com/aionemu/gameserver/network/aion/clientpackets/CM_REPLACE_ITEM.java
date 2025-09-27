@@ -12,26 +12,26 @@ import com.aionemu.gameserver.services.item.ItemMoveService;
  */
 public class CM_REPLACE_ITEM extends AionClientPacket {
 
-	private byte sourceStorageType;
-	private int sourceItemObjId;
-	private byte replaceStorageType;
-	private int replaceItemObjId;
+  private byte sourceStorageType;
+  private int sourceItemObjId;
+  private byte replaceStorageType;
+  private int replaceItemObjId;
 
-	public CM_REPLACE_ITEM(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_REPLACE_ITEM(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		sourceStorageType = readC();
-		sourceItemObjId = readD();
-		replaceStorageType = readC();
-		replaceItemObjId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    sourceStorageType = readC();
+    sourceItemObjId = readD();
+    replaceStorageType = readC();
+    replaceItemObjId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		ItemMoveService.switchItemsInStorages(player, sourceStorageType, sourceItemObjId, replaceStorageType, replaceItemObjId);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    ItemMoveService.switchItemsInStorages(player, sourceStorageType, sourceItemObjId, replaceStorageType, replaceItemObjId);
+  }
 }

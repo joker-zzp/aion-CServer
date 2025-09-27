@@ -23,87 +23,87 @@ import ai.AggressiveNpcAI;
 @AIName("unstablekaluva")
 public class UnstableKaluvaAI extends AggressiveNpcAI {
 
-	private boolean canThink = true;
-	private boolean isInMove = false;
+  private boolean canThink = true;
+  private boolean isInMove = false;
 
-	public UnstableKaluvaAI(Npc owner) {
-		super(owner);
-	}
+  public UnstableKaluvaAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleAttack(Creature creature) {
-		super.handleAttack(creature);
-		if (Rnd.chance() < 3) {
-			if (!isInMove) {
-				isInMove = true;
-				moveToSpawner(randomEgg());
-			}
-		}
-	}
+  @Override
+  protected void handleAttack(Creature creature) {
+    super.handleAttack(creature);
+    if (Rnd.chance() < 3) {
+      if (!isInMove) {
+        isInMove = true;
+        moveToSpawner(randomEgg());
+      }
+    }
+  }
 
-	private void moveToSpawner(int egg) {
-		Npc spawner = getPosition().getWorldMapInstance().getNpc(egg);
-		if (spawner != null) {
-			SkillEngine.getInstance().getSkill(getOwner(), 19152, 55, getOwner()).useNoAnimationSkill();
-			canThink = false;
-			EmoteManager.emoteStopAttacking(getOwner());
-			setStateIfNot(AIState.FOLLOWING);
-			getOwner().setState(CreatureState.ACTIVE, true);
-			PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getObjectId()));
-			AIActions.targetCreature(this, getPosition().getWorldMapInstance().getNpc(egg));
-			getMoveController().moveToTargetObject();
-		}
-	}
+  private void moveToSpawner(int egg) {
+    Npc spawner = getPosition().getWorldMapInstance().getNpc(egg);
+    if (spawner != null) {
+      SkillEngine.getInstance().getSkill(getOwner(), 19152, 55, getOwner()).useNoAnimationSkill();
+      canThink = false;
+      EmoteManager.emoteStopAttacking(getOwner());
+      setStateIfNot(AIState.FOLLOWING);
+      getOwner().setState(CreatureState.ACTIVE, true);
+      PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getObjectId()));
+      AIActions.targetCreature(this, getPosition().getWorldMapInstance().getNpc(egg));
+      getMoveController().moveToTargetObject();
+    }
+  }
 
-	@Override
-	protected void handleMoveArrived() {
-		if (!canThink) {
-			if (getOwner().getTarget()instanceof Npc spawner) {
-				spawner.getEffectController().removeEffect(19222);
-				SkillEngine.getInstance().getSkill(getOwner(), 19223, 55, spawner).useNoAnimationSkill();
-				getEffectController().removeEffect(19152);
-			}
+  @Override
+  protected void handleMoveArrived() {
+    if (!canThink) {
+      if (getOwner().getTarget()instanceof Npc spawner) {
+        spawner.getEffectController().removeEffect(19222);
+        SkillEngine.getInstance().getSkill(getOwner(), 19223, 55, spawner).useNoAnimationSkill();
+        getEffectController().removeEffect(19152);
+      }
 
-			ThreadPoolManager.getInstance().schedule(() -> {
-				canThink = true;
-				Creature creature = getAggroList().getMostHated();
-				if (creature != null && getOwner().canSee(creature) && !creature.isDead()) {
-					getOwner().setTarget(creature);
-					getOwner().getGameStats().renewLastAttackTime();
-					getOwner().getGameStats().renewLastAttackedTime();
-					getOwner().getGameStats().renewLastChangeTargetTime();
-					getOwner().getGameStats().renewLastSkillTime();
-				}
-				setStateIfNot(AIState.FIGHT);
-				think();
-			}, 2000);
-			isInMove = false;
-		}
-		super.handleMoveArrived();
-	}
+      ThreadPoolManager.getInstance().schedule(() -> {
+        canThink = true;
+        Creature creature = getAggroList().getMostHated();
+        if (creature != null && getOwner().canSee(creature) && !creature.isDead()) {
+          getOwner().setTarget(creature);
+          getOwner().getGameStats().renewLastAttackTime();
+          getOwner().getGameStats().renewLastAttackedTime();
+          getOwner().getGameStats().renewLastChangeTargetTime();
+          getOwner().getGameStats().renewLastSkillTime();
+        }
+        setStateIfNot(AIState.FIGHT);
+        think();
+      }, 2000);
+      isInMove = false;
+    }
+    super.handleMoveArrived();
+  }
 
-	@Override
-	protected void handleBackHome() {
-		super.handleBackHome();
-		isInMove = false;
-	}
+  @Override
+  protected void handleBackHome() {
+    super.handleBackHome();
+    isInMove = false;
+  }
 
-	private int randomEgg() {
-		int[] npcIds = { 219971, 219952, 219970, 219969 };
-		return Rnd.get(npcIds);
-	}
+  private int randomEgg() {
+    int[] npcIds = { 219971, 219952, 219970, 219969 };
+    return Rnd.get(npcIds);
+  }
 
-	@Override
-	public boolean canThink() {
-		return canThink;
-	}
+  @Override
+  public boolean canThink() {
+    return canThink;
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case REWARD_LOOT, REWARD_AP -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case REWARD_LOOT, REWARD_AP -> false;
+      default -> super.ask(question);
+    };
+  }
 
 }

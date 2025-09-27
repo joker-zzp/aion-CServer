@@ -24,30 +24,30 @@ import com.aionemu.gameserver.model.templates.spawns.SpawnType;
 @XmlRootElement(name = "house_npcs")
 public class HouseNpcsData {
 
-	@XmlElement(name = "house")
-	private List<HouseSpawns> houseSpawnsData;
+  @XmlElement(name = "house")
+  private List<HouseSpawns> houseSpawnsData;
 
-	@XmlTransient
-	private Map<Integer, List<HouseSpawn>> houseSpawnsByAddressId = new HashMap<>();
+  @XmlTransient
+  private Map<Integer, List<HouseSpawn>> houseSpawnsByAddressId = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (HouseSpawns houseSpawns : houseSpawnsData) {
-			Set<SpawnType> spawnTypes = new HashSet<>();
-			houseSpawnsByAddressId.put(houseSpawns.getAddress(), houseSpawns.getSpawns());
-			for (HouseSpawn spawn : houseSpawns.getSpawns()) {
-				if (!spawnTypes.add(spawn.getType()))
-					throw new IllegalArgumentException("Duplicate " + spawn.getType() + " spawn for house " + houseSpawns.getAddress());
-			}
-		}
-		houseSpawnsData = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (HouseSpawns houseSpawns : houseSpawnsData) {
+      Set<SpawnType> spawnTypes = new HashSet<>();
+      houseSpawnsByAddressId.put(houseSpawns.getAddress(), houseSpawns.getSpawns());
+      for (HouseSpawn spawn : houseSpawns.getSpawns()) {
+        if (!spawnTypes.add(spawn.getType()))
+          throw new IllegalArgumentException("Duplicate " + spawn.getType() + " spawn for house " + houseSpawns.getAddress());
+      }
+    }
+    houseSpawnsData = null;
+  }
 
-	public List<HouseSpawn> getSpawnsByAddress(int address) {
-		return houseSpawnsByAddressId.get(address);
-	}
+  public List<HouseSpawn> getSpawnsByAddress(int address) {
+    return houseSpawnsByAddressId.get(address);
+  }
 
-	public int size() {
-		return houseSpawnsByAddressId.values().stream().mapToInt(List::size).sum();
-	}
+  public int size() {
+    return houseSpawnsByAddressId.values().stream().mapToInt(List::size).sum();
+  }
 
 }

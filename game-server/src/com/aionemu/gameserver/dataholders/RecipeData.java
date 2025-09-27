@@ -15,44 +15,44 @@ import com.aionemu.gameserver.model.templates.recipe.RecipeTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RecipeData {
 
-	@XmlElement(name = "recipe_template")
-	protected List<RecipeTemplate> list;
+  @XmlElement(name = "recipe_template")
+  protected List<RecipeTemplate> list;
 
-	@XmlTransient
-	private final Map<Integer, RecipeTemplate> recipeData = new HashMap<>();
-	@XmlTransient
-	private final List<RecipeTemplate> autoLearnRecipes = new ArrayList<>();
+  @XmlTransient
+  private final Map<Integer, RecipeTemplate> recipeData = new HashMap<>();
+  @XmlTransient
+  private final List<RecipeTemplate> autoLearnRecipes = new ArrayList<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (RecipeTemplate it : list) {
-			recipeData.put(it.getId(), it);
-			if (it.getAutoLearn() != 0)
-				autoLearnRecipes.add(it);
-		}
-		list = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (RecipeTemplate it : list) {
+      recipeData.put(it.getId(), it);
+      if (it.getAutoLearn() != 0)
+        autoLearnRecipes.add(it);
+    }
+    list = null;
+  }
 
-	public List<RecipeTemplate> getAutolearnRecipes(Race race, int skillId, int maxLevel) {
-		List<RecipeTemplate> list = new ArrayList<>();
-		for (RecipeTemplate recipe : autoLearnRecipes) {
-			if (recipe.getSkillId() != skillId || recipe.getSkillpoint() > maxLevel)
-				continue;
-			if (recipe.getRace() != Race.PC_ALL && recipe.getRace() != race)
-				continue;
-			list.add(recipe);
-		}
-		return list;
-	}
+  public List<RecipeTemplate> getAutolearnRecipes(Race race, int skillId, int maxLevel) {
+    List<RecipeTemplate> list = new ArrayList<>();
+    for (RecipeTemplate recipe : autoLearnRecipes) {
+      if (recipe.getSkillId() != skillId || recipe.getSkillpoint() > maxLevel)
+        continue;
+      if (recipe.getRace() != Race.PC_ALL && recipe.getRace() != race)
+        continue;
+      list.add(recipe);
+    }
+    return list;
+  }
 
-	public RecipeTemplate getRecipeTemplateById(int id) {
-		return recipeData.get(id);
-	}
+  public RecipeTemplate getRecipeTemplateById(int id) {
+    return recipeData.get(id);
+  }
 
-	public Collection<RecipeTemplate> getRecipeTemplates() {
-		return recipeData.values();
-	}
+  public Collection<RecipeTemplate> getRecipeTemplates() {
+    return recipeData.values();
+  }
 
-	public int size() {
-		return recipeData.size();
-	}
+  public int size() {
+    return recipeData.size();
+  }
 }

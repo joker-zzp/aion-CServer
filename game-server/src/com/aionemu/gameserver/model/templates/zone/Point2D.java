@@ -12,35 +12,35 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Point2D")
 public class Point2D {
 
-	@XmlAttribute(name = "y")
-	protected float y;
-	@XmlAttribute(name = "x")
-	protected float x;
+  @XmlAttribute(name = "y")
+  protected float y;
+  @XmlAttribute(name = "x")
+  protected float x;
 
-	/**
-	 * @param x
-	 * @param y
-	 */
-	public Point2D(float x, float y) {
-		this.x = x;
-		this.y = y;
-	}
+  /**
+   * @param x
+   * @param y
+   */
+  public Point2D(float x, float y) {
+    this.x = x;
+    this.y = y;
+  }
 
-	public Point2D() {
-		super();
-	}
+  public Point2D() {
+    super();
+  }
 
-	/**
-	 * @return the y
-	 */
-	public float getY() {
-		return y;
-	}
+  /**
+   * @return the y
+   */
+  public float getY() {
+    return y;
+  }
 
-	/**
-	 * @return the x
-	 */
-	public float getX() {
-		return x;
-	}
+  /**
+   * @return the x
+   */
+  public float getX() {
+    return x;
+  }
 }

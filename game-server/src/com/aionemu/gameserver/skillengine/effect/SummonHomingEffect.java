@@ -26,41 +26,41 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @XmlType(name = "SummonHomingEffect")
 public class SummonHomingEffect extends SummonEffect {
 
-	@XmlAttribute(name = "npc_count", required = true)
-	protected int npcCount;
-	@XmlAttribute(name = "attack_count", required = true)
-	protected int attackCount;
+  @XmlAttribute(name = "npc_count", required = true)
+  protected int npcCount;
+  @XmlAttribute(name = "attack_count", required = true)
+  protected int attackCount;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		Creature effector = effect.getEffector();
-		float x = effector.getX();
-		float y = effector.getY();
-		float z = effector.getZ();
-		byte heading = effector.getHeading();
-		int worldId = effector.getWorldId();
-		int instanceId = effector.getInstanceId();
+  @Override
+  public void applyEffect(Effect effect) {
+    Creature effector = effect.getEffector();
+    float x = effector.getX();
+    float y = effector.getY();
+    float z = effector.getZ();
+    byte heading = effector.getHeading();
+    int worldId = effector.getWorldId();
+    int instanceId = effector.getInstanceId();
 
-		for (int i = 0; i < npcCount; i++) {
-			SpawnTemplate spawn = SpawnEngine.newSingleTimeSpawn(worldId, npcId, x, y, z, heading);
-			final Homing homing = VisibleObjectSpawner.spawnHoming(spawn, instanceId, effector, attackCount, effect.getSkillId());
+    for (int i = 0; i < npcCount; i++) {
+      SpawnTemplate spawn = SpawnEngine.newSingleTimeSpawn(worldId, npcId, x, y, z, heading);
+      final Homing homing = VisibleObjectSpawner.spawnHoming(spawn, instanceId, effector, attackCount, effect.getSkillId());
 
-			if (attackCount > 0) {
-				effect.addObserver(homing, new ActionObserver(ObserverType.ATTACK) {
+      if (attackCount > 0) {
+        effect.addObserver(homing, new ActionObserver(ObserverType.ATTACK) {
 
-					@Override
-					public void attack(Creature creature, int skillId) {
-						homing.setAttackCount(homing.getAttackCount() - 1);
-						if (homing.getAttackCount() <= 0)
-							homing.getController().delete();
-					}
-				});
-			}
-			// Schedule a despawn just in case
-			Future<?> task = ThreadPoolManager.getInstance().schedule(() -> homing.getController().delete(), 15 * 1000);
-			homing.getController().addTask(TaskId.DESPAWN, task);
-			homing.getAi().onCreatureEvent(AIEventType.ATTACK, effect.getEffected());
-		}
-	}
+          @Override
+          public void attack(Creature creature, int skillId) {
+            homing.setAttackCount(homing.getAttackCount() - 1);
+            if (homing.getAttackCount() <= 0)
+              homing.getController().delete();
+          }
+        });
+      }
+      // Schedule a despawn just in case
+      Future<?> task = ThreadPoolManager.getInstance().schedule(() -> homing.getController().delete(), 15 * 1000);
+      homing.getController().addTask(TaskId.DESPAWN, task);
+      homing.getAi().onCreatureEvent(AIEventType.ATTACK, effect.getEffected());
+    }
+  }
 
 }

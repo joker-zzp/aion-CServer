@@ -15,55 +15,55 @@ import com.aionemu.gameserver.services.craft.CraftSkillUpdateService;
  */
 public class _19052ExpertPassionforConstruction extends AbstractQuestHandler {
 
-	public _19052ExpertPassionforConstruction() {
-		super(19052);
-	}
+  public _19052ExpertPassionforConstruction() {
+    super(19052);
+  }
 
-	@Override
-	public void register() {
-		qe.registerQuestNpc(798450).addOnQuestStart(questId);
-		qe.registerQuestNpc(798450).addOnTalkEvent(questId);
-	}
+  @Override
+  public void register() {
+    qe.registerQuestNpc(798450).addOnQuestStart(questId);
+    qe.registerQuestNpc(798450).addOnTalkEvent(questId);
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		final Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		int dialogActionId = env.getDialogActionId();
-		int targetId = env.getTargetId();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    final Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    int dialogActionId = env.getDialogActionId();
+    int targetId = env.getTargetId();
 
-		if (dialogActionId == QUEST_SELECT && !CraftSkillUpdateService.getInstance().canLearnMoreExpertCraftingSkill(player)) {
-			return sendQuestSelectionDialog(env);
-		}
+    if (dialogActionId == QUEST_SELECT && !CraftSkillUpdateService.getInstance().canLearnMoreExpertCraftingSkill(player)) {
+      return sendQuestSelectionDialog(env);
+    }
 
-		if (qs == null || qs.isStartable()) {
-			if (targetId == 798450) {
-				if (dialogActionId == QUEST_SELECT)
-					return sendQuestDialog(env, 1011);
-				else
-					return sendQuestStartDialog(env);
-			}
-		} else if (qs.getStatus() == QuestStatus.START) {
-			switch (targetId) {
-				case 798450:
-					switch (dialogActionId) {
-						case QUEST_SELECT: {
-							return sendQuestDialog(env, 2375);
-						}
-						case CHECK_USER_HAS_QUEST_ITEM: {
-							if (QuestService.collectItemCheck(env, true)) {
-								changeQuestStep(env, 0, 0, true);
-								return sendQuestDialog(env, 5);
-							} else
-								return sendQuestDialog(env, 2716);
-						}
-					}
-			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 798450) {
-				return sendQuestEndDialog(env);
-			}
-		}
-		return false;
-	}
+    if (qs == null || qs.isStartable()) {
+      if (targetId == 798450) {
+        if (dialogActionId == QUEST_SELECT)
+          return sendQuestDialog(env, 1011);
+        else
+          return sendQuestStartDialog(env);
+      }
+    } else if (qs.getStatus() == QuestStatus.START) {
+      switch (targetId) {
+        case 798450:
+          switch (dialogActionId) {
+            case QUEST_SELECT: {
+              return sendQuestDialog(env, 2375);
+            }
+            case CHECK_USER_HAS_QUEST_ITEM: {
+              if (QuestService.collectItemCheck(env, true)) {
+                changeQuestStep(env, 0, 0, true);
+                return sendQuestDialog(env, 5);
+              } else
+                return sendQuestDialog(env, 2716);
+            }
+          }
+      }
+    } else if (qs.getStatus() == QuestStatus.REWARD) {
+      if (targetId == 798450) {
+        return sendQuestEndDialog(env);
+      }
+    }
+    return false;
+  }
 }

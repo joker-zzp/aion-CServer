@@ -7,15 +7,15 @@ import com.aionemu.gameserver.model.gameobjects.VisibleObject;
  */
 public class SphereKnownList extends PlayerAwareKnownList {
 
-	private final float radius;
+  private final float radius;
 
-	public SphereKnownList(VisibleObject owner, float radius) {
-		super(owner);
-		this.radius = radius;
-	}
+  public SphereKnownList(VisibleObject owner, float radius) {
+    super(owner);
+    this.radius = radius;
+  }
 
-	@Override
-	protected float getVisibleDistance(VisibleObject newObject) {
-		return radius;
-	}
+  @Override
+  protected float getVisibleDistance(VisibleObject newObject) {
+    return radius;
+  }
 }

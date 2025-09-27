@@ -21,52 +21,52 @@ import com.aionemu.gameserver.services.player.PlayerService;
  */
 public class CM_DELETE_CHARACTER extends AionClientPacket {
 
-	/**
-	 * PlayOk2 - we dont care...
-	 */
-	@SuppressWarnings("unused")
-	private int playOk2;
-	/**
-	 * ObjectId of character that should be deleted.
-	 */
-	private int chaOid;
+  /**
+   * PlayOk2 - we dont care...
+   */
+  @SuppressWarnings("unused")
+  private int playOk2;
+  /**
+   * ObjectId of character that should be deleted.
+   */
+  private int chaOid;
 
-	/**
-	 * Constructs new instance of <tt>CM_DELETE_CHARACTER </tt> packet
-	 * 
-	 * @param opcode
-	 */
-	public CM_DELETE_CHARACTER(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * Constructs new instance of <tt>CM_DELETE_CHARACTER </tt> packet
+   * 
+   * @param opcode
+   */
+  public CM_DELETE_CHARACTER(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		playOk2 = readD();
-		chaOid = readD();
-	}
+  @Override
+  protected void readImpl() {
+    playOk2 = readD();
+    chaOid = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		AionConnection client = getConnection();
-		PlayerAccountData playerAccData = client.getAccount().getPlayerAccountData(chaOid);
-		if (playerAccData != null && !playerAccData.isLegionMember()) {
-			// passkey check
-			if (SecurityConfig.PASSKEY_ENABLE && !client.getAccount().getCharacterPasskey().isPass()) {
-				client.getAccount().getCharacterPasskey().setConnectType(ConnectType.DELETE);
-				client.getAccount().getCharacterPasskey().setObjectId(chaOid);
-				boolean isExistPasskey = PlayerPasskeyDAO.existCheckPlayerPasskey(client.getAccount().getId());
+  @Override
+  protected void runImpl() {
+    AionConnection client = getConnection();
+    PlayerAccountData playerAccData = client.getAccount().getPlayerAccountData(chaOid);
+    if (playerAccData != null && !playerAccData.isLegionMember()) {
+      // passkey check
+      if (SecurityConfig.PASSKEY_ENABLE && !client.getAccount().getCharacterPasskey().isPass()) {
+        client.getAccount().getCharacterPasskey().setConnectType(ConnectType.DELETE);
+        client.getAccount().getCharacterPasskey().setObjectId(chaOid);
+        boolean isExistPasskey = PlayerPasskeyDAO.existCheckPlayerPasskey(client.getAccount().getId());
 
-				if (!isExistPasskey)
-					client.sendPacket(new SM_CHARACTER_SELECT(0));
-				else
-					client.sendPacket(new SM_CHARACTER_SELECT(1));
-			} else {
-				PlayerService.deletePlayer(playerAccData);
-				client.sendPacket(new SM_DELETE_CHARACTER(chaOid, playerAccData.getDeletionTimeInSeconds()));
-			}
-		} else {
-			client.sendPacket(SM_SYSTEM_MESSAGE.STR_GUILD_DISPERSE_STAYMODE_CANCEL_1());
-		}
-	}
+        if (!isExistPasskey)
+          client.sendPacket(new SM_CHARACTER_SELECT(0));
+        else
+          client.sendPacket(new SM_CHARACTER_SELECT(1));
+      } else {
+        PlayerService.deletePlayer(playerAccData);
+        client.sendPacket(new SM_DELETE_CHARACTER(chaOid, playerAccData.getDeletionTimeInSeconds()));
+      }
+    } else {
+      client.sendPacket(SM_SYSTEM_MESSAGE.STR_GUILD_DISPERSE_STAYMODE_CANCEL_1());
+    }
+  }
 }

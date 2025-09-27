@@ -15,38 +15,38 @@ import com.aionemu.gameserver.services.item.ItemChargeService;
  */
 public class CM_CHARGE_ITEM extends AionClientPacket {
 
-	private int targetNpcObjectId;
-	private int chargeLevel;
-	private List<Integer> itemObjectIds;
+  private int targetNpcObjectId;
+  private int chargeLevel;
+  private List<Integer> itemObjectIds;
 
-	public CM_CHARGE_ITEM(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_CHARGE_ITEM(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		targetNpcObjectId = readD();
-		chargeLevel = readUC();
-		int itemsSize = readUH();
-		itemObjectIds = new ArrayList<>();
-		for (int i = 0; i < itemsSize; i++)
-			itemObjectIds.add(readD());
-	}
+  @Override
+  protected void readImpl() {
+    targetNpcObjectId = readD();
+    chargeLevel = readUC();
+    int itemsSize = readUH();
+    itemObjectIds = new ArrayList<>();
+    for (int i = 0; i < itemsSize; i++)
+      itemObjectIds.add(readD());
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (!player.isTargeting(targetNpcObjectId)) {
-			return; // TODO audit?
-		}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (!player.isTargeting(targetNpcObjectId)) {
+      return; // TODO audit?
+    }
 
-		List<Item> itemsToCharge = new ArrayList<>();
-		for (int itemObjId : itemObjectIds) {
-			Item item = player.getInventory().getItemByObjId(itemObjId);
-			if (item != null)
-				itemsToCharge.add(item);
-		}
-		ItemChargeService.chargeItems(player, itemsToCharge, chargeLevel, false, true);
-	}
+    List<Item> itemsToCharge = new ArrayList<>();
+    for (int itemObjId : itemObjectIds) {
+      Item item = player.getInventory().getItemByObjId(itemObjId);
+      if (item != null)
+        itemsToCharge.add(item);
+    }
+    ItemChargeService.chargeItems(player, itemsToCharge, chargeLevel, false, true);
+  }
 
 }

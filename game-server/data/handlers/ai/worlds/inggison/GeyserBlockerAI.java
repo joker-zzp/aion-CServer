@@ -18,33 +18,33 @@ import ai.AggressiveNpcAI;
 @AIName("geyserblocker")
 public class GeyserBlockerAI extends AggressiveNpcAI {
 
-	private int staticId = -1;
+  private int staticId = -1;
 
-	public GeyserBlockerAI(Npc owner) {
-		super(owner);
-	}
+  public GeyserBlockerAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDied() {
-		super.handleDied();
-		if (staticId == -1) // no geyser was despawned on spawn, so we cannot respawn it
-			return;
-		SpawnTemplate spawnPoint = getOwner().getSpawn();
-		spawn(700545, spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ(), (byte) 0, staticId);
-		PacketSendUtility.broadcastPacket(getOwner(), SM_SYSTEM_MESSAGE.STR_MSG_WINDBOX_TRIGGER_ON_INFO(),
-			player -> PositionUtil.isInRange(getOwner(), player, 30));
-	}
+  @Override
+  protected void handleDied() {
+    super.handleDied();
+    if (staticId == -1) // no geyser was despawned on spawn, so we cannot respawn it
+      return;
+    SpawnTemplate spawnPoint = getOwner().getSpawn();
+    spawn(700545, spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ(), (byte) 0, staticId);
+    PacketSendUtility.broadcastPacket(getOwner(), SM_SYSTEM_MESSAGE.STR_MSG_WINDBOX_TRIGGER_ON_INFO(),
+      player -> PositionUtil.isInRange(getOwner(), player, 30));
+  }
 
-	@Override
-	protected void handleCreatureSee(Creature creature) {
-		super.handleCreatureSee(creature);
-		if (creature instanceof Npc) {
-			Npc npc = (Npc) creature;
-			if (npc.getNpcId() == 700545 && PositionUtil.isInRange(getOwner(), npc, 5)) {
-				staticId = npc.getSpawn().getStaticId();
-				npc.getController().delete();
-			}
-		}
-	}
+  @Override
+  protected void handleCreatureSee(Creature creature) {
+    super.handleCreatureSee(creature);
+    if (creature instanceof Npc) {
+      Npc npc = (Npc) creature;
+      if (npc.getNpcId() == 700545 && PositionUtil.isInRange(getOwner(), npc, 5)) {
+        staticId = npc.getSpawn().getStaticId();
+        npc.getController().delete();
+      }
+    }
+  }
 
 }

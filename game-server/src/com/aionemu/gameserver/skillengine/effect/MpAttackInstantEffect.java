@@ -17,24 +17,24 @@ import com.aionemu.gameserver.skillengine.model.EffectReserved.ResourceType;
 @XmlType(name = "MpAttackInstantEffect")
 public class MpAttackInstantEffect extends EffectTemplate {
 
-	@XmlAttribute
-	protected boolean percent;
+  @XmlAttribute
+  protected boolean percent;
 
-	@Override
-	public void calculate(Effect effect) {
-		int maxMP = effect.getEffected().getLifeStats().getMaxMp();
-		int newValue = value;
-		// Support for values in percentage
-		if (percent)
-			newValue = ((maxMP * value) / 100);
+  @Override
+  public void calculate(Effect effect) {
+    int maxMP = effect.getEffected().getLifeStats().getMaxMp();
+    int newValue = value;
+    // Support for values in percentage
+    if (percent)
+      newValue = ((maxMP * value) / 100);
 
-		effect.setReserveds(new EffectReserved(position, newValue, ResourceType.MP, true), false);
+    effect.setReserveds(new EffectReserved(position, newValue, ResourceType.MP, true), false);
 
-		this.calculate(effect, null, null, element);
-	}
+    this.calculate(effect, null, null, element);
+  }
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.getEffected().getLifeStats().reduceMp(SM_ATTACK_STATUS.TYPE.DAMAGE_MP, effect.getReserveds(position).getValue(), effect.getSkillId(), SM_ATTACK_STATUS.LOG.MPATTACK);
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.getEffected().getLifeStats().reduceMp(SM_ATTACK_STATUS.TYPE.DAMAGE_MP, effect.getReserveds(position).getValue(), effect.getSkillId(), SM_ATTACK_STATUS.LOG.MPATTACK);
+  }
 }

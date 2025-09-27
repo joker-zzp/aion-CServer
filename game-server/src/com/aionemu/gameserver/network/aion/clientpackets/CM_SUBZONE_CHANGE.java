@@ -15,36 +15,36 @@ import com.aionemu.gameserver.world.zone.ZoneInstance;
  */
 public class CM_SUBZONE_CHANGE extends AionClientPacket {
 
-	private byte unk;
+  private byte unk;
 
-	public CM_SUBZONE_CHANGE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_SUBZONE_CHANGE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		// Always 1, maybe for neutral zones 0 ?
-		unk = readC();
-	}
+  @Override
+  protected void readImpl() {
+    // Always 1, maybe for neutral zones 0 ?
+    unk = readC();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		player.revalidateZones();
-		if (player.hasAccess(AdminConfig.ZONE_INFO)) {
-			int foundZones = 0;
-			for (ZoneInstance zone : player.findZones()) {
-				if (zone.getZoneTemplate().getZoneType() == ZoneClassName.DUMMY || zone.getZoneTemplate().getZoneType() == ZoneClassName.WEATHER)
-					continue;
-				foundZones++;
-				PacketSendUtility.sendMessage(player, "Passed zone: unk=" + unk + "; " + zone.getZoneTemplate().getZoneType() + " "
-					+ zone.getAreaTemplate().getZoneName().name());
-			}
-			if (foundZones == 0) {
-				PacketSendUtility.sendMessage(player, "Passed unknown zone, unk=" + unk);
-				return;
-			}
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    player.revalidateZones();
+    if (player.hasAccess(AdminConfig.ZONE_INFO)) {
+      int foundZones = 0;
+      for (ZoneInstance zone : player.findZones()) {
+        if (zone.getZoneTemplate().getZoneType() == ZoneClassName.DUMMY || zone.getZoneTemplate().getZoneType() == ZoneClassName.WEATHER)
+          continue;
+        foundZones++;
+        PacketSendUtility.sendMessage(player, "Passed zone: unk=" + unk + "; " + zone.getZoneTemplate().getZoneType() + " "
+          + zone.getAreaTemplate().getZoneName().name());
+      }
+      if (foundZones == 0) {
+        PacketSendUtility.sendMessage(player, "Passed unknown zone, unk=" + unk);
+        return;
+      }
+    }
+  }
 
 }

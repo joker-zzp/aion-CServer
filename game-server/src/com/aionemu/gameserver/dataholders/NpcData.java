@@ -29,86 +29,86 @@ import com.aionemu.gameserver.model.templates.stats.StatsTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class NpcData {
 
-	@XmlElement(name = "npc_template")
-	private List<NpcTemplate> npcs;
+  @XmlElement(name = "npc_template")
+  private List<NpcTemplate> npcs;
 
-	@XmlTransient
-	private final Map<Integer, NpcTemplate> npcData = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, NpcTemplate> npcData = new HashMap<>();
 
-	@XmlTransient
-	private final Set<Integer> functionDialogIds = new HashSet<>();
+  @XmlTransient
+  private final Set<Integer> functionDialogIds = new HashSet<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		StaticDataListener.registerForAsyncExecutionOrRun(u, this::init);
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    StaticDataListener.registerForAsyncExecutionOrRun(u, this::init);
+  }
 
-	private void init() {
-		for (NpcTemplate npc : npcs) {
-			npcData.put(npc.getTemplateId(), npc);
-			npc.internAiName();
-			if (npc.getTribe() != null && !npc.getTribe().isUsed())
-				npc.getTribe().setUsed(true);
-			if (npc.getFuncDialogIds() != null) {
-				for (Integer dialogActionId : npc.getFuncDialogIds()) {
-					if (DialogAction.nameOf(dialogActionId) == null)
-						LoggerFactory.getLogger(NpcData.class).warn("Unknown dialog action " + dialogActionId + " for Npc " + npc.getTemplateId());
-				}
-			}
-			if (npc.getTribe() != TribeClass.PET && npc.getTribe() != TribeClass.PET_DARK) { // summons and siege weapons have fixed stats
-				NpcRating rating = npc.getRating();
-				NpcRank rank = npc.getRank();
-				byte level = npc.getLevel();
-				StatsTemplate template = npc.getStatsTemplate();
-				if (template.getAttack() == 0)
-					template.setAttack(NpcStatCalculation.calculateStat(StatEnum.PHYSICAL_ATTACK, rating, rank, level));
-				if (template.getAccuracy() == 0)
-					template.setAccuracy(NpcStatCalculation.calculateStat(StatEnum.PHYSICAL_ACCURACY, rating, rank, level));
-				if (template.getMagicalAttack() == 0)
-					template.setMagicalAttack(NpcStatCalculation.calculateStat(StatEnum.MAGICAL_ATTACK, rating, rank, level));
-				if (template.getMacc() == 0)
-					template.setMacc(NpcStatCalculation.calculateStat(StatEnum.MAGICAL_ACCURACY, rating, rank, level));
-				if (template.getMresist() == 0)
-					template.setMresist(NpcStatCalculation.calculateStat(StatEnum.MAGICAL_RESIST, rating, rank, level));
-				if (template.getMdef() == 0)
-					template.setMdef(NpcStatCalculation.calculateStat(StatEnum.MAGICAL_DEFEND, rating, rank, level));
-				if (template.getMcrit() == 0)
-					template.setMcrit(50);
-				if (template.getPcrit() == 0)
-					template.setPcrit(10);
-				if (template.getPdef() == 0)
-					template.setPdef(NpcStatCalculation.calculateStat(StatEnum.PHYSICAL_DEFENSE, rating, rank, level));
-				if (template.getParry() == 0)
-					template.setParry(NpcStatCalculation.calculateStat(StatEnum.PARRY, rating, rank, level));
-				if (level >= 50 && template.getSpellResist() == 0)
-					template.setSpellResist(NpcStatCalculation.calculateStat(StatEnum.MAGICAL_CRITICAL_RESIST, rating, rank, level));
-				if (level >= 50 && template.getStrikeResist() == 0) {
-					int strikeResist = NpcStatCalculation.calculateStat(StatEnum.PHYSICAL_CRITICAL_RESIST, rating, rank, level);
-					if (strikeResist > 700) // In general strike resist cannot exceed 700 in retail templates, except bosses in Drakenspire Depths
-						strikeResist = 700;
-					template.setStrikeResist(strikeResist);
-				}
-				if (template.getAbnormalResistance() == 0)
-					template.setAbnormalResistance(NpcStatCalculation.calculateStat(StatEnum.ABNORMAL_RESISTANCE_ALL, rating, rank, level));
-			}
-			if (npc.getFuncDialogIds() != null)
-				functionDialogIds.addAll(npc.getFuncDialogIds());
-		}
-		npcs = null;
-	}
+  private void init() {
+    for (NpcTemplate npc : npcs) {
+      npcData.put(npc.getTemplateId(), npc);
+      npc.internAiName();
+      if (npc.getTribe() != null && !npc.getTribe().isUsed())
+        npc.getTribe().setUsed(true);
+      if (npc.getFuncDialogIds() != null) {
+        for (Integer dialogActionId : npc.getFuncDialogIds()) {
+          if (DialogAction.nameOf(dialogActionId) == null)
+            LoggerFactory.getLogger(NpcData.class).warn("Unknown dialog action " + dialogActionId + " for Npc " + npc.getTemplateId());
+        }
+      }
+      if (npc.getTribe() != TribeClass.PET && npc.getTribe() != TribeClass.PET_DARK) { // summons and siege weapons have fixed stats
+        NpcRating rating = npc.getRating();
+        NpcRank rank = npc.getRank();
+        byte level = npc.getLevel();
+        StatsTemplate template = npc.getStatsTemplate();
+        if (template.getAttack() == 0)
+          template.setAttack(NpcStatCalculation.calculateStat(StatEnum.PHYSICAL_ATTACK, rating, rank, level));
+        if (template.getAccuracy() == 0)
+          template.setAccuracy(NpcStatCalculation.calculateStat(StatEnum.PHYSICAL_ACCURACY, rating, rank, level));
+        if (template.getMagicalAttack() == 0)
+          template.setMagicalAttack(NpcStatCalculation.calculateStat(StatEnum.MAGICAL_ATTACK, rating, rank, level));
+        if (template.getMacc() == 0)
+          template.setMacc(NpcStatCalculation.calculateStat(StatEnum.MAGICAL_ACCURACY, rating, rank, level));
+        if (template.getMresist() == 0)
+          template.setMresist(NpcStatCalculation.calculateStat(StatEnum.MAGICAL_RESIST, rating, rank, level));
+        if (template.getMdef() == 0)
+          template.setMdef(NpcStatCalculation.calculateStat(StatEnum.MAGICAL_DEFEND, rating, rank, level));
+        if (template.getMcrit() == 0)
+          template.setMcrit(50);
+        if (template.getPcrit() == 0)
+          template.setPcrit(10);
+        if (template.getPdef() == 0)
+          template.setPdef(NpcStatCalculation.calculateStat(StatEnum.PHYSICAL_DEFENSE, rating, rank, level));
+        if (template.getParry() == 0)
+          template.setParry(NpcStatCalculation.calculateStat(StatEnum.PARRY, rating, rank, level));
+        if (level >= 50 && template.getSpellResist() == 0)
+          template.setSpellResist(NpcStatCalculation.calculateStat(StatEnum.MAGICAL_CRITICAL_RESIST, rating, rank, level));
+        if (level >= 50 && template.getStrikeResist() == 0) {
+          int strikeResist = NpcStatCalculation.calculateStat(StatEnum.PHYSICAL_CRITICAL_RESIST, rating, rank, level);
+          if (strikeResist > 700) // In general strike resist cannot exceed 700 in retail templates, except bosses in Drakenspire Depths
+            strikeResist = 700;
+          template.setStrikeResist(strikeResist);
+        }
+        if (template.getAbnormalResistance() == 0)
+          template.setAbnormalResistance(NpcStatCalculation.calculateStat(StatEnum.ABNORMAL_RESISTANCE_ALL, rating, rank, level));
+      }
+      if (npc.getFuncDialogIds() != null)
+        functionDialogIds.addAll(npc.getFuncDialogIds());
+    }
+    npcs = null;
+  }
 
-	public int size() {
-		return npcData.size();
-	}
+  public int size() {
+    return npcData.size();
+  }
 
-	public NpcTemplate getNpcTemplate(int id) {
-		return npcData.get(id);
-	}
+  public NpcTemplate getNpcTemplate(int id) {
+    return npcData.get(id);
+  }
 
-	public Collection<NpcTemplate> getNpcData() {
-		return npcData.values();
-	}
+  public Collection<NpcTemplate> getNpcData() {
+    return npcData.values();
+  }
 
-	public boolean isFunctionDialog(int functionDialogId) {
-		return functionDialogIds.contains(functionDialogId);
-	}
+  public boolean isFunctionDialog(int functionDialogId) {
+    return functionDialogIds.contains(functionDialogId);
+  }
 }

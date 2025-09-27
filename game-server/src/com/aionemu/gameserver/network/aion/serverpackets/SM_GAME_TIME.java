@@ -11,8 +11,8 @@ import com.aionemu.gameserver.services.GameTimeService;
  */
 public class SM_GAME_TIME extends AionServerPacket {
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(GameTimeService.getInstance().getGameTime().getTime()); // Minutes since 1/1/00 00:00:00
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(GameTimeService.getInstance().getGameTime().getTime()); // Minutes since 1/1/00 00:00:00
+  }
 }

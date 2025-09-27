@@ -17,17 +17,17 @@ import com.aionemu.gameserver.model.Race;
 @XmlType(name = "MercenaryRace")
 public class MercenaryRace {
 
-	@XmlAttribute(name = "race")
-	private Race race;
-	@XmlElement(name = "mercenary_zone")
-	private List<MercenaryZone> mercenaryZones;
+  @XmlAttribute(name = "race")
+  private Race race;
+  @XmlElement(name = "mercenary_zone")
+  private List<MercenaryZone> mercenaryZones;
 
-	public Race getRace() {
-		return race;
-	}
+  public Race getRace() {
+    return race;
+  }
 
-	public List<MercenaryZone> getMercenaryZones() {
-		return mercenaryZones;
-	}
+  public List<MercenaryZone> getMercenaryZones() {
+    return mercenaryZones;
+  }
 
 }

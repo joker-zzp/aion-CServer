@@ -5,14 +5,14 @@ import com.aionemu.commons.services.CronService;
 
 public class ScheduledTaskClassListenerTestAdapter extends ScheduledTaskClassListener {
 
-	private final CronService cronService;
+  private final CronService cronService;
 
-	public ScheduledTaskClassListenerTestAdapter(CronService cronService) {
-		this.cronService = cronService;
-	}
+  public ScheduledTaskClassListenerTestAdapter(CronService cronService) {
+    this.cronService = cronService;
+  }
 
-	@Override
-	protected CronService getCronService() {
-		return cronService;
-	}
+  @Override
+  protected CronService getCronService() {
+    return cronService;
+  }
 }

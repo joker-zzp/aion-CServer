@@ -12,41 +12,41 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.NONE)
 public class ItemCleanupTemplate {
 
-	@XmlAttribute(name = "id", required = true)
-	private int id;
+  @XmlAttribute(name = "id", required = true)
+  private int id;
 
-	@XmlAttribute
-	private byte trade = -1;
-	@XmlAttribute
-	private byte sell = -1;
-	@XmlAttribute
-	private byte wh = -1;
-	@XmlAttribute
-	private byte awh = -1;
-	@XmlAttribute
-	private byte lwh = -1;
+  @XmlAttribute
+  private byte trade = -1;
+  @XmlAttribute
+  private byte sell = -1;
+  @XmlAttribute
+  private byte wh = -1;
+  @XmlAttribute
+  private byte awh = -1;
+  @XmlAttribute
+  private byte lwh = -1;
 
-	public byte resultTrade() {
-		return trade;
-	}
+  public byte resultTrade() {
+    return trade;
+  }
 
-	public byte resultSell() {
-		return sell;
-	}
+  public byte resultSell() {
+    return sell;
+  }
 
-	public byte resultWH() {
-		return wh;
-	}
+  public byte resultWH() {
+    return wh;
+  }
 
-	public byte resultAccountWH() {
-		return awh;
-	}
+  public byte resultAccountWH() {
+    return awh;
+  }
 
-	public byte resultLegionWH() {
-		return lwh;
-	}
+  public byte resultLegionWH() {
+    return lwh;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 }

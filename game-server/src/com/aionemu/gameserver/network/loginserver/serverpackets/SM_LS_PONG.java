@@ -8,11 +8,11 @@ import com.aionemu.gameserver.network.loginserver.LsServerPacket;
  */
 public class SM_LS_PONG extends LsServerPacket {
 
-	public SM_LS_PONG() {
-		super(12);
-	}
+  public SM_LS_PONG() {
+    super(12);
+  }
 
-	@Override
-	protected void writeImpl(LoginServerConnection con) {
-	}
+  @Override
+  protected void writeImpl(LoginServerConnection con) {
+  }
 }

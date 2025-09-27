@@ -12,28 +12,28 @@ import com.aionemu.gameserver.services.DuelService;
  */
 public class CM_DUEL_REQUEST extends AionClientPacket {
 
-	/**
-	 * Target object id that client wants to start duel with
-	 */
-	private int objectId;
+  /**
+   * Target object id that client wants to start duel with
+   */
+  private int objectId;
 
-	/**
-	 * Constructs new instance of <tt>CM_DUEL_REQUEST</tt> packet
-	 * 
-	 * @param opcode
-	 */
-	public CM_DUEL_REQUEST(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * Constructs new instance of <tt>CM_DUEL_REQUEST</tt> packet
+   * 
+   * @param opcode
+   */
+  public CM_DUEL_REQUEST(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		objectId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    objectId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		DuelService.getInstance().onDuelRequest(activePlayer, activePlayer.getKnownList().getPlayer(objectId));
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    DuelService.getInstance().onDuelRequest(activePlayer, activePlayer.getKnownList().getPlayer(objectId));
+  }
 }

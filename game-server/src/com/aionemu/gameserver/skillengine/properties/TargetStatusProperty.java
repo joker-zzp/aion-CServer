@@ -17,18 +17,18 @@ import com.aionemu.gameserver.skillengine.model.SkillTemplate;
 @XmlType(name = "TargetStatusProperty")
 public class TargetStatusProperty {
 
-	public static boolean set(Properties properties, Properties.ValidationResult result, SkillTemplate skillTemplate) {
-		// TODO find out why skill 2504-2506 ("Protective Shell") has target_status="STUN STAGGER STUMBLE SPIN OPENAERIAL"
-		if (skillTemplate.getStack().equals("RI_PROTECTIONCURTAIN"))
-			return true;
+  public static boolean set(Properties properties, Properties.ValidationResult result, SkillTemplate skillTemplate) {
+    // TODO find out why skill 2504-2506 ("Protective Shell") has target_status="STUN STAGGER STUMBLE SPIN OPENAERIAL"
+    if (skillTemplate.getStack().equals("RI_PROTECTIONCURTAIN"))
+      return true;
 
-		result.getTargets().removeIf(effected -> !hasAnyAbnormalState(effected, properties.getTargetStatus()));
+    result.getTargets().removeIf(effected -> !hasAnyAbnormalState(effected, properties.getTargetStatus()));
 
-		// if first target was filtered out (= he had no required abnormal state), the skill cannot be cast
-		return result.getTargets().contains(result.getFirstTarget());
-	}
+    // if first target was filtered out (= he had no required abnormal state), the skill cannot be cast
+    return result.getTargets().contains(result.getFirstTarget());
+  }
 
-	private static boolean hasAnyAbnormalState(Creature creature, List<AbnormalState> states) {
-		return states.stream().anyMatch(state -> creature.getEffectController().isAbnormalSet(state));
-	}
+  private static boolean hasAnyAbnormalState(Creature creature, List<AbnormalState> states) {
+    return states.stream().anyMatch(state -> creature.getEffectController().isAbnormalSet(state));
+  }
 }

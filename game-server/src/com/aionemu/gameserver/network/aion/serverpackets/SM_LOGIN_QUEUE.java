@@ -8,20 +8,20 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_LOGIN_QUEUE extends AionServerPacket {
 
-	private int waitingPosition; // What is the player's position in line
-	private int waitingTime; // Per waiting position in seconds
-	private int waitingCount; // How many are waiting in line
+  private int waitingPosition; // What is the player's position in line
+  private int waitingTime; // Per waiting position in seconds
+  private int waitingCount; // How many are waiting in line
 
-	private SM_LOGIN_QUEUE() {
-		this.waitingPosition = 5;
-		this.waitingTime = 60;
-		this.waitingCount = 50;
-	}
+  private SM_LOGIN_QUEUE() {
+    this.waitingPosition = 5;
+    this.waitingTime = 60;
+    this.waitingCount = 50;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(waitingPosition);
-		writeD(waitingTime);
-		writeD(waitingCount);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(waitingPosition);
+    writeD(waitingTime);
+    writeD(waitingCount);
+  }
 }

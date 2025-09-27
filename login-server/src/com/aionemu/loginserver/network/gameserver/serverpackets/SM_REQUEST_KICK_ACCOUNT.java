@@ -10,24 +10,24 @@ import com.aionemu.loginserver.network.gameserver.GsServerPacket;
  */
 public class SM_REQUEST_KICK_ACCOUNT extends GsServerPacket {
 
-	private final int accountId;
-	private final boolean notifyDoubleLogin;
+  private final int accountId;
+  private final boolean notifyDoubleLogin;
 
-	/**
-	 * @param accountId
-	 *          - account that must be kicked at GameServer side
-	 * @param notifyDoubleLogin
-	 *          - whether to notify the player that he got kicked due to another client logging in
-	 */
-	public SM_REQUEST_KICK_ACCOUNT(int accountId, boolean notifyDoubleLogin) {
-		this.accountId = accountId;
-		this.notifyDoubleLogin = notifyDoubleLogin;
-	}
+  /**
+   * @param accountId
+   *          - account that must be kicked at GameServer side
+   * @param notifyDoubleLogin
+   *          - whether to notify the player that he got kicked due to another client logging in
+   */
+  public SM_REQUEST_KICK_ACCOUNT(int accountId, boolean notifyDoubleLogin) {
+    this.accountId = accountId;
+    this.notifyDoubleLogin = notifyDoubleLogin;
+  }
 
-	@Override
-	protected void writeImpl(GsConnection con) {
-		writeC(2);
-		writeD(accountId);
-		writeC(notifyDoubleLogin ? 1 : 0);
-	}
+  @Override
+  protected void writeImpl(GsConnection con) {
+    writeC(2);
+    writeD(accountId);
+    writeC(notifyDoubleLogin ? 1 : 0);
+  }
 }

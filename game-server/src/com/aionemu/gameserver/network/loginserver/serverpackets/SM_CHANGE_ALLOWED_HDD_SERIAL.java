@@ -9,18 +9,18 @@ import com.aionemu.gameserver.network.loginserver.LsServerPacket;
  */
 public class SM_CHANGE_ALLOWED_HDD_SERIAL extends LsServerPacket {
 
-	private int accountId;
-	private String hddSerial;
+  private int accountId;
+  private String hddSerial;
 
-	public SM_CHANGE_ALLOWED_HDD_SERIAL(Account playerAccount) {
-		super(15);
-		this.accountId = playerAccount.getId();
-		this.hddSerial = playerAccount.getAllowedHddSerial();
-	}
+  public SM_CHANGE_ALLOWED_HDD_SERIAL(Account playerAccount) {
+    super(15);
+    this.accountId = playerAccount.getId();
+    this.hddSerial = playerAccount.getAllowedHddSerial();
+  }
 
-	@Override
-	protected void writeImpl(LoginServerConnection con) {
-		writeD(accountId);
-		writeS(hddSerial);
-	}
+  @Override
+  protected void writeImpl(LoginServerConnection con) {
+    writeD(accountId);
+    writeS(hddSerial);
+  }
 }

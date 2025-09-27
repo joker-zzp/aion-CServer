@@ -34,15 +34,15 @@ import com.aionemu.gameserver.model.templates.itemgroups.ItemRaceEntry;
 @XmlSeeAlso({ CraftRecipe.class, CraftItem.class })
 public abstract class CraftReward extends ItemRaceEntry {
 
-	@XmlAttribute(name = "skill")
-	private int skill;
+  @XmlAttribute(name = "skill")
+  private int skill;
 
-	public int getSkill() {
-		return skill;
-	}
+  public int getSkill() {
+    return skill;
+  }
 
-	@Override
-	protected boolean matchesQuest(QuestTemplate questTemplate) {
-		return questTemplate.getCombineSkill() == skill;
-	}
+  @Override
+  protected boolean matchesQuest(QuestTemplate questTemplate) {
+    return questTemplate.getCombineSkill() == skill;
+  }
 }

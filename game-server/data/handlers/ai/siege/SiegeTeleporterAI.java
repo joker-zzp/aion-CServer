@@ -18,41 +18,41 @@ import ai.GeneralNpcAI;
 @AIName("siege_teleporter")
 public class SiegeTeleporterAI extends GeneralNpcAI {
 
-	public SiegeTeleporterAI(Npc owner) {
-		super(owner);
-	}
+  public SiegeTeleporterAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDespawned() {
-		canTeleport(false);
-		super.handleDespawned();
-	}
+  @Override
+  protected void handleDespawned() {
+    canTeleport(false);
+    super.handleDespawned();
+  }
 
-	@Override
-	protected void handleDied() {
-		canTeleport(false);
-		super.handleDied();
-	}
+  @Override
+  protected void handleDied() {
+    canTeleport(false);
+    super.handleDied();
+  }
 
-	@Override
-	protected void handleSpawned() {
-		canTeleport(true);
-		super.handleSpawned();
-	}
+  @Override
+  protected void handleSpawned() {
+    canTeleport(true);
+    super.handleSpawned();
+  }
 
-	private void canTeleport(final boolean status) {
-		final int id = ((SiegeNpc) getOwner()).getSiegeId();
+  private void canTeleport(final boolean status) {
+    final int id = ((SiegeNpc) getOwner()).getSiegeId();
 
-		SiegeService.getInstance().getSiegeLocation(id).setCanTeleport(status);
+    SiegeService.getInstance().getSiegeLocation(id).setCanTeleport(status);
 
-		getPosition().getWorldMapInstance().forEachPlayer(new Consumer<Player>() {
+    getPosition().getWorldMapInstance().forEachPlayer(new Consumer<Player>() {
 
-			@Override
-			public void accept(Player player) {
-				PacketSendUtility.sendPacket(player, new SM_FORTRESS_INFO(id, status));
-			}
+      @Override
+      public void accept(Player player) {
+        PacketSendUtility.sendPacket(player, new SM_FORTRESS_INFO(id, status));
+      }
 
-		});
-	}
+    });
+  }
 
 }

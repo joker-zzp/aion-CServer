@@ -15,8 +15,8 @@ import com.aionemu.gameserver.skillengine.model.SkillTargetSlot;
 @XmlType(name = "DispelNpcBuffEffect")
 public class DispelNpcBuffEffect extends AbstractDispelEffect {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		super.applyEffect(effect, DispelCategoryType.NPC_BUFF, SkillTargetSlot.BUFF);
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    super.applyEffect(effect, DispelCategoryType.NPC_BUFF, SkillTargetSlot.BUFF);
+  }
 }

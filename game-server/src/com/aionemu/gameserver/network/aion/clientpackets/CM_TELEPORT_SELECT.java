@@ -22,53 +22,53 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_TELEPORT_SELECT extends AionClientPacket {
 
-	/**
-	 * NPC object ID
-	 */
-	private int targetObjId;
+  /**
+   * NPC object ID
+   */
+  private int targetObjId;
 
-	/**
-	 * Destination of teleport
-	 */
-	private int locId;
+  /**
+   * Destination of teleport
+   */
+  private int locId;
 
-	public CM_TELEPORT_SELECT(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_TELEPORT_SELECT(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		targetObjId = readD();
-		locId = readD(); // locationId
-		readH();
-	}
+  @Override
+  protected void readImpl() {
+    targetObjId = readD();
+    locId = readD(); // locationId
+    readH();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player.isDead())
-			return;
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player.isDead())
+      return;
 
-		AionObject obj = player.getKnownList().getObject(targetObjId);
-		if (!(obj instanceof Npc)) {
-			if (obj == null)
-				obj = World.getInstance().findVisibleObject(targetObjId);
-			AuditLogger.log(player, "tried to teleport to locId " + locId + " via " + (obj == null ? "unknown npc (objId " + targetObjId + ")" : obj)
-				+ " at " + player.getPosition());
-			return;
-		}
+    AionObject obj = player.getKnownList().getObject(targetObjId);
+    if (!(obj instanceof Npc)) {
+      if (obj == null)
+        obj = World.getInstance().findVisibleObject(targetObjId);
+      AuditLogger.log(player, "tried to teleport to locId " + locId + " via " + (obj == null ? "unknown npc (objId " + targetObjId + ")" : obj)
+        + " at " + player.getPosition());
+      return;
+    }
 
-		Npc npc = (Npc) obj;
-		if (!PositionUtil.isInTalkRange(player, npc)) {
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_CANNOT_MOVE_TO_AIRPORT_FAR_FROM_NPC());
-			return;
-		}
-		int npcId = npc.getNpcId();
-		TeleporterTemplate teleport = DataManager.TELEPORTER_DATA.getTeleporterTemplateByNpcId(npcId);
-		if (teleport != null)
-			TeleportService.teleport(teleport, locId, player, npc,
-				npc.getName().toLowerCase().contains("statue") ? TeleportAnimation.JUMP_IN_STATUE : TeleportAnimation.JUMP_IN);
-		else
-			AuditLogger.log(player, "tried to teleport via npc " + npcId + " but he has no teleporter template");
-	}
+    Npc npc = (Npc) obj;
+    if (!PositionUtil.isInTalkRange(player, npc)) {
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_CANNOT_MOVE_TO_AIRPORT_FAR_FROM_NPC());
+      return;
+    }
+    int npcId = npc.getNpcId();
+    TeleporterTemplate teleport = DataManager.TELEPORTER_DATA.getTeleporterTemplateByNpcId(npcId);
+    if (teleport != null)
+      TeleportService.teleport(teleport, locId, player, npc,
+        npc.getName().toLowerCase().contains("statue") ? TeleportAnimation.JUMP_IN_STATUE : TeleportAnimation.JUMP_IN);
+    else
+      AuditLogger.log(player, "tried to teleport via npc " + npcId + " but he has no teleporter template");
+  }
 }

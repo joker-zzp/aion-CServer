@@ -18,28 +18,28 @@ import com.aionemu.gameserver.model.templates.shield.ShieldTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ShieldData {
 
-	@XmlElement(name = "shield")
-	private List<ShieldTemplate> shieldTemplates;
+  @XmlElement(name = "shield")
+  private List<ShieldTemplate> shieldTemplates;
 
-	public int size() {
-		if (shieldTemplates == null) {
-			shieldTemplates = new ArrayList<>();
-			return 0;
-		}
-		return shieldTemplates.size();
-	}
+  public int size() {
+    if (shieldTemplates == null) {
+      shieldTemplates = new ArrayList<>();
+      return 0;
+    }
+    return shieldTemplates.size();
+  }
 
-	public List<ShieldTemplate> getShieldTemplates() {
-		if (shieldTemplates == null) {
-			return new ArrayList<>();
-		}
-		return shieldTemplates;
-	}
+  public List<ShieldTemplate> getShieldTemplates() {
+    if (shieldTemplates == null) {
+      return new ArrayList<>();
+    }
+    return shieldTemplates;
+  }
 
-	public void addAll(Collection<ShieldTemplate> templates) {
-		if (shieldTemplates == null) {
-			shieldTemplates = new ArrayList<>();
-		}
-		shieldTemplates.addAll(templates);
-	}
+  public void addAll(Collection<ShieldTemplate> templates) {
+    if (shieldTemplates == null) {
+      shieldTemplates = new ArrayList<>();
+    }
+    shieldTemplates.addAll(templates);
+  }
 }

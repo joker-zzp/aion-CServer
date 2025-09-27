@@ -19,18 +19,18 @@ import com.aionemu.gameserver.questEngine.handlers.template.RelicRewards;
 @XmlType(name = "RelicRewardsData")
 public class RelicRewardsData extends XMLQuest {
 
-	@XmlAttribute(name = "start_npc_ids")
-	protected List<Integer> startNpcIds;
+  @XmlAttribute(name = "start_npc_ids")
+  protected List<Integer> startNpcIds;
 
-	@Override
-	public void register(QuestEngine questEngine) {
-		questEngine.addQuestHandler(new RelicRewards(id, startNpcIds));
-	}
+  @Override
+  public void register(QuestEngine questEngine) {
+    questEngine.addQuestHandler(new RelicRewards(id, startNpcIds));
+  }
 
-	@Override
-	public Set<Integer> getAlternativeNpcs(int npcId) {
-		if (startNpcIds != null && startNpcIds.size() > 1 && startNpcIds.contains(npcId))
-			return startNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
-		return null;
-	}
+  @Override
+  public Set<Integer> getAlternativeNpcs(int npcId) {
+    if (startNpcIds != null && startNpcIds.size() > 1 && startNpcIds.contains(npcId))
+      return startNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
+    return null;
+  }
 }

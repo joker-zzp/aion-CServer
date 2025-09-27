@@ -15,20 +15,20 @@ import com.aionemu.gameserver.utils.PositionUtil;
 @XmlType(name = "BackCondition")
 public class BackCondition extends Condition {
 
-	@Override
-	public boolean validate(Skill env) {
-		if (env.getFirstTarget() == null || env.getEffector() == null)
-			return false;
+  @Override
+  public boolean validate(Skill env) {
+    if (env.getFirstTarget() == null || env.getEffector() == null)
+      return false;
 
-		return PositionUtil.isBehind(env.getEffector(), env.getFirstTarget());
-	}
+    return PositionUtil.isBehind(env.getEffector(), env.getFirstTarget());
+  }
 
-	@Override
-	public boolean validate(Effect effect) {
-		if (effect.getEffected() == null || effect.getEffector() == null)
-			return false;
+  @Override
+  public boolean validate(Effect effect) {
+    if (effect.getEffected() == null || effect.getEffector() == null)
+      return false;
 
-		return PositionUtil.isBehind(effect.getEffector(), effect.getEffected());
-	}
+    return PositionUtil.isBehind(effect.getEffector(), effect.getEffected());
+  }
 
 }

@@ -18,40 +18,40 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("kharun")
 public class KharunAI extends NpcAI {
 
-	public KharunAI(Npc owner) {
-		super(owner);
-	}
+  public KharunAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		if (dialogActionId == SETPRO1) {
-			AIActions.deleteOwner(this);
-			startKharunEvent();
-		}
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
-		return true;
-	}
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    if (dialogActionId == SETPRO1) {
+      AIActions.deleteOwner(this);
+      startKharunEvent();
+    }
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
+    return true;
+  }
 
-	private void startKharunEvent() {
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+  private void startKharunEvent() {
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-			@Override
-			public void run() {
-				Npc aethericField = getPosition().getWorldMapInstance().getNpc(730613);
-				Npc strongholdDoor = getPosition().getWorldMapInstance().getNpc(730612);
-				Npc Kharun = (Npc) spawn(800335, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 60);
-				Kharun.setTarget(aethericField);
-				SkillEngine.getInstance().getSkill(Kharun, 20943, 60, aethericField).useNoAnimationSkill();
-				PacketSendUtility.broadcastMessage(Kharun, 1500597, 1000);
-				PacketSendUtility.broadcastMessage(Kharun, 1500598, 5000);
-				strongholdDoor.getController().die();
-				aethericField.getController().delete();
-			}
-		}, 3000);
-	}
+      @Override
+      public void run() {
+        Npc aethericField = getPosition().getWorldMapInstance().getNpc(730613);
+        Npc strongholdDoor = getPosition().getWorldMapInstance().getNpc(730612);
+        Npc Kharun = (Npc) spawn(800335, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 60);
+        Kharun.setTarget(aethericField);
+        SkillEngine.getInstance().getSkill(Kharun, 20943, 60, aethericField).useNoAnimationSkill();
+        PacketSendUtility.broadcastMessage(Kharun, 1500597, 1000);
+        PacketSendUtility.broadcastMessage(Kharun, 1500598, 5000);
+        strongholdDoor.getController().die();
+        aethericField.getController().delete();
+      }
+    }, 3000);
+  }
 }

@@ -14,37 +14,37 @@ import com.aionemu.gameserver.network.loginserver.LsClientPacket;
  */
 public class CM_GS_AUTH_RESPONSE extends LsClientPacket {
 
-	private static final Logger log = LoggerFactory.getLogger(CM_GS_AUTH_RESPONSE.class);
-	private int response;
-	private int serverCount;
+  private static final Logger log = LoggerFactory.getLogger(CM_GS_AUTH_RESPONSE.class);
+  private int response;
+  private int serverCount;
 
-	public CM_GS_AUTH_RESPONSE(int opCode) {
-		super(opCode);
-	}
+  public CM_GS_AUTH_RESPONSE(int opCode) {
+    super(opCode);
+  }
 
-	@Override
-	public void readImpl() {
-		response = readUC();
-		if (response == 0)
-			serverCount = readUC();
-	}
+  @Override
+  public void readImpl() {
+    response = readUC();
+    if (response == 0)
+      serverCount = readUC();
+  }
 
-	@Override
-	public void runImpl() {
-		switch (response) {
-			case 0: // Authed
-				getConnection().setState(State.AUTHED);
-				LoginServer.getInstance().setGameServerCount(serverCount);
-				LoginServer.getInstance().sendLoggedInAccounts();
-				break;
-			case 1: // Not authed
-				log.error("GameServer is not authenticated at LoginServer side!");
-				getConnection().close();
-				break;
-			case 2: // Already registered
-				log.info("GameServer is already registered at LoginServer side!");
-				getConnection().close();
-				break;
-		}
-	}
+  @Override
+  public void runImpl() {
+    switch (response) {
+      case 0: // Authed
+        getConnection().setState(State.AUTHED);
+        LoginServer.getInstance().setGameServerCount(serverCount);
+        LoginServer.getInstance().sendLoggedInAccounts();
+        break;
+      case 1: // Not authed
+        log.error("GameServer is not authenticated at LoginServer side!");
+        getConnection().close();
+        break;
+      case 2: // Already registered
+        log.info("GameServer is already registered at LoginServer side!");
+        getConnection().close();
+        break;
+    }
+  }
 }

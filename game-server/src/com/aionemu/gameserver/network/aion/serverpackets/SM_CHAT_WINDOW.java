@@ -15,90 +15,90 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_CHAT_WINDOW extends AionServerPacket {
 
-	private Player target;
-	private boolean isGroup;
+  private Player target;
+  private boolean isGroup;
 
-	public SM_CHAT_WINDOW(Player target, boolean isGroup) {
-		this.target = target;
-		this.isGroup = isGroup;
-	}
+  public SM_CHAT_WINDOW(Player target, boolean isGroup) {
+    this.target = target;
+    this.isGroup = isGroup;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		if (target == null)
-			return;
+  @Override
+  protected void writeImpl(AionConnection con) {
+    if (target == null)
+      return;
 
-		if (isGroup) {
-			if (target.isInGroup()) {
-				writeC(2); // group
-				writeS(target.getName(true));
-				PlayerGroup group = target.getPlayerGroup();
-				writeD(group.getTeamId());
-				writeS(group.getLeader().getName());
+    if (isGroup) {
+      if (target.isInGroup()) {
+        writeC(2); // group
+        writeS(target.getName(true));
+        PlayerGroup group = target.getPlayerGroup();
+        writeD(group.getTeamId());
+        writeS(group.getLeader().getName());
 
-				Collection<Player> members = group.getMembers();
-				for (Player groupMember : members)
-					writeC(groupMember.getLevel());
+        Collection<Player> members = group.getMembers();
+        for (Player groupMember : members)
+          writeC(groupMember.getLevel());
 
-				for (int i = group.size(); i < 6; i++)
-					writeC(0);
+        for (int i = group.size(); i < 6; i++)
+          writeC(0);
 
-				for (Player groupMember : members)
-					writeC(groupMember.getPlayerClass().getClassId());
+        for (Player groupMember : members)
+          writeC(groupMember.getPlayerClass().getClassId());
 
-				for (int i = group.size(); i < 6; i++)
-					writeC(0);
-			} else if (target.isInAlliance()) {
-				writeC(3); // alliance
+        for (int i = group.size(); i < 6; i++)
+          writeC(0);
+      } else if (target.isInAlliance()) {
+        writeC(3); // alliance
 
-				PlayerAlliance alliance = target.getPlayerAlliance();
+        PlayerAlliance alliance = target.getPlayerAlliance();
 
-				writeS(alliance.getLeader().getName());
-				writeD(alliance.getTeamId());
+        writeS(alliance.getLeader().getName());
+        writeD(alliance.getTeamId());
 
-				Collection<Player> members = alliance.getMembers();
-				Iterator<Player> membersIt = alliance.getMembers().iterator();
-				String[] capitans = new String[] { "", "", "", "" };
-				for (int i = 0; i < capitans.length; i++) {
-					while (membersIt.hasNext()) {
-						Player groupMember = membersIt.next();
-						if (alliance.isSomeCaptain(groupMember)) {
-							capitans[i] = groupMember.getName();
-							break;
-						}
-					}
-				}
-				for (String capitan : capitans) {
-					writeS(capitan);
-				}
-				writeH(0);
-				writeC(alliance.size());
-				writeH(alliance.getMinExpPlayerLevel());// LVL
-				writeH(alliance.getMaxExpPlayerLevel());
-				short[] counts = new short[PlayerClass.values().length];
-				for (Player groupMember : members) {
-					counts[groupMember.getPlayerClass().getClassId()]++;
-				}
-				for (short count : counts) {
-					writeH(count);
-				}
-			} else {
-				writeC(4); // no group
-				writeS(target.getName(true));
-				writeD(0); // no group yet
-				writeC(target.getPlayerClass().getClassId());
-				writeC(target.getLevel());
-				writeC(0); // unk
-			}
-		} else {
-			writeC(1);
-			writeS(target.getName(true));
-			writeS(target.getLegion() != null ? target.getLegion().getName() : "");
-			writeC(target.getLevel());
-			writeH(target.getPlayerClass().getClassId());
-			writeS(target.getCommonData().getNote());
-			writeD(1); // unk
-			writeC(target.getAccount().getMembership()); // vip level
-		}
-	}
+        Collection<Player> members = alliance.getMembers();
+        Iterator<Player> membersIt = alliance.getMembers().iterator();
+        String[] capitans = new String[] { "", "", "", "" };
+        for (int i = 0; i < capitans.length; i++) {
+          while (membersIt.hasNext()) {
+            Player groupMember = membersIt.next();
+            if (alliance.isSomeCaptain(groupMember)) {
+              capitans[i] = groupMember.getName();
+              break;
+            }
+          }
+        }
+        for (String capitan : capitans) {
+          writeS(capitan);
+        }
+        writeH(0);
+        writeC(alliance.size());
+        writeH(alliance.getMinExpPlayerLevel());// LVL
+        writeH(alliance.getMaxExpPlayerLevel());
+        short[] counts = new short[PlayerClass.values().length];
+        for (Player groupMember : members) {
+          counts[groupMember.getPlayerClass().getClassId()]++;
+        }
+        for (short count : counts) {
+          writeH(count);
+        }
+      } else {
+        writeC(4); // no group
+        writeS(target.getName(true));
+        writeD(0); // no group yet
+        writeC(target.getPlayerClass().getClassId());
+        writeC(target.getLevel());
+        writeC(0); // unk
+      }
+    } else {
+      writeC(1);
+      writeS(target.getName(true));
+      writeS(target.getLegion() != null ? target.getLegion().getName() : "");
+      writeC(target.getLevel());
+      writeH(target.getPlayerClass().getClassId());
+      writeS(target.getCommonData().getNote());
+      writeD(1); // unk
+      writeC(target.getAccount().getMembership()); // vip level
+    }
+  }
 }

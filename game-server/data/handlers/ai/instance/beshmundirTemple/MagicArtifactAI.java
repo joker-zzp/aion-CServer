@@ -14,30 +14,30 @@ import ai.AggressiveNpcAI;
 @AIName("magicartifact")
 public class MagicArtifactAI extends AggressiveNpcAI {
 
-	private boolean cooldown = false;
+  private boolean cooldown = false;
 
-	public MagicArtifactAI(Npc owner) {
-		super(owner);
-	}
+  public MagicArtifactAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleAttack(Creature creature) {
-		super.handleAttack(creature);
-		if (!cooldown) {
-			AIActions.useSkill(this, 18916);
-			setCD();
-		}
-	}
+  @Override
+  protected void handleAttack(Creature creature) {
+    super.handleAttack(creature);
+    if (!cooldown) {
+      AIActions.useSkill(this, 18916);
+      setCD();
+    }
+  }
 
-	private void setCD() { // ugly hack to prevent overflow TODO: remove on AI improve
-		cooldown = true;
+  private void setCD() { // ugly hack to prevent overflow TODO: remove on AI improve
+    cooldown = true;
 
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-			@Override
-			public void run() {
-				cooldown = false;
-			}
-		}, 1000);
-	}
+      @Override
+      public void run() {
+        cooldown = false;
+      }
+    }, 1000);
+  }
 }

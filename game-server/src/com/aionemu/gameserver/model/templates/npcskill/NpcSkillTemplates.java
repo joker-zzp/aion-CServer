@@ -16,18 +16,18 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "npc_skills")
 public class NpcSkillTemplates {
 
-	@XmlList
-	@XmlAttribute(name = "npc_ids")
-	protected List<Integer> npcIds;
-	@XmlElement(name = "npc_skill")
-	protected List<NpcSkillTemplate> npcSkills;
+  @XmlList
+  @XmlAttribute(name = "npc_ids")
+  protected List<Integer> npcIds;
+  @XmlElement(name = "npc_skill")
+  protected List<NpcSkillTemplate> npcSkills;
 
-	public List<Integer> getNpcIds() {
-		return npcIds;
-	}
+  public List<Integer> getNpcIds() {
+    return npcIds;
+  }
 
-	public List<NpcSkillTemplate> getNpcSkills() {
-		return npcSkills;
-	}
+  public List<NpcSkillTemplate> getNpcSkills() {
+    return npcSkills;
+  }
 
 }

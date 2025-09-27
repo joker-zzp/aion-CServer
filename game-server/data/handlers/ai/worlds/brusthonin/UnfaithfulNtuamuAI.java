@@ -16,30 +16,30 @@ import ai.AggressiveNpcAI;
 @AIName("unfaithfulntuamu")
 public class UnfaithfulNtuamuAI extends AggressiveNpcAI implements HpPhases.PhaseHandler {
 
-	private final HpPhases hpPhases = new HpPhases(50);
+  private final HpPhases hpPhases = new HpPhases(50);
 
-	public UnfaithfulNtuamuAI(Npc owner) {
-		super(owner);
-	}
+  public UnfaithfulNtuamuAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleAttack(Creature creature) {
-		super.handleAttack(creature);
-		hpPhases.tryEnterNextPhase(this);
-	}
+  @Override
+  protected void handleAttack(Creature creature) {
+    super.handleAttack(creature);
+    hpPhases.tryEnterNextPhase(this);
+  }
 
-	@Override
-	public void handleHpPhase(int phaseHpPercent) {
-		Npc ntuamu = getOwner();
-		Npc vampireQueen = (Npc) spawn(214583, ntuamu.getX(), ntuamu.getY(), ntuamu.getZ(), ntuamu.getHeading());
-		vampireQueen.getLifeStats().setCurrentHpPercent(phaseHpPercent);
-		vampireQueen.getObserveController().attach(new ActionObserver(ObserverType.DEATH) {
+  @Override
+  public void handleHpPhase(int phaseHpPercent) {
+    Npc ntuamu = getOwner();
+    Npc vampireQueen = (Npc) spawn(214583, ntuamu.getX(), ntuamu.getY(), ntuamu.getZ(), ntuamu.getHeading());
+    vampireQueen.getLifeStats().setCurrentHpPercent(phaseHpPercent);
+    vampireQueen.getObserveController().attach(new ActionObserver(ObserverType.DEATH) {
 
-			@Override
-			public void died(Creature creature) {
-				AIActions.scheduleRespawn(UnfaithfulNtuamuAI.this);
-			}
-		});
-		AIActions.deleteOwner(this);
-	}
+      @Override
+      public void died(Creature creature) {
+        AIActions.scheduleRespawn(UnfaithfulNtuamuAI.this);
+      }
+    });
+    AIActions.deleteOwner(this);
+  }
 }

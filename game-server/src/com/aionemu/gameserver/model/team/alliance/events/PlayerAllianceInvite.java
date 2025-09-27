@@ -20,55 +20,55 @@ import com.aionemu.gameserver.utils.collections.Predicates;
  */
 public class PlayerAllianceInvite extends RequestResponseHandler<Player> {
 
-	public PlayerAllianceInvite(Player inviter) {
-		super(inviter);
-	}
+  public PlayerAllianceInvite(Player inviter) {
+    super(inviter);
+  }
 
-	@Override
-	public void acceptRequest(Player inviter, Player invited) {
-		if (PlayerRestrictions.canInviteToAlliance(inviter, invited)) {
+  @Override
+  public void acceptRequest(Player inviter, Player invited) {
+    if (PlayerRestrictions.canInviteToAlliance(inviter, invited)) {
 
-			PlayerAlliance alliance = inviter.getPlayerAlliance();
-			List<Player> playersToAdd = new ArrayList<>();
-			collectPlayersToAdd(inviter, invited, playersToAdd, alliance);
+      PlayerAlliance alliance = inviter.getPlayerAlliance();
+      List<Player> playersToAdd = new ArrayList<>();
+      collectPlayersToAdd(inviter, invited, playersToAdd, alliance);
 
-			if (alliance == null) {
-				alliance = PlayerAllianceService.createAlliance(inviter, invited, TeamType.ALLIANCE);
-				playersToAdd.remove(invited);
-			}
+      if (alliance == null) {
+        alliance = PlayerAllianceService.createAlliance(inviter, invited, TeamType.ALLIANCE);
+        playersToAdd.remove(invited);
+      }
 
-			for (Player member : playersToAdd) {
-				PlayerAllianceService.addPlayer(alliance, member);
-			}
-		}
-	}
+      for (Player member : playersToAdd) {
+        PlayerAllianceService.addPlayer(alliance, member);
+      }
+    }
+  }
 
-	private void collectPlayersToAdd(Player inviter, Player invited, List<Player> playersToAdd, PlayerAlliance alliance) {
-		// Collect requester Group without leader
-		if (inviter.isInGroup()) {
-			if (alliance != null)
-				throw new IllegalArgumentException("If requester is in group, alliance should be null");
-			PlayerGroup group = inviter.getPlayerGroup();
-			playersToAdd.addAll(group.filterMembers(Predicates.Players.allExcept(inviter)));
+  private void collectPlayersToAdd(Player inviter, Player invited, List<Player> playersToAdd, PlayerAlliance alliance) {
+    // Collect requester Group without leader
+    if (inviter.isInGroup()) {
+      if (alliance != null)
+        throw new IllegalArgumentException("If requester is in group, alliance should be null");
+      PlayerGroup group = inviter.getPlayerGroup();
+      playersToAdd.addAll(group.filterMembers(Predicates.Players.allExcept(inviter)));
 
-			for (Player player : group.getMembers())
-				PlayerGroupService.removePlayer(player);
-		}
+      for (Player player : group.getMembers())
+        PlayerGroupService.removePlayer(player);
+    }
 
-		// Collect full Invited Group
-		if (invited.isInGroup()) {
-			PlayerGroup group = invited.getPlayerGroup();
-			playersToAdd.addAll(group.getMembers());
-			for (Player player : group.getMembers())
-				PlayerGroupService.removePlayer(player);
-		} else { // or just single player
-			playersToAdd.add(invited);
-		}
-	}
+    // Collect full Invited Group
+    if (invited.isInGroup()) {
+      PlayerGroup group = invited.getPlayerGroup();
+      playersToAdd.addAll(group.getMembers());
+      for (Player player : group.getMembers())
+        PlayerGroupService.removePlayer(player);
+    } else { // or just single player
+      playersToAdd.add(invited);
+    }
+  }
 
-	@Override
-	public void denyRequest(Player requester, Player responder) {
-		PacketSendUtility.sendPacket(requester, SM_SYSTEM_MESSAGE.STR_PARTY_ALLIANCE_HE_REJECT_INVITATION(responder.getName()));
-	}
+  @Override
+  public void denyRequest(Player requester, Player responder) {
+    PacketSendUtility.sendPacket(requester, SM_SYSTEM_MESSAGE.STR_PARTY_ALLIANCE_HE_REJECT_INVITATION(responder.getName()));
+  }
 
 }

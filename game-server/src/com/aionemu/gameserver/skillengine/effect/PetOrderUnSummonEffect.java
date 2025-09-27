@@ -19,14 +19,14 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "PetOrderUnSummonEffect")
 public class PetOrderUnSummonEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		Creature effected = effect.getEffected();
-		if (effected instanceof Player) {
-			Summon summon = ((Player) effected).getSummon();
-			if (summon != null) {
-				SummonsService.doMode(SummonMode.RELEASE, summon, UnsummonType.UNSPECIFIED);
-			}
-		}
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    Creature effected = effect.getEffected();
+    if (effected instanceof Player) {
+      Summon summon = ((Player) effected).getSummon();
+      if (summon != null) {
+        SummonsService.doMode(SummonMode.RELEASE, summon, UnsummonType.UNSPECIFIED);
+      }
+    }
+  }
 }

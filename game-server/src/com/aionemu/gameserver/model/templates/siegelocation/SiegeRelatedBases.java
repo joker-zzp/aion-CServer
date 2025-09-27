@@ -11,11 +11,11 @@ import java.util.List;
 @XmlType(name = "SiegeRelatedBases")
 public class SiegeRelatedBases {
 
-	@XmlList
-	@XmlAttribute(name = "ids")
-	private List<Integer> baseIds;
+  @XmlList
+  @XmlAttribute(name = "ids")
+  private List<Integer> baseIds;
 
-	public List<Integer> getBaseIds() {
-		return baseIds;
-	}
+  public List<Integer> getBaseIds() {
+    return baseIds;
+  }
 }

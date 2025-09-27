@@ -34,12 +34,12 @@ import com.aionemu.gameserver.model.templates.rewards.IdLevelReward;
 @XmlType(name = "EnchantGroup")
 public class EnchantGroup extends BonusItemGroup {
 
-	@XmlElement(name = "item")
-	private List<IdLevelReward> items;
+  @XmlElement(name = "item")
+  private List<IdLevelReward> items;
 
-	@Override
-	public List<IdLevelReward> getItems() {
-		return items == null ? Collections.emptyList() : items;
-	}
+  @Override
+  public List<IdLevelReward> getItems() {
+    return items == null ? Collections.emptyList() : items;
+  }
 
 }

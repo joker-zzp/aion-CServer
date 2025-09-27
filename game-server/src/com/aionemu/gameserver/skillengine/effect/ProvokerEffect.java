@@ -27,67 +27,67 @@ import com.aionemu.gameserver.utils.PositionUtil;
 @XmlType(name = "ProvokerEffect")
 public class ProvokerEffect extends ShieldEffect {
 
-	@XmlAttribute(name = "provoke_target")
-	protected ProvokeTarget provokeTarget;
-	@XmlAttribute(name = "skill_id")
-	protected int skillId;
+  @XmlAttribute(name = "provoke_target")
+  protected ProvokeTarget provokeTarget;
+  @XmlAttribute(name = "skill_id")
+  protected int skillId;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void startEffect(Effect effect) {
-		Creature effector = effect.getEffector();
-		ObserverType observerType = hitType == HitType.NMLATK || hitType == HitType.BACKATK ? ObserverType.ATTACK : ObserverType.ATTACKED;
-		effect.addObserver(effect.getEffected(), new ActionObserver(observerType) {
+  @Override
+  public void startEffect(Effect effect) {
+    Creature effector = effect.getEffector();
+    ObserverType observerType = hitType == HitType.NMLATK || hitType == HitType.BACKATK ? ObserverType.ATTACK : ObserverType.ATTACKED;
+    effect.addObserver(effect.getEffected(), new ActionObserver(observerType) {
 
-			@Override
-			public void attack(Creature attacked, int attackSkillId) {
-				tryApplyEffect(attacked, attackSkillId, effector);
-			}
+      @Override
+      public void attack(Creature attacked, int attackSkillId) {
+        tryApplyEffect(attacked, attackSkillId, effector);
+      }
 
-			@Override
-			public void attacked(Creature attacker, int attackSkillId) {
-				tryApplyEffect(attacker, attackSkillId, effector);
-			}
+      @Override
+      public void attacked(Creature attacker, int attackSkillId) {
+        tryApplyEffect(attacker, attackSkillId, effector);
+      }
 
-			private void tryApplyEffect(Creature target, int attackSkillId, Creature effector) {
-				if (shouldApply(effector, target, attackSkillId)) {
-					if (effector instanceof Player player) {
-						PacketSendUtility.sendPacket(player,
-							SM_SYSTEM_MESSAGE.STR_SKILL_PROC_EFFECT_OCCURRED(DataManager.SKILL_DATA.getSkillTemplate(skillId).getL10n()));
-					}
-					SkillEngine.getInstance().applyEffectDirectly(skillId, effector, getProvokeTarget(effector, target));
-				}
-			}
-		});
-	}
+      private void tryApplyEffect(Creature target, int attackSkillId, Creature effector) {
+        if (shouldApply(effector, target, attackSkillId)) {
+          if (effector instanceof Player player) {
+            PacketSendUtility.sendPacket(player,
+              SM_SYSTEM_MESSAGE.STR_SKILL_PROC_EFFECT_OCCURRED(DataManager.SKILL_DATA.getSkillTemplate(skillId).getL10n()));
+          }
+          SkillEngine.getInstance().applyEffectDirectly(skillId, effector, getProvokeTarget(effector, target));
+        }
+      }
+    });
+  }
 
-	private boolean shouldApply(Creature effector, Creature target, int attackSkillId) {
-		if (provokeTarget == ProvokeTarget.OPPONENT && target == effector)
-			return false;
-		if (radius > 0 && !PositionUtil.isInRange(effector, target, radius, false))
-			return false;
-		if (Rnd.chance() >= hitTypeProb)
-			return false;
-		return switch (hitType) {
-			case PHHIT -> attackSkillId == 0 || DataManager.SKILL_DATA.getSkillTemplate(attackSkillId).getType() == SkillType.PHYSICAL;
-			case MAHIT -> attackSkillId != 0 && DataManager.SKILL_DATA.getSkillTemplate(attackSkillId).getType() == SkillType.MAGICAL;
-			case BACKATK -> PositionUtil.isBehind(effector, target);
-			default -> true;
-		};
-	}
+  private boolean shouldApply(Creature effector, Creature target, int attackSkillId) {
+    if (provokeTarget == ProvokeTarget.OPPONENT && target == effector)
+      return false;
+    if (radius > 0 && !PositionUtil.isInRange(effector, target, radius, false))
+      return false;
+    if (Rnd.chance() >= hitTypeProb)
+      return false;
+    return switch (hitType) {
+      case PHHIT -> attackSkillId == 0 || DataManager.SKILL_DATA.getSkillTemplate(attackSkillId).getType() == SkillType.PHYSICAL;
+      case MAHIT -> attackSkillId != 0 && DataManager.SKILL_DATA.getSkillTemplate(attackSkillId).getType() == SkillType.MAGICAL;
+      case BACKATK -> PositionUtil.isBehind(effector, target);
+      default -> true;
+    };
+  }
 
-	private Creature getProvokeTarget(Creature effector, Creature target) {
-		return switch (provokeTarget) {
-			case ME -> effector;
-			case OPPONENT -> target;
-		};
-	}
+  private Creature getProvokeTarget(Creature effector, Creature target) {
+    return switch (provokeTarget) {
+      case ME -> effector;
+      case OPPONENT -> target;
+    };
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-	}
+  @Override
+  public void endEffect(Effect effect) {
+  }
 }

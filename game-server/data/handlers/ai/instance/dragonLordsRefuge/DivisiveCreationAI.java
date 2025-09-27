@@ -28,49 +28,49 @@ import ai.AggressiveNpcAI;
 @AIName("divisive_creation")
 public class DivisiveCreationAI extends AggressiveNpcAI {
 
-	public DivisiveCreationAI(Npc owner) {
-		super(owner);
-	}
+  public DivisiveCreationAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		final WorldMapInstance instance = getPosition().getWorldMapInstance();
-		ThreadPoolManager.getInstance().schedule(() -> {
-			AIActions.targetCreature(DivisiveCreationAI.this, Rnd.get(instance.getPlayersInside()));
-			setStateIfNot(AIState.WALKING);
-			getOwner().setState(CreatureState.ACTIVE, true);
-			getMoveController().moveToTargetObject();
-			PacketSendUtility.broadcastToMap(getOwner(), new SM_EMOTION(getOwner(), EmotionType.WALK));
-		}, 5000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    final WorldMapInstance instance = getPosition().getWorldMapInstance();
+    ThreadPoolManager.getInstance().schedule(() -> {
+      AIActions.targetCreature(DivisiveCreationAI.this, Rnd.get(instance.getPlayersInside()));
+      setStateIfNot(AIState.WALKING);
+      getOwner().setState(CreatureState.ACTIVE, true);
+      getMoveController().moveToTargetObject();
+      PacketSendUtility.broadcastToMap(getOwner(), new SM_EMOTION(getOwner(), EmotionType.WALK));
+    }, 5000);
+  }
 
-	@Override
-	public float modifyOwnerDamage(float damage, Creature effected, Effect effect) {
-		if (effect != null) {
-			switch (effect.getSkillId()) {
-				case 20986:
-					damage *= 0.6f;
-					break;
-				case 21897:
-				case 21898:
-					damage *= 0.5f;
-					break;
-			}
-		}
-		return damage;
-	}
+  @Override
+  public float modifyOwnerDamage(float damage, Creature effected, Effect effect) {
+    if (effect != null) {
+      switch (effect.getSkillId()) {
+        case 20986:
+          damage *= 0.6f;
+          break;
+        case 21897:
+        case 21898:
+          damage *= 0.5f;
+          break;
+      }
+    }
+    return damage;
+  }
 
-	@Override
-	public ItemAttackType modifyAttackType(ItemAttackType type) {
-		return ItemAttackType.MAGICAL_EARTH;
-	}
+  @Override
+  public ItemAttackType modifyAttackType(ItemAttackType type) {
+    return ItemAttackType.MAGICAL_EARTH;
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
+      default -> super.ask(question);
+    };
+  }
 }

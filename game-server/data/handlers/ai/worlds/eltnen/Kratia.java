@@ -18,29 +18,29 @@ import ai.AggressiveNpcAI;
 @AIName("kratia")
 public class Kratia extends AggressiveNpcAI {
 
-	public Kratia(Npc owner) {
-		super(owner);
-	}
+  public Kratia(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDied() {
-		Npc kratia = getOwner();
-		Npc harpback = (Npc) spawn(211812, kratia.getX(), kratia.getY(), kratia.getZ(), kratia.getHeading());
-		harpback.getObserveController().attach(new ActionObserver(ObserverType.DEATH) {
+  @Override
+  protected void handleDied() {
+    Npc kratia = getOwner();
+    Npc harpback = (Npc) spawn(211812, kratia.getX(), kratia.getY(), kratia.getZ(), kratia.getHeading());
+    harpback.getObserveController().attach(new ActionObserver(ObserverType.DEATH) {
 
-			@Override
-			public void died(Creature creature) {
-				AIActions.scheduleRespawn(Kratia.this);
-			}
-		});
-		super.handleDied();
-	}
+      @Override
+      public void died(Creature creature) {
+        AIActions.scheduleRespawn(Kratia.this);
+      }
+    });
+    super.handleDied();
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_RESPAWN -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_RESPAWN -> false;
+      default -> super.ask(question);
+    };
+  }
 }

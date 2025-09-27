@@ -14,43 +14,43 @@ import com.aionemu.gameserver.model.templates.spawns.Spawn;
 @XmlType(name = "BaseSpawn")
 public class BaseSpawn {
 
-	@XmlAttribute(name = "id")
-	private int id;
-	@XmlAttribute(name = "world")
-	private int world;
-	@XmlElement(name = "occupier_template")
-	private List<BaseOccupierTemplate> baseOccupierTemplates;
+  @XmlAttribute(name = "id")
+  private int id;
+  @XmlAttribute(name = "world")
+  private int world;
+  @XmlElement(name = "occupier_template")
+  private List<BaseOccupierTemplate> baseOccupierTemplates;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public int getWorldId() {
-		return world;
-	}
+  public int getWorldId() {
+    return world;
+  }
 
-	public List<BaseOccupierTemplate> getOccupierTemplates() {
-		return baseOccupierTemplates;
-	}
+  public List<BaseOccupierTemplate> getOccupierTemplates() {
+    return baseOccupierTemplates;
+  }
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlType(name = "BaseOccupierTemplate")
-	public static class BaseOccupierTemplate {
+  @XmlAccessorType(XmlAccessType.FIELD)
+  @XmlType(name = "BaseOccupierTemplate")
+  public static class BaseOccupierTemplate {
 
-		@XmlAttribute(name = "occupier")
-		private BaseOccupier occupier;
+    @XmlAttribute(name = "occupier")
+    private BaseOccupier occupier;
 
-		public BaseOccupier getOccupier() {
-			return occupier;
-		}
+    public BaseOccupier getOccupier() {
+      return occupier;
+    }
 
-		@XmlElement(name = "spawn")
-		private List<Spawn> spawns;
+    @XmlElement(name = "spawn")
+    private List<Spawn> spawns;
 
-		public List<Spawn> getSpawns() {
-			return spawns;
-		}
+    public List<Spawn> getSpawns() {
+      return spawns;
+    }
 
-	}
+  }
 
 }

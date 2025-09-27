@@ -5,9 +5,9 @@ package com.aionemu.gameserver.model.team;
  */
 public interface TeamMember<M> {
 
-	int getObjectId();
+  int getObjectId();
 
-	String getName();
+  String getName();
 
-	M getObject();
+  M getObject();
 }

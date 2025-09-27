@@ -17,37 +17,37 @@ import ai.AggressiveNpcAI;
 @AIName("tiamat_dragon")
 public class TiamatDragonAI extends AggressiveNpcAI {
 
-	public TiamatDragonAI(Npc owner) {
-		super(owner);
-	}
+  public TiamatDragonAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		ThreadPoolManager.getInstance().schedule(() -> AIActions.useSkill(this, 20920), 4000);
-		ThreadPoolManager.getInstance()
-			.schedule(() -> getOwner().queueSkill(20984, 1), 300000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    ThreadPoolManager.getInstance().schedule(() -> AIActions.useSkill(this, 20920), 4000);
+    ThreadPoolManager.getInstance()
+      .schedule(() -> getOwner().queueSkill(20984, 1), 300000);
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		switch (skillTemplate.getSkillId()) {
-			case 20920:
-				AIActions.useSkill(this, 20975); // Fissure Buff
-				AIActions.useSkill(this, 20976); // Wrath Buff
-				AIActions.useSkill(this, 20977); // Gravity Buff
-				AIActions.useSkill(this, 20978); // Petrification Buff
-				break;
-			case 20984:
-				PacketSendUtility.broadcastToMap(getOwner(), SM_SYSTEM_MESSAGE.STR_IDTIAMAT_TIAMAT_WARNING_MSG());
-				break;
-		}
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    switch (skillTemplate.getSkillId()) {
+      case 20920:
+        AIActions.useSkill(this, 20975); // Fissure Buff
+        AIActions.useSkill(this, 20976); // Wrath Buff
+        AIActions.useSkill(this, 20977); // Gravity Buff
+        AIActions.useSkill(this, 20978); // Petrification Buff
+        break;
+      case 20984:
+        PacketSendUtility.broadcastToMap(getOwner(), SM_SYSTEM_MESSAGE.STR_IDTIAMAT_TIAMAT_WARNING_MSG());
+        break;
+    }
+  }
 
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case REWARD_AP_XP_DP_LOOT -> false;
-			default -> super.ask(question);
-		};
-	}
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case REWARD_AP_XP_DP_LOOT -> false;
+      default -> super.ask(question);
+    };
+  }
 }

@@ -22,32 +22,32 @@ import com.aionemu.commons.configuration.TransformationTypeInfo;
  */
 public class CollectionTransformer extends CommaSeparatedValueTransformer<Collection<?>> {
 
-	public static final CollectionTransformer SHARED_INSTANCE = new CollectionTransformer();
+  public static final CollectionTransformer SHARED_INSTANCE = new CollectionTransformer();
 
-	@SuppressWarnings("unchecked")
-	@Override
-	protected Collection<?> parseObject(List<String> values, TransformationTypeInfo typeInfo) throws Exception {
-		Collection<Object> collection;
-		if (typeInfo.getType().isInterface() || Modifier.isAbstract(typeInfo.getType().getModifiers())) {
-			if (typeInfo.getType() == Collection.class)
-				throw new UnsupportedOperationException("Collection type (subclass) must be specified.");
-			else if (typeInfo.getType() == List.class)
-				collection = new ArrayList<>();
-			else if (typeInfo.getType() == Set.class)
-				collection = new HashSet<>();
-			else
-				throw new UnsupportedOperationException("No default implementation for " + typeInfo.getType() + ", non abstract/interface class must be declared.");
-		} else {
-			collection = (Collection<Object>) typeInfo.getType().getDeclaredConstructor().newInstance();
-		}
+  @SuppressWarnings("unchecked")
+  @Override
+  protected Collection<?> parseObject(List<String> values, TransformationTypeInfo typeInfo) throws Exception {
+    Collection<Object> collection;
+    if (typeInfo.getType().isInterface() || Modifier.isAbstract(typeInfo.getType().getModifiers())) {
+      if (typeInfo.getType() == Collection.class)
+        throw new UnsupportedOperationException("Collection type (subclass) must be specified.");
+      else if (typeInfo.getType() == List.class)
+        collection = new ArrayList<>();
+      else if (typeInfo.getType() == Set.class)
+        collection = new HashSet<>();
+      else
+        throw new UnsupportedOperationException("No default implementation for " + typeInfo.getType() + ", non abstract/interface class must be declared.");
+    } else {
+      collection = (Collection<Object>) typeInfo.getType().getDeclaredConstructor().newInstance();
+    }
 
-		if (!values.isEmpty()) {
-			TransformationTypeInfo innerType = typeInfo.getGenericType(0);
-			PropertyTransformer<?> pt = PropertyTransformerFactory.getTransformer(innerType.getType());
-			for (String val : values)
-				collection.add(pt.transform(val, innerType));
-		}
+    if (!values.isEmpty()) {
+      TransformationTypeInfo innerType = typeInfo.getGenericType(0);
+      PropertyTransformer<?> pt = PropertyTransformerFactory.getTransformer(innerType.getType());
+      for (String val : values)
+        collection.add(pt.transform(val, innerType));
+    }
 
-		return collection;
-	}
+    return collection;
+  }
 }

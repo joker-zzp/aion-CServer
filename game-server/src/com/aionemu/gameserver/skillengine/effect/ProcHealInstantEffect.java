@@ -14,33 +14,33 @@ import com.aionemu.gameserver.skillengine.model.HealType;
 @XmlType(name = "ProcHealInstantEffect")
 public class ProcHealInstantEffect extends AbstractHealEffect {
 
-	@Override
-	public void calculate(Effect effect) {
-		super.calculate(effect, HealType.HP);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    super.calculate(effect, HealType.HP);
+  }
 
-	@Override
-	public void applyEffect(Effect effect) {
-		super.applyEffect(effect, HealType.HP);
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    super.applyEffect(effect, HealType.HP);
+  }
 
-	@Override
-	public int getCurrentStatValue(Effect effect) {
-		return effect.getEffected().getLifeStats().getCurrentHp();
-	}
+  @Override
+  public int getCurrentStatValue(Effect effect) {
+    return effect.getEffected().getLifeStats().getCurrentHp();
+  }
 
-	@Override
-	public int getMaxStatValue(Effect effect) {
-		return effect.getEffected().getGameStats().getMaxHp().getCurrent();
-	}
+  @Override
+  public int getMaxStatValue(Effect effect) {
+    return effect.getEffected().getGameStats().getMaxHp().getCurrent();
+  }
 
-	@Override
-	public boolean allowHpHealBoost(Effect effect) {
-		return false;
-	}
+  @Override
+  public boolean allowHpHealBoost(Effect effect) {
+    return false;
+  }
 
-	@Override
-	public boolean allowHpHealSkillDeboost(Effect effect) {
-		return false;
-	}
+  @Override
+  public boolean allowHpHealSkillDeboost(Effect effect) {
+    return false;
+  }
 }

@@ -8,18 +8,18 @@ import com.aionemu.gameserver.network.loginserver.LsServerPacket;
  */
 public class SM_ACCOUNT_TOLL_INFO extends LsServerPacket {
 
-	private final int accountId;
-	private final long toll;
+  private final int accountId;
+  private final long toll;
 
-	public SM_ACCOUNT_TOLL_INFO(long toll, int accountId) {
-		super(0x09);
-		this.accountId = accountId;
-		this.toll = toll;
-	}
+  public SM_ACCOUNT_TOLL_INFO(long toll, int accountId) {
+    super(0x09);
+    this.accountId = accountId;
+    this.toll = toll;
+  }
 
-	@Override
-	protected void writeImpl(LoginServerConnection con) {
-		writeD(accountId);
-		writeQ(toll);
-	}
+  @Override
+  protected void writeImpl(LoginServerConnection con) {
+    writeD(accountId);
+    writeQ(toll);
+  }
 }

@@ -11,19 +11,19 @@ import com.aionemu.gameserver.network.loginserver.LsServerPacket;
  */
 public class SM_GS_AUTH extends LsServerPacket {
 
-	public SM_GS_AUTH() {
-		super(0x00);
-	}
+  public SM_GS_AUTH() {
+    super(0x00);
+  }
 
-	@Override
-	protected void writeImpl(LoginServerConnection con) {
-		byte[] gsIp = NetworkConfig.CLIENT_CONNECT_ADDRESS.getAddress().getAddress();
-		writeC(NetworkConfig.GAMESERVER_ID);
-		writeS(NetworkConfig.LOGIN_PASSWORD);
-		writeC(gsIp.length);
-		writeB(gsIp);
-		writeH(NetworkConfig.CLIENT_CONNECT_ADDRESS.getPort());
-		writeC(NetworkConfig.MIN_ACCESS_LEVEL);
-		writeD(NetworkConfig.MAX_ONLINE_PLAYERS);
-	}
+  @Override
+  protected void writeImpl(LoginServerConnection con) {
+    byte[] gsIp = NetworkConfig.CLIENT_CONNECT_ADDRESS.getAddress().getAddress();
+    writeC(NetworkConfig.GAMESERVER_ID);
+    writeS(NetworkConfig.LOGIN_PASSWORD);
+    writeC(gsIp.length);
+    writeB(gsIp);
+    writeH(NetworkConfig.CLIENT_CONNECT_ADDRESS.getPort());
+    writeC(NetworkConfig.MIN_ACCESS_LEVEL);
+    writeD(NetworkConfig.MAX_ONLINE_PLAYERS);
+  }
 }

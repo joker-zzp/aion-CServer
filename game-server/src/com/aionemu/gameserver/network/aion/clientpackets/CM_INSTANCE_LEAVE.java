@@ -11,20 +11,20 @@ import com.aionemu.gameserver.network.aion.AionConnection.State;
  */
 public class CM_INSTANCE_LEAVE extends AionClientPacket {
 
-	public CM_INSTANCE_LEAVE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_INSTANCE_LEAVE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		// nothing to read
-	}
+  @Override
+  protected void readImpl() {
+    // nothing to read
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player.isInInstance()) {
-			player.getPosition().getWorldMapInstance().getInstanceHandler().leaveInstance(player);
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player.isInInstance()) {
+      player.getPosition().getWorldMapInstance().getInstanceHandler().leaveInstance(player);
+    }
+  }
 }

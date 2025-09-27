@@ -8,17 +8,17 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_LEGION_SEND_EMBLEM_DATA extends AionServerPacket {
 
-	private int size;
-	private byte[] data;
+  private int size;
+  private byte[] data;
 
-	public SM_LEGION_SEND_EMBLEM_DATA(int size, byte[] data) {
-		this.size = size;
-		this.data = data;
-	}
+  public SM_LEGION_SEND_EMBLEM_DATA(int size, byte[] data) {
+    this.size = size;
+    this.data = data;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(size);
-		writeB(data);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(size);
+    writeB(data);
+  }
 }

@@ -15,11 +15,11 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 @XmlType(name = "DpCondition")
 public class DpCondition extends Condition {
 
-	@XmlAttribute(required = true)
-	protected int value;
+  @XmlAttribute(required = true)
+  protected int value;
 
-	@Override
-	public boolean validate(Skill skill) {
-		return ((Player) skill.getEffector()).getCommonData().getDp() >= value;
-	}
+  @Override
+  public boolean validate(Skill skill) {
+    return ((Player) skill.getEffector()).getCommonData().getDp() >= value;
+  }
 }

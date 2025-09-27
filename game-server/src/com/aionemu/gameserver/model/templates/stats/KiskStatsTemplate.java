@@ -13,24 +13,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class KiskStatsTemplate {
 
-	@XmlAttribute(name = "usemask")
-	private int useMask = 4;
+  @XmlAttribute(name = "usemask")
+  private int useMask = 4;
 
-	@XmlAttribute(name = "members")
-	private int maxMembers = 6;
+  @XmlAttribute(name = "members")
+  private int maxMembers = 6;
 
-	@XmlAttribute(name = "resurrects")
-	private int maxResurrects = 18;
+  @XmlAttribute(name = "resurrects")
+  private int maxResurrects = 18;
 
-	public int getUseMask() {
-		return useMask;
-	}
+  public int getUseMask() {
+    return useMask;
+  }
 
-	public int getMaxMembers() {
-		return maxMembers;
-	}
+  public int getMaxMembers() {
+    return maxMembers;
+  }
 
-	public int getMaxResurrects() {
-		return maxResurrects;
-	}
+  public int getMaxResurrects() {
+    return maxResurrects;
+  }
 }

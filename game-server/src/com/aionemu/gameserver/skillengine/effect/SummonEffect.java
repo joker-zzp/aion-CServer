@@ -22,24 +22,24 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @XmlType(name = "SummonEffect")
 public class SummonEffect extends EffectTemplate {
 
-	@XmlAttribute(name = "npc_id", required = true)
-	protected int npcId;
-	@XmlAttribute(name = "time", required = true)
-	protected int time; // in seconds
+  @XmlAttribute(name = "npc_id", required = true)
+  protected int npcId;
+  @XmlAttribute(name = "time", required = true)
+  protected int time; // in seconds
 
-	@Override
-	public void applyEffect(Effect effect) {
-		Player effected = (Player) effect.getEffected();
-		Summon summon = SummonsService.createSummon(effected, npcId, effect.getSkillId(), effect.getSkillLevel(), time);
-		if (summon != null && time > 0) {
-			Future<?> task = ThreadPoolManager.getInstance().schedule(() -> summon.getController().release(UnsummonType.UNSPECIFIED), time * 1000);
-			summon.getController().addTask(TaskId.DESPAWN, task);
-			effected.getEffectController().removePetOrderUnSummonEffects();
-		}
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    Player effected = (Player) effect.getEffected();
+    Summon summon = SummonsService.createSummon(effected, npcId, effect.getSkillId(), effect.getSkillLevel(), time);
+    if (summon != null && time > 0) {
+      Future<?> task = ThreadPoolManager.getInstance().schedule(() -> summon.getController().release(UnsummonType.UNSPECIFIED), time * 1000);
+      summon.getController().addTask(TaskId.DESPAWN, task);
+      effected.getEffectController().removePetOrderUnSummonEffects();
+    }
+  }
 
-	@Override
-	public void calculate(Effect effect) {
-		effect.addSuccessEffect(this);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    effect.addSuccessEffect(this);
+  }
 }

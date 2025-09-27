@@ -12,19 +12,19 @@ import com.aionemu.gameserver.network.aion.iteminfo.ItemInfoBlob.ItemBlobType;
  */
 public class AccessoryInfoBlobEntry extends ItemBlobEntry {
 
-	AccessoryInfoBlobEntry() {
-		super(ItemBlobType.SLOTS_ACCESSORY);
-	}
+  AccessoryInfoBlobEntry() {
+    super(ItemBlobType.SLOTS_ACCESSORY);
+  }
 
-	@Override
-	public void writeThisBlob(ByteBuffer buf) {
-		ItemSlot[] slots = ItemSlot.getSlotsFor(ownerItem.getItemTemplate().getItemSlot());
-		writeQ(buf, slots[0].getSlotIdMask());
-		writeQ(buf, slots.length > 1 ? slots[1].getSlotIdMask() : 0);
-	}
+  @Override
+  public void writeThisBlob(ByteBuffer buf) {
+    ItemSlot[] slots = ItemSlot.getSlotsFor(ownerItem.getItemTemplate().getItemSlot());
+    writeQ(buf, slots[0].getSlotIdMask());
+    writeQ(buf, slots.length > 1 ? slots[1].getSlotIdMask() : 0);
+  }
 
-	@Override
-	public int getSize() {
-		return 16;
-	}
+  @Override
+  public int getSize() {
+    return 16;
+  }
 }

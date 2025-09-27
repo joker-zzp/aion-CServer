@@ -9,11 +9,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "activationAttribute")
 @XmlEnum
 public enum ActivationAttribute {
-	NONE,
-	ACTIVE,
-	PROVOKED,
-	MAINTAIN,
-	TOGGLE,
-	PASSIVE,
-	CHARGE
+  NONE,
+  ACTIVE,
+  PROVOKED,
+  MAINTAIN,
+  TOGGLE,
+  PASSIVE,
+  CHARGE
 }

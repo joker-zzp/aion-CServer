@@ -9,17 +9,17 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_SKILL_CANCEL extends AionServerPacket {
 
-	private Creature creature;
-	private int skillId;
+  private Creature creature;
+  private int skillId;
 
-	public SM_SKILL_CANCEL(Creature creature, int skillId) {
-		this.creature = creature;
-		this.skillId = skillId;
-	}
+  public SM_SKILL_CANCEL(Creature creature, int skillId) {
+    this.creature = creature;
+    this.skillId = skillId;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(creature.getObjectId());
-		writeH(skillId);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(creature.getObjectId());
+    writeH(skillId);
+  }
 }

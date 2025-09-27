@@ -12,33 +12,33 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "MarkerSpot")
 public class MarkerSpot {
 
-	@XmlAttribute(name = "x", required = true)
-	private float x;
-	@XmlAttribute(name = "y", required = true)
-	private float y;
-	@XmlAttribute(name = "z", required = true)
-	private float z;
-	@XmlAttribute(name = "h")
-	private byte h = 0;
+  @XmlAttribute(name = "x", required = true)
+  private float x;
+  @XmlAttribute(name = "y", required = true)
+  private float y;
+  @XmlAttribute(name = "z", required = true)
+  private float z;
+  @XmlAttribute(name = "h")
+  private byte h = 0;
 
-	public float getX() {
-		return x;
-	}
+  public float getX() {
+    return x;
+  }
 
-	public float getY() {
-		return y;
-	}
+  public float getY() {
+    return y;
+  }
 
-	public float getZ() {
-		return z;
-	}
+  public float getZ() {
+    return z;
+  }
 
-	public byte getH() {
-		return h;
-	}
+  public byte getH() {
+    return h;
+  }
 
-	@Override
-	public String toString() {
-		return "MarkerSpot[" + "x=" + x + ", y=" + y + ", z=" + z + ", h=" + h + ']';
-	}
+  @Override
+  public String toString() {
+    return "MarkerSpot[" + "x=" + x + ", y=" + y + ", z=" + z + ", h=" + h + ']';
+  }
 }

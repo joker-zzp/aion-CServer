@@ -10,18 +10,18 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "TransformType")
 @XmlEnum
 public enum TransformType {
-	NONE(0),
-	PC(1),
-	AVATAR(2),
-	FORM1(3);
+  NONE(0),
+  PC(1),
+  AVATAR(2),
+  FORM1(3);
 
-	private int id;
+  private int id;
 
-	private TransformType(int id) {
-		this.id = id;
-	}
+  private TransformType(int id) {
+    this.id = id;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 }

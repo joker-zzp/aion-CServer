@@ -14,29 +14,29 @@ import com.aionemu.gameserver.services.SocialService;
  */
 public class CM_BLOCK_SET_REASON extends AionClientPacket {
 
-	String targetName;
-	String reason;
+  String targetName;
+  String reason;
 
-	public CM_BLOCK_SET_REASON(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_BLOCK_SET_REASON(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		targetName = readS();
-		reason = readS();
+  @Override
+  protected void readImpl() {
+    targetName = readS();
+    reason = readS();
 
-	}
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		BlockedPlayer target = activePlayer.getBlockList().getBlockedPlayer(targetName);
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    BlockedPlayer target = activePlayer.getBlockList().getBlockedPlayer(targetName);
 
-		if (target == null)
-			sendPacket(SM_SYSTEM_MESSAGE.STR_BLOCKLIST_NOT_IN_LIST());
-		else {
-			SocialService.setBlockedReason(activePlayer, target, reason);
-		}
-	}
+    if (target == null)
+      sendPacket(SM_SYSTEM_MESSAGE.STR_BLOCKLIST_NOT_IN_LIST());
+    else {
+      SocialService.setBlockedReason(activePlayer, target, reason);
+    }
+  }
 }

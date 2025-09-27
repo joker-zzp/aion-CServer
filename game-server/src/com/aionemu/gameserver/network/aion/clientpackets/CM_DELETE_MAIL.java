@@ -12,24 +12,24 @@ import com.aionemu.gameserver.services.mail.MailService;
  */
 public class CM_DELETE_MAIL extends AionClientPacket {
 
-	private int[] mailObjIds;
+  private int[] mailObjIds;
 
-	public CM_DELETE_MAIL(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_DELETE_MAIL(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		mailObjIds = new int[readUH()];
-		for (int i = 0; i < mailObjIds.length; i++) {
-			mailObjIds[i] = readD();
-			readC(); // unk
-		}
-	}
+  @Override
+  protected void readImpl() {
+    mailObjIds = new int[readUH()];
+    for (int i = 0; i < mailObjIds.length; i++) {
+      mailObjIds[i] = readD();
+      readC(); // unk
+    }
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		MailService.deleteMail(player, mailObjIds);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    MailService.deleteMail(player, mailObjIds);
+  }
 }

@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "SiegeLegionReward")
 public class SiegeLegionReward {
 
-	@XmlAttribute(name = "item_id")
-	private int itemId;
-	@XmlAttribute(name = "item_count")
-	private long itemCount;
+  @XmlAttribute(name = "item_id")
+  private int itemId;
+  @XmlAttribute(name = "item_count")
+  private long itemCount;
 
-	public int getItemId() {
-		return itemId;
-	}
+  public int getItemId() {
+    return itemId;
+  }
 
-	public long getItemCount() {
-		return itemCount;
-	}
+  public long getItemCount() {
+    return itemCount;
+  }
 }

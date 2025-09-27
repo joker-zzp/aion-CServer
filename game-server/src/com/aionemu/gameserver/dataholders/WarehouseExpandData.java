@@ -18,25 +18,25 @@ import com.aionemu.gameserver.model.templates.StorageExpansionTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class WarehouseExpandData {
 
-	@XmlElement(name = "expansion_npc")
-	private List<StorageExpansionTemplate> expansionTemplates;
+  @XmlElement(name = "expansion_npc")
+  private List<StorageExpansionTemplate> expansionTemplates;
 
-	@XmlTransient
-	private final Map<Integer, StorageExpansionTemplate> expansionTemplatesByNpcId = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, StorageExpansionTemplate> expansionTemplatesByNpcId = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (StorageExpansionTemplate expansionTemplate : expansionTemplates) {
-			for (int npcId : expansionTemplate.getNpcIds())
-				expansionTemplatesByNpcId.put(npcId, expansionTemplate);
-		}
-		expansionTemplates = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (StorageExpansionTemplate expansionTemplate : expansionTemplates) {
+      for (int npcId : expansionTemplate.getNpcIds())
+        expansionTemplatesByNpcId.put(npcId, expansionTemplate);
+    }
+    expansionTemplates = null;
+  }
 
-	public int size() {
-		return expansionTemplatesByNpcId.size();
-	}
+  public int size() {
+    return expansionTemplatesByNpcId.size();
+  }
 
-	public StorageExpansionTemplate getWarehouseExpansionTemplate(int id) {
-		return expansionTemplatesByNpcId.get(id);
-	}
+  public StorageExpansionTemplate getWarehouseExpansionTemplate(int id) {
+    return expansionTemplatesByNpcId.get(id);
+  }
 }

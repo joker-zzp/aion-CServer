@@ -18,119 +18,119 @@ import com.aionemu.gameserver.world.zone.ZoneName;
 @XmlType(name = "Zone")
 public class ZoneTemplate {
 
-	@XmlElement
-	protected Points points;
+  @XmlElement
+  protected Points points;
 
-	@XmlElement
-	protected Cylinder cylinder;
+  @XmlElement
+  protected Cylinder cylinder;
 
-	@XmlElement
-	protected Sphere sphere;
+  @XmlElement
+  protected Sphere sphere;
 
-	@XmlElement
-	protected Semisphere semisphere;
+  @XmlElement
+  protected Semisphere semisphere;
 
-	@XmlAttribute
-	protected int flags = -1;
+  @XmlAttribute
+  protected int flags = -1;
 
-	@XmlAttribute
-	protected int priority;
+  @XmlAttribute
+  protected int priority;
 
-	@XmlTransient
-	private String name;
+  @XmlTransient
+  private String name;
 
-	@XmlTransient
-	private ZoneName zoneName;
+  @XmlTransient
+  private ZoneName zoneName;
 
-	@XmlAttribute(name = "name")
-	public String getXmlName() {
-		return name;
-	}
+  @XmlAttribute(name = "name")
+  public String getXmlName() {
+    return name;
+  }
 
-	protected void setXmlName(String name) {
-		zoneName = ZoneName.createOrGet(name);
-		this.name = zoneName.name();
-	}
+  protected void setXmlName(String name) {
+    zoneName = ZoneName.createOrGet(name);
+    this.name = zoneName.name();
+  }
 
-	@XmlAttribute
-	protected int mapid;
+  @XmlAttribute
+  protected int mapid;
 
-	@XmlAttribute(name = "siege_id")
-	protected List<Integer> siegeId;
+  @XmlAttribute(name = "siege_id")
+  protected List<Integer> siegeId;
 
-	@XmlAttribute(name = "town_id")
-	private int townId;
+  @XmlAttribute(name = "town_id")
+  private int townId;
 
-	@XmlAttribute(name = "area_type")
-	protected AreaType areaType = AreaType.POLYGON;
+  @XmlAttribute(name = "area_type")
+  protected AreaType areaType = AreaType.POLYGON;
 
-	@XmlAttribute(name = "zone_type")
-	protected ZoneClassName zoneType = ZoneClassName.SUB;
+  @XmlAttribute(name = "zone_type")
+  protected ZoneClassName zoneType = ZoneClassName.SUB;
 
-	/**
-	 * Gets the value of the points property.
-	 */
-	public Points getPoints() {
-		return points;
-	}
+  /**
+   * Gets the value of the points property.
+   */
+  public Points getPoints() {
+    return points;
+  }
 
-	public Cylinder getCylinder() {
-		return cylinder;
-	}
+  public Cylinder getCylinder() {
+    return cylinder;
+  }
 
-	public Sphere getSphere() {
-		return sphere;
-	}
+  public Sphere getSphere() {
+    return sphere;
+  }
 
-	public Semisphere getSemisphere() {
-		return semisphere;
-	}
+  public Semisphere getSemisphere() {
+    return semisphere;
+  }
 
-	/**
-	 * @return the priority
-	 */
-	public int getPriority() {
-		return priority;
-	}
+  /**
+   * @return the priority
+   */
+  public int getPriority() {
+    return priority;
+  }
 
-	/**
-	 * Gets the value of the name property.
-	 */
-	public ZoneName getName() {
-		return zoneName;
-	}
+  /**
+   * Gets the value of the name property.
+   */
+  public ZoneName getName() {
+    return zoneName;
+  }
 
-	/**
-	 * Gets the value of the mapid property.
-	 */
-	public int getMapid() {
-		return mapid;
-	}
+  /**
+   * Gets the value of the mapid property.
+   */
+  public int getMapid() {
+    return mapid;
+  }
 
-	/**
-	 * @return the type
-	 */
-	public AreaType getAreaType() {
-		return areaType;
-	}
+  /**
+   * @return the type
+   */
+  public AreaType getAreaType() {
+    return areaType;
+  }
 
-	/**
-	 * @return the zoneType
-	 */
-	public ZoneClassName getZoneType() {
-		return zoneType;
-	}
+  /**
+   * @return the zoneType
+   */
+  public ZoneClassName getZoneType() {
+    return zoneType;
+  }
 
-	public List<Integer> getSiegeId() {
-		return siegeId;
-	}
+  public List<Integer> getSiegeId() {
+    return siegeId;
+  }
 
-	public int getFlags() {
-		return flags;
-	}
+  public int getFlags() {
+    return flags;
+  }
 
-	public int getTownId() {
-		return townId;
-	}
+  public int getTownId() {
+    return townId;
+  }
 
 }

@@ -17,43 +17,43 @@ import com.aionemu.gameserver.utils.chathandlers.ConsoleCommand;
  */
 public class Endquest extends ConsoleCommand {
 
-	public Endquest() {
-		super("endquest", "Completes a quest.");
+  public Endquest() {
+    super("endquest", "Completes a quest.");
 
-		setSyntaxInfo("<quest> - Completes the specified quest (without giving rewards).");
-	}
+    setSyntaxInfo("<quest> - Completes the specified quest (without giving rewards).");
+  }
 
-	@Override
-	public void execute(Player admin, String... params) {
-		if (params.length == 0) {
-			sendInfo(admin);
-			return;
-		}
+  @Override
+  public void execute(Player admin, String... params) {
+    if (params.length == 0) {
+      sendInfo(admin);
+      return;
+    }
 
-		VisibleObject target = admin.getTarget();
-		if (!(target instanceof Player)) {
-			sendInfo(admin, "Please select a player.");
-			return;
-		}
+    VisibleObject target = admin.getTarget();
+    if (!(target instanceof Player)) {
+      sendInfo(admin, "Please select a player.");
+      return;
+    }
 
-		Player player = (Player) target;
-		int questId = ChatUtil.getQuestId(params[0]);
-		if (questId == 0) {
-			sendInfo(admin, "Invalid quest link or ID.");
-			return;
-		}
+    Player player = (Player) target;
+    int questId = ChatUtil.getQuestId(params[0]);
+    if (questId == 0) {
+      sendInfo(admin, "Invalid quest link or ID.");
+      return;
+    }
 
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (qs == null) {
-			sendInfo(admin, "Quest must be started first.");
-			return;
-		}
-		qs.setStatus(QuestStatus.COMPLETE);
-		qs.setQuestVar(0);
-		if (!DataManager.QUEST_DATA.getQuestById(qs.getQuestId()).getRewards().isEmpty())
-			qs.setRewardGroup(0); // follow quests could require reward group > 0 to be unlocked (see quest_data.xml)
-		PacketSendUtility.sendPacket(player, new SM_QUEST_ACTION(ActionType.UPDATE, qs));
-		QuestEngine.getInstance().onQuestCompleted(player, qs.getQuestId());
-		player.getController().updateNearbyQuests();
-	}
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    if (qs == null) {
+      sendInfo(admin, "Quest must be started first.");
+      return;
+    }
+    qs.setStatus(QuestStatus.COMPLETE);
+    qs.setQuestVar(0);
+    if (!DataManager.QUEST_DATA.getQuestById(qs.getQuestId()).getRewards().isEmpty())
+      qs.setRewardGroup(0); // follow quests could require reward group > 0 to be unlocked (see quest_data.xml)
+    PacketSendUtility.sendPacket(player, new SM_QUEST_ACTION(ActionType.UPDATE, qs));
+    QuestEngine.getInstance().onQuestCompleted(player, qs.getQuestId());
+    player.getController().updateNearbyQuests();
+  }
 }

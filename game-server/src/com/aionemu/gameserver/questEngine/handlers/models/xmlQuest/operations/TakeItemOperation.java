@@ -14,13 +14,13 @@ import com.aionemu.gameserver.questEngine.model.QuestEnv;
 @XmlType(name = "TakeItemOperation")
 public class TakeItemOperation extends QuestOperation {
 
-	@XmlAttribute(name = "item_id", required = true)
-	protected int itemId;
-	@XmlAttribute(required = true)
-	protected int count;
+  @XmlAttribute(name = "item_id", required = true)
+  protected int itemId;
+  @XmlAttribute(required = true)
+  protected int count;
 
-	@Override
-	public void doOperate(QuestEnv env) {
-		env.getPlayer().getInventory().decreaseByItemId(itemId, count);
-	}
+  @Override
+  public void doOperate(QuestEnv env) {
+    env.getPlayer().getInventory().decreaseByItemId(itemId, count);
+  }
 }

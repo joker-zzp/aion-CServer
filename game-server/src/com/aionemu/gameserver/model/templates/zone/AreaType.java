@@ -9,8 +9,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "AreaType")
 @XmlEnum
 public enum AreaType {
-	POLYGON,
-	CYLINDER,
-	SPHERE,
-	SEMISPHERE;
+  POLYGON,
+  CYLINDER,
+  SPHERE,
+  SEMISPHERE;
 }

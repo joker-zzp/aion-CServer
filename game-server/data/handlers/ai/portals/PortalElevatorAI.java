@@ -13,14 +13,14 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("portal_elevator")
 public class PortalElevatorAI extends PortalAI {
 
-	public PortalElevatorAI(Npc owner) {
-		super(owner);
-	}
+  public PortalElevatorAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		PacketSendUtility.broadcastPacket(player, new SM_EMOTION(getOwner(), EmotionType.EMOTE, 144, 0), true);
-		super.handleUseItemFinish(player);
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    PacketSendUtility.broadcastPacket(player, new SM_EMOTION(getOwner(), EmotionType.EMOTE, 144, 0), true);
+    super.handleUseItemFinish(player);
+  }
 
 }

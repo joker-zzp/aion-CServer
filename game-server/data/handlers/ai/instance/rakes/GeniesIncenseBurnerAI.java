@@ -13,13 +13,13 @@ import ai.ActionItemNpcAI;
 @AIName("geniesincenseburner")
 public class GeniesIncenseBurnerAI extends ActionItemNpcAI {
 
-	public GeniesIncenseBurnerAI(Npc owner) {
-		super(owner);
-	}
+  public GeniesIncenseBurnerAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		AIActions.targetSelf(this);
-		AIActions.useSkill(this, 18465);
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    AIActions.targetSelf(this);
+    AIActions.useSkill(this, 18465);
+  }
 }

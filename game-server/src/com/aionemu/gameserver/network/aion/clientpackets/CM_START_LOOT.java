@@ -15,41 +15,41 @@ import com.aionemu.gameserver.services.drop.DropService;
  */
 public class CM_START_LOOT extends AionClientPacket {
 
-	private static final Logger log = LoggerFactory.getLogger(CM_START_LOOT.class);
-	/**
-	 * Target object id that client wants to TALK WITH or 0 if wants to unselect
-	 */
-	private int targetObjectId;
-	private byte action;
+  private static final Logger log = LoggerFactory.getLogger(CM_START_LOOT.class);
+  /**
+   * Target object id that client wants to TALK WITH or 0 if wants to unselect
+   */
+  private int targetObjectId;
+  private byte action;
 
-	/**
-	 * Constructs new instance of <tt>CM_CM_REQUEST_DIALOG</tt> packet
-	 * 
-	 * @param opcode
-	 */
-	public CM_START_LOOT(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * Constructs new instance of <tt>CM_CM_REQUEST_DIALOG</tt> packet
+   * 
+   * @param opcode
+   */
+  public CM_START_LOOT(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		targetObjectId = readD(); // empty
-		action = readC();
-	}
+  @Override
+  protected void readImpl() {
+    targetObjectId = readD(); // empty
+    action = readC();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
 
-		switch (action) {
-			case 0: // open
-				DropService.getInstance().requestDropList(player, targetObjectId);
-				break;
-			case 1: // close
-				DropService.getInstance().closeDropList(player, targetObjectId);
-				break;
-			default:
-				log.warn(player + " sent unknown loot action type " + action);
-		}
-	}
+    switch (action) {
+      case 0: // open
+        DropService.getInstance().requestDropList(player, targetObjectId);
+        break;
+      case 1: // close
+        DropService.getInstance().closeDropList(player, targetObjectId);
+        break;
+      default:
+        log.warn(player + " sent unknown loot action type " + action);
+    }
+  }
 }

@@ -10,24 +10,24 @@ import java.util.Map;
  */
 public class Macros {
 
-	private final Map<Integer, Macro> macrosById = new HashMap<>(12);
+  private final Map<Integer, Macro> macrosById = new HashMap<>(12);
 
-	public synchronized List<Macro> getAll() {
-		return new ArrayList<>(macrosById.values());
-	}
+  public synchronized List<Macro> getAll() {
+    return new ArrayList<>(macrosById.values());
+  }
 
-	/**
-	 * @return <tt>true</tt> if given macro ID was not used before.
-	 */
-	public synchronized boolean add(int macroId, String macroXML) {
-		if (macroId < 1 || macroId > 12)
-			throw new IllegalArgumentException("Invalid macro ID: " + macroId);
-		return macrosById.put(macroId, new Macro(macroId, macroXML)) == null;
-	}
+  /**
+   * @return <tt>true</tt> if given macro ID was not used before.
+   */
+  public synchronized boolean add(int macroId, String macroXML) {
+    if (macroId < 1 || macroId > 12)
+      throw new IllegalArgumentException("Invalid macro ID: " + macroId);
+    return macrosById.put(macroId, new Macro(macroId, macroXML)) == null;
+  }
 
-	public synchronized boolean remove(int macroId) {
-		return macrosById.remove(macroId) != null;
-	}
+  public synchronized boolean remove(int macroId) {
+    return macrosById.remove(macroId) != null;
+  }
 
-	public record Macro(int id, String xml) {}
+  public record Macro(int id, String xml) {}
 }

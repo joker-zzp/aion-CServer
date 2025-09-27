@@ -8,7 +8,7 @@ import com.aionemu.gameserver.model.templates.base.BaseTemplate;
  */
 public class SiegeBaseLocation extends BaseLocation {
 
-	public SiegeBaseLocation(BaseTemplate template) {
-		super(template);
-	}
+  public SiegeBaseLocation(BaseTemplate template) {
+    super(template);
+  }
 }

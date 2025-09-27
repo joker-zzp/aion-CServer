@@ -12,18 +12,18 @@ import com.aionemu.chatserver.network.netty.handler.ClientChannelHandler;
  */
 public class CM_PING extends AbstractClientPacket {
 
-	public CM_PING(ChannelBuffer channelBuffer, ClientChannelHandler clientChannelHandler, byte opCode) {
-		super(channelBuffer, clientChannelHandler, opCode);
-	}
+  public CM_PING(ChannelBuffer channelBuffer, ClientChannelHandler clientChannelHandler, byte opCode) {
+    super(channelBuffer, clientChannelHandler, opCode);
+  }
 
-	@Override
-	protected void readImpl() {
-		readC(); // 0
-		readH(); // 0
-		readB(16); // 0
-	}
+  @Override
+  protected void readImpl() {
+    readC(); // 0
+    readH(); // 0
+    readB(16); // 0
+  }
 
-	@Override
-	protected void runImpl() {
-	}
+  @Override
+  protected void runImpl() {
+  }
 }

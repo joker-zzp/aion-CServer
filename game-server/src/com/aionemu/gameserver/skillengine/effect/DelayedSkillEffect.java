@@ -10,18 +10,18 @@ import com.aionemu.gameserver.skillengine.model.Effect;
  */
 public class DelayedSkillEffect extends EffectTemplate {
 
-	@XmlAttribute(name = "skill_id")
-	protected int skillId;
+  @XmlAttribute(name = "skill_id")
+  protected int skillId;
 
-	@Override
-	public void applyEffect(final Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(final Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		super.endEffect(effect);
-		if (effect.isEndedByTime())
-			SkillEngine.getInstance().applyEffectsDirectly(skillId, effect.getEffector(), effect.getEffected(), effect.getTargetX(), effect.getTargetY(), effect.getTargetZ());
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    super.endEffect(effect);
+    if (effect.isEndedByTime())
+      SkillEngine.getInstance().applyEffectsDirectly(skillId, effect.getEffector(), effect.getEffected(), effect.getTargetX(), effect.getTargetY(), effect.getTargetZ());
+  }
 }

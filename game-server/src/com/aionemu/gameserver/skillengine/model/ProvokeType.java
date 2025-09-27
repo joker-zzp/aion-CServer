@@ -9,6 +9,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ProvokeType")
 @XmlEnum
 public enum ProvokeType {
-	ATTACK,
-	ATTACKED
+  ATTACK,
+  ATTACKED
 }

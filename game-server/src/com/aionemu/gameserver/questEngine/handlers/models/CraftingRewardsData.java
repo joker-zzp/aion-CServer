@@ -17,25 +17,25 @@ import com.aionemu.gameserver.questEngine.handlers.template.CraftingRewards;
 @XmlType(name = "CraftingRewardsData")
 public class CraftingRewardsData extends XMLQuest {
 
-	@XmlAttribute(name = "start_npc_id")
-	protected int startNpcId;
+  @XmlAttribute(name = "start_npc_id")
+  protected int startNpcId;
 
-	@XmlAttribute(name = "end_npc_id")
-	protected int endNpcId;
+  @XmlAttribute(name = "end_npc_id")
+  protected int endNpcId;
 
-	@XmlAttribute(name = "skill_id", required = true)
-	protected int skillId;
+  @XmlAttribute(name = "skill_id", required = true)
+  protected int skillId;
 
-	@XmlAttribute(name = "level_reward", required = true)
-	protected int levelReward;
+  @XmlAttribute(name = "level_reward", required = true)
+  protected int levelReward;
 
-	@Override
-	public void register(QuestEngine questEngine) {
-		questEngine.addQuestHandler(new CraftingRewards(id, startNpcId, skillId, levelReward, endNpcId, questMovie));
-	}
+  @Override
+  public void register(QuestEngine questEngine) {
+    questEngine.addQuestHandler(new CraftingRewards(id, startNpcId, skillId, levelReward, endNpcId, questMovie));
+  }
 
-	@Override
-	public Set<Integer> getAlternativeNpcs(int npcId) {
-		return null;
-	}
+  @Override
+  public Set<Integer> getAlternativeNpcs(int npcId) {
+    return null;
+  }
 }

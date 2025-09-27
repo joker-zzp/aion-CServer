@@ -11,8 +11,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "HousingMovieJukeBox")
 public class HousingMovieJukeBox extends HousingJukeBox {
 
-	@Override
-	public byte getTypeId() {
-		return 0; // unknown
-	}
+  @Override
+  public byte getTypeId() {
+    return 0; // unknown
+  }
 }

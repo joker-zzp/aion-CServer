@@ -18,45 +18,45 @@ import ai.AggressiveNoLootNpcAI;
 @AIName("aggressive_stonespear")
 public class StonespearAggressiveNpcAI extends AggressiveNoLootNpcAI {
 
-	private final List<Integer> guardIds = new ArrayList<>();
+  private final List<Integer> guardIds = new ArrayList<>();
 
-	public StonespearAggressiveNpcAI(Npc owner) {
-		super(owner);
-	}
+  public StonespearAggressiveNpcAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void handleSpawned() {
-		super.handleSpawned();
-		findGuardianStone();
-	}
+  @Override
+  public void handleSpawned() {
+    super.handleSpawned();
+    findGuardianStone();
+  }
 
-	private void findGuardianStone() {
-		Collections.addAll(guardIds, 855763, 855832, 855786, 856466, 856467, 856468);
-		Creature target = null;
-		for (Integer npcId : guardIds) {
-			target = getOwner().getPosition().getWorldMapInstance().getNpc(npcId.intValue());
-			if (target != null) {
-				break;
-			}
-		}
-		if (target != null) {
-			getOwner().getAggroList().addHate(target, 3000);
-			setStateIfNot(AIState.FIGHT);
-			think();
-		}
-	}
+  private void findGuardianStone() {
+    Collections.addAll(guardIds, 855763, 855832, 855786, 856466, 856467, 856468);
+    Creature target = null;
+    for (Integer npcId : guardIds) {
+      target = getOwner().getPosition().getWorldMapInstance().getNpc(npcId.intValue());
+      if (target != null) {
+        break;
+      }
+    }
+    if (target != null) {
+      getOwner().getAggroList().addHate(target, 3000);
+      setStateIfNot(AIState.FIGHT);
+      think();
+    }
+  }
 
-	@Override
-	public void handleDied() {
-		super.handleDied();
-		getOwner().getController().delete();
-	}
+  @Override
+  public void handleDied() {
+    super.handleDied();
+    getOwner().getController().delete();
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
+      default -> super.ask(question);
+    };
+  }
 }

@@ -13,42 +13,42 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class RecipeList {
 
-	private Set<Integer> recipeList = new HashSet<>();
+  private Set<Integer> recipeList = new HashSet<>();
 
-	public RecipeList(HashSet<Integer> recipeList) {
-		this.recipeList = recipeList;
-	}
+  public RecipeList(HashSet<Integer> recipeList) {
+    this.recipeList = recipeList;
+  }
 
-	public RecipeList() {
-	}
+  public RecipeList() {
+  }
 
-	public Set<Integer> getRecipeList() {
-		return recipeList;
-	}
+  public Set<Integer> getRecipeList() {
+    return recipeList;
+  }
 
-	public boolean addRecipe(Player player, int recipeId) {
-		if (!isRecipePresent(recipeId) && PlayerRecipesDAO.addRecipe(player.getObjectId(), recipeId)) {
-			recipeList.add(recipeId);
-			PacketSendUtility.sendPacket(player, new SM_LEARN_RECIPE(recipeId));
-			return true;
-		}
-		return false;
-	}
+  public boolean addRecipe(Player player, int recipeId) {
+    if (!isRecipePresent(recipeId) && PlayerRecipesDAO.addRecipe(player.getObjectId(), recipeId)) {
+      recipeList.add(recipeId);
+      PacketSendUtility.sendPacket(player, new SM_LEARN_RECIPE(recipeId));
+      return true;
+    }
+    return false;
+  }
 
-	public boolean deleteRecipe(Player player, int recipeId) {
-		if (recipeList.contains(recipeId) && PlayerRecipesDAO.delRecipe(player.getObjectId(), recipeId)) {
-			recipeList.remove(recipeId);
-			PacketSendUtility.sendPacket(player, new SM_RECIPE_DELETE(recipeId));
-			return true;
-		}
-		return false;
-	}
+  public boolean deleteRecipe(Player player, int recipeId) {
+    if (recipeList.contains(recipeId) && PlayerRecipesDAO.delRecipe(player.getObjectId(), recipeId)) {
+      recipeList.remove(recipeId);
+      PacketSendUtility.sendPacket(player, new SM_RECIPE_DELETE(recipeId));
+      return true;
+    }
+    return false;
+  }
 
-	public boolean isRecipePresent(int recipeId) {
-		return recipeList.contains(recipeId);
-	}
+  public boolean isRecipePresent(int recipeId) {
+    return recipeList.contains(recipeId);
+  }
 
-	public int size() {
-		return this.recipeList.size();
-	}
+  public int size() {
+    return this.recipeList.size();
+  }
 }

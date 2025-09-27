@@ -16,66 +16,66 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  */
 public class _13708ProximityProtect extends AbstractQuestHandler {
 
-	private static final int npcId = 802332; // Feleus
-	private static final int itemId = 182215529;
+  private static final int npcId = 802332; // Feleus
+  private static final int itemId = 182215529;
 
-	public _13708ProximityProtect() {
-		super(13708);
-	}
+  public _13708ProximityProtect() {
+    super(13708);
+  }
 
-	@Override
-	public void register() {
-		qe.registerQuestNpc(npcId).addOnQuestStart(questId);
-		qe.registerQuestNpc(npcId).addOnTalkEvent(questId);
-		qe.registerQuestItem(itemId, questId);
-	}
+  @Override
+  public void register() {
+    qe.registerQuestNpc(npcId).addOnQuestStart(questId);
+    qe.registerQuestNpc(npcId).addOnTalkEvent(questId);
+    qe.registerQuestItem(itemId, questId);
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		int dialogActionId = env.getDialogActionId();
-		int targetId = env.getTargetId();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    int dialogActionId = env.getDialogActionId();
+    int targetId = env.getTargetId();
 
-		if (qs == null || qs.isStartable()) {
-			if (targetId == npcId) {
-				if (dialogActionId == QUEST_SELECT) {
-					return sendQuestDialog(env, 1011);
-				} else {
-					return sendQuestStartDialog(env, itemId, 1);
-				}
-			}
-		} else if (qs.getStatus() == QuestStatus.START) {
-			int var = qs.getQuestVarById(0);
-			if (targetId == npcId) {
-				switch (dialogActionId) {
-					case QUEST_SELECT:
-						if (var == 1) {
-							return sendQuestDialog(env, 2375);
-						}
-						return false;
-					case SELECT_QUEST_REWARD:
-						return defaultCloseDialog(env, 1, 1, true, true);
-				}
-			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == npcId) {
-				return sendQuestEndDialog(env);
-			}
-		}
-		return false;
-	}
+    if (qs == null || qs.isStartable()) {
+      if (targetId == npcId) {
+        if (dialogActionId == QUEST_SELECT) {
+          return sendQuestDialog(env, 1011);
+        } else {
+          return sendQuestStartDialog(env, itemId, 1);
+        }
+      }
+    } else if (qs.getStatus() == QuestStatus.START) {
+      int var = qs.getQuestVarById(0);
+      if (targetId == npcId) {
+        switch (dialogActionId) {
+          case QUEST_SELECT:
+            if (var == 1) {
+              return sendQuestDialog(env, 2375);
+            }
+            return false;
+          case SELECT_QUEST_REWARD:
+            return defaultCloseDialog(env, 1, 1, true, true);
+        }
+      }
+    } else if (qs.getStatus() == QuestStatus.REWARD) {
+      if (targetId == npcId) {
+        return sendQuestEndDialog(env);
+      }
+    }
+    return false;
+  }
 
-	@Override
-	public HandlerResult onItemUseEvent(QuestEnv env, Item item) {
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (qs != null && qs.getStatus() == QuestStatus.START) {
-			if (player.isInsideZone(ZoneName.get("LDF4_ADVANCE_ITEMUSEAREA_Q13708_600100000"))) {
-				return HandlerResult.fromBoolean(useQuestItem(env, item, 0, 1, false));
-			}
-		}
-		return HandlerResult.FAILED;
-	}
+  @Override
+  public HandlerResult onItemUseEvent(QuestEnv env, Item item) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    if (qs != null && qs.getStatus() == QuestStatus.START) {
+      if (player.isInsideZone(ZoneName.get("LDF4_ADVANCE_ITEMUSEAREA_Q13708_600100000"))) {
+        return HandlerResult.fromBoolean(useQuestItem(env, item, 0, 1, false));
+      }
+    }
+    return HandlerResult.FAILED;
+  }
 
 }

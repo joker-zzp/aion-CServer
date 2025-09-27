@@ -8,11 +8,11 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_PACKAGE_INFO_NOTIFY extends AionServerPacket {
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeH(1);
-		writeC(3);
-		writeD(0); // time until pack expiration
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeH(1);
+    writeC(3);
+    writeD(0); // time until pack expiration
+  }
 
 }

@@ -10,27 +10,27 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_DELETE_CHARACTER extends AionServerPacket {
 
-	private int playerObjId;
-	private int deletionTime;
+  private int playerObjId;
+  private int deletionTime;
 
-	/**
-	 * Constructs new <tt>SM_DELETE_CHARACTER </tt> packet
-	 */
-	public SM_DELETE_CHARACTER(int playerObjId, int deletionTime) {
-		this.playerObjId = playerObjId;
-		this.deletionTime = deletionTime;
-	}
+  /**
+   * Constructs new <tt>SM_DELETE_CHARACTER </tt> packet
+   */
+  public SM_DELETE_CHARACTER(int playerObjId, int deletionTime) {
+    this.playerObjId = playerObjId;
+    this.deletionTime = deletionTime;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		if (playerObjId != 0) {
-			writeD(0x00);// unk
-			writeD(playerObjId);
-			writeD(deletionTime);
-		} else {
-			writeD(0x10);// unk
-			writeD(0x00);
-			writeD(0x00);
-		}
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    if (playerObjId != 0) {
+      writeD(0x00);// unk
+      writeD(playerObjId);
+      writeD(deletionTime);
+    } else {
+      writeD(0x10);// unk
+      writeD(0x00);
+      writeD(0x00);
+    }
+  }
 }

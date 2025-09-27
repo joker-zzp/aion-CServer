@@ -15,13 +15,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "StreamLocations")
 public class StreamLocations {
 
-	@XmlElement(required = true)
-	protected List<Location2D> location;
+  @XmlElement(required = true)
+  protected List<Location2D> location;
 
-	public List<Location2D> getLocation() {
-		if (location == null)
-			location = new ArrayList<>();
+  public List<Location2D> getLocation() {
+    if (location == null)
+      location = new ArrayList<>();
 
-		return this.location;
-	}
+    return this.location;
+  }
 }

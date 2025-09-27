@@ -17,24 +17,24 @@ import com.aionemu.gameserver.model.templates.instance_bonusatrr.InstanceBonusAt
 @XmlRootElement(name = "instance_bonusattrs")
 public class InstanceBuffData {
 
-	@XmlElement(name = "instance_bonusattr")
-	protected List<InstanceBonusAttr> instanceBonusattr;
-	@XmlTransient
-	private final Map<Integer, InstanceBonusAttr> templates = new HashMap<>();
+  @XmlElement(name = "instance_bonusattr")
+  protected List<InstanceBonusAttr> instanceBonusattr;
+  @XmlTransient
+  private final Map<Integer, InstanceBonusAttr> templates = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (InstanceBonusAttr template : instanceBonusattr) {
-			templates.put(template.getBuffId(), template);
-		}
-		instanceBonusattr = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (InstanceBonusAttr template : instanceBonusattr) {
+      templates.put(template.getBuffId(), template);
+    }
+    instanceBonusattr = null;
+  }
 
-	public int size() {
-		return templates.size();
-	}
+  public int size() {
+    return templates.size();
+  }
 
-	public InstanceBonusAttr getInstanceBonusattr(int buffId) {
-		return templates.get(buffId);
-	}
+  public InstanceBonusAttr getInstanceBonusattr(int buffId) {
+    return templates.get(buffId);
+  }
 
 }

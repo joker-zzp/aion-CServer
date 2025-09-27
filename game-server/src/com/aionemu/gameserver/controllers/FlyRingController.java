@@ -13,24 +13,24 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  */
 public class FlyRingController extends VisibleObjectController<FlyRing> {
 
-	ConcurrentHashMap<Integer, FlyRingObserver> observed = new ConcurrentHashMap<>();
+  ConcurrentHashMap<Integer, FlyRingObserver> observed = new ConcurrentHashMap<>();
 
-	@Override
-	public void see(VisibleObject object) {
-		if (object instanceof Player) {
-			Player p = (Player) object;
-			FlyRingObserver observer = new FlyRingObserver(getOwner(), p);
-			p.getObserveController().addObserver(observer);
-			observed.put(p.getObjectId(), observer);
-		}
-	}
+  @Override
+  public void see(VisibleObject object) {
+    if (object instanceof Player) {
+      Player p = (Player) object;
+      FlyRingObserver observer = new FlyRingObserver(getOwner(), p);
+      p.getObserveController().addObserver(observer);
+      observed.put(p.getObjectId(), observer);
+    }
+  }
 
-	@Override
-	public void notSee(VisibleObject object, ObjectDeleteAnimation animation) {
-		if (object instanceof Player) {
-			Player p = (Player) object;
-			FlyRingObserver observer = observed.remove(p.getObjectId());
-			p.getObserveController().removeObserver(observer);
-		}
-	}
+  @Override
+  public void notSee(VisibleObject object, ObjectDeleteAnimation animation) {
+    if (object instanceof Player) {
+      Player p = (Player) object;
+      FlyRingObserver observer = observed.remove(p.getObjectId());
+      p.getObserveController().removeObserver(observer);
+    }
+  }
 }

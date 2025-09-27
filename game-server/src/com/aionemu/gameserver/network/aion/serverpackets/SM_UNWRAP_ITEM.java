@@ -8,17 +8,17 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_UNWRAP_ITEM extends AionServerPacket {
 
-	private final int objectId, count;
+  private final int objectId, count;
 
-	public SM_UNWRAP_ITEM(int objectId, int count) {
-		this.objectId = objectId;
-		this.count = count;
-	}
+  public SM_UNWRAP_ITEM(int objectId, int count) {
+    this.objectId = objectId;
+    this.count = count;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(objectId);
-		writeC(count);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(objectId);
+    writeC(count);
+  }
 
 }

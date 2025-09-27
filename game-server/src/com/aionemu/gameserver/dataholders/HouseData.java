@@ -26,38 +26,38 @@ import com.aionemu.gameserver.model.templates.housing.HousingLand;
 @XmlRootElement(name = "house_lands")
 public class HouseData {
 
-	@XmlElement(name = "land")
-	private List<HousingLand> lands;
+  @XmlElement(name = "land")
+  private List<HousingLand> lands;
 
-	@XmlTransient
-	private Map<Integer, HouseAddress> addressesById = new HashMap<>();
+  @XmlTransient
+  private Map<Integer, HouseAddress> addressesById = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (HousingLand land : lands) {
-			for (HouseAddress address : land.getAddresses()) {
-				if (addressesById.put(address.getId(), address) != null)
-					throw new IllegalArgumentException("Duplicate house address " + address.getId() + " in house_lands templates");
-			}
-		}
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (HousingLand land : lands) {
+      for (HouseAddress address : land.getAddresses()) {
+        if (addressesById.put(address.getId(), address) != null)
+          throw new IllegalArgumentException("Duplicate house address " + address.getId() + " in house_lands templates");
+      }
+    }
+  }
 
-	public List<HouseAddress> getAddresses(int worldId) {
-		return addressesById.values().stream().filter(address -> address.getMapId() == worldId).collect(Collectors.toList());
-	}
+  public List<HouseAddress> getAddresses(int worldId) {
+    return addressesById.values().stream().filter(address -> address.getMapId() == worldId).collect(Collectors.toList());
+  }
 
-	public HouseAddress getAddress(int houseAddress) {
-		return addressesById.get(houseAddress);
-	}
+  public HouseAddress getAddress(int houseAddress) {
+    return addressesById.get(houseAddress);
+  }
 
-	public HouseAddress getStudioAddress(Race race) {
-		return getAddress(race == Race.ELYOS ? 2001 : 3001);
-	}
+  public HouseAddress getStudioAddress(Race race) {
+    return getAddress(race == Race.ELYOS ? 2001 : 3001);
+  }
 
-	public Collection<HousingLand> getLands() {
-		return lands;
-	}
+  public Collection<HousingLand> getLands() {
+    return lands;
+  }
 
-	public int size() {
-		return lands.size();
-	}
+  public int size() {
+    return lands.size();
+  }
 }

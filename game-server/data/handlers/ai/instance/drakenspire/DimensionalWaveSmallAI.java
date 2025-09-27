@@ -15,19 +15,19 @@ import ai.UseSkillAndDieAI;
 @AIName("drakenspire_dimensional_wave_small")
 public class DimensionalWaveSmallAI extends UseSkillAndDieAI {
 
-	public DimensionalWaveSmallAI(Npc owner) {
-		super(owner);
-	}
+  public DimensionalWaveSmallAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		if (skillTemplate.getSkillId() == 21620) {
-			ThreadPoolManager.getInstance().schedule(this::calculateAndApplyDamage, 1200); // Aligns visual hit and damage
-		}
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    if (skillTemplate.getSkillId() == 21620) {
+      ThreadPoolManager.getInstance().schedule(this::calculateAndApplyDamage, 1200); // Aligns visual hit and damage
+    }
+  }
 
-	private void calculateAndApplyDamage() {
-		getKnownList().getKnownPlayers().values().stream().filter(p -> !p.isDead() && PositionUtil.isInRange(getOwner(), p, 22, true))
-			.forEach(p -> SkillEngine.getInstance().applyEffect(21874, getOwner(), p));
-	}
+  private void calculateAndApplyDamage() {
+    getKnownList().getKnownPlayers().values().stream().filter(p -> !p.isDead() && PositionUtil.isInRange(getOwner(), p, 22, true))
+      .forEach(p -> SkillEngine.getInstance().applyEffect(21874, getOwner(), p));
+  }
 }

@@ -15,28 +15,28 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "DiseaseEffect")
 public class DiseaseEffect extends EffectTemplate {
 
-	@Override
-	public void calculate(Effect effect) {
-		super.calculate(effect, StatEnum.DISEASE_RESISTANCE, null);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    super.calculate(effect, StatEnum.DISEASE_RESISTANCE, null);
+  }
 
-	// skillId 18386
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  // skillId 18386
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void startEffect(Effect effect) {
-		Creature effected = effect.getEffected();
-		effect.setAbnormal(AbnormalState.DISEASE);
-		effected.getEffectController().setAbnormal(AbnormalState.DISEASE);
-	}
+  @Override
+  public void startEffect(Effect effect) {
+    Creature effected = effect.getEffected();
+    effect.setAbnormal(AbnormalState.DISEASE);
+    effected.getEffectController().setAbnormal(AbnormalState.DISEASE);
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		if (effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.DISEASE))
-			effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.DISEASE);
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    if (effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.DISEASE))
+      effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.DISEASE);
+  }
 
 }

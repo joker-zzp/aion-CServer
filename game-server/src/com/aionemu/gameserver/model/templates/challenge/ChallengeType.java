@@ -6,24 +6,24 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ChallengeType")
 @XmlEnum
 public enum ChallengeType {
-	LEGION(1),
-	TOWN(2);
+  LEGION(1),
+  TOWN(2);
 
-	private int id;
+  private int id;
 
-	public int getId() {
-		return this.id;
-	}
+  public int getId() {
+    return this.id;
+  }
 
-	private ChallengeType(int id) {
-		this.id = id;
-	}
+  private ChallengeType(int id) {
+    this.id = id;
+  }
 
-	public String value() {
-		return name();
-	}
+  public String value() {
+    return name();
+  }
 
-	public static ChallengeType fromValue(String paramString) {
-		return valueOf(paramString);
-	}
+  public static ChallengeType fromValue(String paramString) {
+    return valueOf(paramString);
+  }
 }

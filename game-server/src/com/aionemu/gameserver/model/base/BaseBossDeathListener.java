@@ -12,44 +12,44 @@ import com.aionemu.gameserver.services.BaseService;
  */
 public class BaseBossDeathListener extends OnDieEventListener {
 
-	private final Base<?> base;
+  private final Base<?> base;
 
-	public BaseBossDeathListener(Base<?> base) {
-		this.base = base;
-	}
+  public BaseBossDeathListener(Base<?> base) {
+    this.base = base;
+  }
 
-	@Override
-	public void onBeforeEvent(GeneralAIEvent event) {
-		super.onBeforeEvent(event);
-		if (!event.isHandled())
-			return;
+  @Override
+  public void onBeforeEvent(GeneralAIEvent event) {
+    super.onBeforeEvent(event);
+    if (!event.isHandled())
+      return;
 
-		AionObject winner = event.getSource().getOwner().getAggroList().getMostDamage();
+    AionObject winner = event.getSource().getOwner().getAggroList().getMostDamage();
 
-		BaseOccupier winnerType = findOccupierType(event);
-		if (winnerType == base.getOccupier())
-			throw new BaseException("Base boss got killed by its own type! Boss killer: " + winner + ", Base ID: " + base.getId());
+    BaseOccupier winnerType = findOccupierType(event);
+    if (winnerType == base.getOccupier())
+      throw new BaseException("Base boss got killed by its own type! Boss killer: " + winner + ", Base ID: " + base.getId());
 
-		BaseService.getInstance().capture(base.getId(), winnerType);
-	}
+    BaseService.getInstance().capture(base.getId(), winnerType);
+  }
 
-	private BaseOccupier findOccupierType(GeneralAIEvent event) {
-		AionObject winner = event.getSource().getOwner().getAggroList().getMostDamage();
+  private BaseOccupier findOccupierType(GeneralAIEvent event) {
+    AionObject winner = event.getSource().getOwner().getAggroList().getMostDamage();
 
-		if (winner instanceof Player p) {
-			return findOccupierType(p);
-		} else if (winner instanceof TemporaryPlayerTeam) {
-			Player leader = ((TemporaryPlayerTeam<?>) winner).getLeaderObject();
-			return findOccupierType(leader);
-		}
-		return BaseOccupier.BALAUR;
-	}
+    if (winner instanceof Player p) {
+      return findOccupierType(p);
+    } else if (winner instanceof TemporaryPlayerTeam) {
+      Player leader = ((TemporaryPlayerTeam<?>) winner).getLeaderObject();
+      return findOccupierType(leader);
+    }
+    return BaseOccupier.BALAUR;
+  }
 
-	private BaseOccupier findOccupierType(Player player) {
-		if (base instanceof PanesterraFactionCamp)
-			return BaseOccupier.PEACE; // If the soul anchor (boss) is destroyed, the camp will be eliminated
-		if (base instanceof PanesterraBase && player.getPanesterraFaction() != null)
-			return BaseOccupier.findBy(player.getPanesterraFaction());
-		return BaseOccupier.findBy(player.getRace());
-	}
+  private BaseOccupier findOccupierType(Player player) {
+    if (base instanceof PanesterraFactionCamp)
+      return BaseOccupier.PEACE; // If the soul anchor (boss) is destroyed, the camp will be eliminated
+    if (base instanceof PanesterraBase && player.getPanesterraFaction() != null)
+      return BaseOccupier.findBy(player.getPanesterraFaction());
+    return BaseOccupier.findBy(player.getRace());
+  }
 }

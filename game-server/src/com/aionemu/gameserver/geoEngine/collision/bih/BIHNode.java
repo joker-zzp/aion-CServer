@@ -50,186 +50,186 @@ import com.aionemu.gameserver.geoEngine.utils.TempVars;
  */
 public final class BIHNode {
 
-	private int leftIndex, rightIndex;
+  private int leftIndex, rightIndex;
 
-	private BIHNode left;
-	private BIHNode right;
-	private float leftPlane;
-	private float rightPlane;
-	private int axis;
+  private BIHNode left;
+  private BIHNode right;
+  private float leftPlane;
+  private float rightPlane;
+  private int axis;
 
-	public BIHNode(int l, int r) {
-		leftIndex = l;
-		rightIndex = r;
-		axis = 3; // indicates leaf
-	}
+  public BIHNode(int l, int r) {
+    leftIndex = l;
+    rightIndex = r;
+    axis = 3; // indicates leaf
+  }
 
-	public BIHNode(int axis) {
-		this.axis = axis;
-	}
+  public BIHNode(int axis) {
+    this.axis = axis;
+  }
 
-	public BIHNode() {
-	}
+  public BIHNode() {
+  }
 
-	public BIHNode getLeftChild() {
-		return left;
-	}
+  public BIHNode getLeftChild() {
+    return left;
+  }
 
-	public void setLeftChild(BIHNode left) {
-		this.left = left;
-	}
+  public void setLeftChild(BIHNode left) {
+    this.left = left;
+  }
 
-	public float getLeftPlane() {
-		return leftPlane;
-	}
+  public float getLeftPlane() {
+    return leftPlane;
+  }
 
-	public void setLeftPlane(float leftPlane) {
-		this.leftPlane = leftPlane;
-	}
+  public void setLeftPlane(float leftPlane) {
+    this.leftPlane = leftPlane;
+  }
 
-	public BIHNode getRightChild() {
-		return right;
-	}
+  public BIHNode getRightChild() {
+    return right;
+  }
 
-	public void setRightChild(BIHNode right) {
-		this.right = right;
-	}
+  public void setRightChild(BIHNode right) {
+    this.right = right;
+  }
 
-	public float getRightPlane() {
-		return rightPlane;
-	}
+  public float getRightPlane() {
+    return rightPlane;
+  }
 
-	public void setRightPlane(float rightPlane) {
-		this.rightPlane = rightPlane;
-	}
+  public void setRightPlane(float rightPlane) {
+    this.rightPlane = rightPlane;
+  }
 
-	public static final class BIHStackData {
+  public static final class BIHStackData {
 
-		private final BIHNode node;
-		private final float min, max;
+    private final BIHNode node;
+    private final float min, max;
 
-		BIHStackData(BIHNode node, float min, float max) {
-			this.node = node;
-			this.min = min;
-			this.max = max;
-		}
+    BIHStackData(BIHNode node, float min, float max) {
+      this.node = node;
+      this.min = min;
+      this.max = max;
+    }
 
-	}
+  }
 
-	public final int intersectWhere(Ray r, Matrix4f worldMatrix, BIHTree tree, float sceneMin, float sceneMax, CollisionResults results) {
-		TempVars vars = TempVars.get();
-		ArrayList<BIHStackData> stack = vars.bihStack;
-		stack.clear();
+  public final int intersectWhere(Ray r, Matrix4f worldMatrix, BIHTree tree, float sceneMin, float sceneMax, CollisionResults results) {
+    TempVars vars = TempVars.get();
+    ArrayList<BIHStackData> stack = vars.bihStack;
+    stack.clear();
 
-		Vector3f o = vars.vect1.set(r.getOrigin());
-		Vector3f d = vars.vect2.set(r.getDirection());
+    Vector3f o = vars.vect1.set(r.getOrigin());
+    Vector3f d = vars.vect2.set(r.getDirection());
 
-		Matrix4f inv = worldMatrix.invert();
+    Matrix4f inv = worldMatrix.invert();
 
-		inv.mult(r.getOrigin(), r.getOrigin());
+    inv.mult(r.getOrigin(), r.getOrigin());
 
-		// Fixes rotation collision bug
-		inv.multNormal(r.getDirection(), r.getDirection());
-		// inv.multNormalAcross(r.getDirection(), r.getDirection());
+    // Fixes rotation collision bug
+    inv.multNormal(r.getDirection(), r.getDirection());
+    // inv.multNormalAcross(r.getDirection(), r.getDirection());
 
-		float[] origins = { r.getOrigin().x, r.getOrigin().y, r.getOrigin().z };
+    float[] origins = { r.getOrigin().x, r.getOrigin().y, r.getOrigin().z };
 
-		float[] invDirections = { 1f / r.getDirection().x, 1f / r.getDirection().y, 1f / r.getDirection().z };
+    float[] invDirections = { 1f / r.getDirection().x, 1f / r.getDirection().y, 1f / r.getDirection().z };
 
-		r.getDirection().normalizeLocal();
+    r.getDirection().normalizeLocal();
 
-		Vector3f v1 = vars.vect3, v2 = vars.vect4, v3 = vars.vect5;
-		int cols = 0;
+    Vector3f v1 = vars.vect3, v2 = vars.vect4, v3 = vars.vect5;
+    int cols = 0;
 
-		stack.add(new BIHStackData(this, sceneMin, sceneMax));
-		stackloop:
-		while (stack.size() > 0) {
+    stack.add(new BIHStackData(this, sceneMin, sceneMax));
+    stackloop:
+    while (stack.size() > 0) {
 
-			BIHStackData data = stack.remove(stack.size() - 1);
-			BIHNode node = data.node;
-			float tMin = data.min, tMax = data.max;
+      BIHStackData data = stack.remove(stack.size() - 1);
+      BIHNode node = data.node;
+      float tMin = data.min, tMax = data.max;
 
-			if (tMax < tMin)
-				continue;
+      if (tMax < tMin)
+        continue;
 
-			while (node.axis != 3) { // while node is not a leaf
-				int a = node.axis;
+      while (node.axis != 3) { // while node is not a leaf
+        int a = node.axis;
 
-				// find the origin and direction value for the given axis
-				float origin = origins[a];
-				float invDirection = invDirections[a];
+        // find the origin and direction value for the given axis
+        float origin = origins[a];
+        float invDirection = invDirections[a];
 
-				float tNearSplit, tFarSplit;
-				BIHNode nearNode, farNode;
+        float tNearSplit, tFarSplit;
+        BIHNode nearNode, farNode;
 
-				tNearSplit = (node.leftPlane - origin) * invDirection;
-				tFarSplit = (node.rightPlane - origin) * invDirection;
-				nearNode = node.left;
-				farNode = node.right;
+        tNearSplit = (node.leftPlane - origin) * invDirection;
+        tFarSplit = (node.rightPlane - origin) * invDirection;
+        nearNode = node.left;
+        farNode = node.right;
 
-				if (invDirection < 0) {
-					float tmpSplit = tNearSplit;
-					tNearSplit = tFarSplit;
-					tFarSplit = tmpSplit;
+        if (invDirection < 0) {
+          float tmpSplit = tNearSplit;
+          tNearSplit = tFarSplit;
+          tFarSplit = tmpSplit;
 
-					BIHNode tmpNode = nearNode;
-					nearNode = farNode;
-					farNode = tmpNode;
-				}
+          BIHNode tmpNode = nearNode;
+          nearNode = farNode;
+          farNode = tmpNode;
+        }
 
-				if (tMin > tNearSplit && tMax < tFarSplit) {
-					continue stackloop;
-				}
+        if (tMin > tNearSplit && tMax < tFarSplit) {
+          continue stackloop;
+        }
 
-				if (tMin > tNearSplit) {
-					tMin = max(tMin, tFarSplit);
-					node = farNode;
-				} else if (tMax < tFarSplit) {
-					tMax = min(tMax, tNearSplit);
-					node = nearNode;
-				} else {
-					stack.add(new BIHStackData(farNode, max(tMin, tFarSplit), tMax));
-					tMax = min(tMax, tNearSplit);
-					node = nearNode;
-				}
-			}
+        if (tMin > tNearSplit) {
+          tMin = max(tMin, tFarSplit);
+          node = farNode;
+        } else if (tMax < tFarSplit) {
+          tMax = min(tMax, tNearSplit);
+          node = nearNode;
+        } else {
+          stack.add(new BIHStackData(farNode, max(tMin, tFarSplit), tMax));
+          tMax = min(tMax, tNearSplit);
+          node = nearNode;
+        }
+      }
 
-			// a leaf
-			for (int i = node.leftIndex; i <= node.rightIndex; i++) {
-				tree.getTriangle(i, v1, v2, v3);
+      // a leaf
+      for (int i = node.leftIndex; i <= node.rightIndex; i++) {
+        tree.getTriangle(i, v1, v2, v3);
 
-				float t = r.intersects(v1, v2, v3);
-				if (!Float.isInfinite(t)) {
-					worldMatrix.mult(v1, v1);
-					worldMatrix.mult(v2, v2);
-					worldMatrix.mult(v3, v3);
-					float t_world = new Ray(o, d).intersects(v1, v2, v3);
-					t = t_world;
+        float t = r.intersects(v1, v2, v3);
+        if (!Float.isInfinite(t)) {
+          worldMatrix.mult(v1, v1);
+          worldMatrix.mult(v2, v2);
+          worldMatrix.mult(v3, v3);
+          float t_world = new Ray(o, d).intersects(v1, v2, v3);
+          t = t_world;
 
-					Vector3f tempVarsContactPoint = vars.vect6.set(d).multLocal(t).addLocal(o);
-					float worldSpaceDist = o.distance(tempVarsContactPoint);
-					// fix invisible walls
-					if (worldSpaceDist > r.limit)
-						continue;
-					if (results.shouldInvalidateSlopingSurface()) {
-						// taken from https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/geometry-of-a-triangle
-						Vector3f planeNormal = v2.subtractLocal(v1).crossLocal(v3.subtractLocal(v1)).normalizeLocal();
-						double elevationAngleRad = planeNormal.angleBetween(Vector3f.UNIT_Z);
-						if (elevationAngleRad > FastMath.HALF_PI) // convert angle >90-180° to 0-90° range
-							elevationAngleRad = Math.PI - elevationAngleRad;
-						if (elevationAngleRad > results.getSlopingSurfaceAngleRad())
-							tempVarsContactPoint.setZ(Float.NaN);
-					}
-					results.addCollision(new CollisionResult(new Vector3f(tempVarsContactPoint), worldSpaceDist));
-					cols++;
-					if (results.isOnlyFirst())
-						break stackloop;
-				}
-			}
-		}
-		vars.release();
-		r.setOrigin(o);
-		r.setDirection(d);
-		return cols;
-	}
+          Vector3f tempVarsContactPoint = vars.vect6.set(d).multLocal(t).addLocal(o);
+          float worldSpaceDist = o.distance(tempVarsContactPoint);
+          // fix invisible walls
+          if (worldSpaceDist > r.limit)
+            continue;
+          if (results.shouldInvalidateSlopingSurface()) {
+            // taken from https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/geometry-of-a-triangle
+            Vector3f planeNormal = v2.subtractLocal(v1).crossLocal(v3.subtractLocal(v1)).normalizeLocal();
+            double elevationAngleRad = planeNormal.angleBetween(Vector3f.UNIT_Z);
+            if (elevationAngleRad > FastMath.HALF_PI) // convert angle >90-180° to 0-90° range
+              elevationAngleRad = Math.PI - elevationAngleRad;
+            if (elevationAngleRad > results.getSlopingSurfaceAngleRad())
+              tempVarsContactPoint.setZ(Float.NaN);
+          }
+          results.addCollision(new CollisionResult(new Vector3f(tempVarsContactPoint), worldSpaceDist));
+          cols++;
+          if (results.isOnlyFirst())
+            break stackloop;
+        }
+      }
+    }
+    vars.release();
+    r.setOrigin(o);
+    r.setDirection(d);
+    return cols;
+  }
 }

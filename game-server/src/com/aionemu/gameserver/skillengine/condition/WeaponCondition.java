@@ -22,33 +22,33 @@ import com.aionemu.gameserver.skillengine.model.Skill.SkillMethod;
 @XmlType(name = "WeaponCondition")
 public class WeaponCondition extends Condition {
 
-	@XmlAttribute(name = "weapon")
-	private List<ItemGroup> itemGroups;
+  @XmlAttribute(name = "weapon")
+  private List<ItemGroup> itemGroups;
 
-	@Override
-	public boolean validate(Skill env) {
-		if (env.getSkillMethod() != SkillMethod.CAST)
-			return true;
+  @Override
+  public boolean validate(Skill env) {
+    if (env.getSkillMethod() != SkillMethod.CAST)
+      return true;
 
-		return isValidWeapon(env.getEffector());
-	}
+    return isValidWeapon(env.getEffector());
+  }
 
-	@Override
-	public boolean validate(Stat2 stat, IStatFunction statFunction) {
-		return isValidWeapon(stat.getOwner());
-	}
+  @Override
+  public boolean validate(Stat2 stat, IStatFunction statFunction) {
+    return isValidWeapon(stat.getOwner());
+  }
 
-	/**
-	 * @param creature
-	 * @return
-	 */
-	private boolean isValidWeapon(Creature creature) {
-		if (creature instanceof Player) {
-			Player player = (Player) creature;
-			return itemGroups.contains(player.getEquipment().getMainHandWeaponType());
-		}
-		// for npcs we don't validate weapon, though in templates they are present
-		return true;
-	}
+  /**
+   * @param creature
+   * @return
+   */
+  private boolean isValidWeapon(Creature creature) {
+    if (creature instanceof Player) {
+      Player player = (Player) creature;
+      return itemGroups.contains(player.getEquipment().getMainHandWeaponType());
+    }
+    // for npcs we don't validate weapon, though in templates they are present
+    return true;
+  }
 
 }

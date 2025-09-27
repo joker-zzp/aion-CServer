@@ -8,16 +8,16 @@ import com.aionemu.gameserver.controllers.attack.AddDamageEventListener;
  */
 public class SiegeBossDoAddDamageListener extends AddDamageEventListener {
 
-	private final Siege<?> siege;
+  private final Siege<?> siege;
 
-	public SiegeBossDoAddDamageListener(Siege<?> siege) {
-		this.siege = siege;
-	}
+  public SiegeBossDoAddDamageListener(Siege<?> siege) {
+    this.siege = siege;
+  }
 
-	@Override
-	public void onAfterEvent(AddDamageEvent event) {
-		if (event.isHandled())
-			siege.addBossDamage(event.getAttacker(), event.getDamage());
-	}
+  @Override
+  public void onAfterEvent(AddDamageEvent event) {
+    if (event.isHandled())
+      siege.addBossDamage(event.getAttacker(), event.getDamage());
+  }
 
 }

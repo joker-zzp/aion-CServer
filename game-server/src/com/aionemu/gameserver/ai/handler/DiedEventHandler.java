@@ -10,16 +10,16 @@ import com.aionemu.gameserver.ai.NpcAI;
  */
 public class DiedEventHandler {
 
-	public static void onDie(NpcAI npcAI) {
-		if (npcAI.isLogging()) {
-			AILogger.info(npcAI, "onDie");
-		}
+  public static void onDie(NpcAI npcAI) {
+    if (npcAI.isLogging()) {
+      AILogger.info(npcAI, "onDie");
+    }
 
-		ShoutEventHandler.onDied(npcAI);
+    ShoutEventHandler.onDied(npcAI);
 
-		npcAI.setStateIfNot(AIState.DIED);
-		npcAI.setSubStateIfNot(AISubState.NONE);
-		npcAI.getOwner().getController().loseAggro(false);
-	}
+    npcAI.setStateIfNot(AIState.DIED);
+    npcAI.setSubStateIfNot(AISubState.NONE);
+    npcAI.getOwner().getController().loseAggro(false);
+  }
 
 }

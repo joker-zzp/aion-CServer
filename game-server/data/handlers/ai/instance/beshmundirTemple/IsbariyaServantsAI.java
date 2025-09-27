@@ -13,24 +13,24 @@ import ai.AggressiveNpcAI;
 @AIName("isbariyaServants")
 public class IsbariyaServantsAI extends AggressiveNpcAI {
 
-	public IsbariyaServantsAI(Npc owner) {
-		super(owner);
-	}
+  public IsbariyaServantsAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		int lifetime = (getNpcId() == 281659 ? 20000 : 10000);
-		toDespawn(lifetime);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    int lifetime = (getNpcId() == 281659 ? 20000 : 10000);
+    toDespawn(lifetime);
+  }
 
-	private void toDespawn(int delay) {
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+  private void toDespawn(int delay) {
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-			@Override
-			public void run() {
-				AIActions.deleteOwner(IsbariyaServantsAI.this);
-			}
-		}, delay);
-	}
+      @Override
+      public void run() {
+        AIActions.deleteOwner(IsbariyaServantsAI.this);
+      }
+    }, delay);
+  }
 }

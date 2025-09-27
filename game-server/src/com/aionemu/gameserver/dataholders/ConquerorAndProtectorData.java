@@ -17,18 +17,18 @@ import com.aionemu.gameserver.model.templates.cp.CPType;
 @XmlRootElement(name = "conqueror_protector_ranks")
 public class ConquerorAndProtectorData {
 
-	@XmlElement(name = "rank")
-	private List<CPRank> ranks;
+  @XmlElement(name = "rank")
+  private List<CPRank> ranks;
 
-	public CPRank getRank(CPType type, int rank) {
-		for (CPRank template : ranks) {
-			if (template.getType() == type && template.getRankNum() == rank)
-				return template;
-		}
-		return null;
-	}
+  public CPRank getRank(CPType type, int rank) {
+    for (CPRank template : ranks) {
+      if (template.getType() == type && template.getRankNum() == rank)
+        return template;
+    }
+    return null;
+  }
 
-	public int size() {
-		return ranks.size();
-	}
+  public int size() {
+    return ranks.size();
+  }
 }

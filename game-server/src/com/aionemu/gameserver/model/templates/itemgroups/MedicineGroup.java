@@ -34,12 +34,12 @@ import com.aionemu.gameserver.model.templates.rewards.MedicineItem;
 @XmlType(name = "MedicineGroup")
 public class MedicineGroup extends BonusItemGroup {
 
-	@XmlElement(name = "item")
-	private List<MedicineItem> items;
+  @XmlElement(name = "item")
+  private List<MedicineItem> items;
 
-	@Override
-	public List<MedicineItem> getItems() {
-		return items == null ? Collections.emptyList() : items;
-	}
+  @Override
+  public List<MedicineItem> getItems() {
+    return items == null ? Collections.emptyList() : items;
+  }
 
 }

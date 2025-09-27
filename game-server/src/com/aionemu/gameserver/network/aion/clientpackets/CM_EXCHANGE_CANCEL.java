@@ -12,18 +12,18 @@ import com.aionemu.gameserver.services.ExchangeService;
  */
 public class CM_EXCHANGE_CANCEL extends AionClientPacket {
 
-	public CM_EXCHANGE_CANCEL(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_EXCHANGE_CANCEL(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		// 0 bytes
-	}
+  @Override
+  protected void readImpl() {
+    // 0 bytes
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		ExchangeService.getInstance().cancelExchange(activePlayer);
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    ExchangeService.getInstance().cancelExchange(activePlayer);
+  }
 }

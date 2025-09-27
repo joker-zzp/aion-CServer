@@ -10,16 +10,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ConjunctionType {
 
-	AND,
-	OR,
-	XOR;
+  AND,
+  OR,
+  XOR;
 
-	public String value() {
-		return name();
-	}
+  public String value() {
+    return name();
+  }
 
-	public static ConjunctionType fromValue(String v) {
-		return valueOf(v);
-	}
+  public static ConjunctionType fromValue(String v) {
+    return valueOf(v);
+  }
 
 }

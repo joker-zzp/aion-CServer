@@ -13,26 +13,26 @@ import com.aionemu.gameserver.services.QuestService;
 
 public class CM_DELETE_QUEST extends AionClientPacket {
 
-	private int questId;
+  private int questId;
 
-	public CM_DELETE_QUEST(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_DELETE_QUEST(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		questId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    questId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		QuestTemplate qt = DataManager.QUEST_DATA.getQuestById(questId);
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    QuestTemplate qt = DataManager.QUEST_DATA.getQuestById(questId);
 
-		if (qt != null && qt.isTimer()) {
-			player.getController().cancelTask(TaskId.QUEST_TIMER);
-			sendPacket(new SM_QUEST_ACTION(questId, 0));
-		}
-		QuestService.abandonQuest(player, questId);
-	}
+    if (qt != null && qt.isTimer()) {
+      player.getController().cancelTask(TaskId.QUEST_TIMER);
+      sendPacket(new SM_QUEST_ACTION(questId, 0));
+    }
+    QuestService.abandonQuest(player, questId);
+  }
 }

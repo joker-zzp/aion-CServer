@@ -13,63 +13,63 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "HousingUseableItem", propOrder = { "action" })
 public class HousingUseableItem extends PlaceableHouseObject {
 
-	@XmlElement(required = true)
-	protected UseItemAction action;
+  @XmlElement(required = true)
+  protected UseItemAction action;
 
-	@XmlAttribute(required = true)
-	protected boolean owner;
+  @XmlAttribute(required = true)
+  protected boolean owner;
 
-	@XmlAttribute
-	protected Integer cd;
+  @XmlAttribute
+  protected Integer cd;
 
-	@XmlAttribute(required = true)
-	protected int delay;
+  @XmlAttribute(required = true)
+  protected int delay;
 
-	@XmlAttribute(name = "use_count")
-	protected Integer useCount;
+  @XmlAttribute(name = "use_count")
+  protected Integer useCount;
 
-	@XmlAttribute(name = "required_item")
-	protected Integer requiredItem;
+  @XmlAttribute(name = "required_item")
+  protected Integer requiredItem;
 
-	public UseItemAction getAction() {
-		return action;
-	}
+  public UseItemAction getAction() {
+    return action;
+  }
 
-	/**
-	 * Can the object be used only by the owner or visitors too
-	 */
-	public boolean isOwnerOnly() {
-		return owner;
-	}
+  /**
+   * Can the object be used only by the owner or visitors too
+   */
+  public boolean isOwnerOnly() {
+    return owner;
+  }
 
-	/**
-	 * @return null if no Cooltime is used
-	 */
-	public Integer getCd() {
-		return cd;
-	}
+  /**
+   * @return null if no Cooltime is used
+   */
+  public Integer getCd() {
+    return cd;
+  }
 
-	public int getDelay() {
-		return delay;
-	}
+  public int getDelay() {
+    return delay;
+  }
 
-	/**
-	 * @return null if use is not restricted
-	 */
-	public Integer getUseCount() {
-		return useCount;
-	}
+  /**
+   * @return null if use is not restricted
+   */
+  public Integer getUseCount() {
+    return useCount;
+  }
 
-	/**
-	 * @return null if no item is required
-	 */
-	public Integer getRequiredItem() {
-		return requiredItem;
-	}
+  /**
+   * @return null if no item is required
+   */
+  public Integer getRequiredItem() {
+    return requiredItem;
+  }
 
-	@Override
-	public byte getTypeId() {
-		return 1;
-	}
+  @Override
+  public byte getTypeId() {
+    return 1;
+  }
 
 }

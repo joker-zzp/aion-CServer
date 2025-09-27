@@ -14,17 +14,17 @@ import com.aionemu.gameserver.services.reward.WebRewardService;
  */
 public class CM_PLAYER_LISTENER extends AionClientPacket {
 
-	public CM_PLAYER_LISTENER(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_PLAYER_LISTENER(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-	}
+  @Override
+  protected void readImpl() {
+  }
 
-	@Override
-	protected void runImpl() {
-		if (GSConfig.ENABLE_WEB_REWARDS)
-			WebRewardService.getInstance().sendAvailableRewards(getConnection().getActivePlayer());
-	}
+  @Override
+  protected void runImpl() {
+    if (GSConfig.ENABLE_WEB_REWARDS)
+      WebRewardService.getInstance().sendAvailableRewards(getConnection().getActivePlayer());
+  }
 }

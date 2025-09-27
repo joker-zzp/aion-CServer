@@ -16,32 +16,32 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "PetrificationEffect")
 public class PetrificationEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void calculate(Effect effect) {
-		super.calculate(effect, StatEnum.PERIFICATION_RESISTANCE, null);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    super.calculate(effect, StatEnum.PERIFICATION_RESISTANCE, null);
+  }
 
-	@Override
-	public void startEffect(Effect effect) {
-		Creature effected = effect.getEffected();
-		effected.getMoveController().abortMove();
-		effected.getController().cancelCurrentSkill(effect.getEffector());
-		// removes glide
-		if (effected instanceof Player && ((Player) effected).isInGlidingState()) {
-			((Player) effected).getFlyController().onStopGliding();
-		}
-		effect.getEffected().getEffectController().setAbnormal(AbnormalState.PETRIFICATION);
-		effect.setAbnormal(AbnormalState.PETRIFICATION);
-	}
+  @Override
+  public void startEffect(Effect effect) {
+    Creature effected = effect.getEffected();
+    effected.getMoveController().abortMove();
+    effected.getController().cancelCurrentSkill(effect.getEffector());
+    // removes glide
+    if (effected instanceof Player && ((Player) effected).isInGlidingState()) {
+      ((Player) effected).getFlyController().onStopGliding();
+    }
+    effect.getEffected().getEffectController().setAbnormal(AbnormalState.PETRIFICATION);
+    effect.setAbnormal(AbnormalState.PETRIFICATION);
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.PETRIFICATION);
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.PETRIFICATION);
+  }
 
 }

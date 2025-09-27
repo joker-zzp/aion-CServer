@@ -20,125 +20,125 @@ import com.aionemu.gameserver.model.skill.NpcSkillEntry;
 @AIName("general")
 public class GeneralNpcAI extends NpcAI {
 
-	public GeneralNpcAI(Npc owner) {
-		super(owner);
-	}
+  public GeneralNpcAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void think() {
-		ThinkEventHandler.onThink(this);
-	}
+  @Override
+  public void think() {
+    ThinkEventHandler.onThink(this);
+  }
 
-	@Override
-	protected void handleAttack(Creature creature) {
-		AttackEventHandler.onAttack(this, creature);
-	}
+  @Override
+  protected void handleAttack(Creature creature) {
+    AttackEventHandler.onAttack(this, creature);
+  }
 
-	@Override
-	protected boolean handleCreatureNeedsSupport(Creature creature) {
-		return AggroEventHandler.onCreatureNeedsSupport(this, creature);
-	}
+  @Override
+  protected boolean handleCreatureNeedsSupport(Creature creature) {
+    return AggroEventHandler.onCreatureNeedsSupport(this, creature);
+  }
 
-	@Override
-	protected void handleCreatureNotSee(Creature creature) {
-		if (creature.equals(getTarget())) {
-			getOwner().getController().abortCast();
-			onGeneralEvent(AIEventType.TARGET_TOOFAR);
-		}
-	}
+  @Override
+  protected void handleCreatureNotSee(Creature creature) {
+    if (creature.equals(getTarget())) {
+      getOwner().getController().abortCast();
+      onGeneralEvent(AIEventType.TARGET_TOOFAR);
+    }
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		TalkEventHandler.onTalk(this, player);
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    TalkEventHandler.onTalk(this, player);
+  }
 
-	@Override
-	protected void handleDialogFinish(Player creature) {
-		TalkEventHandler.onFinishTalk(this, creature);
-	}
+  @Override
+  protected void handleDialogFinish(Player creature) {
+    TalkEventHandler.onFinishTalk(this, creature);
+  }
 
-	@Override
-	protected void handleFinishAttack() {
-		AttackEventHandler.onFinishAttack(this);
-	}
+  @Override
+  protected void handleFinishAttack() {
+    AttackEventHandler.onFinishAttack(this);
+  }
 
-	@Override
-	protected void handleAttackComplete() {
-		AttackEventHandler.onAttackComplete(this);
-	}
+  @Override
+  protected void handleAttackComplete() {
+    AttackEventHandler.onAttackComplete(this);
+  }
 
-	@Override
-	protected void handleNotAtHome() {
-		ReturningEventHandler.onNotAtHome(this);
-	}
+  @Override
+  protected void handleNotAtHome() {
+    ReturningEventHandler.onNotAtHome(this);
+  }
 
-	@Override
-	protected void handleBackHome() {
-		ReturningEventHandler.onBackHome(this);
-	}
+  @Override
+  protected void handleBackHome() {
+    ReturningEventHandler.onBackHome(this);
+  }
 
-	@Override
-	protected void handleTargetTooFar() {
-		TargetEventHandler.onTargetTooFar(this);
-	}
+  @Override
+  protected void handleTargetTooFar() {
+    TargetEventHandler.onTargetTooFar(this);
+  }
 
-	@Override
-	protected void handleTargetGiveup() {
-		TargetEventHandler.onTargetGiveup(this);
-	}
+  @Override
+  protected void handleTargetGiveup() {
+    TargetEventHandler.onTargetGiveup(this);
+  }
 
-	@Override
-	protected void handleTargetChanged(Creature creature) {
-		super.handleTargetChanged(creature);
-		TargetEventHandler.onTargetChange(this, creature);
-	}
+  @Override
+  protected void handleTargetChanged(Creature creature) {
+    super.handleTargetChanged(creature);
+    TargetEventHandler.onTargetChange(this, creature);
+  }
 
-	@Override
-	protected void handleMoveArrived() {
-		super.handleMoveArrived();
-		MoveEventHandler.onMoveArrived(this);
-	}
+  @Override
+  protected void handleMoveArrived() {
+    super.handleMoveArrived();
+    MoveEventHandler.onMoveArrived(this);
+  }
 
-	@Override
-	public void handleCreatureDetected(Creature creature) {
-		getOwner().getPosition().getWorldMapInstance().getInstanceHandler().onCreatureDetected(getOwner(), creature);
-	}
+  @Override
+  public void handleCreatureDetected(Creature creature) {
+    getOwner().getPosition().getWorldMapInstance().getInstanceHandler().onCreatureDetected(getOwner(), creature);
+  }
 
-	@Override
-	protected boolean canHandleEvent(AIEventType eventType) {
-		switch (eventType) {
-			case CREATURE_NEEDS_SUPPORT:
-				return (getState() == AIState.IDLE || getState() == AIState.WALKING) && DataManager.TRIBE_RELATIONS_DATA.hasSupportRelations(
-					getOwner().getTribe());
-		}
-		return super.canHandleEvent(eventType);
-	}
+  @Override
+  protected boolean canHandleEvent(AIEventType eventType) {
+    switch (eventType) {
+      case CREATURE_NEEDS_SUPPORT:
+        return (getState() == AIState.IDLE || getState() == AIState.WALKING) && DataManager.TRIBE_RELATIONS_DATA.hasSupportRelations(
+          getOwner().getTribe());
+    }
+    return super.canHandleEvent(eventType);
+  }
 
-	@Override
-	public AttackIntention chooseAttackIntention() {
-		VisibleObject currentTarget = getTarget();
-		Creature mostHated = getAggroList().getMostHated();
+  @Override
+  public AttackIntention chooseAttackIntention() {
+    VisibleObject currentTarget = getTarget();
+    Creature mostHated = getAggroList().getMostHated();
 
-		if (mostHated == null || mostHated.isDead())
-			return AttackIntention.FINISH_ATTACK;
+    if (mostHated == null || mostHated.isDead())
+      return AttackIntention.FINISH_ATTACK;
 
-		if (currentTarget == null)
-			onCreatureEvent(AIEventType.TARGET_CHANGED, mostHated);
+    if (currentTarget == null)
+      onCreatureEvent(AIEventType.TARGET_CHANGED, mostHated);
 
-		if (chooseSkillAttack(getOwner().getObjectTemplate().getAttackRange() == 0))
-			return AttackIntention.SKILL_ATTACK;
+    if (chooseSkillAttack(getOwner().getObjectTemplate().getAttackRange() == 0))
+      return AttackIntention.SKILL_ATTACK;
 
-		return AttackIntention.SIMPLE_ATTACK;
-	}
+    return AttackIntention.SIMPLE_ATTACK;
+  }
 
-	protected final boolean chooseSkillAttack(boolean alwaysRandomSkill) {
-		NpcSkillEntry skill = alwaysRandomSkill ? getOwner().getSkillList().getRandomSkill() : SkillAttackManager.chooseNextSkill(this);
-		if (skill != null) {
-			getOwner().getGameStats().setLastSkill(skill);
-			if (skill.equals(getOwner().getQueuedSkills().peek()))
-				getOwner().getQueuedSkills().poll();
-			return true;
-		}
-		return false;
-	}
+  protected final boolean chooseSkillAttack(boolean alwaysRandomSkill) {
+    NpcSkillEntry skill = alwaysRandomSkill ? getOwner().getSkillList().getRandomSkill() : SkillAttackManager.chooseNextSkill(this);
+    if (skill != null) {
+      getOwner().getGameStats().setLastSkill(skill);
+      if (skill.equals(getOwner().getQueuedSkills().peek()))
+        getOwner().getQueuedSkills().poll();
+      return true;
+    }
+    return false;
+  }
 }

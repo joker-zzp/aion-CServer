@@ -12,19 +12,19 @@ import ai.GeneralNpcAI;
 @AIName("blackened_grave")
 public class BlackenedGraveAI extends GeneralNpcAI {
 
-	public BlackenedGraveAI(Npc owner) {
-		super(owner);
-	}
+  public BlackenedGraveAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean canThink() {
-		return false;
-	}
+  @Override
+  public boolean canThink() {
+    return false;
+  }
 
-	@Override
-	protected void handleDied() {
-		super.handleDied();
-		spawn(284262, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
-		AIActions.deleteOwner(this);
-	}
+  @Override
+  protected void handleDied() {
+    super.handleDied();
+    spawn(284262, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
+    AIActions.deleteOwner(this);
+  }
 }

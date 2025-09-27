@@ -12,22 +12,22 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "SurveyTemplate")
 public class SurveyTemplate {
 
-	@XmlAttribute(name = "itemId")
-	private int itemId;
-	@XmlAttribute(name = "count")
-	private long count;
+  @XmlAttribute(name = "itemId")
+  private int itemId;
+  @XmlAttribute(name = "count")
+  private long count;
 
-	/**
-	 * @return the count
-	 */
-	public long getCount() {
-		return this.count;
-	}
+  /**
+   * @return the count
+   */
+  public long getCount() {
+    return this.count;
+  }
 
-	/**
-	 * @return the itemId
-	 */
-	public int getItemId() {
-		return this.itemId;
-	}
+  /**
+   * @return the itemId
+   */
+  public int getItemId() {
+    return this.itemId;
+  }
 }

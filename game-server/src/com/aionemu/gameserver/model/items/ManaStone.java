@@ -11,26 +11,26 @@ import com.aionemu.gameserver.model.templates.item.ItemTemplate;
  */
 public class ManaStone extends ItemStone {
 
-	private List<StatFunction> modifiers;
+  private List<StatFunction> modifiers;
 
-	public ManaStone(int itemObjId, int itemId, int slot, PersistentState persistentState) {
-		super(itemObjId, itemId, slot, persistentState);
+  public ManaStone(int itemObjId, int itemId, int slot, PersistentState persistentState) {
+    super(itemObjId, itemId, slot, persistentState);
 
-		ItemTemplate stoneTemplate = DataManager.ITEM_DATA.getItemTemplate(itemId);
-		if (stoneTemplate != null && stoneTemplate.getModifiers() != null) {
-			this.modifiers = stoneTemplate.getModifiers();
-		}
-	}
+    ItemTemplate stoneTemplate = DataManager.ITEM_DATA.getItemTemplate(itemId);
+    if (stoneTemplate != null && stoneTemplate.getModifiers() != null) {
+      this.modifiers = stoneTemplate.getModifiers();
+    }
+  }
 
-	/**
-	 * @return modifiers
-	 */
-	public List<StatFunction> getModifiers() {
-		return modifiers;
-	}
+  /**
+   * @return modifiers
+   */
+  public List<StatFunction> getModifiers() {
+    return modifiers;
+  }
 
-	public StatFunction getFirstModifier() {
-		return (modifiers != null && modifiers.size() > 0) ? modifiers.get(0) : null;
-	}
+  public StatFunction getFirstModifier() {
+    return (modifiers != null && modifiers.size() > 0) ? modifiers.get(0) : null;
+  }
 
 }

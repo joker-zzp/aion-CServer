@@ -10,15 +10,15 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_ASCENSION_MORPH extends AionServerPacket {
 
-	private int inascension;
+  private int inascension;
 
-	public SM_ASCENSION_MORPH(int inascension) {
-		this.inascension = inascension;
-	}
+  public SM_ASCENSION_MORPH(int inascension) {
+    this.inascension = inascension;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(inascension);// if inascension =0x01 morph.
-		writeC(0x00); // new 2.0 Packet --- probably pet info?
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(inascension);// if inascension =0x01 morph.
+    writeC(0x00); // new 2.0 Packet --- probably pet info?
+  }
 }

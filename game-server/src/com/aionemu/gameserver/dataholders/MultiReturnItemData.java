@@ -17,24 +17,24 @@ import com.aionemu.gameserver.model.templates.item.ReturnLocList;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MultiReturnItemData {
 
-	@XmlElement(name = "return_item")
-	private List<MultiReturnItem> multiReturnItemTemplate;
+  @XmlElement(name = "return_item")
+  private List<MultiReturnItem> multiReturnItemTemplate;
 
-	@XmlTransient
-	private final Map<Integer, List<ReturnLocList>> returnLocList = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, List<ReturnLocList>> returnLocList = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		returnLocList.clear();
-		for (MultiReturnItem template : multiReturnItemTemplate)
-			returnLocList.put(template.getId(), template.getReturnLocList());
-		multiReturnItemTemplate = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    returnLocList.clear();
+    for (MultiReturnItem template : multiReturnItemTemplate)
+      returnLocList.put(template.getId(), template.getReturnLocList());
+    multiReturnItemTemplate = null;
+  }
 
-	public int size() {
-		return returnLocList.size();
-	}
+  public int size() {
+    return returnLocList.size();
+  }
 
-	public List<ReturnLocList> getReturnLocListById(int id) {
-		return returnLocList.get(id);
-	}
+  public List<ReturnLocList> getReturnLocListById(int id) {
+    return returnLocList.get(id);
+  }
 }

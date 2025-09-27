@@ -12,28 +12,28 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public abstract class PlayerStopMentoringEvent<T extends TemporaryPlayerTeam<? extends TeamMember<Player>>> extends AlwaysTrueTeamEvent {
 
-	protected final T team;
-	protected final Player player;
+  protected final T team;
+  protected final Player player;
 
-	public PlayerStopMentoringEvent(T team, Player player) {
-		this.team = team;
-		this.player = player;
-	}
+  public PlayerStopMentoringEvent(T team, Player player) {
+    this.team = team;
+    this.player = player;
+  }
 
-	@Override
-	public void handleEvent() {
-		player.setMentor(false);
-		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_MENTOR_END());
-		team.forEach(member -> {
-			if (!player.equals(member))
-				PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_MSG_MENTOR_END_PARTYMSG(player.getName()));
-			sendGroupPacketOnMentorEnd(member);
-		});
-		PacketSendUtility.broadcastPacketAndReceive(player, new SM_ABYSS_RANK_UPDATE(2, player));
-	}
+  @Override
+  public void handleEvent() {
+    player.setMentor(false);
+    PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_MENTOR_END());
+    team.forEach(member -> {
+      if (!player.equals(member))
+        PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_MSG_MENTOR_END_PARTYMSG(player.getName()));
+      sendGroupPacketOnMentorEnd(member);
+    });
+    PacketSendUtility.broadcastPacketAndReceive(player, new SM_ABYSS_RANK_UPDATE(2, player));
+  }
 
-	/**
-	 * @param member
-	 */
-	protected abstract void sendGroupPacketOnMentorEnd(Player member);
+  /**
+   * @param member
+   */
+  protected abstract void sendGroupPacketOnMentorEnd(Player member);
 }

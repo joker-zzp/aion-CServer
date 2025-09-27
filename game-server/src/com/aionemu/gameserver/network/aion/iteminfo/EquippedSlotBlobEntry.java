@@ -11,17 +11,17 @@ import com.aionemu.gameserver.network.aion.iteminfo.ItemInfoBlob.ItemBlobType;
  */
 public class EquippedSlotBlobEntry extends ItemBlobEntry {
 
-	EquippedSlotBlobEntry() {
-		super(ItemBlobType.EQUIPPED_SLOT);
-	}
+  EquippedSlotBlobEntry() {
+    super(ItemBlobType.EQUIPPED_SLOT);
+  }
 
-	@Override
-	public void writeThisBlob(ByteBuffer buf) {
-		writeQ(buf, ownerItem.isEquipped() ? ownerItem.getEquipmentSlot() : 0);
-	}
+  @Override
+  public void writeThisBlob(ByteBuffer buf) {
+    writeQ(buf, ownerItem.isEquipped() ? ownerItem.getEquipmentSlot() : 0);
+  }
 
-	@Override
-	public int getSize() {
-		return 8;
-	}
+  @Override
+  public int getSize() {
+    return 8;
+  }
 }

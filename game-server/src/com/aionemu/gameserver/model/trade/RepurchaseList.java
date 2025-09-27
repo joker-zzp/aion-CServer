@@ -11,27 +11,27 @@ import com.aionemu.gameserver.services.RepurchaseService;
  */
 public class RepurchaseList {
 
-	private final int sellerObjId;
-	private Set<Integer> repurchases = new LinkedHashSet<>();
+  private final int sellerObjId;
+  private Set<Integer> repurchases = new LinkedHashSet<>();
 
-	public RepurchaseList(int sellerObjId) {
-		this.sellerObjId = sellerObjId;
-	}
+  public RepurchaseList(int sellerObjId) {
+    this.sellerObjId = sellerObjId;
+  }
 
-	public void addRepurchaseItem(Player player, int itemObjectId, long count) {
-		if (RepurchaseService.getInstance().canRepurchase(player, itemObjectId))
-			repurchases.add(itemObjectId);
-	}
+  public void addRepurchaseItem(Player player, int itemObjectId, long count) {
+    if (RepurchaseService.getInstance().canRepurchase(player, itemObjectId))
+      repurchases.add(itemObjectId);
+  }
 
-	public Set<Integer> getRepurchaseItems() {
-		return repurchases;
-	}
+  public Set<Integer> getRepurchaseItems() {
+    return repurchases;
+  }
 
-	public int size() {
-		return repurchases.size();
-	}
+  public int size() {
+    return repurchases.size();
+  }
 
-	public final int getSellerObjId() {
-		return sellerObjId;
-	}
+  public final int getSellerObjId() {
+    return sellerObjId;
+  }
 }

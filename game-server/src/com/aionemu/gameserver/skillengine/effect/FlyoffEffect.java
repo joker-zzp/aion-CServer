@@ -14,12 +14,12 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "FlyOffEffect")
 public class FlyoffEffect extends EffectTemplate {
 
-	@XmlAttribute
-	protected int distance;
+  @XmlAttribute
+  protected int distance;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		// TODO Distance is Z, value probably contains angle or width
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    // TODO Distance is Z, value probably contains angle or width
+  }
 
 }

@@ -11,16 +11,16 @@ import com.aionemu.gameserver.world.World;
  */
 public class Search extends ConsoleCommand {
 
-	public Search() {
-		super("search");
-	}
+  public Search() {
+    super("search");
+  }
 
-	@Override
-	public void execute(Player admin, String... params) {
-		if (params.length > 0) {
-			Player p = World.getInstance().getPlayer(params[0]);
-			if (p != null)
-				PacketSendUtility.sendPacket(admin, new SM_GM_SEARCH(p));
-		}
-	}
+  @Override
+  public void execute(Player admin, String... params) {
+    if (params.length > 0) {
+      Player p = World.getInstance().getPlayer(params[0]);
+      if (p != null)
+        PacketSendUtility.sendPacket(admin, new SM_GM_SEARCH(p));
+    }
+  }
 }

@@ -17,24 +17,24 @@ import com.aionemu.gameserver.model.templates.windstreams.WindstreamTemplate;
 @XmlRootElement(name = "windstreams")
 public class WindstreamData {
 
-	@XmlElement(name = "windstream")
-	private List<WindstreamTemplate> wts;
+  @XmlElement(name = "windstream")
+  private List<WindstreamTemplate> wts;
 
-	@XmlTransient
-	private final Map<Integer, WindstreamTemplate> windstreams = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, WindstreamTemplate> windstreams = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (WindstreamTemplate wt : wts) {
-			windstreams.put(wt.getMapId(), wt);
-		}
-		wts = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (WindstreamTemplate wt : wts) {
+      windstreams.put(wt.getMapId(), wt);
+    }
+    wts = null;
+  }
 
-	public WindstreamTemplate getStreamTemplate(int mapId) {
-		return windstreams.get(mapId);
-	}
+  public WindstreamTemplate getStreamTemplate(int mapId) {
+    return windstreams.get(mapId);
+  }
 
-	public int size() {
-		return windstreams.size();
-	}
+  public int size() {
+    return windstreams.size();
+  }
 }

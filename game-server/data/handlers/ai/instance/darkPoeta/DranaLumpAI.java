@@ -16,35 +16,35 @@ import ai.ActionItemNpcAI;
 @AIName("drana_lump")
 public class DranaLumpAI extends ActionItemNpcAI {
 
-	public DranaLumpAI(Npc owner) {
-		super(owner);
-	}
+  public DranaLumpAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void handleCreatureDetected(Creature creature) {
-		if (creature instanceof Npc) {
-			switch (((Npc) creature).getNpcId()) {
-				case 214880:
-				case 215388:
-				case 215389:
-					checkDistance((Npc) creature);
-					break;
-			}
-		}
-	}
+  @Override
+  public void handleCreatureDetected(Creature creature) {
+    if (creature instanceof Npc) {
+      switch (((Npc) creature).getNpcId()) {
+        case 214880:
+        case 215388:
+        case 215389:
+          checkDistance((Npc) creature);
+          break;
+      }
+    }
+  }
 
-	private void checkDistance(Npc npc) {
-		ThreadPoolManager.getInstance().schedule(() -> {
-			if (PositionUtil.getDistance(getOwner(), npc) <= 2)
-				SkillEngine.getInstance().getSkill(getOwner(), 18536, 46, npc).useSkill();
-			else
-				checkDistance(npc);
-		}, 4000);
-	}
+  private void checkDistance(Npc npc) {
+    ThreadPoolManager.getInstance().schedule(() -> {
+      if (PositionUtil.getDistance(getOwner(), npc) <= 2)
+        SkillEngine.getInstance().getSkill(getOwner(), 18536, 46, npc).useSkill();
+      else
+        checkDistance(npc);
+    }, 4000);
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		if (skillTemplate.getSkillId() == 18536)
-			getOwner().getController().delete();
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    if (skillTemplate.getSkillId() == 18536)
+      getOwner().getController().delete();
+  }
 }

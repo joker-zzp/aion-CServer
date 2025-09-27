@@ -14,34 +14,34 @@ import com.aionemu.gameserver.services.HTMLService;
  */
 public class CM_QUESTIONNAIRE extends AionClientPacket {
 
-	private int objectId;
-	private int itemId;
-	@SuppressWarnings("unused")
-	private String stringItemsId;
-	private int itemSize;
-	private List<Integer> items;
+  private int objectId;
+  private int itemId;
+  @SuppressWarnings("unused")
+  private String stringItemsId;
+  private int itemSize;
+  private List<Integer> items;
 
-	public CM_QUESTIONNAIRE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_QUESTIONNAIRE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		objectId = readD();
-		itemSize = readUH();
-		items = new ArrayList<>();
-		for (int i = 0; i < itemSize; i++) {
-			itemId = readD();
-			items.add(itemId);
-		}
-		stringItemsId = readS();
-	}
+  @Override
+  protected void readImpl() {
+    objectId = readD();
+    itemSize = readUH();
+    items = new ArrayList<>();
+    for (int i = 0; i < itemSize; i++) {
+      itemId = readD();
+      items.add(itemId);
+    }
+    stringItemsId = readS();
+  }
 
-	@Override
-	protected void runImpl() {
-		if (objectId > 0) {
-			Player player = getConnection().getActivePlayer();
-			HTMLService.getReward(player, objectId, items);
-		}
-	}
+  @Override
+  protected void runImpl() {
+    if (objectId > 0) {
+      Player player = getConnection().getActivePlayer();
+      HTMLService.getReward(player, objectId, items);
+    }
+  }
 }

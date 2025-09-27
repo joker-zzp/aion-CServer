@@ -9,15 +9,15 @@ import com.aionemu.gameserver.model.templates.TitleTemplate;
  */
 public class TitleChangeListener {
 
-	public static void onBonusTitleChange(CreatureGameStats<?> cgs, int titleId, boolean isSet) {
-		TitleTemplate tt = DataManager.TITLE_DATA.getTitleTemplate(titleId);
-		if (tt == null) {
-			return;
-		}
-		if (!isSet) {
-			cgs.endEffect(tt);
-		} else {
-			cgs.addEffect(tt, tt.getModifiers());
-		}
-	}
+  public static void onBonusTitleChange(CreatureGameStats<?> cgs, int titleId, boolean isSet) {
+    TitleTemplate tt = DataManager.TITLE_DATA.getTitleTemplate(titleId);
+    if (tt == null) {
+      return;
+    }
+    if (!isSet) {
+      cgs.endEffect(tt);
+    } else {
+      cgs.addEffect(tt, tt.getModifiers());
+    }
+  }
 }

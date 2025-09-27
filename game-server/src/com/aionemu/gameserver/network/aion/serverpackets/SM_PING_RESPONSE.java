@@ -8,8 +8,8 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_PING_RESPONSE extends AionServerPacket {
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(0x04);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(0x04);
+  }
 }

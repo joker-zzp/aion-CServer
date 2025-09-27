@@ -14,29 +14,29 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_BROKER_LIST extends AionClientPacket {
 
-	private int brokerObjId;
-	private byte sortType;
-	private int page;
-	private int listMask;
+  private int brokerObjId;
+  private byte sortType;
+  private int page;
+  private int listMask;
 
-	public CM_BROKER_LIST(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_BROKER_LIST(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		brokerObjId = readD();
-		sortType = readC(); // 1 - name; 2 - level; 4 - totalPrice; 6 - price for piece
-		page = readUH();
-		listMask = readUH();
-	}
+  @Override
+  protected void readImpl() {
+    brokerObjId = readD();
+    sortType = readC(); // 1 - name; 2 - level; 4 - totalPrice; 6 - price for piece
+    page = readUH();
+    listMask = readUH();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player.isTargetingNpcWithFunction(brokerObjId, DialogAction.OPEN_VENDOR))
-			BrokerService.getInstance().showRequestedItems(player, listMask, sortType, page, null);
-		else
-			AuditLogger.log(player, "tried to browse for broker items without targeting a broker");
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player.isTargetingNpcWithFunction(brokerObjId, DialogAction.OPEN_VENDOR))
+      BrokerService.getInstance().showRequestedItems(player, listMask, sortType, page, null);
+    else
+      AuditLogger.log(player, "tried to browse for broker items without targeting a broker");
+  }
 }

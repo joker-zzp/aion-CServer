@@ -17,25 +17,25 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "SpellAtkDrainEffect")
 public class SpellAtkDrainEffect extends AbstractOverTimeEffect {
 
-	@XmlAttribute(name = "hp_percent")
-	private int hpPercent;
-	@XmlAttribute(name = "mp_percent")
-	private int mpPercent;
+  @XmlAttribute(name = "hp_percent")
+  private int hpPercent;
+  @XmlAttribute(name = "mp_percent")
+  private int mpPercent;
 
-	@Override
-	public void onPeriodicAction(Effect effect) {
-		int valueWithDelta = calculateBaseValue(effect);
-		int critAddDmg = critAddDmg2 + critAddDmg1 * effect.getSkillLevel();
-		int damage = AttackUtil.calculateMagicalOverTimeSkillResult(effect, valueWithDelta, element, position, true, critProbMod2, critAddDmg);
-		effect.getEffected().getController().onAttack(effect, TYPE.DAMAGE, damage, true, LOG.SPELLATKDRAIN, hopType);
-		effect.getEffector().getObserveController().notifyAttackObservers(effect.getEffected(), effect.getSkillId());
+  @Override
+  public void onPeriodicAction(Effect effect) {
+    int valueWithDelta = calculateBaseValue(effect);
+    int critAddDmg = critAddDmg2 + critAddDmg1 * effect.getSkillLevel();
+    int damage = AttackUtil.calculateMagicalOverTimeSkillResult(effect, valueWithDelta, element, position, true, critProbMod2, critAddDmg);
+    effect.getEffected().getController().onAttack(effect, TYPE.DAMAGE, damage, true, LOG.SPELLATKDRAIN, hopType);
+    effect.getEffector().getObserveController().notifyAttackObservers(effect.getEffected(), effect.getSkillId());
 
-		// Drain (heal) portion of damage inflicted
-		if (hpPercent != 0) {
-			effect.getEffector().getLifeStats().increaseHp(TYPE.HP, damage * hpPercent / 100, effect, LOG.SPELLATKDRAIN);
-		}
-		if (mpPercent != 0) {
-			effect.getEffector().getLifeStats().increaseMp(TYPE.MP, damage * mpPercent / 100, effect.getSkillId(), LOG.SPELLATKDRAIN);
-		}
-	}
+    // Drain (heal) portion of damage inflicted
+    if (hpPercent != 0) {
+      effect.getEffector().getLifeStats().increaseHp(TYPE.HP, damage * hpPercent / 100, effect, LOG.SPELLATKDRAIN);
+    }
+    if (mpPercent != 0) {
+      effect.getEffector().getLifeStats().increaseMp(TYPE.MP, damage * mpPercent / 100, effect.getSkillId(), LOG.SPELLATKDRAIN);
+    }
+  }
 }

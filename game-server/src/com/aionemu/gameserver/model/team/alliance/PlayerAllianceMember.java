@@ -8,26 +8,26 @@ import com.aionemu.gameserver.model.team.PlayerTeamMember;
  */
 public class PlayerAllianceMember extends PlayerTeamMember {
 
-	private int allianceId;
+  private int allianceId;
 
-	public PlayerAllianceMember(Player player) {
-		super(player);
-	}
+  public PlayerAllianceMember(Player player) {
+    super(player);
+  }
 
-	public int getAllianceId() {
-		return allianceId;
-	}
+  public int getAllianceId() {
+    return allianceId;
+  }
 
-	public void setAllianceId(int allianceId) {
-		this.allianceId = allianceId;
-	}
+  public void setAllianceId(int allianceId) {
+    this.allianceId = allianceId;
+  }
 
-	public final PlayerAllianceGroup getPlayerAllianceGroup() {
-		return getObject().getPlayerAllianceGroup();
-	}
+  public final PlayerAllianceGroup getPlayerAllianceGroup() {
+    return getObject().getPlayerAllianceGroup();
+  }
 
-	public final void setPlayerAllianceGroup(PlayerAllianceGroup playerAllianceGroup) {
-		getObject().setPlayerAllianceGroup(playerAllianceGroup);
-	}
+  public final void setPlayerAllianceGroup(PlayerAllianceGroup playerAllianceGroup) {
+    getObject().setPlayerAllianceGroup(playerAllianceGroup);
+  }
 
 }

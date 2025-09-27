@@ -12,14 +12,14 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_BLOCK_LIST extends AionServerPacket {
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		BlockList list = con.getActivePlayer().getBlockList();
-		writeH(-list.getSize());
-		writeC(0); // Unk
-		for (BlockedPlayer player : list) {
-			writeS(player.getName());
-			writeS(player.getReason());
-		}
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    BlockList list = con.getActivePlayer().getBlockList();
+    writeH(-list.getSize());
+    writeC(0); // Unk
+    for (BlockedPlayer player : list) {
+      writeS(player.getName());
+      writeS(player.getReason());
+    }
+  }
 }

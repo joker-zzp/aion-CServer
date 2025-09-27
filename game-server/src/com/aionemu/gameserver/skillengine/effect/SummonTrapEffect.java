@@ -26,30 +26,30 @@ import com.aionemu.gameserver.world.geo.GeoService;
 @XmlType(name = "SummonTrapEffect")
 public class SummonTrapEffect extends SummonEffect {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		Creature effector = effect.getEffector();
-		// should only be set if player has no target to avoid errors
-		if (effect.getEffector().getTarget() == null)
-			effect.getEffector().setTarget(effect.getEffector());
-		double radian = Math.toRadians(PositionUtil.convertHeadingToAngle(effect.getEffector().getHeading()));
-		float x = effect.getX();
-		float y = effect.getY();
-		float z = effect.getZ();
-		if (effect.getSkill().isFirstTargetSelf()) {
-			Creature effected = effect.getEffected();
-			Vector3f pos = GeoService.getInstance().getClosestCollision(effector, effected.getX() + (float) (Math.cos(radian) * 2), effected.getY() + (float) (Math.sin(radian) * 2), effected.getZ(), true, CollisionIntention.DEFAULT_COLLISIONS.getId(), IgnoreProperties.of(effector.getRace()));
-			x = pos.getX();
-			y = pos.getY();
-			z = pos.getZ();
-		}
-		byte heading = effector.getHeading();
-		int worldId = effector.getWorldId();
-		int instanceId = effector.getInstanceId();
+  @Override
+  public void applyEffect(Effect effect) {
+    Creature effector = effect.getEffector();
+    // should only be set if player has no target to avoid errors
+    if (effect.getEffector().getTarget() == null)
+      effect.getEffector().setTarget(effect.getEffector());
+    double radian = Math.toRadians(PositionUtil.convertHeadingToAngle(effect.getEffector().getHeading()));
+    float x = effect.getX();
+    float y = effect.getY();
+    float z = effect.getZ();
+    if (effect.getSkill().isFirstTargetSelf()) {
+      Creature effected = effect.getEffected();
+      Vector3f pos = GeoService.getInstance().getClosestCollision(effector, effected.getX() + (float) (Math.cos(radian) * 2), effected.getY() + (float) (Math.sin(radian) * 2), effected.getZ(), true, CollisionIntention.DEFAULT_COLLISIONS.getId(), IgnoreProperties.of(effector.getRace()));
+      x = pos.getX();
+      y = pos.getY();
+      z = pos.getZ();
+    }
+    byte heading = effector.getHeading();
+    int worldId = effector.getWorldId();
+    int instanceId = effector.getInstanceId();
 
-		SpawnTemplate spawn = SpawnEngine.newSingleTimeSpawn(worldId, npcId, x, y, z, heading);
-		Trap trap = VisibleObjectSpawner.spawnTrap(spawn, instanceId, effector);
-		TrapService.registerTrap(effector.getObjectId(), trap, true);
-		trap.getController().addTask(TaskId.DESPAWN, ThreadPoolManager.getInstance().schedule(() -> trap.getController().delete(), time * 1000L));
-	}
+    SpawnTemplate spawn = SpawnEngine.newSingleTimeSpawn(worldId, npcId, x, y, z, heading);
+    Trap trap = VisibleObjectSpawner.spawnTrap(spawn, instanceId, effector);
+    TrapService.registerTrap(effector.getObjectId(), trap, true);
+    trap.getController().addTask(TaskId.DESPAWN, ThreadPoolManager.getInstance().schedule(() -> trap.getController().delete(), time * 1000L));
+  }
 }

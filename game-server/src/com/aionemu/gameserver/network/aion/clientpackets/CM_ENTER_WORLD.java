@@ -13,22 +13,22 @@ import com.aionemu.gameserver.services.player.PlayerEnterWorldService;
  */
 public class CM_ENTER_WORLD extends AionClientPacket {
 
-	/**
-	 * Object Id of player that is entering world
-	 */
-	private int objectId;
+  /**
+   * Object Id of player that is entering world
+   */
+  private int objectId;
 
-	public CM_ENTER_WORLD(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_ENTER_WORLD(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		objectId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    objectId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		PlayerEnterWorldService.enterWorld(getConnection(), objectId);
-	}
+  @Override
+  protected void runImpl() {
+    PlayerEnterWorldService.enterWorld(getConnection(), objectId);
+  }
 }

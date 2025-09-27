@@ -10,17 +10,17 @@ import com.aionemu.gameserver.model.templates.item.ItemQuality;
  */
 public class DropConfig {
 
-	/**
-	 * Announce when a player drops an item with the configured minimum item quality
-	 * 
-	 * @see ItemQuality
-	 */
-	@Property(key = "gameserver.drop.announce_quality")
-	public static ItemQuality MIN_ANNOUNCE_QUALITY;
+  /**
+   * Announce when a player drops an item with the configured minimum item quality
+   * 
+   * @see ItemQuality
+   */
+  @Property(key = "gameserver.drop.announce_quality")
+  public static ItemQuality MIN_ANNOUNCE_QUALITY;
 
-	/**
-	 * Disable range checks for specified maps
-	 */
-	@Property(key = "gameserver.drop.disable_range_check_maps")
-	public static Set<Integer> DISABLE_RANGE_CHECK_MAPS;
+  /**
+   * Disable range checks for specified maps
+   */
+  @Property(key = "gameserver.drop.disable_range_check_maps")
+  public static Set<Integer> DISABLE_RANGE_CHECK_MAPS;
 }

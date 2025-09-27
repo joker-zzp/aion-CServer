@@ -18,22 +18,22 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @XmlType(name = "NpcDialogOperation")
 public class NpcDialogOperation extends QuestOperation {
 
-	@XmlAttribute(required = true)
-	protected int id;
-	@XmlAttribute(name = "quest_id")
-	protected Integer questId;
+  @XmlAttribute(required = true)
+  protected int id;
+  @XmlAttribute(name = "quest_id")
+  protected Integer questId;
 
-	@Override
-	public void doOperate(QuestEnv env) {
-		Player player = env.getPlayer();
-		VisibleObject obj = env.getVisibleObject();
-		int qId = env.getQuestId();
-		if (questId != null)
-			qId = questId;
-		if (qId == 0)
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(obj.getObjectId(), id));
-		else
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(obj.getObjectId(), id, qId));
-	}
+  @Override
+  public void doOperate(QuestEnv env) {
+    Player player = env.getPlayer();
+    VisibleObject obj = env.getVisibleObject();
+    int qId = env.getQuestId();
+    if (questId != null)
+      qId = questId;
+    if (qId == 0)
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(obj.getObjectId(), id));
+    else
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(obj.getObjectId(), id, qId));
+  }
 
 }

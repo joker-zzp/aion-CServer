@@ -12,15 +12,15 @@ import com.aionemu.gameserver.network.aion.AionConnection.State;
  */
 public class CM_REJECT_REVIVE extends AionClientPacket {
 
-	public CM_REJECT_REVIVE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_REJECT_REVIVE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-	}
+  @Override
+  protected void readImpl() {
+  }
 
-	@Override
-	protected void runImpl() {
-	}
+  @Override
+  protected void runImpl() {
+  }
 }

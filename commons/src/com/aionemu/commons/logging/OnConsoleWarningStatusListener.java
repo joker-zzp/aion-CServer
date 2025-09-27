@@ -8,14 +8,14 @@ import ch.qos.logback.core.status.Status;
  */
 public class OnConsoleWarningStatusListener extends OnErrorConsoleStatusListener {
 
-	public OnConsoleWarningStatusListener() {
-		setRetrospective(0);
-	}
+  public OnConsoleWarningStatusListener() {
+    setRetrospective(0);
+  }
 
-	@Override
-	public void addStatusEvent(Status status) {
-		if (status.getLevel() >= Status.WARN) {
-			super.addStatusEvent(status);
-		}
-	}
+  @Override
+  public void addStatusEvent(Status status) {
+    if (status.getLevel() >= Status.WARN) {
+      super.addStatusEvent(status);
+    }
+  }
 }

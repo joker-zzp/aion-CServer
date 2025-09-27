@@ -13,33 +13,33 @@ import com.aionemu.gameserver.services.LegionService;
  */
 public class CM_LEGION_MODIFY_EMBLEM extends AionClientPacket {
 
-	private int legionId;
-	private int emblemId;
-	private int alpha;
-	private int red;
-	private int green;
-	private int blue;
-	private LegionEmblemType emblemType;
+  private int legionId;
+  private int emblemId;
+  private int alpha;
+  private int red;
+  private int green;
+  private int blue;
+  private LegionEmblemType emblemType;
 
-	public CM_LEGION_MODIFY_EMBLEM(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_LEGION_MODIFY_EMBLEM(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		legionId = readD();
-		emblemId = readUC();
-		emblemType = (readUC() == LegionEmblemType.DEFAULT.getValue()) ? LegionEmblemType.DEFAULT : LegionEmblemType.CUSTOM;
-		alpha = readUC();
-		red = readUC();
-		green = readUC();
-		blue = readUC();
-	}
+  @Override
+  protected void readImpl() {
+    legionId = readD();
+    emblemId = readUC();
+    emblemType = (readUC() == LegionEmblemType.DEFAULT.getValue()) ? LegionEmblemType.DEFAULT : LegionEmblemType.CUSTOM;
+    alpha = readUC();
+    red = readUC();
+    green = readUC();
+    blue = readUC();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		if (activePlayer.isLegionMember() && activePlayer.getLegion().getLegionId() == legionId)
-			LegionService.getInstance().storeLegionEmblem(activePlayer, emblemId, alpha, red, green, blue, emblemType);
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    if (activePlayer.isLegionMember() && activePlayer.getLegion().getLegionId() == legionId)
+      LegionService.getInstance().storeLegionEmblem(activePlayer, emblemId, alpha, red, green, blue, emblemType);
+  }
 }

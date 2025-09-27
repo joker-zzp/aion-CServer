@@ -16,15 +16,15 @@ import com.aionemu.gameserver.model.templates.LegionDominionLocationTemplate;
 @XmlRootElement(name="legion_dominion_template")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class LegionDominionData {
-	
-	@XmlElement(name = "legion_dominion_location")
-	private List<LegionDominionLocationTemplate> ldl;
-	
-	public int size() {
-		return ldl.size();
-	}
+  
+  @XmlElement(name = "legion_dominion_location")
+  private List<LegionDominionLocationTemplate> ldl;
+  
+  public int size() {
+    return ldl.size();
+  }
 
-	public List<LegionDominionLocationTemplate> getLocationTemplates() {
-		return ldl;
-	}
+  public List<LegionDominionLocationTemplate> getLocationTemplates() {
+    return ldl;
+  }
 }

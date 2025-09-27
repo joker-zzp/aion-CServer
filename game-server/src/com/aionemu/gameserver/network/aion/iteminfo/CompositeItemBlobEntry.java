@@ -15,36 +15,36 @@ import com.aionemu.gameserver.network.aion.iteminfo.ItemInfoBlob.ItemBlobType;
  */
 public class CompositeItemBlobEntry extends ItemBlobEntry {
 
-	CompositeItemBlobEntry() {
-		super(ItemBlobType.COMPOSITE_ITEM);
-	}
+  CompositeItemBlobEntry() {
+    super(ItemBlobType.COMPOSITE_ITEM);
+  }
 
-	@Override
-	public void writeThisBlob(ByteBuffer buf) {
-		writeD(buf, ownerItem.getFusionedItemId());
-		writeFusionStones(buf);
-		writeC(buf, ownerItem.getFusionedItemOptionalSockets()); // additional manastone sockets
-		writeC(buf, ownerItem.getFusionedItemBonusStatsId());
-	}
+  @Override
+  public void writeThisBlob(ByteBuffer buf) {
+    writeD(buf, ownerItem.getFusionedItemId());
+    writeFusionStones(buf);
+    writeC(buf, ownerItem.getFusionedItemOptionalSockets()); // additional manastone sockets
+    writeC(buf, ownerItem.getFusionedItemBonusStatsId());
+  }
 
-	private void writeFusionStones(ByteBuffer buf) {
-		if (ownerItem.hasFusionStones()) {
-			Set<ManaStone> itemStones = ownerItem.getFusionStones();
-			HashMap<Integer, ManaStone> stonesBySlot = new HashMap<>();
-			for (ManaStone itemStone : itemStones) {
-				stonesBySlot.put(itemStone.getSlot(), itemStone);
-			}
-			for (int i = 0; i < Item.MAX_BASIC_STONES; i++) {
-				ManaStone stone = stonesBySlot.get(i);
-				writeD(buf, stone == null ? 0 : stone.getItemId());
-			}
-		} else {
-			skip(buf, Item.MAX_BASIC_STONES * 4);
-		}
-	}
+  private void writeFusionStones(ByteBuffer buf) {
+    if (ownerItem.hasFusionStones()) {
+      Set<ManaStone> itemStones = ownerItem.getFusionStones();
+      HashMap<Integer, ManaStone> stonesBySlot = new HashMap<>();
+      for (ManaStone itemStone : itemStones) {
+        stonesBySlot.put(itemStone.getSlot(), itemStone);
+      }
+      for (int i = 0; i < Item.MAX_BASIC_STONES; i++) {
+        ManaStone stone = stonesBySlot.get(i);
+        writeD(buf, stone == null ? 0 : stone.getItemId());
+      }
+    } else {
+      skip(buf, Item.MAX_BASIC_STONES * 4);
+    }
+  }
 
-	@Override
-	public int getSize() {
-		return Item.MAX_BASIC_STONES * 4 + 6;
-	}
+  @Override
+  public int getSize() {
+    return Item.MAX_BASIC_STONES * 4 + 6;
+  }
 }

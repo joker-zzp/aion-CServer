@@ -12,20 +12,20 @@ import com.aionemu.gameserver.services.mail.MailService;
  */
 public class CM_READ_MAIL extends AionClientPacket {
 
-	int mailObjId;
+  int mailObjId;
 
-	public CM_READ_MAIL(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_READ_MAIL(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		mailObjId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    mailObjId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		MailService.readMail(player, mailObjId);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    MailService.readMail(player, mailObjId);
+  }
 }

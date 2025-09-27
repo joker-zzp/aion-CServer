@@ -16,14 +16,14 @@ import com.aionemu.gameserver.model.templates.bounty.KillBountyTemplate;
 @XmlRootElement(name = "kill_bounties")
 public class KillBountyData {
 
-	@XmlElement(name = "kill_bounty")
-	private List<KillBountyTemplate> killBounties;
+  @XmlElement(name = "kill_bounty")
+  private List<KillBountyTemplate> killBounties;
 
-	public int size() {
-		return killBounties.size();
-	}
+  public int size() {
+    return killBounties.size();
+  }
 
-	public List<KillBountyTemplate> getKillBounties() {
-		return killBounties;
-	}
+  public List<KillBountyTemplate> getKillBounties() {
+    return killBounties;
+  }
 }

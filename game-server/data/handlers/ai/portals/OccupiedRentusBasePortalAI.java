@@ -13,26 +13,26 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("occupy_rentus_portal")
 public class OccupiedRentusBasePortalAI extends PortalDialogAI {
 
-	public OccupiedRentusBasePortalAI(Npc owner) {
-		super(owner);
-	}
+  public OccupiedRentusBasePortalAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void checkDialog(Player player) {
-		if (getOwner().getNpcId() == 832991) {
-			if (player.getRace() == Race.ASMODIANS) {
-				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
-			} else {
-				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 10));
-			}
-		} else if (getOwner().getNpcId() == 832992) {
-			if (player.getRace() == Race.ASMODIANS) {
-				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 10));
-			} else {
-				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
-			}
-		} else {
-			super.checkDialog(player);
-		}
-	}
+  @Override
+  protected void checkDialog(Player player) {
+    if (getOwner().getNpcId() == 832991) {
+      if (player.getRace() == Race.ASMODIANS) {
+        PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
+      } else {
+        PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 10));
+      }
+    } else if (getOwner().getNpcId() == 832992) {
+      if (player.getRace() == Race.ASMODIANS) {
+        PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 10));
+      } else {
+        PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
+      }
+    } else {
+      super.checkDialog(player);
+    }
+  }
 }

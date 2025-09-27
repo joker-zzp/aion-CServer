@@ -16,28 +16,28 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("t_a_g_portal")
 public class TAGPortalAI extends PortalDialogAI {
 
-	public TAGPortalAI(Npc owner) {
-		super(owner);
-	}
+  public TAGPortalAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		if (questId != 0) {
-			super.onDialogSelect(player, dialogActionId, questId, extendedRewardIndex);
-			return true;
-		}
-		int worldId = switch (dialogActionId) {
-			case SETPRO1 -> 300430000;
-			case SETPRO2 -> 300420000;
-			case SETPRO3 -> 300570000;
-			default -> 0;
-		};
-		AutoGroupType agt = AutoGroupType.getAutoGroupByWorld(player.getLevel(), worldId);
-		if (agt != null) {
-			PacketSendUtility.sendPacket(player, new SM_AUTO_GROUP(agt.getTemplate().getMaskId()));
-		}
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
-		return true;
-	}
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    if (questId != 0) {
+      super.onDialogSelect(player, dialogActionId, questId, extendedRewardIndex);
+      return true;
+    }
+    int worldId = switch (dialogActionId) {
+      case SETPRO1 -> 300430000;
+      case SETPRO2 -> 300420000;
+      case SETPRO3 -> 300570000;
+      default -> 0;
+    };
+    AutoGroupType agt = AutoGroupType.getAutoGroupByWorld(player.getLevel(), worldId);
+    if (agt != null) {
+      PacketSendUtility.sendPacket(player, new SM_AUTO_GROUP(agt.getTemplate().getMaskId()));
+    }
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
+    return true;
+  }
 
 }

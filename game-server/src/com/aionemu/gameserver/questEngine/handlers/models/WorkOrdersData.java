@@ -20,29 +20,29 @@ import com.aionemu.gameserver.questEngine.handlers.template.WorkOrders;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "WorkOrdersData", propOrder = { "giveComponents" })
 public class WorkOrdersData extends XMLQuest {
-	
-	@XmlElement(name = "give_component", required = true)
-	protected List<QuestItems> giveComponents;
-	
-	@XmlAttribute(name = "start_npc_ids", required = true)
-	protected List<Integer> startNpcIds;
-	
-	@XmlAttribute(name = "recipe_id", required = true)
-	protected int recipeId;
-	
-	public int getRecipeId() {
-		return recipeId;
-	}
+  
+  @XmlElement(name = "give_component", required = true)
+  protected List<QuestItems> giveComponents;
+  
+  @XmlAttribute(name = "start_npc_ids", required = true)
+  protected List<Integer> startNpcIds;
+  
+  @XmlAttribute(name = "recipe_id", required = true)
+  protected int recipeId;
+  
+  public int getRecipeId() {
+    return recipeId;
+  }
 
-	@Override
-	public void register(QuestEngine questEngine) {
-		questEngine.addQuestHandler(new WorkOrders(id, startNpcIds, giveComponents, recipeId));
-	}
+  @Override
+  public void register(QuestEngine questEngine) {
+    questEngine.addQuestHandler(new WorkOrders(id, startNpcIds, giveComponents, recipeId));
+  }
 
-	@Override
-	public Set<Integer> getAlternativeNpcs(int npcId) {
-		if (startNpcIds != null && startNpcIds.size() > 1 && startNpcIds.contains(npcId))
-			return startNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
-		return null;
-	}
+  @Override
+  public Set<Integer> getAlternativeNpcs(int npcId) {
+    if (startNpcIds != null && startNpcIds.size() > 1 && startNpcIds.contains(npcId))
+      return startNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
+    return null;
+  }
 }

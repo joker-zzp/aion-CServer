@@ -17,46 +17,46 @@ import com.aionemu.gameserver.utils.PositionUtil;
  */
 public class CM_CRAFT extends AionClientPacket {
 
-	private int unk;
-	private int targetTemplateId;
-	private int recipeId;
-	private int targetObjId;
-	private int craftType;
-	private Map<Integer, Long> materialsData = new HashMap<>();
+  private int unk;
+  private int targetTemplateId;
+  private int recipeId;
+  private int targetObjId;
+  private int craftType;
+  private Map<Integer, Long> materialsData = new HashMap<>();
 
-	public CM_CRAFT(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_CRAFT(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		unk = readUC();
-		targetTemplateId = readD();
-		recipeId = readD();
-		targetObjId = readD();
-		int materialsCount = readUH();
-		craftType = readUC();
-		for (int i = 0; i < materialsCount; i++)
-			materialsData.put(readD(), readQ());
-	}
+  @Override
+  protected void readImpl() {
+    unk = readUC();
+    targetTemplateId = readD();
+    recipeId = readD();
+    targetObjId = readD();
+    int materialsCount = readUH();
+    craftType = readUC();
+    for (int i = 0; i < materialsCount; i++)
+      materialsData.put(readD(), readQ());
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
 
-		if (player == null || !player.isSpawned())
-			return;
-		if (GameServer.isShuttingDownSoon()) // stop crafting to avoid unnecessary material loss 
-			return;
+    if (player == null || !player.isSpawned())
+      return;
+    if (GameServer.isShuttingDownSoon()) // stop crafting to avoid unnecessary material loss 
+      return;
 
-		// 129 = Morph Substances
-		if (unk != 129) {
-			VisibleObject staticObject = player.getKnownList().getObject(targetObjId);
-			if (staticObject == null || !PositionUtil.isInRange(player, staticObject, 10)
-				|| staticObject.getObjectTemplate().getTemplateId() != targetTemplateId)
-				return;
-		}
+    // 129 = Morph Substances
+    if (unk != 129) {
+      VisibleObject staticObject = player.getKnownList().getObject(targetObjId);
+      if (staticObject == null || !PositionUtil.isInRange(player, staticObject, 10)
+        || staticObject.getObjectTemplate().getTemplateId() != targetTemplateId)
+        return;
+    }
 
-		CraftService.startCrafting(player, recipeId, targetObjId, craftType, materialsData);
-	}
+    CraftService.startCrafting(player, recipeId, targetObjId, craftType, materialsData);
+  }
 }

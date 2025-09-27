@@ -5,8 +5,8 @@ package com.aionemu.gameserver.model.base;
  *
  */
 public enum BaseColorType {
-	BLUE,
-	GREEN,
-	RED,
-	YELLOW;
+  BLUE,
+  GREEN,
+  RED,
+  YELLOW;
 }

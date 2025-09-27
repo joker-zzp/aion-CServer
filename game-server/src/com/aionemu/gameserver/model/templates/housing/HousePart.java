@@ -16,43 +16,43 @@ import com.aionemu.gameserver.model.templates.item.ItemQuality;
 @XmlRootElement(name = "house_part")
 public class HousePart {
 
-	@XmlAttribute(required = true)
-	private int id;
+  @XmlAttribute(required = true)
+  private int id;
 
-	@XmlAttribute
-	private String name;
+  @XmlAttribute
+  private String name;
 
-	@XmlAttribute(required = true)
-	private ItemQuality quality;
+  @XmlAttribute(required = true)
+  private ItemQuality quality;
 
-	@XmlAttribute(required = true)
-	private PartType type;
+  @XmlAttribute(required = true)
+  private PartType type;
 
-	@XmlAttribute(name = "building_tags", required = true)
-	private Set<String> buildingTags;
+  @XmlAttribute(name = "building_tags", required = true)
+  private Set<String> buildingTags;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public ItemQuality getQuality() {
-		return quality;
-	}
+  public ItemQuality getQuality() {
+    return quality;
+  }
 
-	public PartType getType() {
-		return type;
-	}
+  public PartType getType() {
+    return type;
+  }
 
-	public Set<String> getTags() {
-		return buildingTags;
-	}
+  public Set<String> getTags() {
+    return buildingTags;
+  }
 
-	public boolean isForBuilding(Building building) {
-		return buildingTags.contains(building.getPartsMatchTag());
-	}
+  public boolean isForBuilding(Building building) {
+    return buildingTags.contains(building.getPartsMatchTag());
+  }
 
 }

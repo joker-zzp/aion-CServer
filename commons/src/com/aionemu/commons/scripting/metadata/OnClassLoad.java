@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * static {
- * 	...
+ *   ...
  * }
  * </pre>
  * 

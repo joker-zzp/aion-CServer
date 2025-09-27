@@ -14,58 +14,58 @@ import com.aionemu.gameserver.services.craft.CraftSkillUpdateService;
  */
 public class _1973ExpertExpertofWeaponsmithing extends AbstractQuestHandler {
 
-	public _1973ExpertExpertofWeaponsmithing() {
-		super(1973);
-	}
+  public _1973ExpertExpertofWeaponsmithing() {
+    super(1973);
+  }
 
-	@Override
-	public void register() {
-		qe.registerQuestNpc(203788).addOnQuestStart(questId);
-		qe.registerQuestNpc(203788).addOnTalkEvent(questId);
-	}
+  @Override
+  public void register() {
+    qe.registerQuestNpc(203788).addOnQuestStart(questId);
+    qe.registerQuestNpc(203788).addOnTalkEvent(questId);
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		final Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		int dialogActionId = env.getDialogActionId();
-		int targetId = env.getTargetId();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    final Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    int dialogActionId = env.getDialogActionId();
+    int targetId = env.getTargetId();
 
-		if (dialogActionId == QUEST_SELECT && !CraftSkillUpdateService.getInstance().canLearnMoreExpertCraftingSkill(player)) {
-			return sendQuestSelectionDialog(env);
-		}
+    if (dialogActionId == QUEST_SELECT && !CraftSkillUpdateService.getInstance().canLearnMoreExpertCraftingSkill(player)) {
+      return sendQuestSelectionDialog(env);
+    }
 
-		if (qs == null || qs.isStartable()) {
-			if (targetId == 203788) {
-				if (dialogActionId == QUEST_SELECT)
-					return sendQuestDialog(env, 1011);
-				else
-					return sendQuestStartDialog(env);
-			}
-		} else if (qs.getStatus() == QuestStatus.START) {
-			switch (targetId) {
-				case 203788:
-					switch (dialogActionId) {
-						case QUEST_SELECT: {
-							long itemCount1 = player.getInventory().getItemCountByItemId(182206893);
-							if (itemCount1 > 0) {
-								removeQuestItem(env, 182206893, 1);
-								qs.setStatus(QuestStatus.REWARD);
-								updateQuestStatus(env);
-								return sendQuestDialog(env, 2375);
-							} else
-								return sendQuestDialog(env, 2716);
-						}
-					}
-			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 203788) {
-				if (dialogActionId == CHECK_USER_HAS_QUEST_ITEM)
-					return sendQuestDialog(env, 5);
-				else
-					return sendQuestEndDialog(env);
-			}
-		}
-		return false;
-	}
+    if (qs == null || qs.isStartable()) {
+      if (targetId == 203788) {
+        if (dialogActionId == QUEST_SELECT)
+          return sendQuestDialog(env, 1011);
+        else
+          return sendQuestStartDialog(env);
+      }
+    } else if (qs.getStatus() == QuestStatus.START) {
+      switch (targetId) {
+        case 203788:
+          switch (dialogActionId) {
+            case QUEST_SELECT: {
+              long itemCount1 = player.getInventory().getItemCountByItemId(182206893);
+              if (itemCount1 > 0) {
+                removeQuestItem(env, 182206893, 1);
+                qs.setStatus(QuestStatus.REWARD);
+                updateQuestStatus(env);
+                return sendQuestDialog(env, 2375);
+              } else
+                return sendQuestDialog(env, 2716);
+            }
+          }
+      }
+    } else if (qs.getStatus() == QuestStatus.REWARD) {
+      if (targetId == 203788) {
+        if (dialogActionId == CHECK_USER_HAS_QUEST_ITEM)
+          return sendQuestDialog(env, 5);
+        else
+          return sendQuestEndDialog(env);
+      }
+    }
+    return false;
+  }
 }

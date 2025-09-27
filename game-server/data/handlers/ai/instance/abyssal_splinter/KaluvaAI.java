@@ -24,68 +24,68 @@ import ai.SummonerAI;
 @AIName("kaluva")
 public class KaluvaAI extends SummonerAI {
 
-	private boolean canThink = true;
+  private boolean canThink = true;
 
-	public KaluvaAI(Npc owner) {
-		super(owner);
-	}
+  public KaluvaAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleIndividualSpawnedSummons(Percentage percent) {
-		spawn();
-		canThink = false;
-		EmoteManager.emoteStopAttacking(getOwner());
-		setStateIfNot(AIState.FOLLOWING);
-		getOwner().setState(CreatureState.ACTIVE, true);
-		PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getObjectId()));
-		AIActions.targetCreature(this, getPosition().getWorldMapInstance().getNpc(281902));
-		getMoveController().moveToTargetObject();
-	}
+  @Override
+  protected void handleIndividualSpawnedSummons(Percentage percent) {
+    spawn();
+    canThink = false;
+    EmoteManager.emoteStopAttacking(getOwner());
+    setStateIfNot(AIState.FOLLOWING);
+    getOwner().setState(CreatureState.ACTIVE, true);
+    PacketSendUtility.broadcastPacket(getOwner(), new SM_EMOTION(getOwner(), EmotionType.CHANGE_SPEED, 0, getObjectId()));
+    AIActions.targetCreature(this, getPosition().getWorldMapInstance().getNpc(281902));
+    getMoveController().moveToTargetObject();
+  }
 
-	@Override
-	protected void handleMoveArrived() {
-		if (!canThink) {
-			Npc egg = getPosition().getWorldMapInstance().getNpc(281902);
-			if (egg != null) {
-				SkillEngine.getInstance().getSkill(getOwner(), 19223, 55, egg).useNoAnimationSkill();
-			}
+  @Override
+  protected void handleMoveArrived() {
+    if (!canThink) {
+      Npc egg = getPosition().getWorldMapInstance().getNpc(281902);
+      if (egg != null) {
+        SkillEngine.getInstance().getSkill(getOwner(), 19223, 55, egg).useNoAnimationSkill();
+      }
 
-			ThreadPoolManager.getInstance().schedule(() -> {
-				canThink = true;
-				Creature creature = getAggroList().getMostHated();
-				if (creature != null && getOwner().canSee(creature) && !creature.isDead()) {
-					getOwner().setTarget(creature);
-					getOwner().getGameStats().renewLastAttackTime();
-					getOwner().getGameStats().renewLastAttackedTime();
-					getOwner().getGameStats().renewLastChangeTargetTime();
-					getOwner().getGameStats().renewLastSkillTime();
-				}
-				setStateIfNot(AIState.FIGHT);
-				think();
-			}, 2000);
-		}
-		super.handleMoveArrived();
-	}
+      ThreadPoolManager.getInstance().schedule(() -> {
+        canThink = true;
+        Creature creature = getAggroList().getMostHated();
+        if (creature != null && getOwner().canSee(creature) && !creature.isDead()) {
+          getOwner().setTarget(creature);
+          getOwner().getGameStats().renewLastAttackTime();
+          getOwner().getGameStats().renewLastAttackedTime();
+          getOwner().getGameStats().renewLastChangeTargetTime();
+          getOwner().getGameStats().renewLastSkillTime();
+        }
+        setStateIfNot(AIState.FIGHT);
+        think();
+      }, 2000);
+    }
+    super.handleMoveArrived();
+  }
 
-	private void spawn() {
-		switch (Rnd.get(1, 4)) {
-			case 1 -> spawn(281902, 663.322021f, 556.731995f, 424.295013f, (byte) 64);
-			case 2 -> spawn(281902, 644.0224f, 523.9641f, 423.09103f, (byte) 32);
-			case 3 -> spawn(281902, 611.008f, 539.73395f, 423.25034f, (byte) 119);
-			case 4 -> spawn(281902, 628.4426f, 585.4443f, 424.31854f, (byte) 93);
-		}
-	}
+  private void spawn() {
+    switch (Rnd.get(1, 4)) {
+      case 1 -> spawn(281902, 663.322021f, 556.731995f, 424.295013f, (byte) 64);
+      case 2 -> spawn(281902, 644.0224f, 523.9641f, 423.09103f, (byte) 32);
+      case 3 -> spawn(281902, 611.008f, 539.73395f, 423.25034f, (byte) 119);
+      case 4 -> spawn(281902, 628.4426f, 585.4443f, 424.31854f, (byte) 93);
+    }
+  }
 
-	@Override
-	public boolean canThink() {
-		return canThink;
-	}
+  @Override
+  public boolean canThink() {
+    return canThink;
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case REWARD_LOOT, REWARD_AP -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case REWARD_LOOT, REWARD_AP -> false;
+      default -> super.ask(question);
+    };
+  }
 }

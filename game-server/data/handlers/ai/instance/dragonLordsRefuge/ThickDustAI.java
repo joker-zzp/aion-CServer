@@ -12,13 +12,13 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("thick_dust")
 public class ThickDustAI extends NpcAI {
 
-	public ThickDustAI(Npc owner) {
-		super(owner);
-	}
+  public ThickDustAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		ThreadPoolManager.getInstance().schedule(() -> AIActions.deleteOwner(this), 10000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    ThreadPoolManager.getInstance().schedule(() -> AIActions.deleteOwner(this), 10000);
+  }
 }

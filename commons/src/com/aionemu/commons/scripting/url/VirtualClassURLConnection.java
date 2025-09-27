@@ -18,34 +18,34 @@ import com.aionemu.commons.scripting.ScriptClassLoader;
  */
 public class VirtualClassURLConnection extends URLConnection {
 
-	/**
-	 * Input stream, is assigned from class
-	 */
-	private InputStream is;
+  /**
+   * Input stream, is assigned from class
+   */
+  private InputStream is;
 
-	/**
-	 * Creates URL connections that "connects" to class binary data
-	 * 
-	 * @param url
-	 *          class name
-	 * @param cl
-	 *          classloader
-	 */
-	protected VirtualClassURLConnection(URL url, ScriptClassLoader cl) {
-		super(url);
-		is = new ByteArrayInputStream(cl.getByteCode(url.getHost()));
-	}
+  /**
+   * Creates URL connections that "connects" to class binary data
+   * 
+   * @param url
+   *          class name
+   * @param cl
+   *          classloader
+   */
+  protected VirtualClassURLConnection(URL url, ScriptClassLoader cl) {
+    super(url);
+    is = new ByteArrayInputStream(cl.getByteCode(url.getHost()));
+  }
 
-	/**
-	 * This method is ignored
-	 */
-	@Override
-	public void connect() throws IOException {
+  /**
+   * This method is ignored
+   */
+  @Override
+  public void connect() throws IOException {
 
-	}
+  }
 
-	@Override
-	public InputStream getInputStream() throws IOException {
-		return is;
-	}
+  @Override
+  public InputStream getInputStream() throws IOException {
+    return is;
+  }
 }

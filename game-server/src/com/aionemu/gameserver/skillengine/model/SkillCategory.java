@@ -9,13 +9,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "skillCategory")
 @XmlEnum
 public enum SkillCategory {
-	NONE,
-	CHAIN_SKILL,
-	PHYSICAL_DEBUFF,
-	HEAL,
-	MENTAL_DEBUFF,
-	REBIRTH,
-	DISPELL,
-	DEATHBLOW,
-	DRAIN
+  NONE,
+  CHAIN_SKILL,
+  PHYSICAL_DEBUFF,
+  HEAL,
+  MENTAL_DEBUFF,
+  REBIRTH,
+  DISPELL,
+  DEATHBLOW,
+  DRAIN
 }

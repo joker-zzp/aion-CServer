@@ -8,16 +8,16 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_HOUSE_PAY_RENT extends AionServerPacket {
 
-	private int weeksPaid;
+  private int weeksPaid;
 
-	public SM_HOUSE_PAY_RENT(int weeksPaid) {
-		this.weeksPaid = weeksPaid;
-	}
+  public SM_HOUSE_PAY_RENT(int weeksPaid) {
+    this.weeksPaid = weeksPaid;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(0);
-		writeC(weeksPaid);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(0);
+    writeC(weeksPaid);
+  }
 
 }

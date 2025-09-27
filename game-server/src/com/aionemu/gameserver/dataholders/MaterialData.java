@@ -25,38 +25,38 @@ import com.aionemu.gameserver.model.templates.materials.MaterialTemplate;
 @XmlRootElement(name = "material_templates")
 public class MaterialData {
 
-	@XmlElement(name = "material")
-	private List<MaterialTemplate> materialTemplates;
+  @XmlElement(name = "material")
+  private List<MaterialTemplate> materialTemplates;
 
-	@XmlTransient
-	private final Map<Integer, MaterialTemplate> materialsById = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, MaterialTemplate> materialsById = new HashMap<>();
 
-	@XmlTransient
-	private final Set<Integer> skillIds = new HashSet<>();
+  @XmlTransient
+  private final Set<Integer> skillIds = new HashSet<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		if (materialTemplates == null)
-			return;
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    if (materialTemplates == null)
+      return;
 
-		for (MaterialTemplate template : materialTemplates) {
-			materialsById.put(template.getId(), template);
-			if (template.getSkills() != null)
-				template.getSkills().forEach(skill -> skillIds.add(skill.getId()));
-		}
+    for (MaterialTemplate template : materialTemplates) {
+      materialsById.put(template.getId(), template);
+      if (template.getSkills() != null)
+        template.getSkills().forEach(skill -> skillIds.add(skill.getId()));
+    }
 
-		materialTemplates = null;
-	}
+    materialTemplates = null;
+  }
 
-	public MaterialTemplate getTemplate(int materialId) {
-		return materialsById.get(materialId);
-	}
+  public MaterialTemplate getTemplate(int materialId) {
+    return materialsById.get(materialId);
+  }
 
-	public boolean isMaterialSkill(int skillId) {
-		return skillIds.contains(skillId);
-	}
+  public boolean isMaterialSkill(int skillId) {
+    return skillIds.contains(skillId);
+  }
 
-	public int size() {
-		return materialsById.size();
-	}
+  public int size() {
+    return materialsById.size();
+  }
 
 }

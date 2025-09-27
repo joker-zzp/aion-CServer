@@ -17,48 +17,48 @@ import com.aionemu.gameserver.model.Race;
 @XmlType(name = "LegionDominionLocation")
 public class LegionDominionLocationTemplate implements L10n {
 
-	@XmlAttribute(name = "id")
-	protected int id;
-	@XmlAttribute(name = "world_id")
-	protected int worldId;
-	@XmlAttribute(name = "race")
-	protected Race race;
-	@XmlAttribute(name = "zone")
-	protected String zone;
-	@XmlAttribute(name = "name_id")
-	protected int nameId;
-	@XmlElement(name = "reward")
-	protected List<LegionDominionReward> reward;
-	@XmlElement(name = "invasion_rift")
-	protected LegionDominionInvasionRift invasionRift;
+  @XmlAttribute(name = "id")
+  protected int id;
+  @XmlAttribute(name = "world_id")
+  protected int worldId;
+  @XmlAttribute(name = "race")
+  protected Race race;
+  @XmlAttribute(name = "zone")
+  protected String zone;
+  @XmlAttribute(name = "name_id")
+  protected int nameId;
+  @XmlElement(name = "reward")
+  protected List<LegionDominionReward> reward;
+  @XmlElement(name = "invasion_rift")
+  protected LegionDominionInvasionRift invasionRift;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public int getWorldId() {
-		return worldId;
-	}
+  public int getWorldId() {
+    return worldId;
+  }
 
-	public Race getRace() {
-		return race;
-	}
+  public Race getRace() {
+    return race;
+  }
 
-	public String getZone() {
-		return zone;
-	}
+  public String getZone() {
+    return zone;
+  }
 
-	public List<LegionDominionReward> getRewards() {
-		return reward;
-	}
+  public List<LegionDominionReward> getRewards() {
+    return reward;
+  }
 
-	public LegionDominionInvasionRift getInvasionRift() {
-		return invasionRift;
-	}
+  public LegionDominionInvasionRift getInvasionRift() {
+    return invasionRift;
+  }
 
-	@Override
-	public int getL10nId() {
-		return nameId;
-	}
+  @Override
+  public int getL10nId() {
+    return nameId;
+  }
 
 }

@@ -15,35 +15,35 @@ import ai.GeneralNpcAI;
 @AIName("klawspawn")
 public class KlawspawnAI extends GeneralNpcAI {
 
-	public KlawspawnAI(Npc owner) {
-		super(owner);
-	}
+  public KlawspawnAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean canThink() {
-		return false;
-	}
+  @Override
+  public boolean canThink() {
+    return false;
+  }
 
-	@Override
-	protected void handleAttack(Creature creature) {
-		super.handleAttack(creature);
-		Npc npc = getOwner().getPosition().getWorldMapInstance().getNpc(212120);
-		if (npc == null) {
-			if (Rnd.chance() < 10) {
-				spawn(212120, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
-				AIActions.die(this, creature);
-			}
-		}
-	}
+  @Override
+  protected void handleAttack(Creature creature) {
+    super.handleAttack(creature);
+    Npc npc = getOwner().getPosition().getWorldMapInstance().getNpc(212120);
+    if (npc == null) {
+      if (Rnd.chance() < 10) {
+        spawn(212120, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
+        AIActions.die(this, creature);
+      }
+    }
+  }
 
-	@Override
-	public float modifyDamage(Creature attacker, float damage, Effect effect) {
-		return 1;
-	}
+  @Override
+  public float modifyDamage(Creature attacker, float damage, Effect effect) {
+    return 1;
+  }
 
-	@Override
-	protected void handleDied() {
-		super.handleDied();
-		AIActions.deleteOwner(this);
-	}
+  @Override
+  protected void handleDied() {
+    super.handleDied();
+    AIActions.deleteOwner(this);
+  }
 }

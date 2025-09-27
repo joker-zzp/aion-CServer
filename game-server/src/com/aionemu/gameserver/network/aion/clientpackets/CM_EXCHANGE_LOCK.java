@@ -12,18 +12,18 @@ import com.aionemu.gameserver.services.ExchangeService;
  */
 public class CM_EXCHANGE_LOCK extends AionClientPacket {
 
-	public CM_EXCHANGE_LOCK(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_EXCHANGE_LOCK(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		// nothing
-	}
+  @Override
+  protected void readImpl() {
+    // nothing
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		ExchangeService.getInstance().lockExchange(activePlayer);
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    ExchangeService.getInstance().lockExchange(activePlayer);
+  }
 }

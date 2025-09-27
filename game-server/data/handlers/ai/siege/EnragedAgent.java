@@ -20,23 +20,23 @@ import ai.SummonerAI;
 @AIName("enraged_agent")
 public class EnragedAgent extends SummonerAI {
 
-	public EnragedAgent(Npc owner) {
-		super(owner);
-	}
+  public EnragedAgent(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void onEffectEnd(Effect effect) {
-		switch (effect.getSkillId()) {
-			case 18704:
-				ThreadPoolManager.getInstance()
-					.schedule(() -> SkillEngine.getInstance().getSkill(getOwner(), 18705, 60, getAggroList().getMostHated()).useSkill(), 650);
-				break;
-		}
-	}
+  @Override
+  public void onEffectEnd(Effect effect) {
+    switch (effect.getSkillId()) {
+      case 18704:
+        ThreadPoolManager.getInstance()
+          .schedule(() -> SkillEngine.getInstance().getSkill(getOwner(), 18705, 60, getAggroList().getMostHated()).useSkill(), 650);
+        break;
+    }
+  }
 
-	@Override
-	public void modifyOwnerStat(Stat2 stat) {
-		if (stat.getStat() == StatEnum.MAXHP)
-			stat.setBaseRate(SiegeConfig.FORTRESS_PROTECTOR_HEALTH_MULTIPLIER);
-	}
+  @Override
+  public void modifyOwnerStat(Stat2 stat) {
+    if (stat.getStat() == StatEnum.MAXHP)
+      stat.setBaseRate(SiegeConfig.FORTRESS_PROTECTOR_HEALTH_MULTIPLIER);
+  }
 }

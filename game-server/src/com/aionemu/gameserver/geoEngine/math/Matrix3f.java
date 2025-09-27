@@ -590,25 +590,25 @@ public final class Matrix3f implements Cloneable {
                 "Array must be of size 9.");
 
         if (rowMajor) {
-	        m00 = matrix[0];
-	        m01 = matrix[1];
-	        m02 = matrix[2];
-	        m10 = matrix[3];
-	        m11 = matrix[4];
-	        m12 = matrix[5];
-	        m20 = matrix[6];
-	        m21 = matrix[7];
-	        m22 = matrix[8];
+          m00 = matrix[0];
+          m01 = matrix[1];
+          m02 = matrix[2];
+          m10 = matrix[3];
+          m11 = matrix[4];
+          m12 = matrix[5];
+          m20 = matrix[6];
+          m21 = matrix[7];
+          m22 = matrix[8];
         } else {
-	        m00 = matrix[0];
-	        m01 = matrix[3];
-	        m02 = matrix[6];
-	        m10 = matrix[1];
-	        m11 = matrix[4];
-	        m12 = matrix[7];
-	        m20 = matrix[2];
-	        m21 = matrix[5];
-	        m22 = matrix[8];
+          m00 = matrix[0];
+          m01 = matrix[3];
+          m02 = matrix[6];
+          m10 = matrix[1];
+          m11 = matrix[4];
+          m12 = matrix[7];
+          m20 = matrix[2];
+          m21 = matrix[5];
+          m22 = matrix[8];
         }
         return this;
     }
@@ -1222,32 +1222,32 @@ public final class Matrix3f implements Cloneable {
      *         The scale applied to each of the X, Y and Z output values.
      */
     public void scale(Vector3f scale) {
-    	m00 *= scale.x;
-    	m10 *= scale.x;
-    	m20 *= scale.x;
-    	m01 *= scale.y;
-    	m11 *= scale.y;
-    	m21 *= scale.y;
-    	m02 *= scale.z;
-    	m12 *= scale.z;
-    	m22 *= scale.z;
+      m00 *= scale.x;
+      m10 *= scale.x;
+      m20 *= scale.x;
+      m01 *= scale.y;
+      m11 *= scale.y;
+      m21 *= scale.y;
+      m02 *= scale.z;
+      m12 *= scale.z;
+      m22 *= scale.z;
     }
 
     static final boolean equalIdentity(Matrix3f mat) {
-		if (Math.abs(mat.m00 - 1) > 1e-4) return false;
-		if (Math.abs(mat.m11 - 1) > 1e-4) return false;
-		if (Math.abs(mat.m22 - 1) > 1e-4) return false;
+    if (Math.abs(mat.m00 - 1) > 1e-4) return false;
+    if (Math.abs(mat.m11 - 1) > 1e-4) return false;
+    if (Math.abs(mat.m22 - 1) > 1e-4) return false;
 
-		if (Math.abs(mat.m01) > 1e-4) return false;
-		if (Math.abs(mat.m02) > 1e-4) return false;
+    if (Math.abs(mat.m01) > 1e-4) return false;
+    if (Math.abs(mat.m02) > 1e-4) return false;
 
-		if (Math.abs(mat.m10) > 1e-4) return false;
-		if (Math.abs(mat.m12) > 1e-4) return false;
+    if (Math.abs(mat.m10) > 1e-4) return false;
+    if (Math.abs(mat.m12) > 1e-4) return false;
 
-		if (Math.abs(mat.m20) > 1e-4) return false;
-		if (Math.abs(mat.m21) > 1e-4) return false;
+    if (Math.abs(mat.m20) > 1e-4) return false;
+    if (Math.abs(mat.m21) > 1e-4) return false;
 
-		return true;
+    return true;
     }
     
     @Override

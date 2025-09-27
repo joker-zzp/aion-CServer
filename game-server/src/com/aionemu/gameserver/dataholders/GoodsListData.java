@@ -16,51 +16,51 @@ import com.aionemu.gameserver.model.templates.goods.GoodsList;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GoodsListData {
 
-	@XmlElement(required = true)
-	protected List<GoodsList> list;
+  @XmlElement(required = true)
+  protected List<GoodsList> list;
 
-	@XmlElement(name = "in_list")
-	protected List<GoodsList> inList;
+  @XmlElement(name = "in_list")
+  protected List<GoodsList> inList;
 
-	@XmlElement(name = "purchase_list")
-	protected List<GoodsList> purchaseList;
+  @XmlElement(name = "purchase_list")
+  protected List<GoodsList> purchaseList;
 
-	@XmlTransient
-	private final Map<Integer, GoodsList> goodsListData = new HashMap<>();
-	@XmlTransient
-	private final Map<Integer, GoodsList> goodsInListData = new HashMap<>();
-	@XmlTransient
-	private final Map<Integer, GoodsList> goodsPurchaseListData = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, GoodsList> goodsListData = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, GoodsList> goodsInListData = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, GoodsList> goodsPurchaseListData = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (GoodsList it : list) {
-			goodsListData.put(it.getId(), it);
-		}
-		for (GoodsList it : inList) {
-			goodsInListData.put(it.getId(), it);
-		}
-		for (GoodsList it : purchaseList) {
-			goodsPurchaseListData.put(it.getId(), it);
-		}
-		list = inList = purchaseList = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (GoodsList it : list) {
+      goodsListData.put(it.getId(), it);
+    }
+    for (GoodsList it : inList) {
+      goodsInListData.put(it.getId(), it);
+    }
+    for (GoodsList it : purchaseList) {
+      goodsPurchaseListData.put(it.getId(), it);
+    }
+    list = inList = purchaseList = null;
+  }
 
-	public GoodsList getGoodsListById(int id) {
-		return goodsListData.get(id);
-	}
+  public GoodsList getGoodsListById(int id) {
+    return goodsListData.get(id);
+  }
 
-	public GoodsList getGoodsInListById(int id) {
-		return goodsInListData.get(id);
-	}
+  public GoodsList getGoodsInListById(int id) {
+    return goodsInListData.get(id);
+  }
 
-	public GoodsList getGoodsPurchaseListById(int id) {
-		return goodsPurchaseListData.get(id);
-	}
+  public GoodsList getGoodsPurchaseListById(int id) {
+    return goodsPurchaseListData.get(id);
+  }
 
-	/**
-	 * @return goodListData.size()
-	 */
-	public int size() {
-		return goodsListData.size() + goodsInListData.size() + goodsPurchaseListData.size();
-	}
+  /**
+   * @return goodListData.size()
+   */
+  public int size() {
+    return goodsListData.size() + goodsInListData.size() + goodsPurchaseListData.size();
+  }
 }

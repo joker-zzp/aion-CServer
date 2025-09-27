@@ -19,28 +19,28 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class CM_RELEASE_OBJECT extends AionClientPacket {
 
-	int targetObjectId;
+  int targetObjectId;
 
-	public CM_RELEASE_OBJECT(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_RELEASE_OBJECT(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		targetObjectId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    targetObjectId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		VisibleObject object = player.getKnownList().getObject(targetObjectId);
-		if (object instanceof UseableHouseObject<?> useableHouseObject && useableHouseObject.releaseOccupant(player)) { // release object
-			if (player.getController().hasScheduledTask(TaskId.HOUSE_OBJECT_USE) || object instanceof PostboxObject) { // post box always sends the message
-				if (object instanceof UseableItemObject) // reset visual use progress bar
-					PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), object.getObjectId(), 0, 9));
-				sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_HOUSING_OBJECT_CANCEL_USE());
-			}
-			player.getController().cancelTask(TaskId.HOUSE_OBJECT_USE);
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    VisibleObject object = player.getKnownList().getObject(targetObjectId);
+    if (object instanceof UseableHouseObject<?> useableHouseObject && useableHouseObject.releaseOccupant(player)) { // release object
+      if (player.getController().hasScheduledTask(TaskId.HOUSE_OBJECT_USE) || object instanceof PostboxObject) { // post box always sends the message
+        if (object instanceof UseableItemObject) // reset visual use progress bar
+          PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), object.getObjectId(), 0, 9));
+        sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_HOUSING_OBJECT_CANCEL_USE());
+      }
+      player.getController().cancelTask(TaskId.HOUSE_OBJECT_USE);
+    }
+  }
 }

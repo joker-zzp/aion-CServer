@@ -18,28 +18,28 @@ import com.aionemu.gameserver.model.templates.flyring.FlyRingTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class FlyRingData {
 
-	@XmlElement(name = "fly_ring")
-	private List<FlyRingTemplate> flyRingTemplates;
+  @XmlElement(name = "fly_ring")
+  private List<FlyRingTemplate> flyRingTemplates;
 
-	public int size() {
-		if (flyRingTemplates == null) {
-			flyRingTemplates = new ArrayList<>();
-			return 0;
-		}
-		return flyRingTemplates.size();
-	}
+  public int size() {
+    if (flyRingTemplates == null) {
+      flyRingTemplates = new ArrayList<>();
+      return 0;
+    }
+    return flyRingTemplates.size();
+  }
 
-	public List<FlyRingTemplate> getFlyRingTemplates() {
-		if (flyRingTemplates == null) {
-			return new ArrayList<>();
-		}
-		return flyRingTemplates;
-	}
+  public List<FlyRingTemplate> getFlyRingTemplates() {
+    if (flyRingTemplates == null) {
+      return new ArrayList<>();
+    }
+    return flyRingTemplates;
+  }
 
-	public void addAll(Collection<FlyRingTemplate> templates) {
-		if (flyRingTemplates == null) {
-			flyRingTemplates = new ArrayList<>();
-		}
-		flyRingTemplates.addAll(templates);
-	}
+  public void addAll(Collection<FlyRingTemplate> templates) {
+    if (flyRingTemplates == null) {
+      flyRingTemplates = new ArrayList<>();
+    }
+    flyRingTemplates.addAll(templates);
+  }
 }

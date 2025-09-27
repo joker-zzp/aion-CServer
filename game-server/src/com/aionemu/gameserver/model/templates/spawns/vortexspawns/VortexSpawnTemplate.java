@@ -10,39 +10,39 @@ import com.aionemu.gameserver.model.vortex.VortexStateType;
  */
 public class VortexSpawnTemplate extends SpawnTemplate {
 
-	private int id;
-	private VortexStateType stateType;
+  private int id;
+  private VortexStateType stateType;
 
-	public VortexSpawnTemplate(SpawnGroup spawnGroup, SpawnSpotTemplate spot) {
-		super(spawnGroup, spot);
-	}
+  public VortexSpawnTemplate(SpawnGroup spawnGroup, SpawnSpotTemplate spot) {
+    super(spawnGroup, spot);
+  }
 
-	public VortexSpawnTemplate(SpawnGroup spawnGroup, float x, float y, float z, byte heading, int randWalk, String walkerId, int staticId, int fly) {
-		super(spawnGroup, x, y, z, heading, randWalk, walkerId, staticId, fly);
-	}
+  public VortexSpawnTemplate(SpawnGroup spawnGroup, float x, float y, float z, byte heading, int randWalk, String walkerId, int staticId, int fly) {
+    super(spawnGroup, x, y, z, heading, randWalk, walkerId, staticId, fly);
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public VortexStateType getStateType() {
-		return stateType;
-	}
+  public VortexStateType getStateType() {
+    return stateType;
+  }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public void setStateType(VortexStateType stateType) {
-		this.stateType = stateType;
-	}
+  public void setStateType(VortexStateType stateType) {
+    this.stateType = stateType;
+  }
 
-	public final boolean isInvasion() {
-		return stateType.equals(VortexStateType.INVASION);
-	}
+  public final boolean isInvasion() {
+    return stateType.equals(VortexStateType.INVASION);
+  }
 
-	public final boolean isPeace() {
-		return stateType.equals(VortexStateType.PEACE);
-	}
+  public final boolean isPeace() {
+    return stateType.equals(VortexStateType.PEACE);
+  }
 
 }

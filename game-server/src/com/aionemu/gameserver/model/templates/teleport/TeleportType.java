@@ -9,6 +9,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "type")
 @XmlEnum
 public enum TeleportType {
-	REGULAR,
-	FLIGHT
+  REGULAR,
+  FLIGHT
 }

@@ -19,35 +19,35 @@ import com.aionemu.gameserver.model.templates.pet.PetTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PetData {
 
-	@XmlElement(name = "pet")
-	private List<PetTemplate> pets;
+  @XmlElement(name = "pet")
+  private List<PetTemplate> pets;
 
-	@XmlTransient
-	private final Map<Integer, PetTemplate> petData = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, PetTemplate> petData = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (PetTemplate pet : pets) {
-			petData.put(pet.getTemplateId(), pet);
-		}
-		pets = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (PetTemplate pet : pets) {
+      petData.put(pet.getTemplateId(), pet);
+    }
+    pets = null;
+  }
 
-	public int size() {
-		return petData.size();
-	}
+  public int size() {
+    return petData.size();
+  }
 
-	/**
-	 * /** Returns an {@link PetTemplate} object with given id.
-	 * 
-	 * @param id
-	 *          id of Pet
-	 * @return PetTemplate object containing data about Pet with that id.
-	 */
-	public PetTemplate getPetTemplate(int id) {
-		return petData.get(id);
-	}
+  /**
+   * /** Returns an {@link PetTemplate} object with given id.
+   * 
+   * @param id
+   *          id of Pet
+   * @return PetTemplate object containing data about Pet with that id.
+   */
+  public PetTemplate getPetTemplate(int id) {
+    return petData.get(id);
+  }
 
-	public Set<Integer> getPetIds() {
-		return petData.keySet();
-	}
+  public Set<Integer> getPetIds() {
+    return petData.keySet();
+  }
 }

@@ -12,12 +12,12 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @AIName("no_dmg_no_action")
 public class NoDmgNoActionAI extends NpcAI {
 
-	public NoDmgNoActionAI(Npc owner) {
-		super(owner);
-	}
+  public NoDmgNoActionAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public float modifyDamage(Creature attacker, float damage, Effect effect) {
-		return 0;
-	}
+  @Override
+  public float modifyDamage(Creature attacker, float damage, Effect effect) {
+    return 0;
+  }
 }

@@ -16,21 +16,21 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("vershakastatue")
 public class VershakaStatueAI extends NpcAI {
 
-	public VershakaStatueAI(Npc owner) {
-		super(owner);
-	}
+  public VershakaStatueAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		if (dialogActionId == SETPRO1) {
-			SkillEngine.getInstance().applyEffectDirectly(300, player, player);
-		}
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
-		return true;
-	}
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    if (dialogActionId == SETPRO1) {
+      SkillEngine.getInstance().applyEffectDirectly(300, player, player);
+    }
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
+    return true;
+  }
 }

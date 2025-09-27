@@ -11,24 +11,24 @@ import com.aionemu.gameserver.services.event.EventService;
  */
 public abstract class PlayerEnteredEvent<T extends TemporaryPlayerTeam<? extends TeamMember<Player>>> implements TeamEvent {
 
-	protected final T team;
-	protected final Player player;
+  protected final T team;
+  protected final Player player;
 
-	public PlayerEnteredEvent(T team, Player player) {
-		this.team = team;
-		this.player = player;
-	}
+  public PlayerEnteredEvent(T team, Player player) {
+    this.team = team;
+    this.player = player;
+  }
 
-	/**
-	 * Entered player should not be in team yet
-	 */
-	@Override
-	public boolean checkCondition() {
-		return !team.hasMember(player.getObjectId());
-	}
+  /**
+   * Entered player should not be in team yet
+   */
+  @Override
+  public boolean checkCondition() {
+    return !team.hasMember(player.getObjectId());
+  }
 
-	@Override
-	public void handleEvent() {
-		EventService.getInstance().onEnteredTeam(player, team);
-	}
+  @Override
+  public void handleEvent() {
+    EventService.getInstance().onEnteredTeam(player, team);
+  }
 }

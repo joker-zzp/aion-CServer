@@ -17,39 +17,39 @@ import com.aionemu.gameserver.model.templates.factions.NpcFactionTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class NpcFactionsData {
 
-	@XmlElement(name = "npc_faction", required = true)
-	protected List<NpcFactionTemplate> npcFactionsData;
+  @XmlElement(name = "npc_faction", required = true)
+  protected List<NpcFactionTemplate> npcFactionsData;
 
-	@XmlTransient
-	private final Map<Integer, NpcFactionTemplate> factionsById = new HashMap<>();
-	@XmlTransient
-	private final Map<Integer, NpcFactionTemplate> factionsByNpcId = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, NpcFactionTemplate> factionsById = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, NpcFactionTemplate> factionsByNpcId = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		factionsById.clear();
-		for (NpcFactionTemplate template : npcFactionsData) {
-			factionsById.put(template.getId(), template);
-			if (template.getNpcIds() != null) {
-				for (Integer npcId : template.getNpcIds())
-					factionsByNpcId.put(npcId, template);
-			}
-		}
-		npcFactionsData = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    factionsById.clear();
+    for (NpcFactionTemplate template : npcFactionsData) {
+      factionsById.put(template.getId(), template);
+      if (template.getNpcIds() != null) {
+        for (Integer npcId : template.getNpcIds())
+          factionsByNpcId.put(npcId, template);
+      }
+    }
+    npcFactionsData = null;
+  }
 
-	public NpcFactionTemplate getNpcFactionById(int id) {
-		return factionsById.get(id);
-	}
+  public NpcFactionTemplate getNpcFactionById(int id) {
+    return factionsById.get(id);
+  }
 
-	public NpcFactionTemplate getNpcFactionByNpcId(int id) {
-		return factionsByNpcId.get(id);
-	}
+  public NpcFactionTemplate getNpcFactionByNpcId(int id) {
+    return factionsByNpcId.get(id);
+  }
 
-	public Collection<NpcFactionTemplate> getNpcFactionsData() {
-		return factionsById.values();
-	}
+  public Collection<NpcFactionTemplate> getNpcFactionsData() {
+    return factionsById.values();
+  }
 
-	public int size() {
-		return factionsById.size();
-	}
+  public int size() {
+    return factionsById.size();
+  }
 }

@@ -17,20 +17,20 @@ import com.aionemu.gameserver.world.knownlist.PlayerAwareKnownList;
  */
 public class StaticDoorSpawnManager {
 
-	private static final Logger log = LoggerFactory.getLogger(StaticDoorSpawnManager.class);
+  private static final Logger log = LoggerFactory.getLogger(StaticDoorSpawnManager.class);
 
-	public static void spawnTemplate(WorldMapInstance instance) {
-		int counter = 0;
-		for (StaticDoorTemplate data : DataManager.STATICDOOR_DATA.getStaticDoors(instance.getMapId())) {
-			SpawnTemplate spawn = SpawnEngine.newSingleTimeSpawn(instance.getMapId(), 300001, data.getX(), data.getY(), data.getZ(), (byte) 0);
-			spawn.setStaticId(data.getId());
-			StaticDoor staticDoor = new StaticDoor(new StaticObjectController(), spawn, data, instance.getInstanceId());
-			staticDoor.setKnownlist(new PlayerAwareKnownList(staticDoor));
-			SpawnEngine.bringIntoWorld(staticDoor, spawn, instance.getInstanceId());
-			counter++;
-			GeoService.getInstance().setDoorState(instance.getMapId(), instance.getInstanceId(), data.getId(), staticDoor.isOpen());
-		}
-		if (counter > 0)
-			log.info("Spawned " + counter + " static doors in " + instance);
-	}
+  public static void spawnTemplate(WorldMapInstance instance) {
+    int counter = 0;
+    for (StaticDoorTemplate data : DataManager.STATICDOOR_DATA.getStaticDoors(instance.getMapId())) {
+      SpawnTemplate spawn = SpawnEngine.newSingleTimeSpawn(instance.getMapId(), 300001, data.getX(), data.getY(), data.getZ(), (byte) 0);
+      spawn.setStaticId(data.getId());
+      StaticDoor staticDoor = new StaticDoor(new StaticObjectController(), spawn, data, instance.getInstanceId());
+      staticDoor.setKnownlist(new PlayerAwareKnownList(staticDoor));
+      SpawnEngine.bringIntoWorld(staticDoor, spawn, instance.getInstanceId());
+      counter++;
+      GeoService.getInstance().setDoorState(instance.getMapId(), instance.getInstanceId(), data.getId(), staticDoor.isOpen());
+    }
+    if (counter > 0)
+      log.info("Spawned " + counter + " static doors in " + instance);
+  }
 }

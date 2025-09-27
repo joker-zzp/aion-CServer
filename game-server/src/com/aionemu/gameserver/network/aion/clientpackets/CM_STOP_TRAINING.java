@@ -11,18 +11,18 @@ import com.aionemu.gameserver.network.aion.AionConnection.State;
  */
 public class CM_STOP_TRAINING extends AionClientPacket {
 
-	public CM_STOP_TRAINING(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_STOP_TRAINING(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		// nothing to read
-	}
+  @Override
+  protected void readImpl() {
+    // nothing to read
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		player.getPosition().getWorldMapInstance().getInstanceHandler().onStopTraining(player);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    player.getPosition().getWorldMapInstance().getInstanceHandler().onStopTraining(player);
+  }
 }

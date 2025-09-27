@@ -14,37 +14,37 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("eternal_bastion_construct")
 public class EternalBastionConstructAI extends NpcAI {
 
-	private long lastMsgTime;
+  private long lastMsgTime;
 
-	public EternalBastionConstructAI(Npc owner) {
-		super(owner);
-	}
+  public EternalBastionConstructAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean canThink() {
-		return false;
-	}
+  @Override
+  public boolean canThink() {
+    return false;
+  }
 
-	@Override
-	protected void handleAttack(Creature creature) {
-		if (getNpcId() == 831333 || getNpcId() == 831335) {
-			if (System.currentTimeMillis() - lastMsgTime > 30000) {
-				lastMsgTime = System.currentTimeMillis();
-				broadcastMsg(getNpcId() == 831333 ? SM_SYSTEM_MESSAGE.STR_MSG_IDLDF5b_TD_Notice_03() : SM_SYSTEM_MESSAGE.STR_MSG_IDLDF5b_TD_Notice_01());
-			}
-		}
-	}
+  @Override
+  protected void handleAttack(Creature creature) {
+    if (getNpcId() == 831333 || getNpcId() == 831335) {
+      if (System.currentTimeMillis() - lastMsgTime > 30000) {
+        lastMsgTime = System.currentTimeMillis();
+        broadcastMsg(getNpcId() == 831333 ? SM_SYSTEM_MESSAGE.STR_MSG_IDLDF5b_TD_Notice_03() : SM_SYSTEM_MESSAGE.STR_MSG_IDLDF5b_TD_Notice_01());
+      }
+    }
+  }
 
-	private void broadcastMsg(SM_SYSTEM_MESSAGE msg) {
-		PacketSendUtility.broadcastToMap(getOwner(), msg);
-	}
+  private void broadcastMsg(SM_SYSTEM_MESSAGE msg) {
+    PacketSendUtility.broadcastToMap(getOwner(), msg);
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case IS_IMMUNE_TO_ABNORMAL_STATES -> true;
-			case REWARD_LOOT, REWARD_AP -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case IS_IMMUNE_TO_ABNORMAL_STATES -> true;
+      case REWARD_LOOT, REWARD_AP -> false;
+      default -> super.ask(question);
+    };
+  }
 }

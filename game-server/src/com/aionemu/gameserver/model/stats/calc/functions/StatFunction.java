@@ -15,78 +15,78 @@ import com.aionemu.gameserver.utils.stats.CalculationType;
 @XmlType(name = "SimpleModifier")
 public class StatFunction implements IStatFunction {
 
-	@XmlAttribute(name = "name")
-	protected StatEnum stat;
-	@XmlAttribute
-	private boolean bonus;
-	@XmlAttribute
-	protected int value;
-	@XmlElement(name = "conditions")
-	private Conditions conditions;
+  @XmlAttribute(name = "name")
+  protected StatEnum stat;
+  @XmlAttribute
+  private boolean bonus;
+  @XmlAttribute
+  protected int value;
+  @XmlElement(name = "conditions")
+  private Conditions conditions;
 
-	public StatFunction() {
-	}
+  public StatFunction() {
+  }
 
-	public StatFunction(StatEnum stat, int value, boolean bonus) {
-		this.stat = stat;
-		this.value = value;
-		this.bonus = bonus;
-	}
+  public StatFunction(StatEnum stat, int value, boolean bonus) {
+    this.stat = stat;
+    this.value = value;
+    this.bonus = bonus;
+  }
 
-	@Override
-	public StatOwner getOwner() {
-		return null;
-	}
+  @Override
+  public StatOwner getOwner() {
+    return null;
+  }
 
-	@Override
-	public final StatEnum getName() {
-		return stat;
-	}
+  @Override
+  public final StatEnum getName() {
+    return stat;
+  }
 
-	@Override
-	public final boolean isBonus() {
-		return bonus;
-	}
+  @Override
+  public final boolean isBonus() {
+    return bonus;
+  }
 
-	/**
-	 * priorities RATE 20 ADD 30 SUB 30 SET 40 RATE bonus 50 ADD bonus 60 SUB bonus 60 SET bonus 70 ABS 80 ABS debuff 90 ABS bonus 100 ABS debuff bonus
-	 * 110
-	 */
-	@Override
-	public int getPriority() {
-		return 0x10;
-	}
+  /**
+   * priorities RATE 20 ADD 30 SUB 30 SET 40 RATE bonus 50 ADD bonus 60 SUB bonus 60 SET bonus 70 ABS 80 ABS debuff 90 ABS bonus 100 ABS debuff bonus
+   * 110
+   */
+  @Override
+  public int getPriority() {
+    return 0x10;
+  }
 
-	@Override
-	public int getValue() {
-		return value;
-	}
+  @Override
+  public int getValue() {
+    return value;
+  }
 
-	@Override
-	public boolean validate(Stat2 stat) {
-		return conditions == null || conditions.validate(stat, this);
-	}
+  @Override
+  public boolean validate(Stat2 stat) {
+    return conditions == null || conditions.validate(stat, this);
+  }
 
-	protected boolean validate(Stat2 stat, IStatFunction statFunction) {
-		return conditions == null || conditions.validate(stat, statFunction);
-	}
+  protected boolean validate(Stat2 stat, IStatFunction statFunction) {
+    return conditions == null || conditions.validate(stat, statFunction);
+  }
 
-	@Override
-	public void apply(Stat2 stat, CalculationType... calculationTypes) {
-	}
+  @Override
+  public void apply(Stat2 stat, CalculationType... calculationTypes) {
+  }
 
-	@Override
-	public String toString() {
-		return "stat=" + stat + ", bonus=" + bonus + ", value=" + value + ", priority=" + getPriority();
-	}
+  @Override
+  public String toString() {
+    return "stat=" + stat + ", bonus=" + bonus + ", value=" + value + ", priority=" + getPriority();
+  }
 
-	public StatFunction withConditions(Conditions conditions) {
-		this.conditions = conditions;
-		return this;
-	}
+  public StatFunction withConditions(Conditions conditions) {
+    this.conditions = conditions;
+    return this;
+  }
 
-	@Override
-	public boolean hasConditions() {
-		return conditions != null;
-	}
+  @Override
+  public boolean hasConditions() {
+    return conditions != null;
+  }
 }

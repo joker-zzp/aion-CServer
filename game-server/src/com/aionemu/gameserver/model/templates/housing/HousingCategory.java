@@ -10,23 +10,23 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum HousingCategory {
 
-	BED,
-	BOOK,
-	CARPET,
-	CHAIR,
-	CURTAIN,
-	DECORATION,
-	LIGHT,
-	NPC,
-	OUTLIGHT,
-	TABLE;
+  BED,
+  BOOK,
+  CARPET,
+  CHAIR,
+  CURTAIN,
+  DECORATION,
+  LIGHT,
+  NPC,
+  OUTLIGHT,
+  TABLE;
 
-	public String value() {
-		return name();
-	}
+  public String value() {
+    return name();
+  }
 
-	public static HousingCategory fromValue(String value) {
-		return valueOf(value);
-	}
+  public static HousingCategory fromValue(String value) {
+    return valueOf(value);
+  }
 
 }

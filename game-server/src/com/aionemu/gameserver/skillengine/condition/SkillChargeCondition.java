@@ -13,12 +13,12 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 @XmlType(name = "SkillChargeCondition")
 public class SkillChargeCondition extends ChargeCondition {
 
-	@Override
-	public boolean validate(Skill env) {
-		return true;
-	}
+  @Override
+  public boolean validate(Skill env) {
+    return true;
+  }
 
-	public int getValue() {
-		return value;
-	}
+  public int getValue() {
+    return value;
+  }
 }

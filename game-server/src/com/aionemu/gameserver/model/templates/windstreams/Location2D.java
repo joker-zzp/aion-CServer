@@ -14,32 +14,32 @@ import com.aionemu.gameserver.model.flypath.FlyPathType;
 @XmlType(name = "Location2D")
 public class Location2D {
 
-	@XmlAttribute(name = "id")
-	protected int id;
-	@XmlAttribute(name = "state")
-	protected int state;
-	@XmlAttribute(name = "fly_path")
-	protected FlyPathType flyPath;
+  @XmlAttribute(name = "id")
+  protected int id;
+  @XmlAttribute(name = "state")
+  protected int state;
+  @XmlAttribute(name = "fly_path")
+  protected FlyPathType flyPath;
 
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+  /**
+   * @return the id
+   */
+  public int getId() {
+    return id;
+  }
 
-	public int getState() {
-		return state;
-	}
+  public int getState() {
+    return state;
+  }
 
-	public void setState(int state) {
-		this.state = state;
-	}
+  public void setState(int state) {
+    this.state = state;
+  }
 
-	/**
-	 * @return the bidirectional
-	 */
-	public FlyPathType getFlyPathType() {
-		return flyPath;
-	}
+  /**
+   * @return the bidirectional
+   */
+  public FlyPathType getFlyPathType() {
+    return flyPath;
+  }
 }

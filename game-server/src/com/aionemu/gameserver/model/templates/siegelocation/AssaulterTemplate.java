@@ -17,30 +17,30 @@ import com.aionemu.gameserver.model.siege.AssaulterType;
 @XmlType(name = "AssaulterTemplate")
 public class AssaulterTemplate {
 
-	@XmlAttribute(name = "type")
-	private AssaulterType assaulterType;
-	@XmlAttribute(name = "heading_offset")
-	private int headingOffset = 60;
-	@XmlAttribute(name = "distance_offset")
-	private int distanceOffset;
+  @XmlAttribute(name = "type")
+  private AssaulterType assaulterType;
+  @XmlAttribute(name = "heading_offset")
+  private int headingOffset = 60;
+  @XmlAttribute(name = "distance_offset")
+  private int distanceOffset;
 
-	@XmlList
-	@XmlAttribute(name = "npc_ids")
-	private List<Integer> npcIds;
+  @XmlList
+  @XmlAttribute(name = "npc_ids")
+  private List<Integer> npcIds;
 
-	public AssaulterType getAssaulterType() {
-		return assaulterType;
-	}
+  public AssaulterType getAssaulterType() {
+    return assaulterType;
+  }
 
-	public List<Integer> getNpcIds() {
-		return npcIds;
-	}
+  public List<Integer> getNpcIds() {
+    return npcIds;
+  }
 
-	public int getHeadingOffset() {
-		return headingOffset;
-	}
+  public int getHeadingOffset() {
+    return headingOffset;
+  }
 
-	public int getDistanceOffset() {
-		return distanceOffset;
-	}
+  public int getDistanceOffset() {
+    return distanceOffset;
+  }
 }

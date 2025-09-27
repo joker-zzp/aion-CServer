@@ -12,24 +12,24 @@ import com.aionemu.gameserver.services.drop.DropService;
  */
 public class CM_LOOT_ITEM extends AionClientPacket {
 
-	private int targetObjectId;
-	private int index;
+  private int targetObjectId;
+  private int index;
 
-	public CM_LOOT_ITEM(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_LOOT_ITEM(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		targetObjectId = readD();
-		index = readUC();
-	}
+  @Override
+  protected void readImpl() {
+    targetObjectId = readD();
+    index = readUC();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player == null)
-			return;
-		DropService.getInstance().requestDropItem(player, targetObjectId, index);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player == null)
+      return;
+    DropService.getInstance().requestDropItem(player, targetObjectId, index);
+  }
 }

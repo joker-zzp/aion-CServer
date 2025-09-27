@@ -12,24 +12,24 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "RoadPoint")
 public class RoadPoint {
 
-	@XmlAttribute(name = "x")
-	private float x;
+  @XmlAttribute(name = "x")
+  private float x;
 
-	@XmlAttribute(name = "y")
-	private float y;
+  @XmlAttribute(name = "y")
+  private float y;
 
-	@XmlAttribute(name = "z")
-	private float z;
+  @XmlAttribute(name = "z")
+  private float z;
 
-	public float getX() {
-		return x;
-	}
+  public float getX() {
+    return x;
+  }
 
-	public float getY() {
-		return y;
-	}
+  public float getY() {
+    return y;
+  }
 
-	public float getZ() {
-		return z;
-	}
+  public float getZ() {
+    return z;
+  }
 }

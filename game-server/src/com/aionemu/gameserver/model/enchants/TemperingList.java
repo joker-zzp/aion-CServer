@@ -15,18 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TemperingList {
 
-	@XmlElement(name = "tempering_data", required = true)
-	protected List<TemperingTemplateData> temperingDatas;
+  @XmlElement(name = "tempering_data", required = true)
+  protected List<TemperingTemplateData> temperingDatas;
 
-	@XmlAttribute(name = "item_group", required = true)
-	private String itemGroup;
+  @XmlAttribute(name = "item_group", required = true)
+  private String itemGroup;
 
-	public String getItemGroup() {
-		return itemGroup;
-	}
+  public String getItemGroup() {
+    return itemGroup;
+  }
 
-	public List<TemperingTemplateData> getTemperingDatas() {
-		return temperingDatas;
-	}
+  public List<TemperingTemplateData> getTemperingDatas() {
+    return temperingDatas;
+  }
 
 }

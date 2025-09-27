@@ -7,15 +7,15 @@ import com.aionemu.gameserver.model.gameobjects.Creature;
  */
 public abstract class DestinationChecker {
 
-	protected final Creature follower;
+  protected final Creature follower;
 
-	DestinationChecker(Creature follower) {
-		this.follower = follower;
-	}
+  DestinationChecker(Creature follower) {
+    this.follower = follower;
+  }
 
-	public Creature getFollower() {
-		return follower;
-	}
+  public Creature getFollower() {
+    return follower;
+  }
 
-	public abstract boolean check();
+  public abstract boolean check();
 }

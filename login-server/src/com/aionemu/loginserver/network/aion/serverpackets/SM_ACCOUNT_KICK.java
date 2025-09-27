@@ -11,15 +11,15 @@ import com.aionemu.loginserver.network.aion.LoginConnection;
  */
 public final class SM_ACCOUNT_KICK extends AionServerPacket {
 
-	private final int msgId;
+  private final int msgId;
 
-	public SM_ACCOUNT_KICK(AionAuthResponse msg) {
-		super(0x08);
-		this.msgId = msg.getId();
-	}
+  public SM_ACCOUNT_KICK(AionAuthResponse msg) {
+    super(0x08);
+    this.msgId = msg.getId();
+  }
 
-	@Override
-	protected void writeImpl(LoginConnection con) {
-		writeD(msgId); // reason
-	}
+  @Override
+  protected void writeImpl(LoginConnection con) {
+    writeD(msgId); // reason
+  }
 }

@@ -15,52 +15,52 @@ import com.aionemu.gameserver.services.QuestService;
  */
 public class ReportOnLevelUp extends AbstractTemplateQuestHandler {
 
-	private final Set<Integer> endNpcIds = new HashSet<>();
+  private final Set<Integer> endNpcIds = new HashSet<>();
 
-	public ReportOnLevelUp(int questId, List<Integer> endNpcIds) {
-		super(questId);
-		if (endNpcIds != null) {
-			this.endNpcIds.addAll(endNpcIds);
-		}
-	}
+  public ReportOnLevelUp(int questId, List<Integer> endNpcIds) {
+    super(questId);
+    if (endNpcIds != null) {
+      this.endNpcIds.addAll(endNpcIds);
+    }
+  }
 
-	@Override
-	public void register() {
-		for (Integer endNpcId : endNpcIds)
-			qe.registerQuestNpc(endNpcId).addOnTalkEvent(questId);
+  @Override
+  public void register() {
+    for (Integer endNpcId : endNpcIds)
+      qe.registerQuestNpc(endNpcId).addOnTalkEvent(questId);
 
-		qe.registerOnEnterWorld(questId);
-		qe.registerOnLevelChanged(questId);
-	}
+    qe.registerOnEnterWorld(questId);
+    qe.registerOnLevelChanged(questId);
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		int targetId = env.getTargetId();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    int targetId = env.getTargetId();
 
-		if (qs == null)
-			return false;
-		if (qs.getStatus() == QuestStatus.REWARD) {
-			if (endNpcIds.contains(targetId))
-				return sendQuestEndDialog(env);
-		}
-		return false;
-	}
+    if (qs == null)
+      return false;
+    if (qs.getStatus() == QuestStatus.REWARD) {
+      if (endNpcIds.contains(targetId))
+        return sendQuestEndDialog(env);
+    }
+    return false;
+  }
 
-	@Override
-	public boolean onEnterWorldEvent(QuestEnv env) {
-		return startQuest(env.getPlayer());
-	}
+  @Override
+  public boolean onEnterWorldEvent(QuestEnv env) {
+    return startQuest(env.getPlayer());
+  }
 
-	@Override
-	public void onLevelChangedEvent(Player player) {
-		startQuest(player);
-	}
+  @Override
+  public void onLevelChangedEvent(Player player) {
+    startQuest(player);
+  }
 
-	private boolean startQuest(Player player) {
-		if (!player.getQuestStateList().hasQuest(questId))
-			return QuestService.startQuest(new QuestEnv(null, player, questId), QuestStatus.REWARD, false);
-		return false;
-	}
+  private boolean startQuest(Player player) {
+    if (!player.getQuestStateList().hasQuest(questId))
+      return QuestService.startQuest(new QuestEnv(null, player, questId), QuestStatus.REWARD, false);
+    return false;
+  }
 }

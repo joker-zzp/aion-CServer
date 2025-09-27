@@ -10,15 +10,15 @@ import com.aionemu.chatserver.network.netty.handler.ClientChannelHandler;
  */
 public class SM_CHAT_INI extends AbstractServerPacket {
 
-	public SM_CHAT_INI() {
-		super((byte) 0x31);
-	}
+  public SM_CHAT_INI() {
+    super((byte) 0x31);
+  }
 
-	@Override
-	protected void writeImpl(ClientChannelHandler cHandler, ChannelBuffer buf) {
-		writeC(buf, getOpCode());
-		writeC(buf, 0x40);
-		writeD(buf, 0x02);
-		writeH(buf, 0x00);
-	}
+  @Override
+  protected void writeImpl(ClientChannelHandler cHandler, ChannelBuffer buf) {
+    writeC(buf, getOpCode());
+    writeC(buf, 0x40);
+    writeD(buf, 0x02);
+    writeH(buf, 0x00);
+  }
 }

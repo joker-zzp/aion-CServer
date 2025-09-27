@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "HousingEmblem")
 public class HousingEmblem extends PlaceableHouseObject {
 
-	@XmlAttribute(name = "level", required = true)
-	private int level;
+  @XmlAttribute(name = "level", required = true)
+  private int level;
 
-	@Override
-	public byte getTypeId() {
-		return 11;
-	}
+  @Override
+  public byte getTypeId() {
+    return 11;
+  }
 
-	public int getLevel() {
-		return level;
-	}
+  public int getLevel() {
+    return level;
+  }
 
 }

@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "FlyingRestriction")
 @XmlEnum
 public enum FlyingRestriction {
-	ALL,
-	FLY,
-	GROUND;
+  ALL,
+  FLY,
+  GROUND;
 }

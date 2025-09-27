@@ -18,78 +18,78 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
  */
 public class _28821YourButlerGift extends AbstractQuestHandler {
 
-	private static final Set<Integer> butlers;
+  private static final Set<Integer> butlers;
 
-	static {
-		butlers = new HashSet<>();
-		butlers.add(810022);
-		butlers.add(810023);
-		butlers.add(810024);
-		butlers.add(810025);
-		butlers.add(810026);
-	}
+  static {
+    butlers = new HashSet<>();
+    butlers.add(810022);
+    butlers.add(810023);
+    butlers.add(810024);
+    butlers.add(810025);
+    butlers.add(810026);
+  }
 
-	public _28821YourButlerGift() {
-		super(28821);
-	}
+  public _28821YourButlerGift() {
+    super(28821);
+  }
 
-	@Override
-	public void register() {
-		Iterator<Integer> iter = butlers.iterator();
-		while (iter.hasNext()) {
-			int butlerId = iter.next();
-			qe.registerQuestNpc(butlerId).addOnQuestStart(questId);
-			qe.registerQuestNpc(butlerId).addOnTalkEvent(questId);
-		}
-	}
+  @Override
+  public void register() {
+    Iterator<Integer> iter = butlers.iterator();
+    while (iter.hasNext()) {
+      int butlerId = iter.next();
+      qe.registerQuestNpc(butlerId).addOnQuestStart(questId);
+      qe.registerQuestNpc(butlerId).addOnTalkEvent(questId);
+    }
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		final Player player = env.getPlayer();
-		int targetId = env.getTargetId();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    final Player player = env.getPlayer();
+    int targetId = env.getTargetId();
 
-		if (!butlers.contains(targetId))
-			return false;
+    if (!butlers.contains(targetId))
+      return false;
 
-		House house = player.getActiveHouse();
-		if (house == null || house.getButler() == null || house.getButler().getNpcId() != targetId)
-			return false;
+    House house = player.getActiveHouse();
+    if (house == null || house.getButler() == null || house.getButler().getNpcId() != targetId)
+      return false;
 
-		int dialogActionId = env.getDialogActionId();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
+    int dialogActionId = env.getDialogActionId();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
 
-		if (qs == null || qs.isStartable()) {
-			switch (dialogActionId) {
-				case QUEST_SELECT:
-					return sendQuestDialog(env, 1011);
-				case QUEST_ACCEPT_1:
-				case QUEST_ACCEPT_SIMPLE:
-					return sendQuestStartDialog(env);
-				case QUEST_REFUSE_1:
-				case QUEST_REFUSE_SIMPLE:
-					return sendQuestDialog(env, 1004);
-			}
-		} else if (qs.getStatus() == QuestStatus.START) {
-			switch (dialogActionId) {
-				case QUEST_SELECT:
-					return sendQuestDialog(env, 2375);
-				case SELECT_QUEST_REWARD:
-					changeQuestStep(env, 0, 0, true);
-					return sendQuestDialog(env, 5);
-				case SELECTED_QUEST_NOREWARD:
-					sendQuestEndDialog(env);
-					return true;
-			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			switch (dialogActionId) {
-				case USE_OBJECT:
-					return sendQuestDialog(env, 5);
-				case SELECTED_QUEST_NOREWARD:
-					return sendQuestEndDialog(env);
-			}
-		}
+    if (qs == null || qs.isStartable()) {
+      switch (dialogActionId) {
+        case QUEST_SELECT:
+          return sendQuestDialog(env, 1011);
+        case QUEST_ACCEPT_1:
+        case QUEST_ACCEPT_SIMPLE:
+          return sendQuestStartDialog(env);
+        case QUEST_REFUSE_1:
+        case QUEST_REFUSE_SIMPLE:
+          return sendQuestDialog(env, 1004);
+      }
+    } else if (qs.getStatus() == QuestStatus.START) {
+      switch (dialogActionId) {
+        case QUEST_SELECT:
+          return sendQuestDialog(env, 2375);
+        case SELECT_QUEST_REWARD:
+          changeQuestStep(env, 0, 0, true);
+          return sendQuestDialog(env, 5);
+        case SELECTED_QUEST_NOREWARD:
+          sendQuestEndDialog(env);
+          return true;
+      }
+    } else if (qs.getStatus() == QuestStatus.REWARD) {
+      switch (dialogActionId) {
+        case USE_OBJECT:
+          return sendQuestDialog(env, 5);
+        case SELECTED_QUEST_NOREWARD:
+          return sendQuestEndDialog(env);
+      }
+    }
 
-		return false;
-	}
+    return false;
+  }
 
 }

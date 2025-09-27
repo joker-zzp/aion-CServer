@@ -9,37 +9,37 @@ import com.aionemu.gameserver.model.templates.stats.ModifiersTemplate;
  */
 public class AbsoluteStatOwner implements StatOwner {
 
-	Player target;
-	ModifiersTemplate template;
-	boolean isActive = false;
+  Player target;
+  ModifiersTemplate template;
+  boolean isActive = false;
 
-	public AbsoluteStatOwner(Player player, int templateId) {
-		this.target = player;
-		setTemplate(templateId);
-	}
+  public AbsoluteStatOwner(Player player, int templateId) {
+    this.target = player;
+    setTemplate(templateId);
+  }
 
-	public boolean isActive() {
-		return isActive;
-	}
+  public boolean isActive() {
+    return isActive;
+  }
 
-	public void setTemplate(int templateId) {
-		if (isActive)
-			cancel();
-		this.template = DataManager.ABSOLUTE_STATS_DATA.getTemplate(templateId);
-	}
+  public void setTemplate(int templateId) {
+    if (isActive)
+      cancel();
+    this.template = DataManager.ABSOLUTE_STATS_DATA.getTemplate(templateId);
+  }
 
-	public void apply() {
-		if (template == null)
-			return;
-		target.getGameStats().addEffect(this, template.getModifiers());
-		isActive = true;
-	}
+  public void apply() {
+    if (template == null)
+      return;
+    target.getGameStats().addEffect(this, template.getModifiers());
+    isActive = true;
+  }
 
-	public void cancel() {
-		if (template == null)
-			return;
-		target.getGameStats().endEffect(this);
-		isActive = false;
-	}
+  public void cancel() {
+    if (template == null)
+      return;
+    target.getGameStats().endEffect(this);
+    isActive = false;
+  }
 
 }

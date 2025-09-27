@@ -13,22 +13,22 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_PING_RESPONSE;
  */
 public class CM_PING_REQUEST extends AionClientPacket {
 
-	/**
-	 * Constructs new instance of <tt>CM_PING_REQUEST </tt> packet
-	 * 
-	 * @param opcode
-	 */
-	public CM_PING_REQUEST(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * Constructs new instance of <tt>CM_PING_REQUEST </tt> packet
+   * 
+   * @param opcode
+   */
+  public CM_PING_REQUEST(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		// empty
-	}
+  @Override
+  protected void readImpl() {
+    // empty
+  }
 
-	@Override
-	protected void runImpl() {
-		sendPacket(new SM_PING_RESPONSE());
-	}
+  @Override
+  protected void runImpl() {
+    sendPacket(new SM_PING_RESPONSE());
+  }
 }

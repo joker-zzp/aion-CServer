@@ -13,23 +13,23 @@ import com.aionemu.gameserver.network.loginserver.LsServerPacket;
  */
 public class SM_ACCOUNT_LIST extends LsServerPacket {
 
-	/**
-	 * Map with loaded accounts
-	 */
-	private final List<AionConnection> accounts;
+  /**
+   * Map with loaded accounts
+   */
+  private final List<AionConnection> accounts;
 
-	/**
-	 * constructs new server packet with specified opcode.
-	 */
-	public SM_ACCOUNT_LIST(List<AionConnection> accounts) {
-		super(0x04);
-		this.accounts = accounts;
-	}
+  /**
+   * constructs new server packet with specified opcode.
+   */
+  public SM_ACCOUNT_LIST(List<AionConnection> accounts) {
+    super(0x04);
+    this.accounts = accounts;
+  }
 
-	@Override
-	protected void writeImpl(LoginServerConnection con) {
-		writeD(accounts.size());
-		for (AionConnection ac : accounts)
-			writeD(ac.getAccount().getId());
-	}
+  @Override
+  protected void writeImpl(LoginServerConnection con) {
+    writeD(accounts.size());
+    for (AionConnection ac : accounts)
+      writeD(ac.getAccount().getId());
+  }
 }

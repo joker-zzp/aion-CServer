@@ -304,7 +304,7 @@ public class BIHTree implements CollisionData {
     }
 
     @Override
-		public int collideWith(Collidable other, Matrix4f worldMatrix, BoundingVolume worldBound, CollisionResults results) {
+    public int collideWith(Collidable other, Matrix4f worldMatrix, BoundingVolume worldBound, CollisionResults results) {
         if (other instanceof Ray ray) {
             return collideWithRay(ray, worldMatrix, worldBound, results);
         }

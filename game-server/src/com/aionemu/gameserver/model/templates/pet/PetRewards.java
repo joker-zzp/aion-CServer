@@ -16,28 +16,28 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "PetRewards", propOrder = { "results" })
 public class PetRewards {
 
-	@XmlElement(name = "result")
-	protected List<PetFeedResult> results;
+  @XmlElement(name = "result")
+  protected List<PetFeedResult> results;
 
-	@XmlAttribute(name = "group", required = true)
-	protected FoodType type;
+  @XmlAttribute(name = "group", required = true)
+  protected FoodType type;
 
-	@XmlAttribute
-	protected boolean loved = false;
+  @XmlAttribute
+  protected boolean loved = false;
 
-	public List<PetFeedResult> getResults() {
-		if (results == null) {
-			results = new ArrayList<>();
-		}
-		return this.results;
-	}
+  public List<PetFeedResult> getResults() {
+    if (results == null) {
+      results = new ArrayList<>();
+    }
+    return this.results;
+  }
 
-	public FoodType getType() {
-		return type;
-	}
+  public FoodType getType() {
+    return type;
+  }
 
-	public boolean isLoved() {
-		return loved;
-	}
+  public boolean isLoved() {
+    return loved;
+  }
 
 }

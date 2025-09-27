@@ -19,30 +19,30 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @AIName("fortress_protector")
 public class FortressProtectorNpcAI extends SiegeNpcAI {
 
-	public FortressProtectorNpcAI(Npc owner) {
-		super(owner);
-	}
+  public FortressProtectorNpcAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void handleBackHome() {
-		super.handleBackHome();
-		if (getOwner().getAbyssNpcType() != AbyssNpcType.BOSS)
-			return;
-		Siege<?> siege = SiegeService.getInstance().getSiege(((SiegeNpc) getOwner()).getSiegeId());
-		if (siege != null)
-			siege.getSiegeCounter().clearDamageCounters();
-	}
+  @Override
+  public void handleBackHome() {
+    super.handleBackHome();
+    if (getOwner().getAbyssNpcType() != AbyssNpcType.BOSS)
+      return;
+    Siege<?> siege = SiegeService.getInstance().getSiege(((SiegeNpc) getOwner()).getSiegeId());
+    if (siege != null)
+      siege.getSiegeCounter().clearDamageCounters();
+  }
 
-	@Override
-	public float modifyOwnerDamage(float damage, Creature effected, Effect effect) {
-		if (effected instanceof Npc)
-			return damage * 5;
-		return damage;
-	}
+  @Override
+  public float modifyOwnerDamage(float damage, Creature effected, Effect effect) {
+    if (effected instanceof Npc)
+      return damage * 5;
+    return damage;
+  }
 
-	@Override
-	public void modifyOwnerStat(Stat2 stat) {
-		if (stat.getStat() == StatEnum.MAXHP && getOwner().getRating() == NpcRating.LEGENDARY)
-			stat.setBaseRate(SiegeConfig.FORTRESS_PROTECTOR_HEALTH_MULTIPLIER);
-	}
+  @Override
+  public void modifyOwnerStat(Stat2 stat) {
+    if (stat.getStat() == StatEnum.MAXHP && getOwner().getRating() == NpcRating.LEGENDARY)
+      stat.setBaseRate(SiegeConfig.FORTRESS_PROTECTOR_HEALTH_MULTIPLIER);
+  }
 }

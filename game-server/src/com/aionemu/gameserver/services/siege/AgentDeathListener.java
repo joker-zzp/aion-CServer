@@ -10,23 +10,23 @@ import com.aionemu.gameserver.services.SiegeService;
  *
  */
 public class AgentDeathListener extends OnDieEventListener {
-	
-	private AgentSiege siege;
-	private SiegeRace race;
-	
-	public AgentDeathListener(AgentSiege siege) {
-		this.siege = siege;
-	}
+  
+  private AgentSiege siege;
+  private SiegeRace race;
+  
+  public AgentDeathListener(AgentSiege siege) {
+    this.siege = siege;
+  }
 
-	@Override
-	public void onAfterEvent(GeneralAIEvent event) {
-		if (event.isHandled()) {
-			siege.setWinnerRace(race);
-			SiegeService.getInstance().stopSiege(siege.getSiegeLocationId());
-		}
-	}
+  @Override
+  public void onAfterEvent(GeneralAIEvent event) {
+    if (event.isHandled()) {
+      siege.setWinnerRace(race);
+      SiegeService.getInstance().stopSiege(siege.getSiegeLocationId());
+    }
+  }
 
-	public void setRace(SiegeRace race) {
-		this.race = race;
-	}
+  public void setRace(SiegeRace race) {
+    this.race = race;
+  }
 }

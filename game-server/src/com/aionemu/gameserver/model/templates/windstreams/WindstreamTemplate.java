@@ -13,22 +13,22 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "WindFlight")
 public class WindstreamTemplate {
 
-	@XmlElement(required = true)
-	protected StreamLocations locations;
-	@XmlAttribute
-	protected int mapid;
+  @XmlElement(required = true)
+  protected StreamLocations locations;
+  @XmlAttribute
+  protected int mapid;
 
-	/**
-	 * Gets the value of the locations property.
-	 */
-	public StreamLocations getLocations() {
-		return locations;
-	}
+  /**
+   * Gets the value of the locations property.
+   */
+  public StreamLocations getLocations() {
+    return locations;
+  }
 
-	/**
-	 * Gets the value of the mapid property.
-	 */
-	public int getMapId() {
-		return mapid;
-	}
+  /**
+   * Gets the value of the mapid property.
+   */
+  public int getMapId() {
+    return mapid;
+  }
 }

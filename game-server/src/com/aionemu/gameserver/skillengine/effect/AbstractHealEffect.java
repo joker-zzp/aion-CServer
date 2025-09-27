@@ -21,68 +21,68 @@ import com.aionemu.gameserver.skillengine.model.HealType;
 @XmlType(name = "AbstractHealEffect")
 public abstract class AbstractHealEffect extends EffectTemplate implements HealEffectTemplate {
 
-	@XmlAttribute
-	protected boolean percent;
+  @XmlAttribute
+  protected boolean percent;
 
-	public void calculate(Effect effect, HealType healType) {
-		if (!super.calculate(effect, null, null))
-			return;
-		effect.setReserveds(new EffectReserved(position, calculateHealValue(effect, healType), ResourceType.of(healType), false), false);
-	}
+  public void calculate(Effect effect, HealType healType) {
+    if (!super.calculate(effect, null, null))
+      return;
+    effect.setReserveds(new EffectReserved(position, calculateHealValue(effect, healType), ResourceType.of(healType), false), false);
+  }
 
-	public void applyEffect(Effect effect, HealType healType) {
-		Creature effected = effect.getEffected();
-		int healValue = effect.getReserveds(position).getValue();
-		switch (healType) {
-			case HP:
-				if (this instanceof ProcHealInstantEffect)// item heal, eg potions
-					effected.getLifeStats().increaseHp(TYPE.HP, healValue, effect.getEffector());
-				else
-					effected.getLifeStats().increaseHp(TYPE.REGULAR, healValue, effect.getEffector());
-				break;
-			case MP:
-				if (this instanceof ProcMPHealInstantEffect)// item heal, eg potions
-					effected.getLifeStats().increaseMp(TYPE.MP, healValue, 0, LOG.REGULAR);
-				else
-					effected.getLifeStats().increaseMp(TYPE.HEAL_MP, healValue, 0, LOG.REGULAR);
-				break;
-			case FP:
-				if (!(effected instanceof Player))
-					return;
-				((Player) effected).getLifeStats().increaseFp(TYPE.FP_RINGS, healValue, 0, LOG.REGULAR);
-				break;
-			case DP:
-				((Player) effected).getCommonData().addDp(healValue);
-				break;
-		}
-	}
+  public void applyEffect(Effect effect, HealType healType) {
+    Creature effected = effect.getEffected();
+    int healValue = effect.getReserveds(position).getValue();
+    switch (healType) {
+      case HP:
+        if (this instanceof ProcHealInstantEffect)// item heal, eg potions
+          effected.getLifeStats().increaseHp(TYPE.HP, healValue, effect.getEffector());
+        else
+          effected.getLifeStats().increaseHp(TYPE.REGULAR, healValue, effect.getEffector());
+        break;
+      case MP:
+        if (this instanceof ProcMPHealInstantEffect)// item heal, eg potions
+          effected.getLifeStats().increaseMp(TYPE.MP, healValue, 0, LOG.REGULAR);
+        else
+          effected.getLifeStats().increaseMp(TYPE.HEAL_MP, healValue, 0, LOG.REGULAR);
+        break;
+      case FP:
+        if (!(effected instanceof Player))
+          return;
+        ((Player) effected).getLifeStats().increaseFp(TYPE.FP_RINGS, healValue, 0, LOG.REGULAR);
+        break;
+      case DP:
+        ((Player) effected).getCommonData().addDp(healValue);
+        break;
+    }
+  }
 
-	@Override
-	public boolean isPercent() {
-		return percent;
-	}
+  @Override
+  public boolean isPercent() {
+    return percent;
+  }
 
-	@Override
-	public boolean allowHpHealBoost(Effect effect) {
-		return !percent;
-	}
+  @Override
+  public boolean allowHpHealBoost(Effect effect) {
+    return !percent;
+  }
 
-	@Override
-	public boolean allowHpHealSkillDeboost(Effect effect) {
-		return true;
-	}
+  @Override
+  public boolean allowHpHealSkillDeboost(Effect effect) {
+    return true;
+  }
 
-	@Override
-	public int calculateBaseHealValue(Effect effect) {
-		return calculateBaseValue(effect);
-	}
+  @Override
+  public int calculateBaseHealValue(Effect effect) {
+    return calculateBaseValue(effect);
+  }
 
-	@Override
-	public int calculateHealValue(Effect effect, HealType type) {
-		if (type == HealType.HP && effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.DISEASE))
-			return 0;
-		int cap = getMaxStatValue(effect) - getCurrentStatValue(effect);
-		int healValue = HealEffectTemplate.super.calculateHealValue(effect, type);
-		return Math.min(cap, healValue);
-	}
+  @Override
+  public int calculateHealValue(Effect effect, HealType type) {
+    if (type == HealType.HP && effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.DISEASE))
+      return 0;
+    int cap = getMaxStatValue(effect) - getCurrentStatValue(effect);
+    int healValue = HealEffectTemplate.super.calculateHealValue(effect, type);
+    return Math.min(cap, healValue);
+  }
 }

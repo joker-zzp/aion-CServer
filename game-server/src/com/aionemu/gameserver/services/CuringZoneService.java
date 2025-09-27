@@ -20,50 +20,50 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public class CuringZoneService {
 
-	private static final Logger log = LoggerFactory.getLogger(CuringZoneService.class);
-	private List<CuringObject> curingObjects = new ArrayList<>();
+  private static final Logger log = LoggerFactory.getLogger(CuringZoneService.class);
+  private List<CuringObject> curingObjects = new ArrayList<>();
 
-	private CuringZoneService() {
-		for (CuringTemplate t : DataManager.CURING_OBJECTS_DATA.getCuringObject()) {
-			CuringObject obj = new CuringObject(t, 0);
-			obj.spawn();
-			curingObjects.add(obj);
-		}
-		log.info("spawned Curing Zones");
-		startTask();
-	}
+  private CuringZoneService() {
+    for (CuringTemplate t : DataManager.CURING_OBJECTS_DATA.getCuringObject()) {
+      CuringObject obj = new CuringObject(t, 0);
+      obj.spawn();
+      curingObjects.add(obj);
+    }
+    log.info("spawned Curing Zones");
+    startTask();
+  }
 
-	private void startTask() {
+  private void startTask() {
 
-		ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable() {
+    ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable() {
 
-			@Override
-			public void run() {
-				for (final CuringObject obj : curingObjects) {
-					obj.getKnownList().forEachPlayer(new Consumer<Player>() {
+      @Override
+      public void run() {
+        for (final CuringObject obj : curingObjects) {
+          obj.getKnownList().forEachPlayer(new Consumer<Player>() {
 
-						@Override
-						public void accept(Player player) {
-							if (PositionUtil.isInRange(obj, player, obj.getRange()) && !player.getEffectController().hasAbnormalEffect(8751)) {
-								SkillEngine.getInstance().getSkill(player, 8751, 1, player).useNoAnimationSkill();
-							}
-						}
+            @Override
+            public void accept(Player player) {
+              if (PositionUtil.isInRange(obj, player, obj.getRange()) && !player.getEffectController().hasAbnormalEffect(8751)) {
+                SkillEngine.getInstance().getSkill(player, 8751, 1, player).useNoAnimationSkill();
+              }
+            }
 
-					});
-				}
-			}
+          });
+        }
+      }
 
-		}, 1000, 1000);
+    }, 1000, 1000);
 
-	}
+  }
 
-	private static class SingletonHolder {
+  private static class SingletonHolder {
 
-		protected static final CuringZoneService instance = new CuringZoneService();
-	}
+    protected static final CuringZoneService instance = new CuringZoneService();
+  }
 
-	public static final CuringZoneService getInstance() {
-		return SingletonHolder.instance;
-	}
+  public static final CuringZoneService getInstance() {
+    return SingletonHolder.instance;
+  }
 
 }

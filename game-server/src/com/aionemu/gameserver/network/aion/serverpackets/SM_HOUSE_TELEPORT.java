@@ -8,17 +8,17 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_HOUSE_TELEPORT extends AionServerPacket {
 
-	int address;
-	int playerId;
+  int address;
+  int playerId;
 
-	public SM_HOUSE_TELEPORT(int houseAddress, int playerId) {
-		this.address = houseAddress;
-		this.playerId = playerId;
-	}
+  public SM_HOUSE_TELEPORT(int houseAddress, int playerId) {
+    this.address = houseAddress;
+    this.playerId = playerId;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(address);
-		writeD(playerId);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(address);
+    writeD(playerId);
+  }
 }

@@ -12,38 +12,38 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Sphere")
 public class Sphere {
 
-	@XmlAttribute
-	protected Float x;
-	@XmlAttribute
-	protected Float y;
-	@XmlAttribute
-	protected Float z;
-	@XmlAttribute
-	protected Float r;
+  @XmlAttribute
+  protected Float x;
+  @XmlAttribute
+  protected Float y;
+  @XmlAttribute
+  protected Float z;
+  @XmlAttribute
+  protected Float r;
 
-	public Sphere() {
-	}
+  public Sphere() {
+  }
 
-	public Sphere(float x, float y, float z, float radius) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.r = radius;
-	}
+  public Sphere(float x, float y, float z, float radius) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.r = radius;
+  }
 
-	public Float getX() {
-		return x;
-	}
+  public Float getX() {
+    return x;
+  }
 
-	public Float getY() {
-		return y;
-	}
+  public Float getY() {
+    return y;
+  }
 
-	public Float getZ() {
-		return z;
-	}
+  public Float getZ() {
+    return z;
+  }
 
-	public Float getR() {
-		return r;
-	}
+  public Float getR() {
+    return r;
+  }
 }

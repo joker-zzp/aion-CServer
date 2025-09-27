@@ -8,18 +8,18 @@ import com.aionemu.gameserver.utils.stats.CalculationType;
  */
 public class StatSubFunction extends StatFunction {
 
-	@Override
-	public void apply(Stat2 stat, CalculationType... calculationTypes) {
-		if (isBonus()) {
-			stat.addToBonus(-getValue());
-		} else {
-			stat.addToBase(-getValue());
-		}
-	}
+  @Override
+  public void apply(Stat2 stat, CalculationType... calculationTypes) {
+    if (isBonus()) {
+      stat.addToBonus(-getValue());
+    } else {
+      stat.addToBase(-getValue());
+    }
+  }
 
-	@Override
-	public final int getPriority() {
-		return isBonus() ? 60 : 30;
-	}
+  @Override
+  public final int getPriority() {
+    return isBonus() ? 60 : 30;
+  }
 
 }

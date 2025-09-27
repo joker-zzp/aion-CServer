@@ -15,21 +15,21 @@ import com.aionemu.gameserver.utils.PositionUtil;
 @AIName("fallen_reian")
 public class FallenReianAI extends NpcAI {
 
-	private AtomicBoolean isCollapsed = new AtomicBoolean(false);
+  private AtomicBoolean isCollapsed = new AtomicBoolean(false);
 
-	public FallenReianAI(Npc owner) {
-		super(owner);
-	}
+  public FallenReianAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleCreatureMoved(Creature creature) {
-		if (isCollapsed.get())
-			return;
-		if (!(creature instanceof Player))
-			return;
-		Player player = (Player) creature;
-		if (PositionUtil.isInRange(getOwner(), player, 20) && isCollapsed.compareAndSet(false, true))
-			getPosition().getWorldMapInstance().setDoorState(getNpcId() == 799661 ? 16 : 54, true);
-	}
+  @Override
+  protected void handleCreatureMoved(Creature creature) {
+    if (isCollapsed.get())
+      return;
+    if (!(creature instanceof Player))
+      return;
+    Player player = (Player) creature;
+    if (PositionUtil.isInRange(getOwner(), player, 20) && isCollapsed.compareAndSet(false, true))
+      getPosition().getWorldMapInstance().setDoorState(getNpcId() == 799661 ? 16 : 54, true);
+  }
 
 }

@@ -15,12 +15,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "GlobalDropExcludedNpcs")
 public class GlobalDropExcludedNpcs {
 
-	@XmlList
-	@XmlAttribute(name = "npc_ids", required = true)
-	private Set<Integer> npcIds;
+  @XmlList
+  @XmlAttribute(name = "npc_ids", required = true)
+  private Set<Integer> npcIds;
 
-	public Set<Integer> getNpcIds() {
-		return npcIds;
-	}
+  public Set<Integer> getNpcIds() {
+    return npcIds;
+  }
 
 }

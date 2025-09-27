@@ -11,17 +11,17 @@ import com.aionemu.gameserver.utils.stats.CalculationType;
  */
 public class StatArmorMasteryFunction extends StatRateFunction {
 
-	private final ItemSubType subGroup;
+  private final ItemSubType subGroup;
 
-	public StatArmorMasteryFunction(ItemSubType subGroup, StatEnum name, int value, boolean bonus) {
-		super(name, value, bonus);
-		this.subGroup = subGroup;
-	}
+  public StatArmorMasteryFunction(ItemSubType subGroup, StatEnum name, int value, boolean bonus) {
+    super(name, value, bonus);
+    this.subGroup = subGroup;
+  }
 
-	@Override
-	public void apply(Stat2 stat, CalculationType... calculationTypes) {
-		Player player = (Player) stat.getOwner();
-		if (player.getEquipment().isArmorEquipped(subGroup))
-			super.apply(stat, calculationTypes);
-	}
+  @Override
+  public void apply(Stat2 stat, CalculationType... calculationTypes) {
+    Player player = (Player) stat.getOwner();
+    if (player.getEquipment().isArmorEquipped(subGroup))
+      super.apply(stat, calculationTypes);
+  }
 }

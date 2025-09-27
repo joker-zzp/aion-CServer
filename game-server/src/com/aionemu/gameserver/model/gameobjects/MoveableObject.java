@@ -9,13 +9,13 @@ import com.aionemu.gameserver.model.templates.housing.HousingMoveableItem;
  */
 public class MoveableObject extends HouseObject<HousingMoveableItem> {
 
-	public MoveableObject(HouseRegistry registry, int objId, int templateId) {
-		super(registry, objId, templateId);
-	}
+  public MoveableObject(HouseRegistry registry, int objId, int templateId) {
+    super(registry, objId, templateId);
+  }
 
-	@Override
-	public void onUse(Player player) {
+  @Override
+  public void onUse(Player player) {
 
-	}
+  }
 
 }

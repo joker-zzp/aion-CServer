@@ -14,23 +14,23 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_BROKER_REGISTERED extends AionClientPacket {
 
-	private int brokerObjId;
+  private int brokerObjId;
 
-	public CM_BROKER_REGISTERED(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_BROKER_REGISTERED(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		brokerObjId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    brokerObjId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player.isTargetingNpcWithFunction(brokerObjId, DialogAction.OPEN_VENDOR))
-			BrokerService.getInstance().showRegisteredItems(player);
-		else
-			AuditLogger.log(player, "tried to view his registered broker items without targeting a broker");
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player.isTargetingNpcWithFunction(brokerObjId, DialogAction.OPEN_VENDOR))
+      BrokerService.getInstance().showRegisteredItems(player);
+    else
+      AuditLogger.log(player, "tried to view his registered broker items without targeting a broker");
+  }
 }

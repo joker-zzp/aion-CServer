@@ -14,11 +14,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ComponentsData")
 public class ComponentsData {
 
-	@XmlElement(name = "component")
-	protected List<Component> component;
+  @XmlElement(name = "component")
+  protected List<Component> component;
 
-	public List<Component> getComponent() {
-		return component;
-	}
+  public List<Component> getComponent() {
+    return component;
+  }
 
 }

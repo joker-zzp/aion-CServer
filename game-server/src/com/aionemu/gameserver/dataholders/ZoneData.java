@@ -29,92 +29,92 @@ import com.aionemu.gameserver.utils.xml.XmlUtil;
 @XmlRootElement(name = "zones")
 public class ZoneData {
 
-	private static final Logger log = LoggerFactory.getLogger(ZoneData.class);
+  private static final Logger log = LoggerFactory.getLogger(ZoneData.class);
 
-	@XmlElement(name = "zone")
-	public List<ZoneTemplate> zoneList;
+  @XmlElement(name = "zone")
+  public List<ZoneTemplate> zoneList;
 
-	@XmlTransient
-	private final Map<Integer, List<ZoneInfo>> zoneNameMap = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, List<ZoneInfo>> zoneNameMap = new HashMap<>();
 
-	@XmlTransient
-	private final Map<ZoneTemplate, Integer> weatherZoneIds = new HashMap<>();
+  @XmlTransient
+  private final Map<ZoneTemplate, Integer> weatherZoneIds = new HashMap<>();
 
-	@XmlTransient
-	private int count;
+  @XmlTransient
+  private int count;
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		int lastMapId = 0;
-		int weatherZoneId = 1;
-		for (ZoneTemplate zone : zoneList) {
-			Area area = null;
-			switch (zone.getAreaType()) {
-				case POLYGON:
-					area = new PolyArea(zone.getName(), zone.getMapid(), zone.getPoints().getPoint(), zone.getPoints().getBottom(), zone.getPoints().getTop());
-					break;
-				case CYLINDER:
-					area = new CylinderArea(zone.getName(), zone.getMapid(), zone.getCylinder().getX(), zone.getCylinder().getY(), zone.getCylinder().getR(),
-						zone.getCylinder().getBottom(), zone.getCylinder().getTop());
-					break;
-				case SPHERE:
-					if (zone.getSphere().getR() <= 0)
-						break;
-					area = new SphereArea(zone.getName(), zone.getMapid(), zone.getSphere().getX(), zone.getSphere().getY(), zone.getSphere().getZ(), zone
-						.getSphere().getR());
-					break;
-				case SEMISPHERE:
-					area = new SemisphereArea(zone.getName(), zone.getMapid(), zone.getSemisphere().getX(), zone.getSemisphere().getY(), zone.getSemisphere()
-						.getZ(), zone.getSemisphere().getR());
-			}
-			if (area != null) {
-				List<ZoneInfo> zones = zoneNameMap.get(zone.getMapid());
-				if (zones == null) {
-					zones = new ArrayList<>();
-					zoneNameMap.put(zone.getMapid(), zones);
-				}
-				if (zone.getZoneType() == ZoneClassName.WEATHER) {
-					if (lastMapId != zone.getMapid()) {
-						lastMapId = zone.getMapid();
-						weatherZoneId = 1;
-					}
-					weatherZoneIds.put(zone, weatherZoneId++);
-				}
-				zones.add(new ZoneInfo(area, zone));
-				count++;
-			}
-		}
-		zoneList = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    int lastMapId = 0;
+    int weatherZoneId = 1;
+    for (ZoneTemplate zone : zoneList) {
+      Area area = null;
+      switch (zone.getAreaType()) {
+        case POLYGON:
+          area = new PolyArea(zone.getName(), zone.getMapid(), zone.getPoints().getPoint(), zone.getPoints().getBottom(), zone.getPoints().getTop());
+          break;
+        case CYLINDER:
+          area = new CylinderArea(zone.getName(), zone.getMapid(), zone.getCylinder().getX(), zone.getCylinder().getY(), zone.getCylinder().getR(),
+            zone.getCylinder().getBottom(), zone.getCylinder().getTop());
+          break;
+        case SPHERE:
+          if (zone.getSphere().getR() <= 0)
+            break;
+          area = new SphereArea(zone.getName(), zone.getMapid(), zone.getSphere().getX(), zone.getSphere().getY(), zone.getSphere().getZ(), zone
+            .getSphere().getR());
+          break;
+        case SEMISPHERE:
+          area = new SemisphereArea(zone.getName(), zone.getMapid(), zone.getSemisphere().getX(), zone.getSemisphere().getY(), zone.getSemisphere()
+            .getZ(), zone.getSemisphere().getR());
+      }
+      if (area != null) {
+        List<ZoneInfo> zones = zoneNameMap.get(zone.getMapid());
+        if (zones == null) {
+          zones = new ArrayList<>();
+          zoneNameMap.put(zone.getMapid(), zones);
+        }
+        if (zone.getZoneType() == ZoneClassName.WEATHER) {
+          if (lastMapId != zone.getMapid()) {
+            lastMapId = zone.getMapid();
+            weatherZoneId = 1;
+          }
+          weatherZoneIds.put(zone, weatherZoneId++);
+        }
+        zones.add(new ZoneInfo(area, zone));
+        count++;
+      }
+    }
+    zoneList = null;
+  }
 
-	public Map<Integer, List<ZoneInfo>> getZones() {
-		return zoneNameMap;
-	}
+  public Map<Integer, List<ZoneInfo>> getZones() {
+    return zoneNameMap;
+  }
 
-	public int size() {
-		return count;
-	}
+  public int size() {
+    return count;
+  }
 
-	/**
-	 * Weather zone ID it's an order number (starts from 1)
-	 */
-	public int getWeatherZoneId(ZoneTemplate template) {
-		Integer id = weatherZoneIds.get(template);
-		if (id == null)
-			return 0;
-		return id;
-	}
+  /**
+   * Weather zone ID it's an order number (starts from 1)
+   */
+  public int getWeatherZoneId(ZoneTemplate template) {
+    Integer id = weatherZoneIds.get(template);
+    if (id == null)
+      return 0;
+    return id;
+  }
 
-	public void saveData() {
-		File xml = new File("./data/static_data/zones/generated_zones.xml");
-		try {
-			JAXBContext jc = JAXBContext.newInstance(ZoneData.class);
-			Marshaller marshaller = jc.createMarshaller();
-			marshaller.setSchema(XmlUtil.getSchema("./data/static_data/zones/zones.xsd"));
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			marshaller.marshal(this, xml);
-		} catch (JAXBException e) {
-			log.error("Error while saving data: " + e.getMessage(), e.getCause());
-			return;
-		}
-	}
+  public void saveData() {
+    File xml = new File("./data/static_data/zones/generated_zones.xml");
+    try {
+      JAXBContext jc = JAXBContext.newInstance(ZoneData.class);
+      Marshaller marshaller = jc.createMarshaller();
+      marshaller.setSchema(XmlUtil.getSchema("./data/static_data/zones/zones.xsd"));
+      marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+      marshaller.marshal(this, xml);
+    } catch (JAXBException e) {
+      log.error("Error while saving data: " + e.getMessage(), e.getCause());
+      return;
+    }
+  }
 }

@@ -15,33 +15,33 @@ import com.aionemu.gameserver.utils.PositionUtil;
 @AIName("slowedtime")
 public class SlowTimeAI extends NpcAI {
 
-	public SlowTimeAI(Npc owner) {
-		super(owner);
-	}
+  public SlowTimeAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleCreatureSee(Creature creature) {
-		checkDistance(this, creature);
-	}
+  @Override
+  protected void handleCreatureSee(Creature creature) {
+    checkDistance(this, creature);
+  }
 
-	@Override
-	protected void handleCreatureMoved(Creature creature) {
-		checkDistance(this, creature);
-	}
+  @Override
+  protected void handleCreatureMoved(Creature creature) {
+    checkDistance(this, creature);
+  }
 
-	private void checkDistance(NpcAI ai, Creature creature) {
-		if (creature instanceof Player) {
-			if (PositionUtil.isInRange(getOwner(), creature, 50) && !creature.getEffectController().hasAbnormalEffect(20728)) {
-				AIActions.useSkill(this, 20728);
-			}
-		}
-	}
+  private void checkDistance(NpcAI ai, Creature creature) {
+    if (creature instanceof Player) {
+      if (PositionUtil.isInRange(getOwner(), creature, 50) && !creature.getEffectController().hasAbnormalEffect(20728)) {
+        AIActions.useSkill(this, 20728);
+      }
+    }
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_DECAY, ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT -> false;
+      default -> super.ask(question);
+    };
+  }
 }

@@ -11,16 +11,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum SpawnType {
 
-	MANAGER,
-	TELEPORT,
-	SIGN;
+  MANAGER,
+  TELEPORT,
+  SIGN;
 
-	public String value() {
-		return name();
-	}
+  public String value() {
+    return name();
+  }
 
-	public static SpawnType fromValue(String v) {
-		return valueOf(v);
-	}
+  public static SpawnType fromValue(String v) {
+    return valueOf(v);
+  }
 
 }

@@ -17,37 +17,37 @@ import com.aionemu.gameserver.skillengine.model.SpellStatus;
 @XmlType(name = "SpinEffect")
 public class SpinEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void calculate(Effect effect) {
-		if (effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.PULLED)
-			|| effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.SPIN)
-			|| effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.OPENAERIAL)
-			|| effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.STAGGER)
-			|| effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.STUMBLE))
-			return;
-		super.calculate(effect, StatEnum.SPIN_RESISTANCE, SpellStatus.SPIN);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    if (effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.PULLED)
+      || effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.SPIN)
+      || effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.OPENAERIAL)
+      || effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.STAGGER)
+      || effect.getEffected().getEffectController().isAbnormalSet(AbnormalState.STUMBLE))
+      return;
+    super.calculate(effect, StatEnum.SPIN_RESISTANCE, SpellStatus.SPIN);
+  }
 
-	@Override
-	public void startEffect(Effect effect) {
-		final Creature effected = effect.getEffected();
-		effected.getController().cancelCurrentSkill(effect.getEffector());
-		if (effected instanceof Player player) {
-			player.getFlyController().onStopGliding();
-			player.getMoveController().abortMove();
-		}
-		effect.getEffected().getEffectController().removeParalyzeEffects();
-		effected.getEffectController().setAbnormal(AbnormalState.SPIN);
-		effect.setAbnormal(AbnormalState.SPIN);
-	}
+  @Override
+  public void startEffect(Effect effect) {
+    final Creature effected = effect.getEffected();
+    effected.getController().cancelCurrentSkill(effect.getEffector());
+    if (effected instanceof Player player) {
+      player.getFlyController().onStopGliding();
+      player.getMoveController().abortMove();
+    }
+    effect.getEffected().getEffectController().removeParalyzeEffects();
+    effected.getEffectController().setAbnormal(AbnormalState.SPIN);
+    effect.setAbnormal(AbnormalState.SPIN);
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.SPIN);
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.SPIN);
+  }
 }

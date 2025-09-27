@@ -19,23 +19,23 @@ import com.aionemu.gameserver.model.templates.assemblednpc.AssembledNpcTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AssembledNpcsData {
 
-	@XmlElement(name = "assembled_npc", type = AssembledNpcTemplate.class)
-	private List<AssembledNpcTemplate> templates;
-	private final Map<Integer, AssembledNpcTemplate> assembledNpcsTemplates = new HashMap<>();
+  @XmlElement(name = "assembled_npc", type = AssembledNpcTemplate.class)
+  private List<AssembledNpcTemplate> templates;
+  private final Map<Integer, AssembledNpcTemplate> assembledNpcsTemplates = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (AssembledNpcTemplate template : templates) {
-			assembledNpcsTemplates.put(template.getNr(), template);
-		}
-		templates = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (AssembledNpcTemplate template : templates) {
+      assembledNpcsTemplates.put(template.getNr(), template);
+    }
+    templates = null;
+  }
 
-	public int size() {
-		return assembledNpcsTemplates.size();
-	}
+  public int size() {
+    return assembledNpcsTemplates.size();
+  }
 
-	public AssembledNpcTemplate getAssembledNpcTemplate(Integer i) {
-		return assembledNpcsTemplates.get(i);
-	}
+  public AssembledNpcTemplate getAssembledNpcTemplate(Integer i) {
+    return assembledNpcsTemplates.get(i);
+  }
 
 }

@@ -9,31 +9,31 @@ import com.aionemu.gameserver.taskmanager.AbstractFIFOPeriodicTaskManager;
  */
 public class ZoneUpdateService extends AbstractFIFOPeriodicTaskManager<Creature> {
 
-	private ZoneUpdateService() {
-		super(500);
-	}
+  private ZoneUpdateService() {
+    super(500);
+  }
 
-	@Override
-	protected void callTask(Creature creature) {
-		// validate all zones irrespective of the current zone
-		creature.revalidateZones();
-		if (creature instanceof Player) {
-			ZoneLevelService.checkZoneLevels((Player) creature);
-		}
-	}
+  @Override
+  protected void callTask(Creature creature) {
+    // validate all zones irrespective of the current zone
+    creature.revalidateZones();
+    if (creature instanceof Player) {
+      ZoneLevelService.checkZoneLevels((Player) creature);
+    }
+  }
 
-	@Override
-	protected String getCalledMethodName() {
-		return "ZoneUpdateService()";
-	}
+  @Override
+  protected String getCalledMethodName() {
+    return "ZoneUpdateService()";
+  }
 
-	public static ZoneUpdateService getInstance() {
-		return SingletonHolder.instance;
-	}
+  public static ZoneUpdateService getInstance() {
+    return SingletonHolder.instance;
+  }
 
-	private static class SingletonHolder {
+  private static class SingletonHolder {
 
-		protected static final ZoneUpdateService instance = new ZoneUpdateService();
-	}
+    protected static final ZoneUpdateService instance = new ZoneUpdateService();
+  }
 
 }

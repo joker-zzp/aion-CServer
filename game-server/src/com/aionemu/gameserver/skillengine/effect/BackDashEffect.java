@@ -20,18 +20,18 @@ import com.aionemu.gameserver.world.geo.GeoService;
 @XmlType(name = "BackDashEffect")
 public class BackDashEffect extends DamageEffect {
 
-	@XmlAttribute(name = "distance")
-	private float distance;
+  @XmlAttribute(name = "distance")
+  private float distance;
 
-	@Override
-	public void calculate(Effect effect) {
-		effect.setDashStatus(DashStatus.BACKDASH);
-		Creature effector = effect.getEffector();
-		byte h = PositionUtil.getHeadingTowards(effector, effect.getEffected());
-		float inverseAngle = PositionUtil.convertHeadingToAngle(h) + 180; // flip by 180 degrees for opposite direction
-		Vector3f closestCollision = GeoService.getInstance().findMovementCollision(effector, inverseAngle, distance);
-		effect.getSkill().setTargetPosition(closestCollision.getX(), closestCollision.getY(), closestCollision.getZ(), h);
-		World.getInstance().updatePosition(effector, closestCollision.getX(), closestCollision.getY(), closestCollision.getZ(), h);
-		super.calculate(effect);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    effect.setDashStatus(DashStatus.BACKDASH);
+    Creature effector = effect.getEffector();
+    byte h = PositionUtil.getHeadingTowards(effector, effect.getEffected());
+    float inverseAngle = PositionUtil.convertHeadingToAngle(h) + 180; // flip by 180 degrees for opposite direction
+    Vector3f closestCollision = GeoService.getInstance().findMovementCollision(effector, inverseAngle, distance);
+    effect.getSkill().setTargetPosition(closestCollision.getX(), closestCollision.getY(), closestCollision.getZ(), h);
+    World.getInstance().updatePosition(effector, closestCollision.getX(), closestCollision.getY(), closestCollision.getZ(), h);
+    super.calculate(effect);
+  }
 }

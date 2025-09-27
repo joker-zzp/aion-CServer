@@ -46,112 +46,112 @@ import com.aionemu.gameserver.geoEngine.math.Vector3f;
  */
 public class TempVars {
 
-	/**
-	 * Allow X instances of TempVars in a single thread.
-	 */
-	private static final int STACK_SIZE = 5;
+  /**
+   * Allow X instances of TempVars in a single thread.
+   */
+  private static final int STACK_SIZE = 5;
 
-	/**
-	 * <code>TempVarsStack</code> contains a stack of TempVars.
-	 * Every time TempVars.get() is called, a new entry is added to the stack,
-	 * and the index incremented.
-	 * When TempVars.release() is called, the entry is checked against
-	 * the current instance and  then the index is decremented.
-	 */
-	private static class TempVarsStack {
+  /**
+   * <code>TempVarsStack</code> contains a stack of TempVars.
+   * Every time TempVars.get() is called, a new entry is added to the stack,
+   * and the index incremented.
+   * When TempVars.release() is called, the entry is checked against
+   * the current instance and  then the index is decremented.
+   */
+  private static class TempVarsStack {
 
-		private int index = 0;
-		private TempVars[] tempVars = new TempVars[STACK_SIZE];
-	}
-	/**
-	 * ThreadLocal to store a TempVarsStack for each thread.
-	 * This ensures each thread has a single TempVarsStack that is
-	 * used only in method calls in that thread.
-	 */
-	private static final ThreadLocal<TempVarsStack> varsLocal = ThreadLocal.withInitial(TempVarsStack::new);
-	/**
-	 * This instance of TempVars has been retrieved but not released yet.
-	 */
-	private boolean isUsed = false;
+    private int index = 0;
+    private TempVars[] tempVars = new TempVars[STACK_SIZE];
+  }
+  /**
+   * ThreadLocal to store a TempVarsStack for each thread.
+   * This ensures each thread has a single TempVarsStack that is
+   * used only in method calls in that thread.
+   */
+  private static final ThreadLocal<TempVarsStack> varsLocal = ThreadLocal.withInitial(TempVarsStack::new);
+  /**
+   * This instance of TempVars has been retrieved but not released yet.
+   */
+  private boolean isUsed = false;
 
-	private TempVars() {
-	}
+  private TempVars() {
+  }
 
-	/**
-	 * Acquire an instance of the TempVar class.
-	 * You have to release the instance after use by calling the 
-	 * release() method. 
-	 * If more than STACK_SIZE (currently 5) instances are requested 
-	 * in a single thread then an ArrayIndexOutOfBoundsException will be thrown.
-	 *
-	 * @return A TempVar instance
-	 */
-	public static TempVars get() {
-		TempVarsStack stack = varsLocal.get();
+  /**
+   * Acquire an instance of the TempVar class.
+   * You have to release the instance after use by calling the 
+   * release() method. 
+   * If more than STACK_SIZE (currently 5) instances are requested 
+   * in a single thread then an ArrayIndexOutOfBoundsException will be thrown.
+   *
+   * @return A TempVar instance
+   */
+  public static TempVars get() {
+    TempVarsStack stack = varsLocal.get();
 
-		TempVars instance = stack.tempVars[stack.index];
+    TempVars instance = stack.tempVars[stack.index];
 
-		if (instance == null) {
-			// Create new
-			instance = new TempVars();
+    if (instance == null) {
+      // Create new
+      instance = new TempVars();
 
-			// Put it in there
-			stack.tempVars[stack.index] = instance;
-		}
+      // Put it in there
+      stack.tempVars[stack.index] = instance;
+    }
 
-		stack.index++;
+    stack.index++;
 
-		instance.isUsed = true;
+    instance.isUsed = true;
 
-		return instance;
-	}
+    return instance;
+  }
 
-	/**
-	 * Releases this instance of TempVars.
-	 * Once released, the contents of the TempVars are undefined.
-	 * The TempVars must be released in the opposite order that they are retrieved,
-	 * e.g. Acquiring vars1, then acquiring vars2, vars2 MUST be released 
-	 * first otherwise an exception will be thrown.
-	 */
-	public void release() {
-		if (!isUsed) {
-			throw new IllegalStateException("This instance of TempVars was already released!");
-		}
+  /**
+   * Releases this instance of TempVars.
+   * Once released, the contents of the TempVars are undefined.
+   * The TempVars must be released in the opposite order that they are retrieved,
+   * e.g. Acquiring vars1, then acquiring vars2, vars2 MUST be released 
+   * first otherwise an exception will be thrown.
+   */
+  public void release() {
+    if (!isUsed) {
+      throw new IllegalStateException("This instance of TempVars was already released!");
+    }
 
-		isUsed = false;
+    isUsed = false;
 
-		TempVarsStack stack = varsLocal.get();
+    TempVarsStack stack = varsLocal.get();
 
-		// Return it to the stack
-		stack.index--;
+    // Return it to the stack
+    stack.index--;
 
-		// Check if it is actually there
-		if (stack.tempVars[stack.index] != this) {
-			throw new IllegalStateException("An instance of TempVars has not been released in a called method!");
-		}
-	}
+    // Check if it is actually there
+    if (stack.tempVars[stack.index] != this) {
+      throw new IllegalStateException("An instance of TempVars has not been released in a called method!");
+    }
+  }
 
-	/**
-	 * General vectors.
-	 */
-	public final Vector3f vect1 = new Vector3f();
-	public final Vector3f vect2 = new Vector3f();
-	public final Vector3f vect3 = new Vector3f();
-	public final Vector3f vect4 = new Vector3f();
-	public final Vector3f vect5 = new Vector3f();
-	public final Vector3f vect6 = new Vector3f();
-	public final Matrix3f tempMat3 = new Matrix3f();
-	/**
-	 * BoundingBox ray collision
-	 */
-	public final float[] fWdU = new float[3];
-	public final float[] fAWdU = new float[3];
-	public final float[] fDdU = new float[3];
-	public final float[] fADdU = new float[3];
-	public final float[] fAWxDdU = new float[3];
-	/**
-	 * BIHTree
-	 */
-	public final float[] bihSwapTmp = new float[9];
-	public final ArrayList<BIHStackData> bihStack = new ArrayList<>();
+  /**
+   * General vectors.
+   */
+  public final Vector3f vect1 = new Vector3f();
+  public final Vector3f vect2 = new Vector3f();
+  public final Vector3f vect3 = new Vector3f();
+  public final Vector3f vect4 = new Vector3f();
+  public final Vector3f vect5 = new Vector3f();
+  public final Vector3f vect6 = new Vector3f();
+  public final Matrix3f tempMat3 = new Matrix3f();
+  /**
+   * BoundingBox ray collision
+   */
+  public final float[] fWdU = new float[3];
+  public final float[] fAWdU = new float[3];
+  public final float[] fDdU = new float[3];
+  public final float[] fADdU = new float[3];
+  public final float[] fAWxDdU = new float[3];
+  /**
+   * BIHTree
+   */
+  public final float[] bihSwapTmp = new float[9];
+  public final ArrayList<BIHStackData> bihStack = new ArrayList<>();
 }

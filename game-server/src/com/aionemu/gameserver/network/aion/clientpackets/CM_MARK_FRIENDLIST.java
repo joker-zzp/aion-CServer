@@ -11,17 +11,17 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_MARK_FRIENDLIST;
  */
 public class CM_MARK_FRIENDLIST extends AionClientPacket {
 
-	public CM_MARK_FRIENDLIST(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_MARK_FRIENDLIST(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		// nothing to read
-	}
+  @Override
+  protected void readImpl() {
+    // nothing to read
+  }
 
-	@Override
-	protected void runImpl() {
-		sendPacket(new SM_MARK_FRIENDLIST());
-	}
+  @Override
+  protected void runImpl() {
+    sendPacket(new SM_MARK_FRIENDLIST());
+  }
 }

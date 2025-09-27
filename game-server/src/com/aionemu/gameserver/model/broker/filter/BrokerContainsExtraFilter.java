@@ -9,18 +9,18 @@ import com.aionemu.gameserver.model.templates.item.ItemTemplate;
  */
 public class BrokerContainsExtraFilter extends BrokerFilter {
 
-	private int[] masks;
+  private int[] masks;
 
-	/**
-	 * @param masks
-	 */
-	public BrokerContainsExtraFilter(int... masks) {
-		this.masks = masks;
-	}
+  /**
+   * @param masks
+   */
+  public BrokerContainsExtraFilter(int... masks) {
+    this.masks = masks;
+  }
 
-	@Override
-	public boolean accept(ItemTemplate template) {
-		return ArrayUtils.contains(masks, template.getTemplateId() / 10000);
-	}
+  @Override
+  public boolean accept(ItemTemplate template) {
+    return ArrayUtils.contains(masks, template.getTemplateId() / 10000);
+  }
 
 }

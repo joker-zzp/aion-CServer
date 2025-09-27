@@ -13,17 +13,17 @@ import ai.ChestAI;
 @AIName("pandoras_box")
 public class FakeCakeAI extends ChestAI {
 
-	public FakeCakeAI(Npc owner) {
-		super(owner);
-	}
+  public FakeCakeAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		punishment(player);
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    punishment(player);
+  }
 
-	private void punishment(Player player) {
-		AuditLogger.log(player, String.format("%s used the fake cake at %s.", player, player.getPosition()));
-		getOwner().getController().die();
-	}
+  private void punishment(Player player) {
+    AuditLogger.log(player, String.format("%s used the fake cake at %s.", player, player.getPosition()));
+    getOwner().getController().die();
+  }
 }

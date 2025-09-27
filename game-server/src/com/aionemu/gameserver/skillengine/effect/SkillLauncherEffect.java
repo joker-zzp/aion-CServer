@@ -15,16 +15,16 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "SkillLauncherEffect")
 public class SkillLauncherEffect extends EffectTemplate {
 
-	@XmlAttribute(name = "skill_id")
-	protected int skillId;
+  @XmlAttribute(name = "skill_id")
+  protected int skillId;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		SkillEngine.getInstance().applyEffect(skillId, effect.getEffector(), effect.getEffected());
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    SkillEngine.getInstance().applyEffect(skillId, effect.getEffector(), effect.getEffected());
+  }
 
-	@Override
-	public void calculate(Effect effect) {
-		effect.addSuccessEffect(this);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    effect.addSuccessEffect(this);
+  }
 }

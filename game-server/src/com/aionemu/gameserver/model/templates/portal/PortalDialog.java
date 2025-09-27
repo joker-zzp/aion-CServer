@@ -15,23 +15,23 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "PortalDialog")
 public class PortalDialog {
 
-	@XmlElement(name = "portal_path")
-	private List<PortalPath> portalPaths;
-	@XmlAttribute(name = "npc_id")
-	private int npcId;
-	@XmlAttribute(name = "teleport_dialog_id")
-	private int teleportDialogId = 1011;
+  @XmlElement(name = "portal_path")
+  private List<PortalPath> portalPaths;
+  @XmlAttribute(name = "npc_id")
+  private int npcId;
+  @XmlAttribute(name = "teleport_dialog_id")
+  private int teleportDialogId = 1011;
 
-	public List<PortalPath> getPortalPaths() {
-		return portalPaths;
-	}
+  public List<PortalPath> getPortalPaths() {
+    return portalPaths;
+  }
 
-	public int getNpcId() {
-		return npcId;
-	}
+  public int getNpcId() {
+    return npcId;
+  }
 
-	public int getTeleportDialogId() {
-		return teleportDialogId;
-	}
+  public int getTeleportDialogId() {
+    return teleportDialogId;
+  }
 
 }

@@ -10,24 +10,24 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_QUESTIONNAIRE extends AionServerPacket {
 
-	private int messageId;
-	private byte chunk;
-	private byte count;
-	private String html;
+  private int messageId;
+  private byte chunk;
+  private byte count;
+  private String html;
 
-	public SM_QUESTIONNAIRE(int messageId, byte chunk, byte count, String html) {
-		this.messageId = messageId;
-		this.chunk = chunk;
-		this.count = count;
-		this.html = html;
-	}
+  public SM_QUESTIONNAIRE(int messageId, byte chunk, byte count, String html) {
+    this.messageId = messageId;
+    this.chunk = chunk;
+    this.count = count;
+    this.html = html;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(messageId);
-		writeC(chunk);
-		writeC(count);
-		writeH(html.length() * 2);
-		writeS(html);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(messageId);
+    writeC(chunk);
+    writeC(count);
+    writeH(html.length() * 2);
+    writeS(html);
+  }
 }

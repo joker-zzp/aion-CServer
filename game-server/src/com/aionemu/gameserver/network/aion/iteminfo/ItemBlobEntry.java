@@ -16,29 +16,29 @@ import com.aionemu.gameserver.network.aion.iteminfo.ItemInfoBlob.ItemBlobType;
  */
 public abstract class ItemBlobEntry extends PacketWriteHelper {
 
-	private final ItemBlobType type;
-	Player owner;
-	Item ownerItem;
-	IStatFunction modifier;
+  private final ItemBlobType type;
+  Player owner;
+  Item ownerItem;
+  IStatFunction modifier;
 
-	ItemBlobEntry(ItemBlobType type) {
-		this.type = type;
-	}
+  ItemBlobEntry(ItemBlobType type) {
+    this.type = type;
+  }
 
-	void setOwner(Player owner, Item item, IStatFunction modifier) {
-		this.owner = owner;
-		this.ownerItem = item;
-		this.modifier = modifier;
-	}
+  void setOwner(Player owner, Item item, IStatFunction modifier) {
+    this.owner = owner;
+    this.ownerItem = item;
+    this.modifier = modifier;
+  }
 
-	@Override
-	protected void writeMe(ByteBuffer buf) {
-		writeC(buf, type.getEntryId());
-		writeThisBlob(buf);
-	}
+  @Override
+  protected void writeMe(ByteBuffer buf) {
+    writeC(buf, type.getEntryId());
+    writeThisBlob(buf);
+  }
 
-	public abstract void writeThisBlob(ByteBuffer buf);
+  public abstract void writeThisBlob(ByteBuffer buf);
 
-	public abstract int getSize();
+  public abstract int getSize();
 
 }

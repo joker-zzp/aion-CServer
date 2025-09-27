@@ -12,22 +12,22 @@ import com.aionemu.gameserver.services.mail.MailService;
  */
 public class CM_GET_MAIL_ATTACHMENT extends AionClientPacket {
 
-	private int mailObjId;
-	private byte attachmentType;
+  private int mailObjId;
+  private byte attachmentType;
 
-	public CM_GET_MAIL_ATTACHMENT(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_GET_MAIL_ATTACHMENT(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		mailObjId = readD();
-		attachmentType = readC(); // 0 - item , 1 - kinah
-	}
+  @Override
+  protected void readImpl() {
+    mailObjId = readD();
+    attachmentType = readC(); // 0 - item , 1 - kinah
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		MailService.getAttachments(player, mailObjId, attachmentType);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    MailService.getAttachments(player, mailObjId, attachmentType);
+  }
 }

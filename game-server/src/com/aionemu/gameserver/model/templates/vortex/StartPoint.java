@@ -14,25 +14,25 @@ import com.aionemu.gameserver.world.WorldPosition;
 @XmlType(name = "StartPoint")
 public class StartPoint {
 
-	@XmlAttribute(name = "map")
-	protected int map;
-	@XmlAttribute(name = "x")
-	protected float x;
-	@XmlAttribute(name = "y")
-	protected float y;
-	@XmlAttribute(name = "z")
-	protected float z;
-	@XmlAttribute(name = "h")
-	protected byte h;
+  @XmlAttribute(name = "map")
+  protected int map;
+  @XmlAttribute(name = "x")
+  protected float x;
+  @XmlAttribute(name = "y")
+  protected float y;
+  @XmlAttribute(name = "z")
+  protected float z;
+  @XmlAttribute(name = "h")
+  protected byte h;
 
-	public int getWorldId() {
-		return map;
-	}
+  public int getWorldId() {
+    return map;
+  }
 
-	public WorldPosition getStartPoint() {
-		WorldPosition start = new WorldPosition(map);
-		start.setXYZH(x, y, z, h);
-		return start;
-	}
+  public WorldPosition getStartPoint() {
+    WorldPosition start = new WorldPosition(map);
+    start.setXYZH(x, y, z, h);
+    return start;
+  }
 
 }

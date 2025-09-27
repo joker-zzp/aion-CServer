@@ -15,19 +15,19 @@ import com.aionemu.gameserver.utils.chathandlers.ConsoleCommand;
  */
 public class Itemcooltime extends ConsoleCommand {
 
-	public Itemcooltime() {
-		super("itemcooltime", "Removes cooldowns of all items.");
-	}
+  public Itemcooltime() {
+    super("itemcooltime", "Removes cooldowns of all items.");
+  }
 
-	@Override
-	public void execute(Player player, String... params) {
-		if (player.getItemCoolDowns() != null) {
-			Map<Integer, ItemCooldown> dummyCds = new HashMap<>(); // 4.8 client ignores reuseTime <= currentTime, but sending old cds + useDelay 0 works
-			for (Entry<Integer, ItemCooldown> en : player.getItemCoolDowns().entrySet()) {
-				dummyCds.put(en.getKey(), new ItemCooldown(en.getValue().getReuseTime(), 0));
-				player.removeItemCoolDown(en.getKey());
-			}
-			PacketSendUtility.sendPacket(player, new SM_ITEM_COOLDOWN(dummyCds));
-		}
-	}
+  @Override
+  public void execute(Player player, String... params) {
+    if (player.getItemCoolDowns() != null) {
+      Map<Integer, ItemCooldown> dummyCds = new HashMap<>(); // 4.8 client ignores reuseTime <= currentTime, but sending old cds + useDelay 0 works
+      for (Entry<Integer, ItemCooldown> en : player.getItemCoolDowns().entrySet()) {
+        dummyCds.put(en.getKey(), new ItemCooldown(en.getValue().getReuseTime(), 0));
+        player.removeItemCoolDown(en.getKey());
+      }
+      PacketSendUtility.sendPacket(player, new SM_ITEM_COOLDOWN(dummyCds));
+    }
+  }
 }

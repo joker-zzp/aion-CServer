@@ -14,39 +14,39 @@ import ai.GeneralNpcAI;
 @AIName("spilled_oil")
 public class SpilledOilAI extends GeneralNpcAI {
 
-	private int count;
+  private int count;
 
-	public SpilledOilAI(Npc owner) {
-		super(owner);
-	}
+  public SpilledOilAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		startEventTask();
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    startEventTask();
+  }
 
-	private void startEventTask() {
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+  private void startEventTask() {
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-			@Override
-			public void run() {
-				if (!isDead()) {
-					count++;
-					if (count < 7) {
-						SkillEngine.getInstance().getSkill(getOwner(), 19658, 60, getOwner()).useNoAnimationSkill();
-						startEventTask();
-					} else {
-						delete();
-					}
-				}
+      @Override
+      public void run() {
+        if (!isDead()) {
+          count++;
+          if (count < 7) {
+            SkillEngine.getInstance().getSkill(getOwner(), 19658, 60, getOwner()).useNoAnimationSkill();
+            startEventTask();
+          } else {
+            delete();
+          }
+        }
 
-			}
+      }
 
-		}, 4000);
-	}
+    }, 4000);
+  }
 
-	private void delete() {
-		AIActions.deleteOwner(this);
-	}
+  private void delete() {
+    AIActions.deleteOwner(this);
+  }
 }

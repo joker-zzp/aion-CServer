@@ -16,24 +16,24 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "FeedItemGroup")
 public abstract class FeedItemGroup {
 
-	@XmlAttribute(name = "group", required = true)
-	protected ItemGroupIndex index = ItemGroupIndex.NONE;
+  @XmlAttribute(name = "group", required = true)
+  protected ItemGroupIndex index = ItemGroupIndex.NONE;
 
-	@XmlElement(name = "item")
-	private List<ItemRaceEntry> items;
+  @XmlElement(name = "item")
+  private List<ItemRaceEntry> items;
 
-	/**
-	 * @return the index
-	 */
-	public ItemGroupIndex getIndex() {
-		return index;
-	}
+  /**
+   * @return the index
+   */
+  public ItemGroupIndex getIndex() {
+    return index;
+  }
 
-	public List<ItemRaceEntry> getItems() {
-		if (items == null) {
-			items = new ArrayList<>();
-		}
-		return this.items;
-	}
+  public List<ItemRaceEntry> getItems() {
+    if (items == null) {
+      items = new ArrayList<>();
+    }
+    return this.items;
+  }
 
 }

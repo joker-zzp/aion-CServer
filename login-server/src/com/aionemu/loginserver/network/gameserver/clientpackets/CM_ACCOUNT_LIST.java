@@ -16,29 +16,29 @@ import com.aionemu.loginserver.network.gameserver.serverpackets.SM_REQUEST_KICK_
  */
 public class CM_ACCOUNT_LIST extends GsClientPacket {
 
-	/**
-	 * Array with accounts that are logged in
-	 */
-	private int[] accountIds;
+  /**
+   * Array with accounts that are logged in
+   */
+  private int[] accountIds;
 
-	@Override
-	protected void readImpl() {
-		accountIds = new int[readD()];
-		for (int i = 0; i < accountIds.length; i++)
-			accountIds[i] = readD();
-	}
+  @Override
+  protected void readImpl() {
+    accountIds = new int[readD()];
+    for (int i = 0; i < accountIds.length; i++)
+      accountIds[i] = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		for (int id : accountIds) {
-			GameServerInfo gsi = GameServerTable.findLoggedInAccountGs(id);
-			if (gsi == null)
-				getConnection().getGameServerInfo().addAccountToGameServer(AccountController.loadAccount(id));
-			else if (gsi.getId() != getConnection().getGameServerInfo().getId()) // account already plays on another gameserver
-				getConnection().sendPacket(new SM_REQUEST_KICK_ACCOUNT(id, false));
-		}
-		getConnection().sendPacket(new SM_MACBAN_LIST());
-		getConnection().sendPacket(new SM_HDDBAN_LIST());
-		AccountController.updateServerListForAllLoggedInPlayers();
-	}
+  @Override
+  protected void runImpl() {
+    for (int id : accountIds) {
+      GameServerInfo gsi = GameServerTable.findLoggedInAccountGs(id);
+      if (gsi == null)
+        getConnection().getGameServerInfo().addAccountToGameServer(AccountController.loadAccount(id));
+      else if (gsi.getId() != getConnection().getGameServerInfo().getId()) // account already plays on another gameserver
+        getConnection().sendPacket(new SM_REQUEST_KICK_ACCOUNT(id, false));
+    }
+    getConnection().sendPacket(new SM_MACBAN_LIST());
+    getConnection().sendPacket(new SM_HDDBAN_LIST());
+    AccountController.updateServerListForAllLoggedInPlayers();
+  }
 }

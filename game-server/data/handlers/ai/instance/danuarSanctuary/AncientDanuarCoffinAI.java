@@ -14,25 +14,25 @@ import ai.GeneralNpcAI;
 @AIName("ancientdanuarcoffin")
 public class AncientDanuarCoffinAI extends GeneralNpcAI {
 
-	public AncientDanuarCoffinAI(Npc owner) {
-		super(owner);
-	}
+  public AncientDanuarCoffinAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean canThink() {
-		return false;
-	}
+  @Override
+  public boolean canThink() {
+    return false;
+  }
 
-	@Override
-	public float modifyDamage(Creature attacker, float damage, Effect effect) {
-		return 1;
-	}
+  @Override
+  public float modifyDamage(Creature attacker, float damage, Effect effect) {
+    return 1;
+  }
 
-	@Override
-	protected void handleDied() {
-		super.handleDied();
-		if (Rnd.chance() < 40) {
-			spawn(233085, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
-		}
-	}
+  @Override
+  protected void handleDied() {
+    super.handleDied();
+    if (Rnd.chance() < 40) {
+      spawn(233085, getOwner().getX(), getOwner().getY(), getOwner().getZ(), (byte) 0);
+    }
+  }
 }

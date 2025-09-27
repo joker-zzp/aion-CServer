@@ -13,20 +13,20 @@ import com.aionemu.commons.configuration.TransformationTypeInfo;
  */
 public class ArrayTransformer extends CommaSeparatedValueTransformer<Object> {
 
-	public static final ArrayTransformer SHARED_INSTANCE = new ArrayTransformer();
+  public static final ArrayTransformer SHARED_INSTANCE = new ArrayTransformer();
 
-	@Override
-	protected Object parseObject(List<String> values, TransformationTypeInfo typeInfo) {
-		Class<?> arrayType = typeInfo.getType().getComponentType();
+  @Override
+  protected Object parseObject(List<String> values, TransformationTypeInfo typeInfo) {
+    Class<?> arrayType = typeInfo.getType().getComponentType();
 
-		Object array = Array.newInstance(arrayType, values.size());
+    Object array = Array.newInstance(arrayType, values.size());
 
-		if (!values.isEmpty()) {
-			PropertyTransformer<?> pt = PropertyTransformerFactory.getTransformer(arrayType);
-			for (int i = 0; i < values.size(); i++)
-				Array.set(array, i, pt.transform(values.get(i), arrayType));
-		}
+    if (!values.isEmpty()) {
+      PropertyTransformer<?> pt = PropertyTransformerFactory.getTransformer(arrayType);
+      for (int i = 0; i < values.size(); i++)
+        Array.set(array, i, pt.transform(values.get(i), arrayType));
+    }
 
-		return array;
-	}
+    return array;
+  }
 }

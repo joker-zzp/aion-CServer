@@ -17,38 +17,38 @@ import com.aionemu.gameserver.services.AtreianPassportService;
  */
 public class CM_ATREIAN_PASSPORT extends AionClientPacket {
 
-	private Map<Integer, Set<Integer>> passports = new HashMap<>();
+  private Map<Integer, Set<Integer>> passports = new HashMap<>();
 
-	public CM_ATREIAN_PASSPORT(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_ATREIAN_PASSPORT(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		int count = readH();
-		for (int i = 0; i < count || count == -1; i++) {
-			if (getRemainingBytes() < 8) {
-				if (count != -1)
-					LoggerFactory.getLogger(CM_ATREIAN_PASSPORT.class).warn("Received invalid passport count " + count + " with only data for " + i
-						+ " passports from " + getConnection().getActivePlayer() + "\nCurrent passport data: " + passports);
-				break;
-			}
-			int passportId = readD();
-			int timestamp = readD();
-			passports.compute(passportId, (ppId, timestamps) -> {
-				if (timestamps == null)
-					timestamps = new HashSet<>();
-				timestamps.add(timestamp);
-				return timestamps;
-			});
-		}
-	}
+  @Override
+  protected void readImpl() {
+    int count = readH();
+    for (int i = 0; i < count || count == -1; i++) {
+      if (getRemainingBytes() < 8) {
+        if (count != -1)
+          LoggerFactory.getLogger(CM_ATREIAN_PASSPORT.class).warn("Received invalid passport count " + count + " with only data for " + i
+            + " passports from " + getConnection().getActivePlayer() + "\nCurrent passport data: " + passports);
+        break;
+      }
+      int passportId = readD();
+      int timestamp = readD();
+      passports.compute(passportId, (ppId, timestamps) -> {
+        if (timestamps == null)
+          timestamps = new HashSet<>();
+        timestamps.add(timestamp);
+        return timestamps;
+      });
+    }
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player != null)
-			AtreianPassportService.getInstance().takeReward(player, passports);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player != null)
+      AtreianPassportService.getInstance().takeReward(player, passports);
+  }
 
 }

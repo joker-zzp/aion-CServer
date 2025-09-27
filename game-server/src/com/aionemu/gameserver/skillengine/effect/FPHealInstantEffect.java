@@ -14,24 +14,24 @@ import com.aionemu.gameserver.skillengine.model.HealType;
 @XmlType(name = "FPHealInstantEffect")
 public class FPHealInstantEffect extends AbstractHealEffect {
 
-	@Override
-	public void calculate(Effect effect) {
-		super.calculate(effect, HealType.FP);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    super.calculate(effect, HealType.FP);
+  }
 
-	@Override
-	public void applyEffect(Effect effect) {
-		super.applyEffect(effect, HealType.FP);
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    super.applyEffect(effect, HealType.FP);
+  }
 
-	@Override
-	public int getCurrentStatValue(Effect effect) {
-		return effect.getEffected().getLifeStats().getCurrentFp();
-	}
+  @Override
+  public int getCurrentStatValue(Effect effect) {
+    return effect.getEffected().getLifeStats().getCurrentFp();
+  }
 
-	@Override
-	public int getMaxStatValue(Effect effect) {
-		return effect.getEffected().getLifeStats().getMaxFp();
-	}
+  @Override
+  public int getMaxStatValue(Effect effect) {
+    return effect.getEffected().getLifeStats().getMaxFp();
+  }
 
 }

@@ -24,39 +24,39 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("IDTiamat_2_Kahrun_Talk")
 public class IDTiamat_2_KahrunTalkAI extends NpcAI {
 
-	private final AtomicBoolean isActivated = new AtomicBoolean();
+  private final AtomicBoolean isActivated = new AtomicBoolean();
 
-	public IDTiamat_2_KahrunTalkAI(Npc owner) {
-		super(owner);
-	}
+  public IDTiamat_2_KahrunTalkAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		if (getPosition().getWorldMapInstance().getNpcs(730625).isEmpty())
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    if (getPosition().getWorldMapInstance().getNpcs(730625).isEmpty())
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		if (dialogActionId == SETPRO1) {
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
-			if (isActivated.compareAndSet(false, true)) {
-				getOwner().overrideNpcType(CreatureType.PEACE);
-				PacketSendUtility.broadcastMessage(getOwner(), 1500604, 500);
-				ThreadPoolManager.getInstance().schedule(() -> {
-					getMoveController().moveToPoint(500f, 516.6f, 240.27f);
-					setStateIfNot(AIState.WALKING);
-					getOwner().setState(CreatureState.ACTIVE, true);
-					PacketSendUtility.broadcastToMap(getOwner(), new SM_EMOTION(getOwner(), EmotionType.WALK));
-					ThreadPoolManager.getInstance().schedule(this::spawnOrb, 1500);
-				}, 2000);
-			}
-		}
-		return true;
-	}
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    if (dialogActionId == SETPRO1) {
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
+      if (isActivated.compareAndSet(false, true)) {
+        getOwner().overrideNpcType(CreatureType.PEACE);
+        PacketSendUtility.broadcastMessage(getOwner(), 1500604, 500);
+        ThreadPoolManager.getInstance().schedule(() -> {
+          getMoveController().moveToPoint(500f, 516.6f, 240.27f);
+          setStateIfNot(AIState.WALKING);
+          getOwner().setState(CreatureState.ACTIVE, true);
+          PacketSendUtility.broadcastToMap(getOwner(), new SM_EMOTION(getOwner(), EmotionType.WALK));
+          ThreadPoolManager.getInstance().schedule(this::spawnOrb, 1500);
+        }, 2000);
+      }
+    }
+    return true;
+  }
 
-	private void spawnOrb() {
-		spawn(730625, 503.2197f, 516.6517f, 242.6040f, (byte) 0, 4);
-		AIActions.deleteOwner(this);
-	}
+  private void spawnOrb() {
+    spawn(730625, 503.2197f, 516.6517f, 242.6040f, (byte) 0, 4);
+    AIActions.deleteOwner(this);
+  }
 }

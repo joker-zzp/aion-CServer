@@ -13,31 +13,31 @@ import com.aionemu.gameserver.services.PrivateStoreService;
  */
 public class CM_PRIVATE_STORE extends AionClientPacket {
 
-	private TradePSItem[] tradePSItems;
+  private TradePSItem[] tradePSItems;
 
-	public CM_PRIVATE_STORE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_PRIVATE_STORE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		int itemCount = readUH();
-		tradePSItems = new TradePSItem[itemCount];
-		for (int i = 0; i < itemCount; i++) {
-			int itemObjId = readD();
-			int itemId = readD();
-			int count = readUH();
-			long price = readQ();
-			tradePSItems[i] = new TradePSItem(itemObjId, itemId, count, price);
-		}
-	}
+  @Override
+  protected void readImpl() {
+    int itemCount = readUH();
+    tradePSItems = new TradePSItem[itemCount];
+    for (int i = 0; i < itemCount; i++) {
+      int itemObjId = readD();
+      int itemId = readD();
+      int count = readUH();
+      long price = readQ();
+      tradePSItems[i] = new TradePSItem(itemObjId, itemId, count, price);
+    }
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (tradePSItems.length <= 0)
-			PrivateStoreService.closePrivateStore(player);
-		else
-			PrivateStoreService.createStoreWithItems(player, tradePSItems);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (tradePSItems.length <= 0)
+      PrivateStoreService.closePrivateStore(player);
+    else
+      PrivateStoreService.createStoreWithItems(player, tradePSItems);
+  }
 }

@@ -9,13 +9,13 @@ import com.aionemu.gameserver.model.templates.housing.HousingChair;
  */
 public class ChairObject extends HouseObject<HousingChair> {
 
-	public ChairObject(HouseRegistry registry, int objId, int templateId) {
-		super(registry, objId, templateId);
-	}
+  public ChairObject(HouseRegistry registry, int objId, int templateId) {
+    super(registry, objId, templateId);
+  }
 
-	@Override
-	public void onUse(Player player) {
+  @Override
+  public void onUse(Player player) {
 
-	}
+  }
 
 }

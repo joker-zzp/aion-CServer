@@ -11,24 +11,24 @@ import com.aionemu.gameserver.network.aion.AionConnection.State;
  */
 public class CM_BONUS_TITLE extends AionClientPacket {
 
-	private int bonusTitleId;
+  private int bonusTitleId;
 
-	public CM_BONUS_TITLE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_BONUS_TITLE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		bonusTitleId = readUH();
-	}
+  @Override
+  protected void readImpl() {
+    bonusTitleId = readUH();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (bonusTitleId != 0xFFFF)
-			if (!player.getTitleList().contains(bonusTitleId))
-				return;
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (bonusTitleId != 0xFFFF)
+      if (!player.getTitleList().contains(bonusTitleId))
+        return;
 
-		player.getTitleList().setBonusTitle(bonusTitleId);
-	}
+    player.getTitleList().setBonusTitle(bonusTitleId);
+  }
 }

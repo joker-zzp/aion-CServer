@@ -15,33 +15,33 @@ import com.aionemu.gameserver.services.RepurchaseService;
  */
 public class SM_REPURCHASE extends AionServerPacket {
 
-	private Player player;
-	private final int targetObjectId;
-	private final Collection<Item> items;
+  private Player player;
+  private final int targetObjectId;
+  private final Collection<Item> items;
 
-	public SM_REPURCHASE(Player player, int npcId) {
-		this.player = player;
-		this.targetObjectId = npcId;
-		items = RepurchaseService.getInstance().getRepurchaseItems(player.getObjectId());
-	}
+  public SM_REPURCHASE(Player player, int npcId) {
+    this.player = player;
+    this.targetObjectId = npcId;
+    items = RepurchaseService.getInstance().getRepurchaseItems(player.getObjectId());
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(targetObjectId);
-		writeD(1);
-		writeH(items.size());
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(targetObjectId);
+    writeD(1);
+    writeH(items.size());
 
-		for (Item item : items) {
-			ItemTemplate itemTemplate = item.getItemTemplate();
+    for (Item item : items) {
+      ItemTemplate itemTemplate = item.getItemTemplate();
 
-			writeD(item.getObjectId());
-			writeD(itemTemplate.getTemplateId());
-			writeS(itemTemplate.getL10n());
+      writeD(item.getObjectId());
+      writeD(itemTemplate.getTemplateId());
+      writeS(itemTemplate.getL10n());
 
-			ItemInfoBlob itemInfoBlob = ItemInfoBlob.getFullBlob(player, item);
-			itemInfoBlob.writeMe(getBuf());
+      ItemInfoBlob itemInfoBlob = ItemInfoBlob.getFullBlob(player, item);
+      itemInfoBlob.writeMe(getBuf());
 
-			writeQ(item.getRepurchasePrice());
-		}
-	}
+      writeQ(item.getRepurchasePrice());
+    }
+  }
 }

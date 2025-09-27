@@ -9,22 +9,22 @@ import com.aionemu.gameserver.services.ban.BanAction;
  */
 public class SM_HDDBAN_CONTROL extends LsServerPacket {
 
-	private BanAction action;
-	private String serial;
-	private long time;
+  private BanAction action;
+  private String serial;
+  private long time;
 
-	public SM_HDDBAN_CONTROL(BanAction action, String address, long time) {
-		super(14);
-		this.action = action;
-		this.serial = address;
-		this.time = time;
-	}
+  public SM_HDDBAN_CONTROL(BanAction action, String address, long time) {
+    super(14);
+    this.action = action;
+    this.serial = address;
+    this.time = time;
+  }
 
-	@Override
-	protected void writeImpl(LoginServerConnection con) {
-		writeC(action.getId());
-		writeS(serial);
-		writeQ(time);
-	}
+  @Override
+  protected void writeImpl(LoginServerConnection con) {
+    writeC(action.getId());
+    writeS(serial);
+    writeQ(time);
+  }
 
 }

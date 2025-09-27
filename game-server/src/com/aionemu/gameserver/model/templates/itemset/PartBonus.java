@@ -18,19 +18,19 @@ import com.aionemu.gameserver.model.templates.stats.ModifiersTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PartBonus {
 
-	@XmlAttribute
-	protected int count;
-	@XmlElement(name = "modifiers", required = false)
-	protected ModifiersTemplate modifiers;
+  @XmlAttribute
+  protected int count;
+  @XmlElement(name = "modifiers", required = false)
+  protected ModifiersTemplate modifiers;
 
-	public List<StatFunction> getModifiers() {
-		return modifiers != null ? modifiers.getModifiers() : null;
-	}
+  public List<StatFunction> getModifiers() {
+    return modifiers != null ? modifiers.getModifiers() : null;
+  }
 
-	/**
-	 * @return the count
-	 */
-	public int getCount() {
-		return count;
-	}
+  /**
+   * @return the count
+   */
+  public int getCount() {
+    return count;
+  }
 }

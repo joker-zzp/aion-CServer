@@ -13,88 +13,88 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class PortalCooldownList {
 
-	private final Player owner;
-	private Map<Integer, PortalCooldown> portalCooldowns;
+  private final Player owner;
+  private Map<Integer, PortalCooldown> portalCooldowns;
 
-	PortalCooldownList(Player owner) {
-		this.owner = owner;
-	}
+  PortalCooldownList(Player owner) {
+    this.owner = owner;
+  }
 
-	public boolean isPortalUseDisabled(int worldId) {
-		if (portalCooldowns == null || !portalCooldowns.containsKey(worldId))
-			return false;
+  public boolean isPortalUseDisabled(int worldId) {
+    if (portalCooldowns == null || !portalCooldowns.containsKey(worldId))
+      return false;
 
-		PortalCooldown coolDown = portalCooldowns.get(worldId);
-		if (coolDown == null)
-			return false;
+    PortalCooldown coolDown = portalCooldowns.get(worldId);
+    if (coolDown == null)
+      return false;
 
-		if (coolDown.getReuseTime() < System.currentTimeMillis()) {
-			portalCooldowns.remove(worldId);
-			return false;
-		}
+    if (coolDown.getReuseTime() < System.currentTimeMillis()) {
+      portalCooldowns.remove(worldId);
+      return false;
+    }
 
-		return coolDown.getEnterCount() >= DataManager.INSTANCE_COOLTIME_DATA.getInstanceMaxCountByWorldId(worldId);
-	}
+    return coolDown.getEnterCount() >= DataManager.INSTANCE_COOLTIME_DATA.getInstanceMaxCountByWorldId(worldId);
+  }
 
-	public long getPortalCooldownTime(int worldId) {
-		if (portalCooldowns == null || !portalCooldowns.containsKey(worldId))
-			return 0;
-		long coolDown = portalCooldowns.get(worldId).getReuseTime();
+  public long getPortalCooldownTime(int worldId) {
+    if (portalCooldowns == null || !portalCooldowns.containsKey(worldId))
+      return 0;
+    long coolDown = portalCooldowns.get(worldId).getReuseTime();
 
-		if (coolDown < System.currentTimeMillis()) {
-			portalCooldowns.remove(worldId);
-			return 0;
-		}
+    if (coolDown < System.currentTimeMillis()) {
+      portalCooldowns.remove(worldId);
+      return 0;
+    }
 
-		return coolDown;
-	}
+    return coolDown;
+  }
 
-	public PortalCooldown getPortalCooldown(int worldId) {
-		return portalCooldowns == null ? null : portalCooldowns.get(worldId);
-	}
+  public PortalCooldown getPortalCooldown(int worldId) {
+    return portalCooldowns == null ? null : portalCooldowns.get(worldId);
+  }
 
-	public Map<Integer, PortalCooldown> getPortalCoolDowns() {
-		return portalCooldowns;
-	}
+  public Map<Integer, PortalCooldown> getPortalCoolDowns() {
+    return portalCooldowns;
+  }
 
-	public void setPortalCoolDowns(Map<Integer, PortalCooldown> portalCoolDowns) {
-		this.portalCooldowns = portalCoolDowns;
-	}
+  public void setPortalCoolDowns(Map<Integer, PortalCooldown> portalCoolDowns) {
+    this.portalCooldowns = portalCoolDowns;
+  }
 
-	public void addPortalCooldown(int worldId, long useDelay) {
-		if (portalCooldowns == null)
-			portalCooldowns = new HashMap<>();
+  public void addPortalCooldown(int worldId, long useDelay) {
+    if (portalCooldowns == null)
+      portalCooldowns = new HashMap<>();
 
-		PortalCooldown portalCooldown = portalCooldowns.get(worldId);
-		if (portalCooldown == null)
-			portalCooldown = new PortalCooldown(worldId, useDelay, 0);
+    PortalCooldown portalCooldown = portalCooldowns.get(worldId);
+    if (portalCooldown == null)
+      portalCooldown = new PortalCooldown(worldId, useDelay, 0);
 
-		portalCooldown.increaseEnterCount();
-		portalCooldowns.put(worldId, portalCooldown);
+    portalCooldown.increaseEnterCount();
+    portalCooldowns.put(worldId, portalCooldown);
 
-		PortalCooldownsDAO.storePortalCooldowns(owner);
+    PortalCooldownsDAO.storePortalCooldowns(owner);
 
-		sendEntryInfo(worldId);
-	}
+    sendEntryInfo(worldId);
+  }
 
-	public void sendEntryInfo(int worldId) {
-		if (owner.isInTeam())
-			owner.getCurrentTeam().sendPackets(new SM_INSTANCE_INFO((byte) 2, owner, worldId));
-		else
-			PacketSendUtility.sendPacket(owner, new SM_INSTANCE_INFO((byte) 2, owner, worldId));
-	}
+  public void sendEntryInfo(int worldId) {
+    if (owner.isInTeam())
+      owner.getCurrentTeam().sendPackets(new SM_INSTANCE_INFO((byte) 2, owner, worldId));
+    else
+      PacketSendUtility.sendPacket(owner, new SM_INSTANCE_INFO((byte) 2, owner, worldId));
+  }
 
-	public void removePortalCooldown(int worldId) {
-		if (portalCooldowns != null)
-			portalCooldowns.remove(worldId);
-	}
+  public void removePortalCooldown(int worldId) {
+    if (portalCooldowns != null)
+      portalCooldowns.remove(worldId);
+  }
 
-	public boolean hasCooldowns() {
-		return portalCooldowns != null && portalCooldowns.size() > 0;
-	}
+  public boolean hasCooldowns() {
+    return portalCooldowns != null && portalCooldowns.size() > 0;
+  }
 
-	public int size() {
-		return portalCooldowns != null ? portalCooldowns.size() : 0;
-	}
+  public int size() {
+    return portalCooldowns != null ? portalCooldowns.size() : 0;
+  }
 
 }

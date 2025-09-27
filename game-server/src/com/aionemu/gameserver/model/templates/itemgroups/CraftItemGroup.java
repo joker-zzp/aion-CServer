@@ -34,12 +34,12 @@ import com.aionemu.gameserver.model.templates.rewards.CraftItem;
 @XmlType(name = "CraftItemGroup")
 public class CraftItemGroup extends BonusItemGroup {
 
-	@XmlElement(name = "item")
-	private List<CraftItem> items;
+  @XmlElement(name = "item")
+  private List<CraftItem> items;
 
-	@Override
-	public List<CraftItem> getItems() {
-		return items == null ? Collections.emptyList() : items;
-	}
+  @Override
+  public List<CraftItem> getItems() {
+    return items == null ? Collections.emptyList() : items;
+  }
 
 }

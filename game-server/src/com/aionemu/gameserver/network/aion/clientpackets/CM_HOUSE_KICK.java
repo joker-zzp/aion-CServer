@@ -13,32 +13,32 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_HOUSE_KICK extends AionClientPacket {
 
-	private byte option;
+  private byte option;
 
-	public CM_HOUSE_KICK(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_HOUSE_KICK(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		option = readC();
-		readH();
-	}
+  @Override
+  protected void readImpl() {
+    option = readC();
+    readH();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player == null)
-			return;
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player == null)
+      return;
 
-		House house = player.getActiveHouse();
-		if (house == null) {
-			AuditLogger.log(player, "tried to kick players from house without owning one");
-			return;
-		}
-		if (option == 1)
-			house.getController().kickVisitors(player, false, false);
-		else if (option == 2)
-			house.getController().kickVisitors(player, true, false);
-	}
+    House house = player.getActiveHouse();
+    if (house == null) {
+      AuditLogger.log(player, "tried to kick players from house without owning one");
+      return;
+    }
+    if (option == 1)
+      house.getController().kickVisitors(player, false, false);
+    else if (option == 2)
+      house.getController().kickVisitors(player, true, false);
+  }
 }

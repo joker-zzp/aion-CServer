@@ -14,29 +14,29 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_USE_HOUSE_OBJECT extends AionClientPacket {
 
-	int itemObjectId;
+  int itemObjectId;
 
-	public CM_USE_HOUSE_OBJECT(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_USE_HOUSE_OBJECT(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		itemObjectId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    itemObjectId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player == null)
-			return;
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player == null)
+      return;
 
-		VisibleObject visObject = World.getInstance().findVisibleObject(itemObjectId);
-		if (visObject == null)
-			return;
-		if (visObject instanceof HouseObject<?>) {
-			((HouseObject<?>) visObject).getController().onDialogRequest(player);
-		}
-	}
+    VisibleObject visObject = World.getInstance().findVisibleObject(itemObjectId);
+    if (visObject == null)
+      return;
+    if (visObject instanceof HouseObject<?>) {
+      ((HouseObject<?>) visObject).getController().onDialogRequest(player);
+    }
+  }
 
 }

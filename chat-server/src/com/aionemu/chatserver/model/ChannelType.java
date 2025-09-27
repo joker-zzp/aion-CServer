@@ -8,30 +8,30 @@ import java.util.Map;
  */
 public enum ChannelType {
 
-	REGION("public"),
-	TRADE("trade"),
-	LFG("partyFind"),
-	JOB("job"),
-	LANG("User");
+  REGION("public"),
+  TRADE("trade"),
+  LFG("partyFind"),
+  JOB("job"),
+  LANG("User");
 
-	private static final Map<String, ChannelType> channelByIdentifier = new HashMap<>();
+  private static final Map<String, ChannelType> channelByIdentifier = new HashMap<>();
 
-	private final String identifier;
+  private final String identifier;
 
-	static {
-		for (ChannelType ct : values())
-			channelByIdentifier.put(ct.getIdentifier(), ct);
-	}
+  static {
+    for (ChannelType ct : values())
+      channelByIdentifier.put(ct.getIdentifier(), ct);
+  }
 
-	ChannelType(String identifier) {
-		this.identifier = identifier;
-	}
+  ChannelType(String identifier) {
+    this.identifier = identifier;
+  }
 
-	public String getIdentifier() {
-		return identifier;
-	}
+  public String getIdentifier() {
+    return identifier;
+  }
 
-	public static ChannelType getByIdentifier(String identifier) {
-		return channelByIdentifier.get(identifier);
-	}
+  public static ChannelType getByIdentifier(String identifier) {
+    return channelByIdentifier.get(identifier);
+  }
 }

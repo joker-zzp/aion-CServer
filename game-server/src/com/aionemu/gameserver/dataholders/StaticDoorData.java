@@ -23,31 +23,31 @@ import com.aionemu.gameserver.model.templates.staticdoor.StaticDoorWorld;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class StaticDoorData {
 
-	@XmlElement(name = "world")
-	private List<StaticDoorWorld> staticDoorWorlds;
-	@XmlTransient
-	private Map<Integer, StaticDoorWorld> doorWorlds;
+  @XmlElement(name = "world")
+  private List<StaticDoorWorld> staticDoorWorlds;
+  @XmlTransient
+  private Map<Integer, StaticDoorWorld> doorWorlds;
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		doorWorlds = new HashMap<>();
-		for (StaticDoorWorld world : staticDoorWorlds) {
-			if (doorWorlds.putIfAbsent(world.getWorldId(), world) != null)
-				throw new IllegalArgumentException("Duplicate static door world " + world.getWorldId());
-		}
-		staticDoorWorlds = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    doorWorlds = new HashMap<>();
+    for (StaticDoorWorld world : staticDoorWorlds) {
+      if (doorWorlds.putIfAbsent(world.getWorldId(), world) != null)
+        throw new IllegalArgumentException("Duplicate static door world " + world.getWorldId());
+    }
+    staticDoorWorlds = null;
+  }
 
-	public int size() {
-		return doorWorlds.size();
-	}
+  public int size() {
+    return doorWorlds.size();
+  }
 
-	public Collection<StaticDoorTemplate> getStaticDoors(int worldId) {
-		StaticDoorWorld doorWorld = doorWorlds.get(worldId);
-		return doorWorld == null ? Collections.emptyList() : doorWorld.getStaticDoors();
-	}
+  public Collection<StaticDoorTemplate> getStaticDoors(int worldId) {
+    StaticDoorWorld doorWorld = doorWorlds.get(worldId);
+    return doorWorld == null ? Collections.emptyList() : doorWorld.getStaticDoors();
+  }
 
-	public StaticDoorTemplate getStaticDoor(int worldId, int staticId) {
-		StaticDoorWorld doorWorld = doorWorlds.get(worldId);
-		return doorWorld == null ? null : doorWorld.getStaticDoor(staticId);
-	}
+  public StaticDoorTemplate getStaticDoor(int worldId, int staticId) {
+    StaticDoorWorld doorWorld = doorWorlds.get(worldId);
+    return doorWorld == null ? null : doorWorld.getStaticDoor(staticId);
+  }
 }

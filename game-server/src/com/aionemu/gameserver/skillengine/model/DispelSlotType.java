@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum DispelSlotType {
 
-	BUFF,
-	DEBUFF,
-	SPECIAL2;
+  BUFF,
+  DEBUFF,
+  SPECIAL2;
 
 }

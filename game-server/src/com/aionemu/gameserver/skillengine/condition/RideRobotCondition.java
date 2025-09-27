@@ -14,12 +14,12 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 @XmlType(name = "RideRobotCondition")
 public class RideRobotCondition extends Condition {
 
-	@Override
-	public boolean validate(Skill skill) {
-		if (skill.getEffector() instanceof Player) {
-			return ((Player) skill.getEffector()).isInRobotMode();
-		} else {
-			return true;
-		}
-	}
+  @Override
+  public boolean validate(Skill skill) {
+    if (skill.getEffector() instanceof Player) {
+      return ((Player) skill.getEffector()).isInRobotMode();
+    } else {
+      return true;
+    }
+  }
 }

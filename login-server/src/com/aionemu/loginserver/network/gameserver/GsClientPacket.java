@@ -12,33 +12,33 @@ import com.aionemu.commons.network.packet.BaseClientPacket;
  */
 public abstract class GsClientPacket extends BaseClientPacket<GsConnection> {
 
-	public GsClientPacket() {
-		super(0);
-	}
+  public GsClientPacket() {
+    super(0);
+  }
 
-	/**
-	 * Logger for this class.
-	 */
-	private static final Logger log = LoggerFactory.getLogger(GsClientPacket.class);
+  /**
+   * Logger for this class.
+   */
+  private static final Logger log = LoggerFactory.getLogger(GsClientPacket.class);
 
-	/**
-	 * run runImpl catching and logging Throwable.
-	 */
-	@Override
-	public final void run() {
-		try {
-			runImpl();
-		} catch (Throwable e) {
-			log.warn("error handling gs (" + getConnection().getIP() + ") message " + this, e);
-		}
-	}
+  /**
+   * run runImpl catching and logging Throwable.
+   */
+  @Override
+  public final void run() {
+    try {
+      runImpl();
+    } catch (Throwable e) {
+      log.warn("error handling gs (" + getConnection().getIP() + ") message " + this, e);
+    }
+  }
 
-	/**
-	 * Send new GsServerPacket to connection that is owner of this packet. This method is equivalent to: getConnection().sendPacket(msg);
-	 * 
-	 * @param msg
-	 */
-	protected void sendPacket(GsServerPacket msg) {
-		getConnection().sendPacket(msg);
-	}
+  /**
+   * Send new GsServerPacket to connection that is owner of this packet. This method is equivalent to: getConnection().sendPacket(msg);
+   * 
+   * @param msg
+   */
+  protected void sendPacket(GsServerPacket msg) {
+    getConnection().sendPacket(msg);
+  }
 }

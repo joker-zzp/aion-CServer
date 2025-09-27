@@ -16,21 +16,21 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "FpAttackEffect")
 public class FpAttackEffect extends AbstractOverTimeEffect {
 
-	@Override
-	public void calculate(Effect effect) {
-		// Only players have FP
-		if (effect.getEffected() instanceof Player)
-			super.calculate(effect, null, null);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    // Only players have FP
+    if (effect.getEffected() instanceof Player)
+      super.calculate(effect, null, null);
+  }
 
-	@Override
-	public void onPeriodicAction(Effect effect) {
-		Player effected = (Player) effect.getEffected();
-		int maxFP = effected.getLifeStats().getMaxFp();
-		int newValue = value;
-		// Support for values in percentage
-		if (percent)
-			newValue = (maxFP * value) / 100;
-		effected.getLifeStats().reduceFp(TYPE.FP_DAMAGE, newValue, effect.getSkillId(), LOG.FPATTACK);
-	}
+  @Override
+  public void onPeriodicAction(Effect effect) {
+    Player effected = (Player) effect.getEffected();
+    int maxFP = effected.getLifeStats().getMaxFp();
+    int newValue = value;
+    // Support for values in percentage
+    if (percent)
+      newValue = (maxFP * value) / 100;
+    effected.getLifeStats().reduceFp(TYPE.FP_DAMAGE, newValue, effect.getSkillId(), LOG.FPATTACK);
+  }
 }

@@ -22,45 +22,45 @@ import com.aionemu.gameserver.questEngine.handlers.template.MentorMonsterHunt;
 @XmlType(name = "MentorMonsterHuntData")
 public class MentorMonsterHuntData extends MonsterHuntData {
 
-	@XmlAttribute(name = "min_mente_level")
-	protected int minMenteLevel = 1;
+  @XmlAttribute(name = "min_mente_level")
+  protected int minMenteLevel = 1;
 
-	@XmlAttribute(name = "max_mente_level")
-	protected int maxMenteLevel = 99;
+  @XmlAttribute(name = "max_mente_level")
+  protected int maxMenteLevel = 99;
 
-	public int getMinMenteLevel() {
-		return minMenteLevel;
-	}
+  public int getMinMenteLevel() {
+    return minMenteLevel;
+  }
 
-	public int getMaxMenteLevel() {
-		return maxMenteLevel;
-	}
+  public int getMaxMenteLevel() {
+    return maxMenteLevel;
+  }
 
-	@Override
-	public void register(QuestEngine questEngine) {
-		List<Monster> monsters;
-		QuestTemplate questTemplate = DataManager.QUEST_DATA.getQuestById(id);
+  @Override
+  public void register(QuestEngine questEngine) {
+    List<Monster> monsters;
+    QuestTemplate questTemplate = DataManager.QUEST_DATA.getQuestById(id);
 
-		if (!questTemplate.getQuestKill().isEmpty()) {
-			monsters = new ArrayList<>();
-			for (QuestKill qk : questTemplate.getQuestKill()) {
-				Monster m = new Monster();
-				if (qk.getKillCount() > 0)
-					m.setEndVar(qk.getKillCount());
-				if (qk.getNpcIds() != null)
-					m.addNpcIds(qk.getNpcIds());
-				if (qk.getVar() > 0)
-					m.setVar(qk.getVar());
-				if (qk.getQuestStep() > 0)
-					m.setStep(qk.getQuestStep());
-				if (qk.getSequenceNumber() > 0)
-					m.setVar(qk.getSequenceNumber());
-				monsters.add(m);
-			}
-		} else {
-			monsters = Collections.emptyList();
-		}
+    if (!questTemplate.getQuestKill().isEmpty()) {
+      monsters = new ArrayList<>();
+      for (QuestKill qk : questTemplate.getQuestKill()) {
+        Monster m = new Monster();
+        if (qk.getKillCount() > 0)
+          m.setEndVar(qk.getKillCount());
+        if (qk.getNpcIds() != null)
+          m.addNpcIds(qk.getNpcIds());
+        if (qk.getVar() > 0)
+          m.setVar(qk.getVar());
+        if (qk.getQuestStep() > 0)
+          m.setStep(qk.getQuestStep());
+        if (qk.getSequenceNumber() > 0)
+          m.setVar(qk.getSequenceNumber());
+        monsters.add(m);
+      }
+    } else {
+      monsters = Collections.emptyList();
+    }
 
-		questEngine.addQuestHandler(new MentorMonsterHunt(id, startNpcIds, endNpcIds, monsters, minMenteLevel, maxMenteLevel, reward, rewardNextStep));
-	}
+    questEngine.addQuestHandler(new MentorMonsterHunt(id, startNpcIds, endNpcIds, monsters, minMenteLevel, maxMenteLevel, reward, rewardNextStep));
+  }
 }

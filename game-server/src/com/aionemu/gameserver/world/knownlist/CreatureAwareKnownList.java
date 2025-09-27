@@ -8,12 +8,12 @@ import com.aionemu.gameserver.model.gameobjects.VisibleObject;
  */
 public class CreatureAwareKnownList extends KnownList {
 
-	public CreatureAwareKnownList(VisibleObject owner) {
-		super(owner);
-	}
+  public CreatureAwareKnownList(VisibleObject owner) {
+    super(owner);
+  }
 
-	@Override
-	protected final boolean isAwareOf(VisibleObject newObject) {
-		return newObject instanceof Creature;
-	}
+  @Override
+  protected final boolean isAwareOf(VisibleObject newObject) {
+    return newObject instanceof Creature;
+  }
 }

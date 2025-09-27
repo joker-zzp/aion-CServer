@@ -14,56 +14,56 @@ import com.aionemu.gameserver.model.templates.L10n;
 @XmlAccessorType(XmlAccessType.NONE)
 public class TelelocationTemplate implements L10n {
 
-	/**
-	 * Location Id.
-	 */
-	@XmlAttribute(name = "loc_id", required = true)
-	private int locId;
+  /**
+   * Location Id.
+   */
+  @XmlAttribute(name = "loc_id", required = true)
+  private int locId;
 
-	@XmlAttribute(name = "mapid", required = true)
-	private int mapid = 0;
+  @XmlAttribute(name = "mapid", required = true)
+  private int mapid = 0;
 
-	@XmlAttribute(name = "name_id", required = true)
-	private int nameId;
+  @XmlAttribute(name = "name_id", required = true)
+  private int nameId;
 
-	@XmlAttribute(name = "posX")
-	private float x = 0;
+  @XmlAttribute(name = "posX")
+  private float x = 0;
 
-	@XmlAttribute(name = "posY")
-	private float y = 0;
+  @XmlAttribute(name = "posY")
+  private float y = 0;
 
-	@XmlAttribute(name = "posZ")
-	private float z = 0;
+  @XmlAttribute(name = "posZ")
+  private float z = 0;
 
-	@XmlAttribute(name = "heading")
-	private int heading = 0;
+  @XmlAttribute(name = "heading")
+  private int heading = 0;
 
-	public int getLocId() {
-		return locId;
-	}
+  public int getLocId() {
+    return locId;
+  }
 
-	public int getMapId() {
-		return mapid;
-	}
+  public int getMapId() {
+    return mapid;
+  }
 
-	@Override
-	public int getL10nId() {
-		return nameId;
-	}
+  @Override
+  public int getL10nId() {
+    return nameId;
+  }
 
-	public float getX() {
-		return x;
-	}
+  public float getX() {
+    return x;
+  }
 
-	public float getY() {
-		return y;
-	}
+  public float getY() {
+    return y;
+  }
 
-	public float getZ() {
-		return z;
-	}
+  public float getZ() {
+    return z;
+  }
 
-	public int getHeading() {
-		return heading;
-	}
+  public int getHeading() {
+    return heading;
+  }
 }

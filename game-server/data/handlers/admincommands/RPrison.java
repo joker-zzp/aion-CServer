@@ -14,34 +14,34 @@ import com.aionemu.gameserver.world.World;
  */
 public class RPrison extends AdminCommand {
 
-	public RPrison() {
-		super("rprison", "将玩家从监狱中释放.");
-		setSyntaxInfo("<玩家名> - 示例：//rprison PlayerName");
-	}
+  public RPrison() {
+    super("rprison", "将玩家从监狱中释放.");
+    setSyntaxInfo("<玩家名> - 示例：//rprison PlayerName");
+  }
 
-	@Override
-	public void execute(Player admin, String... params) {
-		if (params.length < 1 || params.length > 2 || (params.length > 0 && "help".equals(params[0]))) {
-			sendInfo(admin);
-			return;
-		}
+  @Override
+  public void execute(Player admin, String... params) {
+    if (params.length < 1 || params.length > 2 || (params.length > 0 && "help".equals(params[0]))) {
+      sendInfo(admin);
+      return;
+    }
 
-		try {
-			Player playerFromPrison = World.getInstance().getPlayer(Util.convertName(params[0]));
+    try {
+      Player playerFromPrison = World.getInstance().getPlayer(Util.convertName(params[0]));
 
-			if (playerFromPrison != null) {
-				PunishmentService.setIsInPrison(playerFromPrison, false, 0, "");
-				PacketSendUtility.sendMessage(admin, "玩家 " + playerFromPrison.getName() + " 已从监狱中释放。");
-			}
-		} catch (NoSuchElementException nsee) {
-			sendInfo(admin);
-		} catch (Exception e) {
-			sendInfo(admin);
-		}
-	}
+      if (playerFromPrison != null) {
+        PunishmentService.setIsInPrison(playerFromPrison, false, 0, "");
+        PacketSendUtility.sendMessage(admin, "玩家 " + playerFromPrison.getName() + " 已从监狱中释放。");
+      }
+    } catch (NoSuchElementException nsee) {
+      sendInfo(admin);
+    } catch (Exception e) {
+      sendInfo(admin);
+    }
+  }
 
-	// @Override
-	// public void info(Player player, String message) {
-	// 	PacketSendUtility.sendMessage(player, "语法: //rprison <玩家名>");
-	// }
+  // @Override
+  // public void info(Player player, String message) {
+  //   PacketSendUtility.sendMessage(player, "语法: //rprison <玩家名>");
+  // }
 }

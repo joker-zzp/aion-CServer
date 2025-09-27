@@ -21,66 +21,66 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("dredgion_commander")
 public class DredgionCommanderAI extends SiegeNpcAI {
 
-	private Npc fortressBoss;
+  private Npc fortressBoss;
 
-	public DredgionCommanderAI(Npc owner) {
-		super(owner);
-	}
+  public DredgionCommanderAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		ThreadPoolManager.getInstance().schedule(this::findFortressBoss, 3000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    ThreadPoolManager.getInstance().schedule(this::findFortressBoss, 3000);
+  }
 
-	private void findFortressBoss() {
-		for (VisibleObject vo : getKnownList().getKnownObjects().values()) {
-			if (vo instanceof Npc boss) {
-				if (boss.getRace() == Race.GCHIEF_LIGHT || boss.getRace() == Race.GCHIEF_DARK) {
-					fortressBoss = boss;
-					getAggroList().addHate(fortressBoss, 500000);
-					break;
-				}
-			}
-		}
-	}
+  private void findFortressBoss() {
+    for (VisibleObject vo : getKnownList().getKnownObjects().values()) {
+      if (vo instanceof Npc boss) {
+        if (boss.getRace() == Race.GCHIEF_LIGHT || boss.getRace() == Race.GCHIEF_DARK) {
+          fortressBoss = boss;
+          getAggroList().addHate(fortressBoss, 500000);
+          break;
+        }
+      }
+    }
+  }
 
-	@Override
-	protected void handleMoveArrived() {
-		super.handleMoveArrived();
-		if (getOwner().getDistanceToSpawnLocation() >= 25.0d && fortressBoss != null) {
-			getAggroList().addHate(fortressBoss, 1000000);
-			AIActions.targetCreature(this, fortressBoss);
-			getOwner().getMoveController().moveToPoint(fortressBoss.getX(), fortressBoss.getY(), fortressBoss.getZ());
-		}
-	}
+  @Override
+  protected void handleMoveArrived() {
+    super.handleMoveArrived();
+    if (getOwner().getDistanceToSpawnLocation() >= 25.0d && fortressBoss != null) {
+      getAggroList().addHate(fortressBoss, 1000000);
+      AIActions.targetCreature(this, fortressBoss);
+      getOwner().getMoveController().moveToPoint(fortressBoss.getX(), fortressBoss.getY(), fortressBoss.getZ());
+    }
+  }
 
-	@Override
-	public float modifyOwnerDamage(float damage, Creature effected, Effect effect) {
-		if (effected == fortressBoss)
-			damage *= SiegeConfig.FORTRESS_PROTECTOR_HEALTH_MULTIPLIER;
-		return damage;
-	}
+  @Override
+  public float modifyOwnerDamage(float damage, Creature effected, Effect effect) {
+    if (effected == fortressBoss)
+      damage *= SiegeConfig.FORTRESS_PROTECTOR_HEALTH_MULTIPLIER;
+    return damage;
+  }
 
-	@Override
-	public void modifyOwnerStat(Stat2 stat) {
-		if (stat.getStat() == StatEnum.MAXHP)
-			stat.setBaseRate(SiegeConfig.FORTRESS_PROTECTOR_HEALTH_MULTIPLIER);
-	}
+  @Override
+  public void modifyOwnerStat(Stat2 stat) {
+    if (stat.getStat() == StatEnum.MAXHP)
+      stat.setBaseRate(SiegeConfig.FORTRESS_PROTECTOR_HEALTH_MULTIPLIER);
+  }
 
-	@Override
-	protected void handleDespawned() {
-		fortressBoss = null;
-		super.handleDespawned();
-	}
+  @Override
+  protected void handleDespawned() {
+    fortressBoss = null;
+    super.handleDespawned();
+  }
 
-	@Override
-	protected void handleDied() {
-		FortressAssault assault = BalaurAssaultService.getInstance().getFortressAssaultBySiegeId(((SiegeNpc) getOwner()).getSiegeId());
-		if (assault != null)
-			assault.onDredgionCommanderKilled();
+  @Override
+  protected void handleDied() {
+    FortressAssault assault = BalaurAssaultService.getInstance().getFortressAssaultBySiegeId(((SiegeNpc) getOwner()).getSiegeId());
+    if (assault != null)
+      assault.onDredgionCommanderKilled();
 
-		fortressBoss = null;
-		super.handleDied();
-	}
+    fortressBoss = null;
+    super.handleDied();
+  }
 }

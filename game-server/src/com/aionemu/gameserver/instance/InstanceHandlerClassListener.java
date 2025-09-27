@@ -13,40 +13,40 @@ import com.aionemu.gameserver.instance.handlers.InstanceHandler;
  */
 public class InstanceHandlerClassListener implements ClassListener {
 
-	private static final Logger log = LoggerFactory.getLogger(InstanceHandlerClassListener.class);
+  private static final Logger log = LoggerFactory.getLogger(InstanceHandlerClassListener.class);
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void postLoad(Class<?>[] classes) {
-		for (Class<?> c : classes) {
-			if (log.isDebugEnabled())
-				log.debug("Load class " + c.getName());
+  @SuppressWarnings("unchecked")
+  @Override
+  public void postLoad(Class<?>[] classes) {
+    for (Class<?> c : classes) {
+      if (log.isDebugEnabled())
+        log.debug("Load class " + c.getName());
 
-			if (!isValidClass(c))
-				continue;
+      if (!isValidClass(c))
+        continue;
 
-			if (InstanceHandler.class.isAssignableFrom(c))
-				InstanceEngine.getInstance().addInstanceHandlerClass((Class<? extends InstanceHandler>) c);
-		}
-	}
+      if (InstanceHandler.class.isAssignableFrom(c))
+        InstanceEngine.getInstance().addInstanceHandlerClass((Class<? extends InstanceHandler>) c);
+    }
+  }
 
-	@Override
-	public void preUnload(Class<?>[] classes) {
-		if (log.isDebugEnabled()) {
-			for (Class<?> c : classes)
-				log.debug("Unload class " + c.getName());
-		}
-	}
+  @Override
+  public void preUnload(Class<?>[] classes) {
+    if (log.isDebugEnabled()) {
+      for (Class<?> c : classes)
+        log.debug("Unload class " + c.getName());
+    }
+  }
 
-	public boolean isValidClass(Class<?> clazz) {
-		final int modifiers = clazz.getModifiers();
+  public boolean isValidClass(Class<?> clazz) {
+    final int modifiers = clazz.getModifiers();
 
-		if (Modifier.isAbstract(modifiers) || Modifier.isInterface(modifiers))
-			return false;
+    if (Modifier.isAbstract(modifiers) || Modifier.isInterface(modifiers))
+      return false;
 
-		if (!Modifier.isPublic(modifiers))
-			return false;
+    if (!Modifier.isPublic(modifiers))
+      return false;
 
-		return true;
-	}
+    return true;
+  }
 }

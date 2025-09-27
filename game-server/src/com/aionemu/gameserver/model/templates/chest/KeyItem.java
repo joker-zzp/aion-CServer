@@ -14,16 +14,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "KeyItem")
 public class KeyItem {
 
-	@XmlAttribute(name = "item_ids")
-	private List<Integer> itemIds;
-	@XmlAttribute(name = "count")
-	private int count;
+  @XmlAttribute(name = "item_ids")
+  private List<Integer> itemIds;
+  @XmlAttribute(name = "count")
+  private int count;
 
-	public List<Integer> getItemIds() {
-		return itemIds;
-	}
+  public List<Integer> getItemIds() {
+    return itemIds;
+  }
 
-	public int getCount() {
-		return count;
-	}
+  public int getCount() {
+    return count;
+  }
 }

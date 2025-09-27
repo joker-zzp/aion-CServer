@@ -13,70 +13,70 @@ import com.aionemu.gameserver.world.knownlist.NpcKnownList;
  */
 public class Homing extends SummonedObject<Creature> {
 
-	private final int skillId;
-	private final ItemAttackType attackType;
+  private final int skillId;
+  private final ItemAttackType attackType;
 
-	/**
-	 * Number of performed attacks
-	 */
-	private int attackCount;
+  /**
+   * Number of performed attacks
+   */
+  private int attackCount;
 
-	public Homing(NpcController controller, SpawnTemplate spawnTemplate, byte level, Creature creator, int skillId) {
-		super(controller, spawnTemplate, level, creator);
-		this.skillId = skillId;
-		this.attackType = findAttackType();
-		setMasterName("");
-		setKnownlist(new NpcKnownList(this));
-		setEffectController(new EffectController(this));
-	}
+  public Homing(NpcController controller, SpawnTemplate spawnTemplate, byte level, Creature creator, int skillId) {
+    super(controller, spawnTemplate, level, creator);
+    this.skillId = skillId;
+    this.attackType = findAttackType();
+    setMasterName("");
+    setKnownlist(new NpcKnownList(this));
+    setEffectController(new EffectController(this));
+  }
 
-	@Override
-	protected void setupStatContainers() {
-		setGameStats(new HomingGameStats(this));
-		setLifeStats(new NpcLifeStats(this));
-	}
+  @Override
+  protected void setupStatContainers() {
+    setGameStats(new HomingGameStats(this));
+    setLifeStats(new NpcLifeStats(this));
+  }
 
-	/**
-	 * @param attackCount
-	 *          the attackCount to set
-	 */
-	public void setAttackCount(int attackCount) {
-		this.attackCount = attackCount;
-	}
+  /**
+   * @param attackCount
+   *          the attackCount to set
+   */
+  public void setAttackCount(int attackCount) {
+    this.attackCount = attackCount;
+  }
 
-	/**
-	 * @return the attackCount
-	 */
-	public int getAttackCount() {
-		return attackCount;
-	}
+  /**
+   * @return the attackCount
+   */
+  public int getAttackCount() {
+    return attackCount;
+  }
 
-	/**
-	 * @return NpcObjectType.HOMING
-	 */
-	@Override
-	public NpcObjectType getNpcObjectType() {
-		return NpcObjectType.HOMING;
-	}
+  /**
+   * @return NpcObjectType.HOMING
+   */
+  @Override
+  public NpcObjectType getNpcObjectType() {
+    return NpcObjectType.HOMING;
+  }
 
-	@Override
-	public ItemAttackType getAttackType() {
-		return attackType;
-	}
+  @Override
+  public ItemAttackType getAttackType() {
+    return attackType;
+  }
 
-	public int getSkillId() {
-		return skillId;
-	}
+  public int getSkillId() {
+    return skillId;
+  }
 
-	private ItemAttackType findAttackType() {
-		if (getName().contains("fire"))
-			return ItemAttackType.MAGICAL_FIRE;
-		else if (getName().contains("stone") || getName().equals("gryphu"))
-			return ItemAttackType.MAGICAL_EARTH;
-		else if (getName().contains("water"))
-			return ItemAttackType.MAGICAL_WATER;
-		else if ((getName().contains("wind")) || (getName().contains("cyclone")) || (getName().contains("elemental")))
-			return ItemAttackType.MAGICAL_WIND;
-		return ItemAttackType.PHYSICAL;
-	}
+  private ItemAttackType findAttackType() {
+    if (getName().contains("fire"))
+      return ItemAttackType.MAGICAL_FIRE;
+    else if (getName().contains("stone") || getName().equals("gryphu"))
+      return ItemAttackType.MAGICAL_EARTH;
+    else if (getName().contains("water"))
+      return ItemAttackType.MAGICAL_WATER;
+    else if ((getName().contains("wind")) || (getName().contains("cyclone")) || (getName().contains("elemental")))
+      return ItemAttackType.MAGICAL_WIND;
+    return ItemAttackType.PHYSICAL;
+  }
 }

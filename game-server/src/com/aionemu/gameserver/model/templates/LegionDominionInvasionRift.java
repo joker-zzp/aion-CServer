@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "LegionDominionInvasionRift")
 public class LegionDominionInvasionRift {
 
-	@XmlAttribute(name = "key_item_id", required = true)
-	private int keyItemId;
-	@XmlAttribute(name = "rift_id", required = true)
-	private int riftId;
+  @XmlAttribute(name = "key_item_id", required = true)
+  private int keyItemId;
+  @XmlAttribute(name = "rift_id", required = true)
+  private int riftId;
 
-	public int getRiftId() {
-		return riftId;
-	}
+  public int getRiftId() {
+    return riftId;
+  }
 
-	public int getKeyItemId() {
-		return keyItemId;
-	}
+  public int getKeyItemId() {
+    return keyItemId;
+  }
 }

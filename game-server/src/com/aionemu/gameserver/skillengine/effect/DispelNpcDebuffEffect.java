@@ -15,8 +15,8 @@ import com.aionemu.gameserver.skillengine.model.SkillTargetSlot;
 @XmlType(name = "DispelNpcDebuffEffect")
 public class DispelNpcDebuffEffect extends AbstractDispelEffect {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		super.applyEffect(effect, DispelCategoryType.NPC_DEBUFF_PHYSICAL, SkillTargetSlot.DEBUFF);
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    super.applyEffect(effect, DispelCategoryType.NPC_DEBUFF_PHYSICAL, SkillTargetSlot.DEBUFF);
+  }
 }

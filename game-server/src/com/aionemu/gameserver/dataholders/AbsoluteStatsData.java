@@ -18,25 +18,25 @@ import com.aionemu.gameserver.model.templates.stats.ModifiersTemplate;
 @XmlRootElement(name = "absolute_stats")
 public class AbsoluteStatsData {
 
-	@XmlElement(name = "stats_set", required = true)
-	protected List<AbsoluteStatsTemplate> absoluteStats;
+  @XmlElement(name = "stats_set", required = true)
+  protected List<AbsoluteStatsTemplate> absoluteStats;
 
-	@XmlTransient
-	private final Map<Integer, ModifiersTemplate> absoluteStatsData = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, ModifiersTemplate> absoluteStatsData = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (AbsoluteStatsTemplate stats : absoluteStats) {
-			absoluteStatsData.put(stats.getId(), stats.getModifiers());
-		}
-		absoluteStats = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (AbsoluteStatsTemplate stats : absoluteStats) {
+      absoluteStatsData.put(stats.getId(), stats.getModifiers());
+    }
+    absoluteStats = null;
+  }
 
-	public ModifiersTemplate getTemplate(int statSetId) {
-		return absoluteStatsData.get(statSetId);
-	}
+  public ModifiersTemplate getTemplate(int statSetId) {
+    return absoluteStatsData.get(statSetId);
+  }
 
-	public int size() {
-		return absoluteStatsData.size();
-	}
+  public int size() {
+    return absoluteStatsData.size();
+  }
 
 }

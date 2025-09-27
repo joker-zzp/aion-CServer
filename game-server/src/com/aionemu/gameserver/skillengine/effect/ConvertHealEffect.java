@@ -12,29 +12,29 @@ import com.aionemu.gameserver.skillengine.model.ShieldType;
  */
 public class ConvertHealEffect extends ShieldEffect {
 
-	@XmlAttribute
-	protected HealType type;
-	@XmlAttribute(name = "hitpercent")
-	protected boolean hitPercent;
+  @XmlAttribute
+  protected HealType type;
+  @XmlAttribute(name = "hitpercent")
+  protected boolean hitPercent;
 
-	@Override
-	public void startEffect(final Effect effect) {
-		int valueWithDelta = calculateBaseValue(effect);
-		int hitValueWithDelta = hitvalue + hitdelta * effect.getSkillLevel();
+  @Override
+  public void startEffect(final Effect effect) {
+    int valueWithDelta = calculateBaseValue(effect);
+    int hitValueWithDelta = hitvalue + hitdelta * effect.getSkillLevel();
 
-		AttackShieldObserver asObserver = new AttackShieldObserver(hitValueWithDelta, valueWithDelta, percent, hitPercent, effect, hitType, getType(),
-			hitTypeProb, 0, 0, type, 0);
+    AttackShieldObserver asObserver = new AttackShieldObserver(hitValueWithDelta, valueWithDelta, percent, hitPercent, effect, hitType, getType(),
+      hitTypeProb, 0, 0, type, 0);
 
-		effect.addObserver(effect.getEffected(), asObserver);
-	}
+    effect.addObserver(effect.getEffected(), asObserver);
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-	}
+  @Override
+  public void endEffect(Effect effect) {
+  }
 
-	@Override
-	public ShieldType getType() {
-		return ShieldType.CONVERT;
-	}
+  @Override
+  public ShieldType getType() {
+    return ShieldType.CONVERT;
+  }
 
 }

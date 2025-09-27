@@ -12,22 +12,22 @@ import com.aionemu.gameserver.services.ExchangeService;
  */
 public class CM_EXCHANGE_ADD_ITEM extends AionClientPacket {
 
-	public int itemObjId;
-	public int itemCount;
+  public int itemObjId;
+  public int itemCount;
 
-	public CM_EXCHANGE_ADD_ITEM(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_EXCHANGE_ADD_ITEM(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		itemObjId = readD();
-		itemCount = readD();
-	}
+  @Override
+  protected void readImpl() {
+    itemObjId = readD();
+    itemCount = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		ExchangeService.getInstance().addItem(activePlayer, itemObjId, itemCount);
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    ExchangeService.getInstance().addItem(activePlayer, itemObjId, itemCount);
+  }
 }

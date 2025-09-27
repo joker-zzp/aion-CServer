@@ -16,31 +16,31 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "CarveSignetEffect")
 public class CarveSignetEffect extends DamageEffect {
 
-	@XmlAttribute(name = "signet_increment", required = true)
-	protected int signetIncrement = 1;
-	@XmlAttribute(name = "signet_cap", required = true)
-	protected int signetCap;
-	@XmlAttribute(name = "signet_id", required = true)
-	protected int signetId;
-	@XmlAttribute(required = true)
-	protected String signet;
-	@XmlAttribute(required = true)
-	protected int prob = 100;
+  @XmlAttribute(name = "signet_increment", required = true)
+  protected int signetIncrement = 1;
+  @XmlAttribute(name = "signet_cap", required = true)
+  protected int signetCap;
+  @XmlAttribute(name = "signet_id", required = true)
+  protected int signetId;
+  @XmlAttribute(required = true)
+  protected String signet;
+  @XmlAttribute(required = true)
+  protected int prob = 100;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		super.applyEffect(effect);
+  @Override
+  public void applyEffect(Effect effect) {
+    super.applyEffect(effect);
 
-		if (Rnd.chance() >= prob)
-			return;
+    if (Rnd.chance() >= prob)
+      return;
 
-		int nextSignetLevel = signetIncrement;
-		Effect activeSignet = effect.getEffected().getEffectController().getAbnormalEffect(signet);
-		if (activeSignet != null) {
-			activeSignet.endEffect();
-			nextSignetLevel = Math.min(activeSignet.getCarvedSignet() + signetIncrement, Math.max(signetCap, activeSignet.getCarvedSignet()));
-		}
-		Effect signet = SkillEngine.getInstance().applyEffect(signetId + nextSignetLevel - 1, effect.getEffector(), effect.getEffected());
-		signet.setCarvedSignet(nextSignetLevel);
-	}
+    int nextSignetLevel = signetIncrement;
+    Effect activeSignet = effect.getEffected().getEffectController().getAbnormalEffect(signet);
+    if (activeSignet != null) {
+      activeSignet.endEffect();
+      nextSignetLevel = Math.min(activeSignet.getCarvedSignet() + signetIncrement, Math.max(signetCap, activeSignet.getCarvedSignet()));
+    }
+    Effect signet = SkillEngine.getInstance().applyEffect(signetId + nextSignetLevel - 1, effect.getEffector(), effect.getEffected());
+    signet.setCarvedSignet(nextSignetLevel);
+  }
 }

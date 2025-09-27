@@ -189,17 +189,17 @@ public final class BufferUtils {
      *            the postion to place the data; in terms of vectors not floats
      */
     public static void setInBuffer(Vector3f vector, FloatBuffer buf, int index) {
-    	if(buf == null) {
-    		return;
-    	}
+      if(buf == null) {
+        return;
+      }
         if(vector == null) {
-        	buf.put(index * 3, 0);
+          buf.put(index * 3, 0);
             buf.put((index * 3) + 1, 0);
             buf.put((index * 3) + 2, 0);
         } else {
-        	buf.put(index * 3, vector.x);
-        	buf.put((index * 3) + 1, vector.y);
-        	buf.put((index * 3) + 2, vector.z);
+          buf.put(index * 3, vector.x);
+          buf.put((index * 3) + 1, vector.y);
+          buf.put((index * 3) + 2, vector.z);
         }
     }
 

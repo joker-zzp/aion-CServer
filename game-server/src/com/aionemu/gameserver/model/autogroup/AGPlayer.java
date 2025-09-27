@@ -9,7 +9,7 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  */
 public record AGPlayer(int objectId, Race race, PlayerClass playerClass, String name) {
 
-	public AGPlayer(Player player) {
-		this(player.getObjectId(), player.getRace(), player.getPlayerClass(), player.getName());
-	}
+  public AGPlayer(Player player) {
+    this(player.getObjectId(), player.getRace(), player.getPlayerClass(), player.getName());
+  }
 }

@@ -17,48 +17,48 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @XmlType(name = "OneTimeBoostSkillAttackEffect")
 public class OneTimeBoostSkillAttackEffect extends BufEffect {
 
-	@XmlAttribute
-	private int count;
+  @XmlAttribute
+  private int count;
 
-	@XmlAttribute
-	private SkillType type;
+  @XmlAttribute
+  private SkillType type;
 
-	@Override
-	public void startEffect(final Effect effect) {
-		super.startEffect(effect);
+  @Override
+  public void startEffect(final Effect effect) {
+    super.startEffect(effect);
 
-		final float percent = 1.0f + value / 100.0f;
-		switch (type) {
-			case PHYSICAL, MAGICAL, ALL ->
-				effect.addObserver(effect.getEffected(), new AttackCalcObserver() {
+    final float percent = 1.0f + value / 100.0f;
+    switch (type) {
+      case PHYSICAL, MAGICAL, ALL ->
+        effect.addObserver(effect.getEffected(), new AttackCalcObserver() {
 
-					private int boostCount = 0;
+          private int boostCount = 0;
 
-					@Override
-					public float getBasePhysicalDamageMultiplier(boolean isSkill) {
-						if (isSkill && type != SkillType.MAGICAL && boostCount++ < count) {
-							if (boostCount == count)
-								removeEffect(effect);
-							return percent;
-						}
-						return 1.0f;
-					}
+          @Override
+          public float getBasePhysicalDamageMultiplier(boolean isSkill) {
+            if (isSkill && type != SkillType.MAGICAL && boostCount++ < count) {
+              if (boostCount == count)
+                removeEffect(effect);
+              return percent;
+            }
+            return 1.0f;
+          }
 
-					@Override
-					public float getBaseMagicalDamageMultiplier() {
-						if (type != SkillType.PHYSICAL && boostCount++ < count) {
-							if (boostCount == count)
-								removeEffect(effect);
-							return percent;
-						}
-						return 1.0f;
-					}
-				});
-		}
-	}
+          @Override
+          public float getBaseMagicalDamageMultiplier() {
+            if (type != SkillType.PHYSICAL && boostCount++ < count) {
+              if (boostCount == count)
+                removeEffect(effect);
+              return percent;
+            }
+            return 1.0f;
+          }
+        });
+    }
+  }
 
-	private void removeEffect(Effect effect) {
-		ThreadPoolManager.getInstance().schedule(() -> effect.getEffected().getEffectController().removeEffect(effect.getSkillId()), 100);
-	}
+  private void removeEffect(Effect effect) {
+    ThreadPoolManager.getInstance().schedule(() -> effect.getEffected().getEffectController().removeEffect(effect.getSkillId()), 100);
+  }
 
 }

@@ -23,72 +23,72 @@ import com.aionemu.gameserver.utils.audit.AuditLogger;
  */
 public class CM_TARGET_SELECT extends AionClientPacket {
 
-	/**
-	 * Target object id that client wants to select or 0 if wants to unselect
-	 */
-	private int targetObjectId;
-	private byte type;
+  /**
+   * Target object id that client wants to select or 0 if wants to unselect
+   */
+  private int targetObjectId;
+  private byte type;
 
-	/**
-	 * Constructs new client packet instance.
-	 *
-	 * @param opcode
-	 */
-	public CM_TARGET_SELECT(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * Constructs new client packet instance.
+   *
+   * @param opcode
+   */
+  public CM_TARGET_SELECT(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	/**
-	 * Read packet.<br>
-	 * d - object id; c - selection type;
-	 */
-	@Override
-	protected void readImpl() {
-		targetObjectId = readD();
-		type = readC();
-	}
+  /**
+   * Read packet.<br>
+   * d - object id; c - selection type;
+   */
+  @Override
+  protected void readImpl() {
+    targetObjectId = readD();
+    type = readC();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
 
-		VisibleObject obj;
-		VisibleObject oldTarget = player.getTarget();
+    VisibleObject obj;
+    VisibleObject oldTarget = player.getTarget();
 
-		if (targetObjectId == player.getObjectId())
-			obj = player;
-		else {
-			obj = player.getKnownList().getObject(targetObjectId);
+    if (targetObjectId == player.getObjectId())
+      obj = player;
+    else {
+      obj = player.getKnownList().getObject(targetObjectId);
 
-			if (obj == null && player.isInTeam()) {
-				TeamMember<Player> member = player.getCurrentTeam().getMember(targetObjectId);
-				if (member != null) {
-					obj = member.getObject();
-				}
-			}
-		}
+      if (obj == null && player.isInTeam()) {
+        TeamMember<Player> member = player.getCurrentTeam().getMember(targetObjectId);
+        if (member != null) {
+          obj = member.getObject();
+        }
+      }
+    }
 
-		if (obj != null) {
-			if (type == 1) {
-				if (obj.getTarget() == null)
-					return;
-				player.setTarget(obj.getTarget());
-			} else
-				player.setTarget(obj);
+    if (obj != null) {
+      if (type == 1) {
+        if (obj.getTarget() == null)
+          return;
+        player.setTarget(obj.getTarget());
+      } else
+        player.setTarget(obj);
 
-			if (!player.equals(obj) && !player.canSee(obj))
-				AuditLogger.log(player, "possibly used radar hack: targeting invisible " + obj);
-		} else
-			player.setTarget(null);
+      if (!player.equals(obj) && !player.canSee(obj))
+        AuditLogger.log(player, "possibly used radar hack: targeting invisible " + obj);
+    } else
+      player.setTarget(null);
 
-		if (oldTarget instanceof Npc) {
-			Npc npc = (Npc) oldTarget;
-			if (npc.getObjectTemplate().isDialogNpc()) {
-				npc.getAi().think();
-			}
-		}
+    if (oldTarget instanceof Npc) {
+      Npc npc = (Npc) oldTarget;
+      if (npc.getObjectTemplate().isDialogNpc()) {
+        npc.getAi().think();
+      }
+    }
 
-		sendPacket(new SM_TARGET_SELECTED(player.getTarget()));
-		PacketSendUtility.broadcastToSightedPlayers(player, new SM_TARGET_UPDATE(player));
-	}
+    sendPacket(new SM_TARGET_SELECTED(player.getTarget()));
+    PacketSendUtility.broadcastToSightedPlayers(player, new SM_TARGET_UPDATE(player));
+  }
 }

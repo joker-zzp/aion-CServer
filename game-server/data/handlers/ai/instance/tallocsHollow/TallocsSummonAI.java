@@ -25,41 +25,41 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("tallocssummon")
 public class TallocsSummonAI extends NpcAI {
 
-	private final AtomicBoolean isTransformed = new AtomicBoolean(false);
+  private final AtomicBoolean isTransformed = new AtomicBoolean(false);
 
-	public TallocsSummonAI(Npc owner) {
-		super(owner);
-	}
+  public TallocsSummonAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		if (dialogActionId == MAKE_MERCENARY && isTransformed.compareAndSet(false, true)) {
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
-			if (player.getSummon() != null) {
-				PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_SKILL_SUMMON_ALREADY_HAVE_A_FOLLOWER());
-				return true;
-			}
-			SpawnTemplate st = getSpawnTemplate();
-			SpawnTemplate spawnTemplate = SpawnEngine.newSingleTimeSpawn(st.getWorldId(), getNpcId(), st.getX(), st.getY(), st.getZ(), st.getHeading(), 0,
-				SpawnTemplate.NO_AI);
-			Summon summon = new Summon(getObjectId(), new SummonController(), spawnTemplate, getObjectTemplate(), player, 0, false);
-			player.setSummon(summon);
-			summon.setTarget(player.getTarget());
-			summon.setKnownlist(getKnownList());
-			summon.setEffectController(new EffectController(summon));
-			summon.setPosition(getPosition());
-			summon.setLifeStats(getLifeStats());
-			PacketSendUtility.sendPacket(player, new SM_TRANSFORM_IN_SUMMON(player, getObjectId()));
-			PacketSendUtility.sendPacket(player, new SM_CUSTOM_SETTINGS(getObjectId(), 0, CreatureType.FRIEND.getId(), 0));
-			summon.setState(CreatureState.ACTIVE, true);
-			PacketSendUtility.broadcastPacket(summon, new SM_EMOTION(summon, EmotionType.CHANGE_SPEED, 0, summon.getObjectId()));
-		}
-		return true;
-	}
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    if (dialogActionId == MAKE_MERCENARY && isTransformed.compareAndSet(false, true)) {
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 0));
+      if (player.getSummon() != null) {
+        PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_SKILL_SUMMON_ALREADY_HAVE_A_FOLLOWER());
+        return true;
+      }
+      SpawnTemplate st = getSpawnTemplate();
+      SpawnTemplate spawnTemplate = SpawnEngine.newSingleTimeSpawn(st.getWorldId(), getNpcId(), st.getX(), st.getY(), st.getZ(), st.getHeading(), 0,
+        SpawnTemplate.NO_AI);
+      Summon summon = new Summon(getObjectId(), new SummonController(), spawnTemplate, getObjectTemplate(), player, 0, false);
+      player.setSummon(summon);
+      summon.setTarget(player.getTarget());
+      summon.setKnownlist(getKnownList());
+      summon.setEffectController(new EffectController(summon));
+      summon.setPosition(getPosition());
+      summon.setLifeStats(getLifeStats());
+      PacketSendUtility.sendPacket(player, new SM_TRANSFORM_IN_SUMMON(player, getObjectId()));
+      PacketSendUtility.sendPacket(player, new SM_CUSTOM_SETTINGS(getObjectId(), 0, CreatureType.FRIEND.getId(), 0));
+      summon.setState(CreatureState.ACTIVE, true);
+      PacketSendUtility.broadcastPacket(summon, new SM_EMOTION(summon, EmotionType.CHANGE_SPEED, 0, summon.getObjectId()));
+    }
+    return true;
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		if (!isTransformed.get())
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 10));
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    if (!isTransformed.get())
+      PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 10));
+  }
 }

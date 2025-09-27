@@ -14,29 +14,29 @@ import ai.portals.PortalAI;
 @AIName("kamar_teleport")
 public class KamarTeleportAI extends PortalAI {
 
-	protected int remainingUses;
+  protected int remainingUses;
 
-	public KamarTeleportAI(Npc owner) {
-		super(owner);
-	}
+  public KamarTeleportAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		remainingUses = 25;
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    remainingUses = 25;
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		if (remainingUses <= 0) {
-			PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1500906));
-			return;
-		}
-		super.handleUseItemFinish(player);
-		if (--remainingUses == 0)
-			PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1500906));
-		else
-			PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1500905, remainingUses));
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    if (remainingUses <= 0) {
+      PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1500906));
+      return;
+    }
+    super.handleUseItemFinish(player);
+    if (--remainingUses == 0)
+      PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1500906));
+    else
+      PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1500905, remainingUses));
+  }
 
 }

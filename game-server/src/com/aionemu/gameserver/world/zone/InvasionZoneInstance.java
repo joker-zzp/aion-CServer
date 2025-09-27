@@ -7,11 +7,11 @@ import com.aionemu.gameserver.model.templates.zone.ZoneInfo;
  */
 public class InvasionZoneInstance extends ZoneInstance {
 
-	/**
-	 * @param mapId
-	 * @param template
-	 */
-	public InvasionZoneInstance(int mapId, ZoneInfo template) {
-		super(mapId, template);
-	}
+  /**
+   * @param mapId
+   * @param template
+   */
+  public InvasionZoneInstance(int mapId, ZoneInfo template) {
+    super(mapId, template);
+  }
 }

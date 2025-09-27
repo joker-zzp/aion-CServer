@@ -17,37 +17,37 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 @XmlType(name = "QuestStatusCondition")
 public class QuestStatusCondition extends QuestCondition {
 
-	@XmlAttribute(required = true)
-	protected QuestStatus value;
-	@XmlAttribute(name = "quest_id")
-	protected Integer questId;
+  @XmlAttribute(required = true)
+  protected QuestStatus value;
+  @XmlAttribute(name = "quest_id")
+  protected Integer questId;
 
-	@Override
-	public boolean doCheck(QuestEnv env) {
-		Player player = env.getPlayer();
-		int qstatus = 0;
-		int id = env.getQuestId();
-		if (questId != null)
-			id = questId;
-		QuestState qs = player.getQuestStateList().getQuestState(id);
-		if (qs != null)
-			qstatus = qs.getStatus().value();
+  @Override
+  public boolean doCheck(QuestEnv env) {
+    Player player = env.getPlayer();
+    int qstatus = 0;
+    int id = env.getQuestId();
+    if (questId != null)
+      id = questId;
+    QuestState qs = player.getQuestStateList().getQuestState(id);
+    if (qs != null)
+      qstatus = qs.getStatus().value();
 
-		switch (getOp()) {
-			case EQUAL:
-				return qstatus == value.value();
-			case GREATER:
-				return qstatus > value.value();
-			case GREATER_EQUAL:
-				return qstatus >= value.value();
-			case LESSER:
-				return qstatus < value.value();
-			case LESSER_EQUAL:
-				return qstatus <= value.value();
-			case NOT_EQUAL:
-				return qstatus != value.value();
-			default:
-				return false;
-		}
-	}
+    switch (getOp()) {
+      case EQUAL:
+        return qstatus == value.value();
+      case GREATER:
+        return qstatus > value.value();
+      case GREATER_EQUAL:
+        return qstatus >= value.value();
+      case LESSER:
+        return qstatus < value.value();
+      case LESSER_EQUAL:
+        return qstatus <= value.value();
+      case NOT_EQUAL:
+        return qstatus != value.value();
+      default:
+        return false;
+    }
+  }
 }

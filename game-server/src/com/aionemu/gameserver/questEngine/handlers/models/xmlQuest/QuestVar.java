@@ -18,22 +18,22 @@ import com.aionemu.gameserver.questEngine.model.QuestState;
 @XmlType(name = "QuestVar", propOrder = { "npc" })
 public class QuestVar {
 
-	@XmlElement(name = "npc")
-	protected List<QuestNpc> npc;
-	
-	@XmlAttribute(required = true)
-	protected int value;
+  @XmlElement(name = "npc")
+  protected List<QuestNpc> npc;
+  
+  @XmlAttribute(required = true)
+  protected int value;
 
-	public boolean operate(QuestEnv env, QuestState qs) {
-		int var = -1;
-		if (qs != null)
-			var = qs.getQuestVars().getQuestVars();
-		if (var != value)
-			return false;
-		for (QuestNpc questNpc : npc) {
-			if (questNpc.operate(env, qs))
-				return true;
-		}
-		return false;
-	}
+  public boolean operate(QuestEnv env, QuestState qs) {
+    int var = -1;
+    if (qs != null)
+      var = qs.getQuestVars().getQuestVars();
+    if (var != value)
+      return false;
+    for (QuestNpc questNpc : npc) {
+      if (questNpc.operate(env, qs))
+        return true;
+    }
+    return false;
+  }
 }

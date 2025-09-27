@@ -8,13 +8,13 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  */
 public class PlayerAwareKnownList extends KnownList {
 
-	public PlayerAwareKnownList(VisibleObject owner) {
-		super(owner);
-	}
+  public PlayerAwareKnownList(VisibleObject owner) {
+    super(owner);
+  }
 
-	@Override
-	protected final boolean isAwareOf(VisibleObject newObject) {
-		return newObject instanceof Player;
-	}
+  @Override
+  protected final boolean isAwareOf(VisibleObject newObject) {
+    return newObject instanceof Player;
+  }
 
 }

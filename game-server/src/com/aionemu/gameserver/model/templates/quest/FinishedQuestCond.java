@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "FinishedQuest", propOrder = { "questId", "reward" })
 public class FinishedQuestCond {
 
-	@XmlAttribute(name = "quest_id", required = true)
-	protected int questId;
-	@XmlAttribute(name = "reward")
-	protected int reward = -1;
+  @XmlAttribute(name = "quest_id", required = true)
+  protected int questId;
+  @XmlAttribute(name = "reward")
+  protected int reward = -1;
 
-	public int getQuestId() {
-		return questId;
-	}
+  public int getQuestId() {
+    return questId;
+  }
 
-	public int getReward() {
-		return reward;
-	}
+  public int getReward() {
+    return reward;
+  }
 }

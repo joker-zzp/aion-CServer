@@ -36,48 +36,48 @@ import com.aionemu.gameserver.utils.idfactory.IDFactory;
  */
 public final class HouseObjectFactory {
 
-	/**
-	 * For loading data from DB
-	 */
-	public static HouseObject<?> createNew(HouseRegistry registry, int objectId, int objectTemplateId) {
-		PlaceableHouseObject template = DataManager.HOUSING_OBJECT_DATA.getTemplateById(objectTemplateId);
-		if (template instanceof HousingChair)
-			return new ChairObject(registry, objectId, template.getTemplateId());
-		else if (template instanceof HousingJukeBox)
-			return new JukeBoxObject(registry, objectId, template.getTemplateId());
-		else if (template instanceof HousingMoveableItem)
-			return new MoveableObject(registry, objectId, template.getTemplateId());
-		else if (template instanceof HousingNpc)
-			return new NpcObject(registry, objectId, template.getTemplateId());
-		else if (template instanceof HousingPicture)
-			return new PictureObject(registry, objectId, template.getTemplateId());
-		else if (template instanceof HousingPostbox)
-			return new PostboxObject(registry, objectId, template.getTemplateId());
-		else if (template instanceof HousingStorage)
-			return new StorageObject(registry, objectId, template.getTemplateId());
-		else if (template instanceof HousingUseableItem)
-			return new UseableItemObject(registry, objectId, template.getTemplateId());
-		else if (template instanceof HousingEmblem)
-			return new EmblemObject(registry, objectId, template.getTemplateId());
-		return new PassiveObject(registry, objectId, template.getTemplateId());
-	}
+  /**
+   * For loading data from DB
+   */
+  public static HouseObject<?> createNew(HouseRegistry registry, int objectId, int objectTemplateId) {
+    PlaceableHouseObject template = DataManager.HOUSING_OBJECT_DATA.getTemplateById(objectTemplateId);
+    if (template instanceof HousingChair)
+      return new ChairObject(registry, objectId, template.getTemplateId());
+    else if (template instanceof HousingJukeBox)
+      return new JukeBoxObject(registry, objectId, template.getTemplateId());
+    else if (template instanceof HousingMoveableItem)
+      return new MoveableObject(registry, objectId, template.getTemplateId());
+    else if (template instanceof HousingNpc)
+      return new NpcObject(registry, objectId, template.getTemplateId());
+    else if (template instanceof HousingPicture)
+      return new PictureObject(registry, objectId, template.getTemplateId());
+    else if (template instanceof HousingPostbox)
+      return new PostboxObject(registry, objectId, template.getTemplateId());
+    else if (template instanceof HousingStorage)
+      return new StorageObject(registry, objectId, template.getTemplateId());
+    else if (template instanceof HousingUseableItem)
+      return new UseableItemObject(registry, objectId, template.getTemplateId());
+    else if (template instanceof HousingEmblem)
+      return new EmblemObject(registry, objectId, template.getTemplateId());
+    return new PassiveObject(registry, objectId, template.getTemplateId());
+  }
 
-	/**
-	 * For transferring item from inventory to house registry
-	 */
-	public static HouseObject<?> createNew(House house, ItemTemplate itemTemplate) {
-		Objects.requireNonNull(itemTemplate.getActions(), "template actions null");
+  /**
+   * For transferring item from inventory to house registry
+   */
+  public static HouseObject<?> createNew(House house, ItemTemplate itemTemplate) {
+    Objects.requireNonNull(itemTemplate.getActions(), "template actions null");
 
-		SummonHouseObjectAction action = itemTemplate.getActions().getHouseObjectAction();
-		Objects.requireNonNull(action, "template actions miss SummonHouseObjectAction");
+    SummonHouseObjectAction action = itemTemplate.getActions().getHouseObjectAction();
+    Objects.requireNonNull(action, "template actions miss SummonHouseObjectAction");
 
-		int objectTemplateId = action.getTemplateId();
-		HouseObject<?> obj = createNew(house.getRegistry(), IDFactory.getInstance().nextId(), objectTemplateId);
-		int useDays = obj.getObjectTemplate().getUseDays();
-		if (useDays > 0) {
-			int expireEnd = (int) (System.currentTimeMillis() / 1000 + TimeUnit.DAYS.toSeconds(useDays));
-			obj.setExpireTime(expireEnd);
-		}
-		return obj;
-	}
+    int objectTemplateId = action.getTemplateId();
+    HouseObject<?> obj = createNew(house.getRegistry(), IDFactory.getInstance().nextId(), objectTemplateId);
+    int useDays = obj.getObjectTemplate().getUseDays();
+    if (useDays > 0) {
+      int expireEnd = (int) (System.currentTimeMillis() / 1000 + TimeUnit.DAYS.toSeconds(useDays));
+      obj.setExpireTime(expireEnd);
+    }
+    return obj;
+  }
 }

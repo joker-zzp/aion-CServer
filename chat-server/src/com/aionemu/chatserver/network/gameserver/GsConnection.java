@@ -23,77 +23,77 @@ import com.aionemu.commons.network.Dispatcher;
  */
 public class GsConnection extends AConnection<GsServerPacket> {
 
-	private static final Logger log = LoggerFactory.getLogger(GsConnection.class);
-	private static final ExecutorService PACKET_EXECUTOR = Executors.newCachedThreadPool();
-	private final Deque<GsServerPacket> sendMsgQueue = new ArrayDeque<>();
-	private GameServerConnectionState state;
+  private static final Logger log = LoggerFactory.getLogger(GsConnection.class);
+  private static final ExecutorService PACKET_EXECUTOR = Executors.newCachedThreadPool();
+  private final Deque<GsServerPacket> sendMsgQueue = new ArrayDeque<>();
+  private GameServerConnectionState state;
 
-	static {
-		((ThreadPoolExecutor) PACKET_EXECUTOR).setCorePoolSize(1);
-	}
+  static {
+    ((ThreadPoolExecutor) PACKET_EXECUTOR).setCorePoolSize(1);
+  }
 
-	public enum GameServerConnectionState {
+  public enum GameServerConnectionState {
 
-		CONNECTED,
-		AUTHED
+    CONNECTED,
+    AUTHED
 
-	}
+  }
 
-	public GsConnection(SocketChannel sc, Dispatcher d) throws IOException {
-		super(sc, d, 8192 * 8, 8192 * 8);
-	}
+  public GsConnection(SocketChannel sc, Dispatcher d) throws IOException {
+    super(sc, d, 8192 * 8, 8192 * 8);
+  }
 
-	@Override
-	protected final Queue<GsServerPacket> getSendMsgQueue() {
-		return sendMsgQueue;
-	}
+  @Override
+  protected final Queue<GsServerPacket> getSendMsgQueue() {
+    return sendMsgQueue;
+  }
 
-	@Override
-	public boolean processData(ByteBuffer data) {
-		GsClientPacket pck = GsPacketHandlerFactory.handle(data, this);
-		if (pck != null && pck.read())
-			PACKET_EXECUTOR.execute(pck);
-		return true;
-	}
+  @Override
+  public boolean processData(ByteBuffer data) {
+    GsClientPacket pck = GsPacketHandlerFactory.handle(data, this);
+    if (pck != null && pck.read())
+      PACKET_EXECUTOR.execute(pck);
+    return true;
+  }
 
-	@Override
-	protected final boolean writeData(ByteBuffer data) {
-		synchronized (guard) {
-			GsServerPacket packet = sendMsgQueue.pollFirst();
-			if (packet == null)
-				return false;
-			packet.write(this, data);
-			return true;
-		}
-	}
+  @Override
+  protected final boolean writeData(ByteBuffer data) {
+    synchronized (guard) {
+      GsServerPacket packet = sendMsgQueue.pollFirst();
+      if (packet == null)
+        return false;
+      packet.write(this, data);
+      return true;
+    }
+  }
 
-	@Override
-	protected final void onDisconnect() {
-		GameServerService.getInstance().setOffline();
-	}
+  @Override
+  protected final void onDisconnect() {
+    GameServerService.getInstance().setOffline();
+  }
 
-	@Override
-	protected final void onServerClose() {
-		close();
-		PACKET_EXECUTOR.shutdown();
-	}
+  @Override
+  protected final void onServerClose() {
+    close();
+    PACKET_EXECUTOR.shutdown();
+  }
 
-	public GameServerConnectionState getState() {
-		return state;
-	}
+  public GameServerConnectionState getState() {
+    return state;
+  }
 
-	public void setState(GameServerConnectionState state) {
-		this.state = state;
-	}
+  public void setState(GameServerConnectionState state) {
+    this.state = state;
+  }
 
-	@Override
-	public String toString() {
-		return "Gameserver " + getIP();
-	}
+  @Override
+  public String toString() {
+    return "Gameserver " + getIP();
+  }
 
-	@Override
-	protected void initialized() {
-		state = GameServerConnectionState.CONNECTED;
-		log.info("Gameserver connection attempt from: {}", getIP());
-	}
+  @Override
+  protected void initialized() {
+    state = GameServerConnectionState.CONNECTED;
+    log.info("Gameserver connection attempt from: {}", getIP());
+  }
 }

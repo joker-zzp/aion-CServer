@@ -15,29 +15,29 @@ import javax.tools.SimpleJavaFileObject;
  */
 public class JavaSourceFromFile extends SimpleJavaFileObject {
 
-	/**
-	 * Construct a JavaFileObject of the given kind and with the given File.
-	 * 
-	 * @param file
-	 *          the file with source of this file object
-	 * @param kind
-	 *          the kind of this file object
-	 */
-	public JavaSourceFromFile(File file, Kind kind) {
-		super(file.toURI(), kind);
-	}
+  /**
+   * Construct a JavaFileObject of the given kind and with the given File.
+   * 
+   * @param file
+   *          the file with source of this file object
+   * @param kind
+   *          the kind of this file object
+   */
+  public JavaSourceFromFile(File file, Kind kind) {
+    super(file.toURI(), kind);
+  }
 
-	/**
-	 * Returns class source represented as string.
-	 * 
-	 * @param ignoreEncodingErrors
-	 *          not used
-	 * @return class source
-	 * @throws IOException
-	 *           if something goes wrong
-	 */
-	@Override
-	public CharSequence getCharContent(boolean ignoreEncodingErrors) throws IOException {
-		return new String(Files.readAllBytes(Paths.get(toUri())), StandardCharsets.UTF_8);
-	}
+  /**
+   * Returns class source represented as string.
+   * 
+   * @param ignoreEncodingErrors
+   *          not used
+   * @return class source
+   * @throws IOException
+   *           if something goes wrong
+   */
+  @Override
+  public CharSequence getCharContent(boolean ignoreEncodingErrors) throws IOException {
+    return new String(Files.readAllBytes(Paths.get(toUri())), StandardCharsets.UTF_8);
+  }
 }

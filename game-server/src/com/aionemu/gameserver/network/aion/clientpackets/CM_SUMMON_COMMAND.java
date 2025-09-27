@@ -15,28 +15,28 @@ import com.aionemu.gameserver.services.summons.SummonsService;
  */
 public class CM_SUMMON_COMMAND extends AionClientPacket {
 
-	private int mode;
-	private int targetObjId;
+  private int mode;
+  private int targetObjId;
 
-	public CM_SUMMON_COMMAND(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_SUMMON_COMMAND(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		mode = readUC();
-		readD(); // 0
-		readD(); // 0
-		targetObjId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    mode = readUC();
+    readD(); // 0
+    readD(); // 0
+    targetObjId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		Summon summon = activePlayer.getSummon();
-		SummonMode summonMode = SummonMode.getSummonModeById(mode);
-		if (summon != null && summonMode != null) {
-			SummonsService.doMode(summonMode, summon, targetObjId, UnsummonType.COMMAND);
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    Summon summon = activePlayer.getSummon();
+    SummonMode summonMode = SummonMode.getSummonModeById(mode);
+    if (summon != null && summonMode != null) {
+      SummonsService.doMode(summonMode, summon, targetObjId, UnsummonType.COMMAND);
+    }
+  }
 }

@@ -14,55 +14,55 @@ import com.aionemu.gameserver.utils.PositionUtil;
  */
 public class FollowSummonTaskAI implements Runnable {
 
-	private Creature target;
-	private Summon summon;
-	private Player master;
-	private float targetX;
-	private float targetY;
-	private float targetZ;
+  private Creature target;
+  private Summon summon;
+  private Player master;
+  private float targetX;
+  private float targetY;
+  private float targetZ;
 
-	public FollowSummonTaskAI(Creature target, Summon summon) {
-		this.target = target;
-		this.summon = summon;
-		this.master = summon.getMaster();
-		setLeadingCoordinates();
-	}
+  public FollowSummonTaskAI(Creature target, Summon summon) {
+    this.target = target;
+    this.summon = summon;
+    this.master = summon.getMaster();
+    setLeadingCoordinates();
+  }
 
-	private void setLeadingCoordinates() {
-		targetX = target.getX();
-		targetY = target.getY();
-		targetZ = target.getZ();
-	}
+  private void setLeadingCoordinates() {
+    targetX = target.getX();
+    targetY = target.getY();
+    targetZ = target.getZ();
+  }
 
-	@Override
-	public void run() {
-		if (!isInMasterRange()) {
-			SummonsService.doMode(SummonMode.RELEASE, summon, UnsummonType.DISTANCE);
-			return;
-		}
-		if (!isInTargetRange()) {
-			if (targetX != target.getX() || targetY != target.getY() || targetZ != target.getZ()) {
-				setLeadingCoordinates();
-				onOutOfTargetRange();
-			}
-		} else if (!master.equals(target)) {
-			onDestination();
-		}
-	}
+  @Override
+  public void run() {
+    if (!isInMasterRange()) {
+      SummonsService.doMode(SummonMode.RELEASE, summon, UnsummonType.DISTANCE);
+      return;
+    }
+    if (!isInTargetRange()) {
+      if (targetX != target.getX() || targetY != target.getY() || targetZ != target.getZ()) {
+        setLeadingCoordinates();
+        onOutOfTargetRange();
+      }
+    } else if (!master.equals(target)) {
+      onDestination();
+    }
+  }
 
-	private boolean isInTargetRange() {
-		return PositionUtil.isInRange(target, summon, 2, false);
-	}
+  private boolean isInTargetRange() {
+    return PositionUtil.isInRange(target, summon, 2, false);
+  }
 
-	private boolean isInMasterRange() {
-		return PositionUtil.isInRange(master, summon, 50);
-	}
+  private boolean isInMasterRange() {
+    return PositionUtil.isInRange(master, summon, 50);
+  }
 
-	protected void onDestination() {
-		summon.getAi().onCreatureEvent(AIEventType.ATTACK, target);
-	}
+  protected void onDestination() {
+    summon.getAi().onCreatureEvent(AIEventType.ATTACK, target);
+  }
 
-	private void onOutOfTargetRange() {
-		summon.getAi().onGeneralEvent(AIEventType.MOVE_VALIDATE);
-	}
+  private void onOutOfTargetRange() {
+    summon.getAi().onGeneralEvent(AIEventType.MOVE_VALIDATE);
+  }
 }

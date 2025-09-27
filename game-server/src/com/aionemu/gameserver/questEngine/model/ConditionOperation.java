@@ -8,21 +8,21 @@ import javax.xml.bind.annotation.XmlEnum;
 @XmlEnum
 public enum ConditionOperation {
 
-	EQUAL,
-	GREATER,
-	GREATER_EQUAL,
-	LESSER,
-	LESSER_EQUAL,
-	NOT_EQUAL,
-	IN,
-	NOT_IN;
+  EQUAL,
+  GREATER,
+  GREATER_EQUAL,
+  LESSER,
+  LESSER_EQUAL,
+  NOT_EQUAL,
+  IN,
+  NOT_IN;
 
-	public String value() {
-		return name();
-	}
+  public String value() {
+    return name();
+  }
 
-	public static ConditionOperation fromValue(String v) {
-		return valueOf(v);
-	}
+  public static ConditionOperation fromValue(String v) {
+    return valueOf(v);
+  }
 
 }

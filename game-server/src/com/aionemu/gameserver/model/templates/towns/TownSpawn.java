@@ -17,32 +17,32 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "town_spawn")
 public class TownSpawn {
 
-	@XmlAttribute(name = "town_id")
-	private int townId;
-	@XmlElement(name = "town_level")
-	private List<TownLevel> townLevels;
+  @XmlAttribute(name = "town_id")
+  private int townId;
+  @XmlElement(name = "town_level")
+  private List<TownLevel> townLevels;
 
-	@XmlTransient
-	private final Map<Integer, TownLevel> townLevelsData = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, TownLevel> townLevelsData = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		townLevelsData.clear();
-		for (TownLevel level : townLevels) {
-			townLevelsData.put(level.getLevel(), level);
-		}
-		townLevels = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    townLevelsData.clear();
+    for (TownLevel level : townLevels) {
+      townLevelsData.put(level.getLevel(), level);
+    }
+    townLevels = null;
+  }
 
-	public int getTownId() {
-		return townId;
-	}
+  public int getTownId() {
+    return townId;
+  }
 
-	public TownLevel getSpawnsForLevel(int level) {
-		return townLevelsData.get(level);
-	}
+  public TownLevel getSpawnsForLevel(int level) {
+    return townLevelsData.get(level);
+  }
 
-	public Collection<TownLevel> getTownLevels() {
-		return townLevelsData.values();
-	}
+  public Collection<TownLevel> getTownLevels() {
+    return townLevelsData.values();
+  }
 
 }

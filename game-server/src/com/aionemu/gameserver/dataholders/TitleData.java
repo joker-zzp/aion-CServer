@@ -16,27 +16,27 @@ import com.aionemu.gameserver.model.templates.TitleTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TitleData {
 
-	@XmlElement(name = "title")
-	private List<TitleTemplate> tts;
+  @XmlElement(name = "title")
+  private List<TitleTemplate> tts;
 
-	@XmlTransient
-	private final Map<Integer, TitleTemplate> titles = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, TitleTemplate> titles = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (TitleTemplate tt : tts) {
-			titles.put(tt.getTitleId(), tt);
-		}
-		tts = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (TitleTemplate tt : tts) {
+      titles.put(tt.getTitleId(), tt);
+    }
+    tts = null;
+  }
 
-	public TitleTemplate getTitleTemplate(int titleId) {
-		return titles.get(titleId);
-	}
+  public TitleTemplate getTitleTemplate(int titleId) {
+    return titles.get(titleId);
+  }
 
-	/**
-	 * @return titles.size()
-	 */
-	public int size() {
-		return titles.size();
-	}
+  /**
+   * @return titles.size()
+   */
+  public int size() {
+    return titles.size();
+  }
 }

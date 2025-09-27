@@ -13,29 +13,29 @@ import com.aionemu.gameserver.services.LegionService;
  */
 public class CM_LEGION_UPLOAD_INFO extends AionClientPacket {
 
-	/** Emblem related information **/
-	private int totalSize;
-	private int alpha;
-	private int red;
-	private int green;
-	private int blue;
+  /** Emblem related information **/
+  private int totalSize;
+  private int alpha;
+  private int red;
+  private int green;
+  private int blue;
 
-	public CM_LEGION_UPLOAD_INFO(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_LEGION_UPLOAD_INFO(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		totalSize = readD();
-		alpha = readUC();
-		red = readUC();
-		green = readUC();
-		blue = readUC();
-	}
+  @Override
+  protected void readImpl() {
+    totalSize = readD();
+    alpha = readUC();
+    red = readUC();
+    green = readUC();
+    blue = readUC();
+  }
 
-	@Override
-	protected void runImpl() {
-		final Player activePlayer = getConnection().getActivePlayer();
-		LegionService.getInstance().uploadEmblemInfo(activePlayer, totalSize, alpha, red, green, blue, LegionEmblemType.CUSTOM);
-	}
+  @Override
+  protected void runImpl() {
+    final Player activePlayer = getConnection().getActivePlayer();
+    LegionService.getInstance().uploadEmblemInfo(activePlayer, totalSize, alpha, red, green, blue, LegionEmblemType.CUSTOM);
+  }
 }

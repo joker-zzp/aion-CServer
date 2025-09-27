@@ -16,17 +16,17 @@ import ai.ActionItemNpcAI;
 @AIName("suspiciouscannon")
 public class SuspiciousCannonAI extends ActionItemNpcAI {
 
-	public SuspiciousCannonAI(Npc owner) {
-		super(owner);
-	}
+  public SuspiciousCannonAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		int teleportId = getOwner().getNpcId() == 730769 ? 247001 : 73001;
-		player.setState(CreatureState.FLYING);
-		player.unsetState(CreatureState.ACTIVE);
-		player.setFlightTeleportId(teleportId);
-		PacketSendUtility.sendPacket(player, new SM_EMOTION(player, EmotionType.START_FLYTELEPORT, teleportId, 0));
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    int teleportId = getOwner().getNpcId() == 730769 ? 247001 : 73001;
+    player.setState(CreatureState.FLYING);
+    player.unsetState(CreatureState.ACTIVE);
+    player.setFlightTeleportId(teleportId);
+    PacketSendUtility.sendPacket(player, new SM_EMOTION(player, EmotionType.START_FLYTELEPORT, teleportId, 0));
+  }
 
 }

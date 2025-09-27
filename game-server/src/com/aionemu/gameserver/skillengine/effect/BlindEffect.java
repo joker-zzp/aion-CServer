@@ -18,36 +18,36 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "BlindEffect")
 public class BlindEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		int visualStateExcludingBlinking = effect.getEffected().getVisualState() & ~CreatureVisualState.BLINKING.getId();
-		if (visualStateExcludingBlinking < CreatureVisualState.HIDE10.getId())
-			effect.getEffected().getEffectController().removeHideEffects();
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    int visualStateExcludingBlinking = effect.getEffected().getVisualState() & ~CreatureVisualState.BLINKING.getId();
+    if (visualStateExcludingBlinking < CreatureVisualState.HIDE10.getId())
+      effect.getEffected().getEffectController().removeHideEffects();
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void calculate(Effect effect) {
-		super.calculate(effect, StatEnum.BLIND_RESISTANCE, null);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    super.calculate(effect, StatEnum.BLIND_RESISTANCE, null);
+  }
 
-	@Override
-	public void startEffect(Effect effect) {
-		effect.setAbnormal(AbnormalState.BLIND);
-		effect.getEffected().getEffectController().setAbnormal(AbnormalState.BLIND);
-		effect.addObserver(effect.getEffected(), new AttackStatusObserver(value, AttackStatus.DODGE) {
+  @Override
+  public void startEffect(Effect effect) {
+    effect.setAbnormal(AbnormalState.BLIND);
+    effect.getEffected().getEffectController().setAbnormal(AbnormalState.BLIND);
+    effect.addObserver(effect.getEffected(), new AttackStatusObserver(value, AttackStatus.DODGE) {
 
-			@Override
-			public boolean checkAttackerStatus(AttackStatus status) {
-				return Rnd.chance() < value;
-			}
+      @Override
+      public boolean checkAttackerStatus(AttackStatus status) {
+        return Rnd.chance() < value;
+      }
 
-		});
-	}
+    });
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.BLIND);
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    effect.getEffected().getEffectController().unsetAbnormal(AbnormalState.BLIND);
+  }
 
 }

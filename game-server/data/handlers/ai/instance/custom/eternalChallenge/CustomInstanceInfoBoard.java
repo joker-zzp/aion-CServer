@@ -17,22 +17,22 @@ import ai.GeneralNpcAI;
 @AIName("custom_instance_info_board")
 public class CustomInstanceInfoBoard extends GeneralNpcAI {
 
-	private static final Map<Integer, Long> lastLeaderboardOpenTime = new HashMap<>();
+  private static final Map<Integer, Long> lastLeaderboardOpenTime = new HashMap<>();
 
-	public CustomInstanceInfoBoard(Npc owner) {
-		super(owner);
-		owner.setMasterName("Eternal Challenge");
-	}
+  public CustomInstanceInfoBoard(Npc owner) {
+    super(owner);
+    owner.setMasterName("Eternal Challenge");
+  }
 
-	@Override
-	protected void handleDialogStart(Player player) {
-		synchronized (lastLeaderboardOpenTime) {
-			long now = System.currentTimeMillis();
-			Long lastOpenTime = lastLeaderboardOpenTime.get(player.getObjectId());
-			if (lastOpenTime != null && lastOpenTime + TimeUnit.SECONDS.toMillis(3) > now)
-				return; // simple flood protection so we don't have to cache the whole leaderboard
-			lastLeaderboardOpenTime.put(player.getObjectId(), now);
-		}
-		CustomInstanceService.getInstance().openLeaderboard(player, getOwner().getRace());
-	}
+  @Override
+  protected void handleDialogStart(Player player) {
+    synchronized (lastLeaderboardOpenTime) {
+      long now = System.currentTimeMillis();
+      Long lastOpenTime = lastLeaderboardOpenTime.get(player.getObjectId());
+      if (lastOpenTime != null && lastOpenTime + TimeUnit.SECONDS.toMillis(3) > now)
+        return; // simple flood protection so we don't have to cache the whole leaderboard
+      lastLeaderboardOpenTime.put(player.getObjectId(), now);
+    }
+    CustomInstanceService.getInstance().openLeaderboard(player, getOwner().getRace());
+  }
 }

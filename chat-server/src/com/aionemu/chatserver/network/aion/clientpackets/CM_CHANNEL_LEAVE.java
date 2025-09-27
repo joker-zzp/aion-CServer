@@ -16,25 +16,25 @@ import com.aionemu.chatserver.network.netty.handler.ClientChannelHandler;
  */
 public class CM_CHANNEL_LEAVE extends AbstractClientPacket {
 
-	private static final Logger log = LoggerFactory.getLogger(CM_CHANNEL_LEAVE.class);
-	private int channelId;
+  private static final Logger log = LoggerFactory.getLogger(CM_CHANNEL_LEAVE.class);
+  private int channelId;
 
-	public CM_CHANNEL_LEAVE(ChannelBuffer channelBuffer, ClientChannelHandler clientChannelHandler, byte opCode) {
-		super(channelBuffer, clientChannelHandler, opCode);
-	}
+  public CM_CHANNEL_LEAVE(ChannelBuffer channelBuffer, ClientChannelHandler clientChannelHandler, byte opCode) {
+    super(channelBuffer, clientChannelHandler, opCode);
+  }
 
-	@Override
-	protected void readImpl() {
-		readC(); // 0
-		readH(); // 0
-		readB(16); // 0
-		channelId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    readC(); // 0
+    readH(); // 0
+    readB(16); // 0
+    channelId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Channel channel = ChatChannels.getChannelById(channelId);
-		if (!clientChannelHandler.getChatClient().removeChannel(channel))
-			log.warn("{}, couldn't leave channel: {} (id: {})", clientChannelHandler.getChatClient(), channel, channelId);
-	}
+  @Override
+  protected void runImpl() {
+    Channel channel = ChatChannels.getChannelById(channelId);
+    if (!clientChannelHandler.getChatClient().removeChannel(channel))
+      log.warn("{}, couldn't leave channel: {} (id: {})", clientChannelHandler.getChatClient(), channel, channelId);
+  }
 }

@@ -20,34 +20,34 @@ import com.aionemu.gameserver.utils.PositionUtil;
 @XmlType(name = "HealCastorOnTargetDeadEffect")
 public class HealCastorOnTargetDeadEffect extends EffectTemplate {
 
-	@XmlAttribute
-	protected HealType type;// useless
-	@XmlAttribute
-	protected float range;
-	@XmlAttribute
-	protected boolean healparty;
+  @XmlAttribute
+  protected HealType type;// useless
+  @XmlAttribute
+  protected float range;
+  @XmlAttribute
+  protected boolean healparty;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		effect.addToEffectedController();
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    effect.addToEffectedController();
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-		Creature effected = effect.getEffected();
-		Creature effector = effect.getEffector();
-		if (effected.isDead()) {
-			int healValue = calculateBaseValue(effect);
-			var group = healparty && effector instanceof Player p ? p.getCurrentGroup() : null;
-			if (group == null) {
-				if (PositionUtil.isInRange(effected, effector, range, false))
-					effector.getLifeStats().increaseHp(TYPE.HP, healValue, effect, LOG.REGULAR);
-			} else {
-				for (Player p : group.getOnlineMembers()) {
-					if (PositionUtil.isInRange(effected, p, range, false))
-						effector.getLifeStats().increaseHp(TYPE.HP, healValue, effect, LOG.REGULAR);
-				}
-			}
-		}
-	}
+  @Override
+  public void endEffect(Effect effect) {
+    Creature effected = effect.getEffected();
+    Creature effector = effect.getEffector();
+    if (effected.isDead()) {
+      int healValue = calculateBaseValue(effect);
+      var group = healparty && effector instanceof Player p ? p.getCurrentGroup() : null;
+      if (group == null) {
+        if (PositionUtil.isInRange(effected, effector, range, false))
+          effector.getLifeStats().increaseHp(TYPE.HP, healValue, effect, LOG.REGULAR);
+      } else {
+        for (Player p : group.getOnlineMembers()) {
+          if (PositionUtil.isInRange(effected, p, range, false))
+            effector.getLifeStats().increaseHp(TYPE.HP, healValue, effect, LOG.REGULAR);
+        }
+      }
+    }
+  }
 }

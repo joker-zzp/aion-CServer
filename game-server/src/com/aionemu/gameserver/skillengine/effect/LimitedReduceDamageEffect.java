@@ -13,10 +13,10 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "LimitedReduceDamageEffect")
 public class LimitedReduceDamageEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		// TODO Auto-generated method stub
+  @Override
+  public void applyEffect(Effect effect) {
+    // TODO Auto-generated method stub
 
-	}
+  }
 
 }

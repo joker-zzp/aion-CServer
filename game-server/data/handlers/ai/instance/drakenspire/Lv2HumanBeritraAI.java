@@ -28,64 +28,64 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("drakenspire_lv2_human_beritra")
 public class Lv2HumanBeritraAI extends Lv1HumanBeritraAI {
 
-	private final AtomicInteger sealsBlasted = new AtomicInteger();
+  private final AtomicInteger sealsBlasted = new AtomicInteger();
 
-	public Lv2HumanBeritraAI(Npc owner) {
-		super(owner);
-	}
+  public Lv2HumanBeritraAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleFightStarted() {
-		// Don't do anything here.
-	}
+  @Override
+  protected void handleFightStarted() {
+    // Don't do anything here.
+  }
 
-	protected void handleThirdPhaseStarted() {
-		if (getEffectController().findBySkillId(21612) != null)
-			spawnFactionHelpers(getAttackingPlayerRace() == Race.ELYOS ? List.of(209734, 209735, 209735) : List.of(209799, 209800, 209800));
-	}
+  protected void handleThirdPhaseStarted() {
+    if (getEffectController().findBySkillId(21612) != null)
+      spawnFactionHelpers(getAttackingPlayerRace() == Race.ELYOS ? List.of(209734, 209735, 209735) : List.of(209799, 209800, 209800));
+  }
 
-	protected void handleLastSealBlasted() {
-		// Don't do anything here.
-	}
+  protected void handleLastSealBlasted() {
+    // Don't do anything here.
+  }
 
-	@Override
-	public void onEffectApplied(Effect effect) {
-		if (effect.getSkillId() == 21624) { // Dragon Lord Seal
-			switch (sealsBlasted.incrementAndGet()) {
-				case 1 -> {
-					PacketSendUtility.broadcastMessage(getOwner(), 1501272); // You insects think you have a chance against me?
-					spawnPustules();
-				}
-				case 2 -> {
-					PacketSendUtility.broadcastMessage(getOwner(), 1501271); // Fregion! You left me to clean up your mess...
-					spawnPustules();
-				}
-				case 3 -> handleLastSealBlasted();
-			}
-		}
-		super.onEffectApplied(effect);
-	}
+  @Override
+  public void onEffectApplied(Effect effect) {
+    if (effect.getSkillId() == 21624) { // Dragon Lord Seal
+      switch (sealsBlasted.incrementAndGet()) {
+        case 1 -> {
+          PacketSendUtility.broadcastMessage(getOwner(), 1501272); // You insects think you have a chance against me?
+          spawnPustules();
+        }
+        case 2 -> {
+          PacketSendUtility.broadcastMessage(getOwner(), 1501271); // Fregion! You left me to clean up your mess...
+          spawnPustules();
+        }
+        case 3 -> handleLastSealBlasted();
+      }
+    }
+    super.onEffectApplied(effect);
+  }
 
-	@Override
-	public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
-		if (skillTemplate.getSkillId() == 21609 && skillLevel == 58)
-			handleThirdPhaseStarted();
-		super.onEndUseSkill(skillTemplate, skillLevel);
-	}
+  @Override
+  public void onEndUseSkill(SkillTemplate skillTemplate, int skillLevel) {
+    if (skillTemplate.getSkillId() == 21609 && skillLevel == 58)
+      handleThirdPhaseStarted();
+    super.onEndUseSkill(skillTemplate, skillLevel);
+  }
 
-	private void spawnPustules() {
-		spawn(855446, 135.192f, 502.221f, 1749.448f, (byte) 0); // Drakenspire Pustule
-		spawn(855446, 167.133f, 502.114f, 1749.448f, (byte) 30); // Drakenspire Pustule
-		spawn(855446, 161.501f, 535.842f, 1749.367f, (byte) 90); // Drakenspire Pustule
-	}
+  private void spawnPustules() {
+    spawn(855446, 135.192f, 502.221f, 1749.448f, (byte) 0); // Drakenspire Pustule
+    spawn(855446, 167.133f, 502.114f, 1749.448f, (byte) 30); // Drakenspire Pustule
+    spawn(855446, 161.501f, 535.842f, 1749.367f, (byte) 90); // Drakenspire Pustule
+  }
 
-	protected void resetBlastedSeal() {
-		sealsBlasted.set(0);
-	}
+  protected void resetBlastedSeal() {
+    sealsBlasted.set(0);
+  }
 
-	@Override
-	protected void handleBackHome() {
-		super.handleBackHome();
-		resetBlastedSeal();
-	}
+  @Override
+  protected void handleBackHome() {
+    super.handleBackHome();
+    resetBlastedSeal();
+  }
 }

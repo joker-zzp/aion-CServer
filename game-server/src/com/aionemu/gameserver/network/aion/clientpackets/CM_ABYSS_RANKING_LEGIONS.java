@@ -18,45 +18,45 @@ import com.aionemu.gameserver.services.abyss.AbyssRankingCache;
  */
 public class CM_ABYSS_RANKING_LEGIONS extends AionClientPacket {
 
-	private static final Logger log = LoggerFactory.getLogger(CM_ABYSS_RANKING_LEGIONS.class);
+  private static final Logger log = LoggerFactory.getLogger(CM_ABYSS_RANKING_LEGIONS.class);
 
-	private byte raceId;
+  private byte raceId;
 
-	public CM_ABYSS_RANKING_LEGIONS(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_ABYSS_RANKING_LEGIONS(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		raceId = readC();
-	}
+  @Override
+  protected void readImpl() {
+    raceId = readC();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		Race queriedRace;
-		AbyssRankUpdateType updateType;
-		switch (raceId) {
-			case 0:
-				queriedRace = Race.ELYOS;
-				updateType = AbyssRankUpdateType.LEGION_ELYOS;
-				break;
-			case 1:
-				queriedRace = Race.ASMODIANS;
-				updateType = AbyssRankUpdateType.LEGION_ASMODIANS;
-				break;
-			default:
-				log.warn("Received invalid raceId (" + raceId + ") from player " + player);
-				return;
-		}
-		// calculate rankings and send packet
-		SM_ABYSS_RANKING_LEGIONS legionRanking;
-		if (player.isAbyssRankListUpdated(updateType)) {
-			legionRanking = new SM_ABYSS_RANKING_LEGIONS(AbyssRankingCache.getInstance().getLastUpdate(), queriedRace);
-		} else {
-			legionRanking = AbyssRankingCache.getInstance().getLegions(queriedRace);
-			player.setAbyssRankListUpdated(updateType);
-		}
-		sendPacket(legionRanking);
-	}
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    Race queriedRace;
+    AbyssRankUpdateType updateType;
+    switch (raceId) {
+      case 0:
+        queriedRace = Race.ELYOS;
+        updateType = AbyssRankUpdateType.LEGION_ELYOS;
+        break;
+      case 1:
+        queriedRace = Race.ASMODIANS;
+        updateType = AbyssRankUpdateType.LEGION_ASMODIANS;
+        break;
+      default:
+        log.warn("Received invalid raceId (" + raceId + ") from player " + player);
+        return;
+    }
+    // calculate rankings and send packet
+    SM_ABYSS_RANKING_LEGIONS legionRanking;
+    if (player.isAbyssRankListUpdated(updateType)) {
+      legionRanking = new SM_ABYSS_RANKING_LEGIONS(AbyssRankingCache.getInstance().getLastUpdate(), queriedRace);
+    } else {
+      legionRanking = AbyssRankingCache.getInstance().getLegions(queriedRace);
+      player.setAbyssRankListUpdated(updateType);
+    }
+    sendPacket(legionRanking);
+  }
 }

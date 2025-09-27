@@ -14,63 +14,63 @@ import ai.AggressiveNpcAI;
 @AIName("virhana")
 public class VirhanaTheGreatAI extends AggressiveNpcAI {
 
-	private boolean isStart;
-	private int count;
+  private boolean isStart;
+  private int count;
 
-	public VirhanaTheGreatAI(Npc owner) {
-		super(owner);
-	}
+  public VirhanaTheGreatAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void handleAttack(Creature creature) {
-		super.handleAttack(creature);
-		if (!isStart) {
-			isStart = true;
-			scheduleRage();
-		}
-	}
+  @Override
+  public void handleAttack(Creature creature) {
+    super.handleAttack(creature);
+    if (!isStart) {
+      isStart = true;
+      scheduleRage();
+    }
+  }
 
-	@Override
-	protected void handleBackHome() {
-		super.handleBackHome();
-		isStart = false;
-	}
+  @Override
+  protected void handleBackHome() {
+    super.handleBackHome();
+    isStart = false;
+  }
 
-	private void scheduleRage() {
-		if (isDead() || !isStart) {
-			return;
-		}
-		AIActions.useSkill(this, 19121);
+  private void scheduleRage() {
+    if (isDead() || !isStart) {
+      return;
+    }
+    AIActions.useSkill(this, 19121);
 
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-			@Override
-			public void run() {
-				startRage();
-			}
+      @Override
+      public void run() {
+        startRage();
+      }
 
-		}, 70000);
-	}
+    }, 70000);
+  }
 
-	private void startRage() {
-		if (isDead() || !isStart) {
-			return;
-		}
-		if (count < 12) {
-			AIActions.useSkill(this, 18897);
-			count++;
+  private void startRage() {
+    if (isDead() || !isStart) {
+      return;
+    }
+    if (count < 12) {
+      AIActions.useSkill(this, 18897);
+      count++;
 
-			ThreadPoolManager.getInstance().schedule(new Runnable() {
+      ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-				@Override
-				public void run() {
-					startRage();
-				}
+        @Override
+        public void run() {
+          startRage();
+        }
 
-			}, 10000);
-		} else { // restart after a douzen casts
-			count = 0;
-			scheduleRage();
-		}
-	}
+      }, 10000);
+    } else { // restart after a douzen casts
+      count = 0;
+      scheduleRage();
+    }
+  }
 }

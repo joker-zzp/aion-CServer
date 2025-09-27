@@ -22,33 +22,33 @@ import com.aionemu.gameserver.model.templates.teleport.TeleporterTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TeleporterData {
 
-	@XmlElement(name = "teleporter_template")
-	private List<TeleporterTemplate> templates;
+  @XmlElement(name = "teleporter_template")
+  private List<TeleporterTemplate> templates;
 
-	@XmlTransient
-	private final Map<Integer, TeleporterTemplate> teleporterTemplates = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, TeleporterTemplate> teleporterTemplates = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (TeleporterTemplate template : templates) {
-			teleporterTemplates.put(template.getTeleportId(), template);
-		}
-		templates = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (TeleporterTemplate template : templates) {
+      teleporterTemplates.put(template.getTeleportId(), template);
+    }
+    templates = null;
+  }
 
-	public int size() {
-		return teleporterTemplates.size();
-	}
+  public int size() {
+    return teleporterTemplates.size();
+  }
 
-	public TeleporterTemplate getTeleporterTemplateByNpcId(int npcId) {
-		for (TeleporterTemplate template : teleporterTemplates.values()) {
-			if (template.containNpc(npcId)) {
-				return template;
-			}
-		}
-		return null;
-	}
+  public TeleporterTemplate getTeleporterTemplateByNpcId(int npcId) {
+    for (TeleporterTemplate template : teleporterTemplates.values()) {
+      if (template.containNpc(npcId)) {
+        return template;
+      }
+    }
+    return null;
+  }
 
-	public TeleporterTemplate getTeleporterTemplateByTeleportId(int teleportId) {
-		return teleporterTemplates.get(teleportId);
-	}
+  public TeleporterTemplate getTeleporterTemplateByTeleportId(int teleportId) {
+    return teleporterTemplates.get(teleportId);
+  }
 }

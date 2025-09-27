@@ -19,18 +19,18 @@ import com.aionemu.gameserver.questEngine.handlers.template.ReportOnLevelUp;
 @XmlType(name = "ReportOnLevelUpData")
 public class ReportOnLevelUpData extends XMLQuest {
 
-	@XmlAttribute(name = "end_npc_ids")
-	protected List<Integer> endNpcIds;
+  @XmlAttribute(name = "end_npc_ids")
+  protected List<Integer> endNpcIds;
 
-	@Override
-	public void register(QuestEngine questEngine) {
-		questEngine.addQuestHandler(new ReportOnLevelUp(id, endNpcIds));
-	}
+  @Override
+  public void register(QuestEngine questEngine) {
+    questEngine.addQuestHandler(new ReportOnLevelUp(id, endNpcIds));
+  }
 
-	@Override
-	public Set<Integer> getAlternativeNpcs(int npcId) {
-		if (endNpcIds != null && endNpcIds.size() > 1 && endNpcIds.contains(npcId))
-			return endNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
-		return null;
-	}
+  @Override
+  public Set<Integer> getAlternativeNpcs(int npcId) {
+    if (endNpcIds != null && endNpcIds.size() > 1 && endNpcIds.contains(npcId))
+      return endNpcIds.stream().filter(id -> id != npcId).collect(Collectors.toSet());
+    return null;
+  }
 }

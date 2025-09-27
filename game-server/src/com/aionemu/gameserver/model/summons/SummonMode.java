@@ -5,32 +5,32 @@ package com.aionemu.gameserver.model.summons;
  */
 public enum SummonMode {
 
-	ATTACK(0),
-	GUARD(1),
-	REST(2),
-	RELEASE(3),
-	UNK(5);
+  ATTACK(0),
+  GUARD(1),
+  REST(2),
+  RELEASE(3),
+  UNK(5);
 
-	private int id;
+  private int id;
 
-	private SummonMode(int id) {
-		this.id = id;
-	}
+  private SummonMode(int id) {
+    this.id = id;
+  }
 
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+  /**
+   * @return the id
+   */
+  public int getId() {
+    return id;
+  }
 
-	public static SummonMode getSummonModeById(int id) {
-		for (SummonMode mode : values()) {
-			if (mode.getId() == id) {
-				return mode;
-			}
-		}
-		return null;
-	}
+  public static SummonMode getSummonModeById(int id) {
+    for (SummonMode mode : values()) {
+      if (mode.getId() == id) {
+        return mode;
+      }
+    }
+    return null;
+  }
 
 }

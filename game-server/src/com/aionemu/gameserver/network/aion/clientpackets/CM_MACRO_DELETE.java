@@ -19,31 +19,31 @@ import com.aionemu.gameserver.services.player.PlayerService;
  */
 public class CM_MACRO_DELETE extends AionClientPacket {
 
-	/**
-	 * Macro id that has to be deleted
-	 */
-	private int macroPosition;
+  /**
+   * Macro id that has to be deleted
+   */
+  private int macroPosition;
 
-	/**
-	 * Constructs new client packet instance.
-	 * 
-	 * @param opcode
-	 */
-	public CM_MACRO_DELETE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * Constructs new client packet instance.
+   * 
+   * @param opcode
+   */
+  public CM_MACRO_DELETE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	/**
-	 * Reading macro id
-	 */
-	@Override
-	protected void readImpl() {
-		macroPosition = readUC();
-	}
+  /**
+   * Reading macro id
+   */
+  @Override
+  protected void readImpl() {
+    macroPosition = readUC();
+  }
 
-	@Override
-	protected void runImpl() {
-		PlayerService.removeMacro(getConnection().getActivePlayer(), macroPosition);
-		sendPacket(SM_MACRO_RESULT.SM_MACRO_DELETED);
-	}
+  @Override
+  protected void runImpl() {
+    PlayerService.removeMacro(getConnection().getActivePlayer(), macroPosition);
+    sendPacket(SM_MACRO_RESULT.SM_MACRO_DELETED);
+  }
 }

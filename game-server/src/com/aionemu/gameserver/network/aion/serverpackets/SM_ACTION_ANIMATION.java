@@ -9,24 +9,24 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_ACTION_ANIMATION extends AionServerPacket {
 
-	private int targetObjectId;
-	private ActionAnimation actionAnimation;
-	private int levelOrObjectId;
+  private int targetObjectId;
+  private ActionAnimation actionAnimation;
+  private int levelOrObjectId;
 
-	public SM_ACTION_ANIMATION(int targetObjectId, ActionAnimation actionAnimation) {
-		this(targetObjectId, actionAnimation, 0);
-	}
+  public SM_ACTION_ANIMATION(int targetObjectId, ActionAnimation actionAnimation) {
+    this(targetObjectId, actionAnimation, 0);
+  }
 
-	public SM_ACTION_ANIMATION(int targetObjectId, ActionAnimation actionAnimation, int levelOrObjectId) {
-		this.targetObjectId = targetObjectId;
-		this.actionAnimation = actionAnimation;
-		this.levelOrObjectId = levelOrObjectId;
-	}
+  public SM_ACTION_ANIMATION(int targetObjectId, ActionAnimation actionAnimation, int levelOrObjectId) {
+    this.targetObjectId = targetObjectId;
+    this.actionAnimation = actionAnimation;
+    this.levelOrObjectId = levelOrObjectId;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(targetObjectId);
-		writeH(actionAnimation.getId());
-		writeD(levelOrObjectId);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(targetObjectId);
+    writeH(actionAnimation.getId());
+    writeD(levelOrObjectId);
+  }
 }

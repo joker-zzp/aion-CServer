@@ -16,37 +16,37 @@ import com.aionemu.gameserver.services.player.PlayerService;
  */
 public class CM_RESTORE_CHARACTER extends AionClientPacket {
 
-	/**
-	 * PlayOk2 - we dont care...
-	 */
-	@SuppressWarnings("unused")
-	private int playOk2;
-	/**
-	 * ObjectId of character that deletion should be canceled
-	 */
-	private int chaOid;
+  /**
+   * PlayOk2 - we dont care...
+   */
+  @SuppressWarnings("unused")
+  private int playOk2;
+  /**
+   * ObjectId of character that deletion should be canceled
+   */
+  private int chaOid;
 
-	/**
-	 * Constructs new instance of <tt>CM_RESTORE_CHARACTER </tt> packet
-	 * 
-	 * @param opcode
-	 */
-	public CM_RESTORE_CHARACTER(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * Constructs new instance of <tt>CM_RESTORE_CHARACTER </tt> packet
+   * 
+   * @param opcode
+   */
+  public CM_RESTORE_CHARACTER(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		playOk2 = readD();
-		chaOid = readD();
-	}
+  @Override
+  protected void readImpl() {
+    playOk2 = readD();
+    chaOid = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Account account = getConnection().getAccount();
-		PlayerAccountData pad = account.getPlayerAccountData(chaOid);
+  @Override
+  protected void runImpl() {
+    Account account = getConnection().getAccount();
+    PlayerAccountData pad = account.getPlayerAccountData(chaOid);
 
-		boolean success = pad != null && PlayerService.cancelPlayerDeletion(pad);
-		sendPacket(new SM_RESTORE_CHARACTER(chaOid, success));
-	}
+    boolean success = pad != null && PlayerService.cancelPlayerDeletion(pad);
+    sendPacket(new SM_RESTORE_CHARACTER(chaOid, success));
+  }
 }

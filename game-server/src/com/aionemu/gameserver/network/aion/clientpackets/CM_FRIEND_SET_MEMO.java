@@ -14,27 +14,27 @@ import com.aionemu.gameserver.services.SocialService;
  */
 public class CM_FRIEND_SET_MEMO extends AionClientPacket {
 
-	private String targetName;
-	private String memo;
+  private String targetName;
+  private String memo;
 
-	public CM_FRIEND_SET_MEMO(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_FRIEND_SET_MEMO(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		targetName = readS();
-		memo = readS();
-	}
+  @Override
+  protected void readImpl() {
+    targetName = readS();
+    memo = readS();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		Friend friend = activePlayer.getFriendList().getFriend(targetName);
-		if (friend == null) {
-			sendPacket(SM_SYSTEM_MESSAGE.STR_BUDDYLIST_NOT_IN_LIST());
-		} else {
-			SocialService.setFriendMemo(activePlayer, friend, memo);
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    Friend friend = activePlayer.getFriendList().getFriend(targetName);
+    if (friend == null) {
+      sendPacket(SM_SYSTEM_MESSAGE.STR_BUDDYLIST_NOT_IN_LIST());
+    } else {
+      SocialService.setFriendMemo(activePlayer, friend, memo);
+    }
+  }
 }

@@ -21,60 +21,60 @@ import com.aionemu.gameserver.skillengine.model.HealType;
 @XmlType(name = "HealOverTimeEffect")
 public abstract class HealOverTimeEffect extends AbstractOverTimeEffect implements HealEffectTemplate {
 
-	@Override
-	public void calculate(Effect effect) {
-		if (!super.calculate(effect, null, null))
-			return;
+  @Override
+  public void calculate(Effect effect) {
+    if (!super.calculate(effect, null, null))
+      return;
 
-		effect.addSuccessEffect(this);
-	}
+    effect.addSuccessEffect(this);
+  }
 
-	public void startEffect(Effect effect, HealType healType) {
-		effect.setReserveds(new EffectReserved(position, calculateHealValue(effect, healType), ResourceType.of(healType), false, false), true);
-		super.startEffect(effect, null);
-	}
+  public void startEffect(Effect effect, HealType healType) {
+    effect.setReserveds(new EffectReserved(position, calculateHealValue(effect, healType), ResourceType.of(healType), false, false), true);
+    super.startEffect(effect, null);
+  }
 
-	public void onPeriodicAction(Effect effect, HealType healType) {
-		Creature effected = effect.getEffected();
+  public void onPeriodicAction(Effect effect, HealType healType) {
+    Creature effected = effect.getEffected();
 
-		int currentValue = getCurrentStatValue(effect);
-		int maxCurValue = getMaxStatValue(effect);
-		int possibleHealValue = effect.getReserveds(position).getValue();
+    int currentValue = getCurrentStatValue(effect);
+    int maxCurValue = getMaxStatValue(effect);
+    int possibleHealValue = effect.getReserveds(position).getValue();
 
-		if (healType == HealType.HP && effect.getItemTemplate() == null)
-			possibleHealValue = effected.getGameStats().getStat(StatEnum.HEAL_SKILL_DEBOOST, possibleHealValue).getCurrent();
+    if (healType == HealType.HP && effect.getItemTemplate() == null)
+      possibleHealValue = effected.getGameStats().getStat(StatEnum.HEAL_SKILL_DEBOOST, possibleHealValue).getCurrent();
 
-		int healValue = maxCurValue - currentValue < possibleHealValue ? (maxCurValue - currentValue) : possibleHealValue;
+    int healValue = maxCurValue - currentValue < possibleHealValue ? (maxCurValue - currentValue) : possibleHealValue;
 
-		if (healValue <= 0)
-			return;
+    if (healValue <= 0)
+      return;
 
-		switch (healType) {
-			case HP -> effected.getLifeStats().increaseHp(TYPE.HP, healValue, effect, LOG.HEAL);
-			case MP -> effected.getLifeStats().increaseMp(TYPE.MP, healValue, effect.getSkillId(), LOG.MPHEAL);
-			case FP -> ((Player) effected).getLifeStats().increaseFp(TYPE.FP, healValue, effect.getSkillId(), LOG.FPHEAL);
-			case DP -> ((Player) effected).getCommonData().addDp(healValue);
-		}
+    switch (healType) {
+      case HP -> effected.getLifeStats().increaseHp(TYPE.HP, healValue, effect, LOG.HEAL);
+      case MP -> effected.getLifeStats().increaseMp(TYPE.MP, healValue, effect.getSkillId(), LOG.MPHEAL);
+      case FP -> ((Player) effected).getLifeStats().increaseFp(TYPE.FP, healValue, effect.getSkillId(), LOG.FPHEAL);
+      case DP -> ((Player) effected).getCommonData().addDp(healValue);
+    }
 
-	}
+  }
 
-	@Override
-	public boolean isPercent() {
-		return percent;
-	}
+  @Override
+  public boolean isPercent() {
+    return percent;
+  }
 
-	@Override
-	public boolean allowHpHealBoost(Effect effect) {
-		return !percent && effect.getItemTemplate() == null;
-	}
+  @Override
+  public boolean allowHpHealBoost(Effect effect) {
+    return !percent && effect.getItemTemplate() == null;
+  }
 
-	@Override
-	public boolean allowHpHealSkillDeboost(Effect effect) {
-		return false; // calculated in onPeriodicAction instead
-	}
+  @Override
+  public boolean allowHpHealSkillDeboost(Effect effect) {
+    return false; // calculated in onPeriodicAction instead
+  }
 
-	@Override
-	public int calculateBaseHealValue(Effect effect) {
-		return calculateBaseValue(effect);
-	}
+  @Override
+  public int calculateBaseHealValue(Effect effect) {
+    return calculateBaseValue(effect);
+  }
 }

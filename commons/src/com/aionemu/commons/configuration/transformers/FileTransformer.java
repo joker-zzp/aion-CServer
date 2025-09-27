@@ -11,13 +11,13 @@ import com.aionemu.commons.configuration.TransformationTypeInfo;
  */
 public class FileTransformer extends PropertyTransformer<File> {
 
-	/**
-	 * Shared instance of this transformer. It's thread-safe so no need of multiple instances
-	 */
-	public static final FileTransformer SHARED_INSTANCE = new FileTransformer();
+  /**
+   * Shared instance of this transformer. It's thread-safe so no need of multiple instances
+   */
+  public static final FileTransformer SHARED_INSTANCE = new FileTransformer();
 
-	@Override
-	protected File parseObject(String value, TransformationTypeInfo typeInfo) {
-		return new File(value);
-	}
+  @Override
+  protected File parseObject(String value, TransformationTypeInfo typeInfo) {
+    return new File(value);
+  }
 }

@@ -20,34 +20,34 @@ import com.aionemu.gameserver.model.templates.walker.RouteVersion;
 @XmlRootElement(name = "walker_versions")
 public class WalkerVersionsData {
 
-	@XmlElement(name = "walk_parent")
-	private List<RouteParent> routeGroups;
+  @XmlElement(name = "walk_parent")
+  private List<RouteParent> routeGroups;
 
-	@XmlTransient
-	private Map<String, String> walkParents = new HashMap<>();
+  @XmlTransient
+  private Map<String, String> walkParents = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (RouteParent group : routeGroups) {
-			for (RouteVersion version : group.getRouteVersion())
-				walkParents.put(version.getId(), group.getId());
-		}
-		routeGroups.clear();
-		routeGroups = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (RouteParent group : routeGroups) {
+      for (RouteVersion version : group.getRouteVersion())
+        walkParents.put(version.getId(), group.getId());
+    }
+    routeGroups.clear();
+    routeGroups = null;
+  }
 
-	public boolean isRouteVersioned(String routeId) {
-		if (routeId == null)
-			return false;
-		return walkParents.containsKey(routeId);
-	}
+  public boolean isRouteVersioned(String routeId) {
+    if (routeId == null)
+      return false;
+    return walkParents.containsKey(routeId);
+  }
 
-	public String getRouteVersionId(String routeId) {
-		if (routeId == null)
-			return null;
-		return walkParents.get(routeId);
-	}
+  public String getRouteVersionId(String routeId) {
+    if (routeId == null)
+      return null;
+    return walkParents.get(routeId);
+  }
 
-	public int size() {
-		return walkParents.size();
-	}
+  public int size() {
+    return walkParents.size();
+  }
 }

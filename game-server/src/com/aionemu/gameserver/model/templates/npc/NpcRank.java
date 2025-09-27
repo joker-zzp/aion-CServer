@@ -9,10 +9,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "rank")
 @XmlEnum
 public enum NpcRank {
-	NOVICE,
-	DISCIPLINED,
-	SEASONED,
-	EXPERT,
-	VETERAN,
-	MASTER;
+  NOVICE,
+  DISCIPLINED,
+  SEASONED,
+  EXPERT,
+  VETERAN,
+  MASTER;
 }

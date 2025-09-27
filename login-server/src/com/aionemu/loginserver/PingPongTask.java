@@ -15,37 +15,37 @@ import com.aionemu.loginserver.network.gameserver.serverpackets.SM_PING;
  */
 public class PingPongTask implements Runnable {
 
-	private final GsConnection connection;
-	private final AtomicInteger unrespondedPingCount = new AtomicInteger();
-	private Future<?> task;
+  private final GsConnection connection;
+  private final AtomicInteger unrespondedPingCount = new AtomicInteger();
+  private Future<?> task;
 
-	public PingPongTask(GsConnection connection) {
-		this.connection = connection;
-	}
+  public PingPongTask(GsConnection connection) {
+    this.connection = connection;
+  }
 
-	@Override
-	public void run() {
-		if (unrespondedPingCount.getAndIncrement() <= 2) {
-			connection.sendPacket(new SM_PING());
-		} else {
-			stop();
-			LoggerFactory.getLogger(PingPongTask.class).warn("Gameserver #" + connection.getGameServerInfo().getId() + " connection died, closing it.");
-			connection.close();
-		}
-	}
+  @Override
+  public void run() {
+    if (unrespondedPingCount.getAndIncrement() <= 2) {
+      connection.sendPacket(new SM_PING());
+    } else {
+      stop();
+      LoggerFactory.getLogger(PingPongTask.class).warn("Gameserver #" + connection.getGameServerInfo().getId() + " connection died, closing it.");
+      connection.close();
+    }
+  }
 
-	public void onReceivePong() {
-		unrespondedPingCount.set(0);
-	}
+  public void onReceivePong() {
+    unrespondedPingCount.set(0);
+  }
 
-	public void start(ScheduledExecutorService scheduledExecutorService) {
-		if (task != null)
-			throw new UnsupportedOperationException("PingPongTask was already started");
-		task = scheduledExecutorService.scheduleAtFixedRate(this, 5, 5, TimeUnit.SECONDS);
-	}
+  public void start(ScheduledExecutorService scheduledExecutorService) {
+    if (task != null)
+      throw new UnsupportedOperationException("PingPongTask was already started");
+    task = scheduledExecutorService.scheduleAtFixedRate(this, 5, 5, TimeUnit.SECONDS);
+  }
 
-	public void stop() {
-		if (task != null)
-			task.cancel(false);
-	}
+  public void stop() {
+    if (task != null)
+      task.cancel(false);
+  }
 }

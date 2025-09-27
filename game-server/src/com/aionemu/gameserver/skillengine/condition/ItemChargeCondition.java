@@ -17,19 +17,19 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 @XmlType(name = "ItemChargeCondition")
 public class ItemChargeCondition extends ChargeCondition {
 
-	@Override
-	public boolean validate(Stat2 env, IStatFunction statFunction) {
-		StatOwner owner = statFunction.getOwner();
-		if (owner instanceof Item) {
-			Item item = (Item) owner;
-			return item.getChargeLevel() >= value;
-		}
-		return false;
-	}
+  @Override
+  public boolean validate(Stat2 env, IStatFunction statFunction) {
+    StatOwner owner = statFunction.getOwner();
+    if (owner instanceof Item) {
+      Item item = (Item) owner;
+      return item.getChargeLevel() >= value;
+    }
+    return false;
+  }
 
-	@Override
-	public boolean validate(Skill env) {
-		return false;
-	}
+  @Override
+  public boolean validate(Skill env) {
+    return false;
+  }
 
 }

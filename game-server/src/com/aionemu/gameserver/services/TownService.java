@@ -25,88 +25,88 @@ import com.aionemu.gameserver.world.zone.ZoneInstance;
  */
 public class TownService {
 
-	private static final Logger log = LoggerFactory.getLogger(TownService.class);
-	private Map<Integer, Town> elyosTowns;
-	private Map<Integer, Town> asmosTowns;
+  private static final Logger log = LoggerFactory.getLogger(TownService.class);
+  private Map<Integer, Town> elyosTowns;
+  private Map<Integer, Town> asmosTowns;
 
-	private static class SingletonHolder {
+  private static class SingletonHolder {
 
-		protected static final TownService instance = new TownService();
-	}
+    protected static final TownService instance = new TownService();
+  }
 
-	public static final TownService getInstance() {
-		return SingletonHolder.instance;
-	}
+  public static final TownService getInstance() {
+    return SingletonHolder.instance;
+  }
 
-	private TownService() {
-		elyosTowns = TownDAO.load(Race.ELYOS);
-		asmosTowns = TownDAO.load(Race.ASMODIANS);
-		if (elyosTowns.size() == 0 && asmosTowns.size() == 0) {
-			for (HousingLand land : DataManager.HOUSE_DATA.getLands()) {
-				for (HouseAddress address : land.getAddresses()) {
-					if (address.getTownId() == 0)
-						continue;
-					else {
-						Race townRace = DataManager.NPC_DATA.getNpcTemplate(land.getManagerNpcId()).getTribe() == TribeClass.GENERAL ? Race.ELYOS
-							: Race.ASMODIANS;
-						if ((townRace == Race.ELYOS && !elyosTowns.containsKey(address.getTownId()))
-							|| (townRace == Race.ASMODIANS && !asmosTowns.containsKey(address.getTownId()))) {
-							Town town = new Town(address.getTownId(), townRace);
-							if (townRace == Race.ELYOS)
-								elyosTowns.put(town.getId(), town);
-							else
-								asmosTowns.put(town.getId(), town);
-							TownDAO.store(town);
-						}
+  private TownService() {
+    elyosTowns = TownDAO.load(Race.ELYOS);
+    asmosTowns = TownDAO.load(Race.ASMODIANS);
+    if (elyosTowns.size() == 0 && asmosTowns.size() == 0) {
+      for (HousingLand land : DataManager.HOUSE_DATA.getLands()) {
+        for (HouseAddress address : land.getAddresses()) {
+          if (address.getTownId() == 0)
+            continue;
+          else {
+            Race townRace = DataManager.NPC_DATA.getNpcTemplate(land.getManagerNpcId()).getTribe() == TribeClass.GENERAL ? Race.ELYOS
+              : Race.ASMODIANS;
+            if ((townRace == Race.ELYOS && !elyosTowns.containsKey(address.getTownId()))
+              || (townRace == Race.ASMODIANS && !asmosTowns.containsKey(address.getTownId()))) {
+              Town town = new Town(address.getTownId(), townRace);
+              if (townRace == Race.ELYOS)
+                elyosTowns.put(town.getId(), town);
+              else
+                asmosTowns.put(town.getId(), town);
+              TownDAO.store(town);
+            }
 
-					}
-				}
-			}
-		}
-		log.info("Loaded " + elyosTowns.size() + " elyos towns.");
-		log.info("Loaded " + asmosTowns.size() + " asmodian towns.");
-	}
+          }
+        }
+      }
+    }
+    log.info("Loaded " + elyosTowns.size() + " elyos towns.");
+    log.info("Loaded " + asmosTowns.size() + " asmodian towns.");
+  }
 
-	public Town getTownById(int townId) {
-		if (elyosTowns.containsKey(townId))
-			return elyosTowns.get(townId);
-		else
-			return asmosTowns.get(townId);
-	}
+  public Town getTownById(int townId) {
+    if (elyosTowns.containsKey(townId))
+      return elyosTowns.get(townId);
+    else
+      return asmosTowns.get(townId);
+  }
 
-	public int getTownResidence(Player player) {
-		House house = player.getActiveHouse();
-		if (house == null)
-			return 0;
-		else
-			return house.getAddress().getTownId();
-	}
+  public int getTownResidence(Player player) {
+    House house = player.getActiveHouse();
+    if (house == null)
+      return 0;
+    else
+      return house.getAddress().getTownId();
+  }
 
-	public int getTownIdByPosition(Creature creature) {
-		if (creature instanceof Npc) {
-			if (((Npc) creature).getTownId() != 0)
-				return ((Npc) creature).getTownId();
-		}
-		if (creature.isSpawned()) {
-			for (ZoneInstance zone : creature.findZones()) {
-				if (zone.getTownId() > 0)
-					return zone.getTownId();
-			}
-		}
-		return 0;
-	}
+  public int getTownIdByPosition(Creature creature) {
+    if (creature instanceof Npc) {
+      if (((Npc) creature).getTownId() != 0)
+        return ((Npc) creature).getTownId();
+    }
+    if (creature.isSpawned()) {
+      for (ZoneInstance zone : creature.findZones()) {
+        if (zone.getTownId() > 0)
+          return zone.getTownId();
+      }
+    }
+    return 0;
+  }
 
-	public void onEnterWorld(Player player) {
-		switch (player.getRace()) {
-			case ELYOS:
-				if (player.getWorldId() == 700010000)
-					PacketSendUtility.sendPacket(player, new SM_TOWNS_LIST(elyosTowns));
-				break;
-			case ASMODIANS:
-				if (player.getWorldId() == 710010000)
-					PacketSendUtility.sendPacket(player, new SM_TOWNS_LIST(asmosTowns));
-				break;
-		}
-	}
+  public void onEnterWorld(Player player) {
+    switch (player.getRace()) {
+      case ELYOS:
+        if (player.getWorldId() == 700010000)
+          PacketSendUtility.sendPacket(player, new SM_TOWNS_LIST(elyosTowns));
+        break;
+      case ASMODIANS:
+        if (player.getWorldId() == 710010000)
+          PacketSendUtility.sendPacket(player, new SM_TOWNS_LIST(asmosTowns));
+        break;
+    }
+  }
 
 }

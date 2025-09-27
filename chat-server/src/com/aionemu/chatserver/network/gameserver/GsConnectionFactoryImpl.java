@@ -14,19 +14,19 @@ import com.aionemu.commons.network.Dispatcher;
  */
 public class GsConnectionFactoryImpl implements ConnectionFactory {
 
-	/**
-	 * Create a new {@link AConnection} instance.<br>
-	 * 
-	 * @param socket
-	 *          that new {@link AConnection} instance will represent.<br>
-	 * @param dispatcher
-	 *          to which new connection will be registered.<br>
-	 * @return a new instance of {@link AConnection}<br>
-	 * @see AConnection
-	 * @see Dispatcher
-	 */
-	@Override
-	public GsConnection create(SocketChannel socket, Dispatcher dispatcher) throws IOException {
-		return new GsConnection(socket, dispatcher);
-	}
+  /**
+   * Create a new {@link AConnection} instance.<br>
+   * 
+   * @param socket
+   *          that new {@link AConnection} instance will represent.<br>
+   * @param dispatcher
+   *          to which new connection will be registered.<br>
+   * @return a new instance of {@link AConnection}<br>
+   * @see AConnection
+   * @see Dispatcher
+   */
+  @Override
+  public GsConnection create(SocketChannel socket, Dispatcher dispatcher) throws IOException {
+    return new GsConnection(socket, dispatcher);
+  }
 }

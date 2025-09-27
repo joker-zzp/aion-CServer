@@ -14,24 +14,24 @@ import ai.AggressiveNpcAI;
 @AIName("unstablepazuzuworm")
 public class UnstablePazuzuWormAI extends AggressiveNpcAI {
 
-	public UnstablePazuzuWormAI(Npc owner) {
-		super(owner);
-	}
+  public UnstablePazuzuWormAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleSpawned() {
-		super.handleSpawned();
-		ThreadPoolManager.getInstance().schedule(() -> {
-			AIActions.targetCreature(UnstablePazuzuWormAI.this, getPosition().getWorldMapInstance().getNpc(219554));
-			AIActions.useSkill(UnstablePazuzuWormAI.this, 19291);
-		}, 3000);
-	}
+  @Override
+  protected void handleSpawned() {
+    super.handleSpawned();
+    ThreadPoolManager.getInstance().schedule(() -> {
+      AIActions.targetCreature(UnstablePazuzuWormAI.this, getPosition().getWorldMapInstance().getNpc(219554));
+      AIActions.useSkill(UnstablePazuzuWormAI.this, 19291);
+    }, 3000);
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case REWARD_LOOT, REWARD_AP -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case REWARD_LOOT, REWARD_AP -> false;
+      default -> super.ask(question);
+    };
+  }
 }

@@ -19,28 +19,28 @@ import com.aionemu.gameserver.utils.xml.JAXBUtil;
 @XmlRootElement(name = "in_game_shop")
 public class InGameShopProperty {
 
-	@XmlElement(name = "category", required = true)
-	private List<IGCategory> categories;
+  @XmlElement(name = "category", required = true)
+  private List<IGCategory> categories;
 
-	public List<IGCategory> getCategories() {
-		if (categories == null) {
-			categories = new ArrayList<>();
-		}
-		return this.categories;
-	}
+  public List<IGCategory> getCategories() {
+    if (categories == null) {
+      categories = new ArrayList<>();
+    }
+    return this.categories;
+  }
 
-	public int size() {
-		return getCategories().size();
-	}
+  public int size() {
+    return getCategories().size();
+  }
 
-	public void clear() {
-		if (categories != null) {
-			categories.clear();
-		}
-	}
+  public void clear() {
+    if (categories != null) {
+      categories.clear();
+    }
+  }
 
-	public static InGameShopProperty load() {
-		return JAXBUtil.deserialize(new File("./config/ingameshop/in_game_shop.xml"), InGameShopProperty.class);
-	}
+  public static InGameShopProperty load() {
+    return JAXBUtil.deserialize(new File("./config/ingameshop/in_game_shop.xml"), InGameShopProperty.class);
+  }
 
 }

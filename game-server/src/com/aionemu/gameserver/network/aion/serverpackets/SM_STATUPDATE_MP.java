@@ -10,22 +10,22 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_STATUPDATE_MP extends AionServerPacket {
 
-	private int currentMp;
-	private int maxMp;
+  private int currentMp;
+  private int maxMp;
 
-	/**
-	 * @param currentMp
-	 * @param maxMp
-	 */
-	public SM_STATUPDATE_MP(int currentMp, int maxMp) {
-		this.currentMp = currentMp;
-		this.maxMp = maxMp;
-	}
+  /**
+   * @param currentMp
+   * @param maxMp
+   */
+  public SM_STATUPDATE_MP(int currentMp, int maxMp) {
+    this.currentMp = currentMp;
+    this.maxMp = maxMp;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(currentMp);
-		writeD(maxMp);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(currentMp);
+    writeD(maxMp);
+  }
 
 }

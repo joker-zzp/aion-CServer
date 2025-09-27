@@ -8,19 +8,19 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_SUMMON_PANEL_REMOVE extends AionServerPacket {
 
-	private int skillId;
+  private int skillId;
 
-	public SM_SUMMON_PANEL_REMOVE(int skillId) {
-		this.skillId = skillId;
-	}
+  public SM_SUMMON_PANEL_REMOVE(int skillId) {
+    this.skillId = skillId;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
+  @Override
+  protected void writeImpl(AionConnection con) {
 
-		writeH(skillId); // skillId
-		if (skillId != 0)
-			writeC(1); // unk = 1
-		else
-			writeC(0); // unk
-	}
+    writeH(skillId); // skillId
+    if (skillId != 0)
+      writeC(1); // unk = 1
+    else
+      writeC(0); // unk
+  }
 }

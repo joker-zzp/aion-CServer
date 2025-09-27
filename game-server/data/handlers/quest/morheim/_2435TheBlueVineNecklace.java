@@ -19,74 +19,74 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public class _2435TheBlueVineNecklace extends AbstractQuestHandler {
 
-	public _2435TheBlueVineNecklace() {
-		super(2435);
-	}
+  public _2435TheBlueVineNecklace() {
+    super(2435);
+  }
 
-	@Override
-	public void register() {
-		qe.registerQuestNpc(204387).addOnTalkEvent(questId);
-		qe.registerQuestNpc(204390).addOnTalkEvent(questId);
-		qe.registerQuestItem(182204181, questId);
-	}
+  @Override
+  public void register() {
+    qe.registerQuestNpc(204387).addOnTalkEvent(questId);
+    qe.registerQuestNpc(204390).addOnTalkEvent(questId);
+    qe.registerQuestItem(182204181, questId);
+  }
 
-	@Override
-	public boolean onDialogEvent(QuestEnv env) {
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		int dialogActionId = env.getDialogActionId();
-		int targetId = env.getTargetId();
+  @Override
+  public boolean onDialogEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    int dialogActionId = env.getDialogActionId();
+    int targetId = env.getTargetId();
 
-		if (qs == null || qs.isStartable()) {
-			if (targetId == 0) {
-				if (dialogActionId == QUEST_ACCEPT_1) {
-					QuestService.startQuest(env);
-					return closeDialogWindow(env);
-				}
-			}
-		} else if (qs.getStatus() == QuestStatus.START) {
-			if (targetId == 204387) {
-				if (dialogActionId == QUEST_SELECT) {
-					return sendQuestDialog(env, 1352);
-				} else if (dialogActionId == SETPRO1) {
-					return defaultCloseDialog(env, 0, 1);
-				}
-			} else if (targetId == 204390) {
-				if (dialogActionId == QUEST_SELECT) {
-					return sendQuestDialog(env, 2375);
-				} else if (dialogActionId == SELECT_QUEST_REWARD) {
-					return defaultCloseDialog(env, 1, 1, true, true);
-				}
-			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 204390) {
-				if (dialogActionId == USE_OBJECT) {
-					return sendQuestDialog(env, 2375);
-				}
-				removeQuestItem(env, 182204181, 1);
-				return sendQuestEndDialog(env);
-			}
-		}
-		return false;
-	}
+    if (qs == null || qs.isStartable()) {
+      if (targetId == 0) {
+        if (dialogActionId == QUEST_ACCEPT_1) {
+          QuestService.startQuest(env);
+          return closeDialogWindow(env);
+        }
+      }
+    } else if (qs.getStatus() == QuestStatus.START) {
+      if (targetId == 204387) {
+        if (dialogActionId == QUEST_SELECT) {
+          return sendQuestDialog(env, 1352);
+        } else if (dialogActionId == SETPRO1) {
+          return defaultCloseDialog(env, 0, 1);
+        }
+      } else if (targetId == 204390) {
+        if (dialogActionId == QUEST_SELECT) {
+          return sendQuestDialog(env, 2375);
+        } else if (dialogActionId == SELECT_QUEST_REWARD) {
+          return defaultCloseDialog(env, 1, 1, true, true);
+        }
+      }
+    } else if (qs.getStatus() == QuestStatus.REWARD) {
+      if (targetId == 204390) {
+        if (dialogActionId == USE_OBJECT) {
+          return sendQuestDialog(env, 2375);
+        }
+        removeQuestItem(env, 182204181, 1);
+        return sendQuestEndDialog(env);
+      }
+    }
+    return false;
+  }
 
-	@Override
-	public HandlerResult onItemUseEvent(final QuestEnv env, Item item) {
-		final Player player = env.getPlayer();
-		final int id = item.getItemTemplate().getTemplateId();
-		final int itemObjId = item.getObjectId();
+  @Override
+  public HandlerResult onItemUseEvent(final QuestEnv env, Item item) {
+    final Player player = env.getPlayer();
+    final int id = item.getItemTemplate().getTemplateId();
+    final int itemObjId = item.getObjectId();
 
-		if (id != 182204181)
-			return HandlerResult.UNKNOWN;
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 3000, 0, 0), true);
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+    if (id != 182204181)
+      return HandlerResult.UNKNOWN;
+    PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 3000, 0, 0), true);
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-			@Override
-			public void run() {
-				PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 0, 1, 0), true);
-				sendQuestDialog(env, 4);
-			}
-		}, 3000);
-		return HandlerResult.SUCCESS;
-	}
+      @Override
+      public void run() {
+        PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 0, 1, 0), true);
+        sendQuestDialog(env, 4);
+      }
+    }, 3000);
+    return HandlerResult.SUCCESS;
+  }
 }

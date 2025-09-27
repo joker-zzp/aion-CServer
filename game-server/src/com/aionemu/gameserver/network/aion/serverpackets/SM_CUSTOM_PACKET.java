@@ -14,143 +14,143 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_CUSTOM_PACKET extends AionServerPacket {
 
-	/** Enumeration of types of packet elements. */
-	public static enum PacketElementType {
-		D('d') {
+  /** Enumeration of types of packet elements. */
+  public static enum PacketElementType {
+    D('d') {
 
-			@Override
-			public void write(SM_CUSTOM_PACKET packet, String value) {
-				packet.writeD(Integer.decode(value));
-			}
-		},
-		B('b') {
+      @Override
+      public void write(SM_CUSTOM_PACKET packet, String value) {
+        packet.writeD(Integer.decode(value));
+      }
+    },
+    B('b') {
 
-			@Override
-			public void write(SM_CUSTOM_PACKET packet, String value) {
-				packet.writeB(new byte[Integer.valueOf(value)]);
-			}
-		},
-		H('h') {
+      @Override
+      public void write(SM_CUSTOM_PACKET packet, String value) {
+        packet.writeB(new byte[Integer.valueOf(value)]);
+      }
+    },
+    H('h') {
 
-			@Override
-			public void write(SM_CUSTOM_PACKET packet, String value) {
-				packet.writeH(Integer.decode(value));
-			}
-		},
-		C('c') {
+      @Override
+      public void write(SM_CUSTOM_PACKET packet, String value) {
+        packet.writeH(Integer.decode(value));
+      }
+    },
+    C('c') {
 
-			@Override
-			public void write(SM_CUSTOM_PACKET packet, String value) {
-				packet.writeC(Integer.decode(value));
-			}
-		},
-		F('f') {
+      @Override
+      public void write(SM_CUSTOM_PACKET packet, String value) {
+        packet.writeC(Integer.decode(value));
+      }
+    },
+    F('f') {
 
-			@Override
-			public void write(SM_CUSTOM_PACKET packet, String value) {
-				packet.writeF(Float.valueOf(value));
-			}
-		},
-		DF('e') {
+      @Override
+      public void write(SM_CUSTOM_PACKET packet, String value) {
+        packet.writeF(Float.valueOf(value));
+      }
+    },
+    DF('e') {
 
-			@Override
-			public void write(SM_CUSTOM_PACKET packet, String value) {
-				packet.writeDF(Double.valueOf(value));
-			}
-		},
-		Q('q') {
+      @Override
+      public void write(SM_CUSTOM_PACKET packet, String value) {
+        packet.writeDF(Double.valueOf(value));
+      }
+    },
+    Q('q') {
 
-			@Override
-			public void write(SM_CUSTOM_PACKET packet, String value) {
-				packet.writeQ(Long.decode(value));
-			}
-		},
-		S('s') {
+      @Override
+      public void write(SM_CUSTOM_PACKET packet, String value) {
+        packet.writeQ(Long.decode(value));
+      }
+    },
+    S('s') {
 
-			@Override
-			public void write(SM_CUSTOM_PACKET packet, String value) {
-				packet.writeS(value);
-			}
-		};
+      @Override
+      public void write(SM_CUSTOM_PACKET packet, String value) {
+        packet.writeS(value);
+      }
+    };
 
-		private final char code;
+    private final char code;
 
-		private PacketElementType(char code) {
-			this.code = code;
-		}
+    private PacketElementType(char code) {
+      this.code = code;
+    }
 
-		public static PacketElementType getByCode(char code) {
-			for (PacketElementType type : values())
-				if (type.code == code)
-					return type;
-			return null;
-		}
+    public static PacketElementType getByCode(char code) {
+      for (PacketElementType type : values())
+        if (type.code == code)
+          return type;
+      return null;
+    }
 
-		/**
-		 * Writes <tt>value</tt> to buffer according to the ElementType
-		 * 
-		 * @param packet
-		 *          packet instance
-		 * @param buf
-		 *          packet write buffer
-		 * @param value
-		 *          element value
-		 */
-		public abstract void write(SM_CUSTOM_PACKET packet, String value);
-	}
+    /**
+     * Writes <tt>value</tt> to buffer according to the ElementType
+     * 
+     * @param packet
+     *          packet instance
+     * @param buf
+     *          packet write buffer
+     * @param value
+     *          element value
+     */
+    public abstract void write(SM_CUSTOM_PACKET packet, String value);
+  }
 
-	public static class PacketElement {
+  public static class PacketElement {
 
-		private final PacketElementType type;
-		private final String value;
+    private final PacketElementType type;
+    private final String value;
 
-		public PacketElement(PacketElementType type, String value) {
-			this.type = type;
-			this.value = value;
-		}
+    public PacketElement(PacketElementType type, String value) {
+      this.type = type;
+      this.value = value;
+    }
 
-		/**
-		 * Writes value stored in this PacketElement into buffer <tt>buf</tt>
-		 * 
-		 * @param packet
-		 *          packet instance.
-		 * @param buf
-		 *          packet write buffer.
-		 */
-		public void writeValue(SM_CUSTOM_PACKET packet) {
-			type.write(packet, value);
-		}
-	}
+    /**
+     * Writes value stored in this PacketElement into buffer <tt>buf</tt>
+     * 
+     * @param packet
+     *          packet instance.
+     * @param buf
+     *          packet write buffer.
+     */
+    public void writeValue(SM_CUSTOM_PACKET packet) {
+      type.write(packet, value);
+    }
+  }
 
-	private List<PacketElement> elements = new ArrayList<>();
+  private List<PacketElement> elements = new ArrayList<>();
 
-	public SM_CUSTOM_PACKET(int opcode) {
-		super(opcode);
-	}
+  public SM_CUSTOM_PACKET(int opcode) {
+    super(opcode);
+  }
 
-	/**
-	 * Add an element to this packet.
-	 * 
-	 * @param packetElement
-	 */
-	public void addElement(PacketElement packetElement) {
-		elements.add(packetElement);
-	}
+  /**
+   * Add an element to this packet.
+   * 
+   * @param packetElement
+   */
+  public void addElement(PacketElement packetElement) {
+    elements.add(packetElement);
+  }
 
-	/**
-	 * Add packet element.
-	 * 
-	 * @param type
-	 * @param value
-	 */
-	public void addElement(PacketElementType type, String value) {
-		elements.add(new PacketElement(type, value));
-	}
+  /**
+   * Add packet element.
+   * 
+   * @param type
+   * @param value
+   */
+  public void addElement(PacketElementType type, String value) {
+    elements.add(new PacketElement(type, value));
+  }
 
-	@Override
-	public void writeImpl(AionConnection con) {
-		for (PacketElement el : elements) {
-			el.writeValue(this);
-		}
-	}
+  @Override
+  public void writeImpl(AionConnection con) {
+    for (PacketElement el : elements) {
+      el.writeValue(this);
+    }
+  }
 }

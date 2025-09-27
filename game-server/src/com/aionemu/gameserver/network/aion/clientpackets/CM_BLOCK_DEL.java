@@ -14,28 +14,28 @@ import com.aionemu.gameserver.services.SocialService;
  */
 public class CM_BLOCK_DEL extends AionClientPacket {
 
-	private String targetName;
+  private String targetName;
 
-	/**
-	 * @param opcode
-	 */
-	public CM_BLOCK_DEL(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * @param opcode
+   */
+  public CM_BLOCK_DEL(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		targetName = readS();
-	}
+  @Override
+  protected void readImpl() {
+    targetName = readS();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player activePlayer = getConnection().getActivePlayer();
-		BlockedPlayer target = activePlayer.getBlockList().getBlockedPlayer(targetName);
-		if (target == null) {
-			sendPacket(SM_SYSTEM_MESSAGE.STR_BUDDYLIST_NOT_IN_LIST());
-		} else {
-			SocialService.deleteBlockedUser(activePlayer, target);
-		}
-	}
+  @Override
+  protected void runImpl() {
+    Player activePlayer = getConnection().getActivePlayer();
+    BlockedPlayer target = activePlayer.getBlockList().getBlockedPlayer(targetName);
+    if (target == null) {
+      sendPacket(SM_SYSTEM_MESSAGE.STR_BUDDYLIST_NOT_IN_LIST());
+    } else {
+      SocialService.deleteBlockedUser(activePlayer, target);
+    }
+  }
 }

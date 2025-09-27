@@ -12,10 +12,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface AIListenable {
 
-	/**
-	 * @return true if the method should be listenable; set to false to disable temporary
-	 */
-	boolean enabled() default true;
+  /**
+   * @return true if the method should be listenable; set to false to disable temporary
+   */
+  boolean enabled() default true;
 
-	AIEventType type();
+  AIEventType type();
 }

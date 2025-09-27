@@ -17,25 +17,25 @@ import com.aionemu.gameserver.model.templates.ride.RideInfo;
 @XmlRootElement(name = "rides")
 public class RideData {
 
-	@XmlElement(name = "ride_info")
-	private List<RideInfo> rides;
+  @XmlElement(name = "ride_info")
+  private List<RideInfo> rides;
 
-	@XmlTransient
-	private final Map<Integer, RideInfo> rideInfos = new HashMap<>();
+  @XmlTransient
+  private final Map<Integer, RideInfo> rideInfos = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (RideInfo info : rides) {
-			rideInfos.put(info.getNpcId(), info);
-		}
-		rides = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (RideInfo info : rides) {
+      rideInfos.put(info.getNpcId(), info);
+    }
+    rides = null;
+  }
 
-	public RideInfo getRideInfo(int npcId) {
-		return rideInfos.get(npcId);
-	}
+  public RideInfo getRideInfo(int npcId) {
+    return rideInfos.get(npcId);
+  }
 
-	public int size() {
-		return rideInfos.size();
-	}
+  public int size() {
+    return rideInfos.size();
+  }
 
 }

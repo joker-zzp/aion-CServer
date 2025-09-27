@@ -10,17 +10,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum StigmaType {
 
-	NONE(0),
-	BASIC(1),
-	ADVANCED(2);
+  NONE(0),
+  BASIC(1),
+  ADVANCED(2);
 
-	private int id;
+  private int id;
 
-	private StigmaType(int id) {
-		this.id = id;
-	}
+  private StigmaType(int id) {
+    this.id = id;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 }

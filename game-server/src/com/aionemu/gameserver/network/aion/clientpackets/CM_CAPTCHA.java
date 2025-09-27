@@ -21,65 +21,65 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class CM_CAPTCHA extends AionClientPacket {
 
-	private static final Logger log = LoggerFactory.getLogger(CM_CAPTCHA.class);
+  private static final Logger log = LoggerFactory.getLogger(CM_CAPTCHA.class);
 
-	private int type;
-	private int count;
-	private String word;
+  private int type;
+  private int count;
+  private String word;
 
-	public CM_CAPTCHA(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_CAPTCHA(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		type = readUC();
+  @Override
+  protected void readImpl() {
+    type = readUC();
 
-		switch (type) {
-			case 2:
-				count = readUC();
-				word = readS();
-				break;
-			case 4: // /ExtractStatus
-				break;
-			default:
-				log.warn("Unknown CAPTCHA packet type " + type);
-				break;
-		}
-	}
+    switch (type) {
+      case 2:
+        count = readUC();
+        word = readS();
+        break;
+      case 4: // /ExtractStatus
+        break;
+      default:
+        log.warn("Unknown CAPTCHA packet type " + type);
+        break;
+    }
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
 
-		switch (type) {
-			case 2:
-				if (player.getCaptchaWord().equalsIgnoreCase(word)) {
-					PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CAPTCHA_UNRESTRICT());
-					PacketSendUtility.sendPacket(player, new SM_CAPTCHA(true, 0));
+    switch (type) {
+      case 2:
+        if (player.getCaptchaWord().equalsIgnoreCase(word)) {
+          PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CAPTCHA_UNRESTRICT());
+          PacketSendUtility.sendPacket(player, new SM_CAPTCHA(true, 0));
 
-					PunishmentService.setIsNotGatherable(player, 0, false, 0);
+          PunishmentService.setIsNotGatherable(player, 0, false, 0);
 
-					// fp bonus (like retail)
-					player.getLifeStats().increaseFp(TYPE.FP, SecurityConfig.CAPTCHA_BONUS_FP_TIME, 0, LOG.REGULAR);
-				} else {
-					int banTime = SecurityConfig.CAPTCHA_EXTRACTION_BAN_TIME + (SecurityConfig.CAPTCHA_EXTRACTION_BAN_ADD_TIME * count);
+          // fp bonus (like retail)
+          player.getLifeStats().increaseFp(TYPE.FP, SecurityConfig.CAPTCHA_BONUS_FP_TIME, 0, LOG.REGULAR);
+        } else {
+          int banTime = SecurityConfig.CAPTCHA_EXTRACTION_BAN_TIME + (SecurityConfig.CAPTCHA_EXTRACTION_BAN_ADD_TIME * count);
 
-					if (count < 3) {
-						PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CAPTCHA_UNRESTRICT_FAILED_RETRY(3 - count));
-						PacketSendUtility.sendPacket(player, new SM_CAPTCHA(false, banTime));
-						PunishmentService.setIsNotGatherable(player, count, true, banTime * 1000L);
-					} else {
-						PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CAPTCHA_UNRESTRICT_FAILED());
-						PunishmentService.setIsNotGatherable(player, count, true, banTime * 1000L);
-					}
-				}
-				break;
-			case 4:
-				if (player.isGatherRestricted())
-					sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_CAPTCHA_RESTRICTED(player.getGatherRestrictionDurationSeconds()));
-				else
-					sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_CAPTCHA_NOT_RESTRICTED());
-		}
-	}
+          if (count < 3) {
+            PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CAPTCHA_UNRESTRICT_FAILED_RETRY(3 - count));
+            PacketSendUtility.sendPacket(player, new SM_CAPTCHA(false, banTime));
+            PunishmentService.setIsNotGatherable(player, count, true, banTime * 1000L);
+          } else {
+            PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CAPTCHA_UNRESTRICT_FAILED());
+            PunishmentService.setIsNotGatherable(player, count, true, banTime * 1000L);
+          }
+        }
+        break;
+      case 4:
+        if (player.isGatherRestricted())
+          sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_CAPTCHA_RESTRICTED(player.getGatherRestrictionDurationSeconds()));
+        else
+          sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_CAPTCHA_NOT_RESTRICTED());
+    }
+  }
 }

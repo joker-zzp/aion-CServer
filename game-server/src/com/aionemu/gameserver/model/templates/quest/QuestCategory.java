@@ -9,17 +9,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "QuestCategory")
 @XmlEnum
 public enum QuestCategory {
-	QUEST,
-	EVENT,
-	MISSION,
-	SIGNIFICANT,
-	IMPORTANT,
-	NON_COUNT,
-	SEEN_MARKER,
-	TASK,
-	FACTION,
-	CHALLENGE_TASK,
-	PUBLIC,
-	LEGION,
-	PRIMARY;
+  QUEST,
+  EVENT,
+  MISSION,
+  SIGNIFICANT,
+  IMPORTANT,
+  NON_COUNT,
+  SEEN_MARKER,
+  TASK,
+  FACTION,
+  CHALLENGE_TASK,
+  PUBLIC,
+  LEGION,
+  PRIMARY;
 }

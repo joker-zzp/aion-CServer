@@ -22,27 +22,27 @@ import com.aionemu.gameserver.model.templates.housing.HousePart;
 @XmlRootElement(name = "house_parts")
 public class HousePartsData {
 
-	@XmlElement(name = "house_part")
-	private List<HousePart> houseParts;
+  @XmlElement(name = "house_part")
+  private List<HousePart> houseParts;
 
-	@XmlTransient
-	private Map<Integer, HousePart> partsById = new HashMap<>();
+  @XmlTransient
+  private Map<Integer, HousePart> partsById = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		if (houseParts == null)
-			return;
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    if (houseParts == null)
+      return;
 
-		for (HousePart part : houseParts)
-			partsById.put(part.getId(), part);
-		houseParts = null;
-	}
+    for (HousePart part : houseParts)
+      partsById.put(part.getId(), part);
+    houseParts = null;
+  }
 
-	public HousePart getPartById(int partId) {
-		return partsById.get(partId);
-	}
+  public HousePart getPartById(int partId) {
+    return partsById.get(partId);
+  }
 
-	public int size() {
-		return partsById.size();
-	}
+  public int size() {
+    return partsById.size();
+  }
 
 }

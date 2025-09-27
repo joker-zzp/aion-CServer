@@ -8,15 +8,15 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_FRIEND_STATUS extends AionServerPacket {
 
-	int status;
+  int status;
 
-	public SM_FRIEND_STATUS(int status) {
-		this.status = status;
-	}
+  public SM_FRIEND_STATUS(int status) {
+    this.status = status;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeC(status);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeC(status);
+  }
 
 }

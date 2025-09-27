@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "MultiReturnItem")
 public class MultiReturnItem {
 
-	@XmlAttribute(name = "id")
-	private int id;
-	@XmlElement(name = "return_loc")
-	private List<ReturnLocList> returnLocList;
+  @XmlAttribute(name = "id")
+  private int id;
+  @XmlElement(name = "return_loc")
+  private List<ReturnLocList> returnLocList;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public List<ReturnLocList> getReturnLocList() {
-		return returnLocList;
-	}
+  public List<ReturnLocList> getReturnLocList() {
+    return returnLocList;
+  }
 }

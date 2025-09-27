@@ -9,335 +9,335 @@ import java.sql.Timestamp;
  */
 public class Account {
 
-	/**
-	 * Id of account, object if assigned, null if not
-	 */
-	private Integer id;
+  /**
+   * Id of account, object if assigned, null if not
+   */
+  private Integer id;
 
-	/**
-	 * Account name
-	 */
-	private String name;
+  /**
+   * Account name
+   */
+  private String name;
 
-	/**
-	 * Password hash
-	 */
-	private String passwordHash;
+  /**
+   * Password hash
+   */
+  private String passwordHash;
 
-	/**
-	 * Time of account creation
-	 */
-	private Timestamp creationDate;
+  /**
+   * Time of account creation
+   */
+  private Timestamp creationDate;
 
-	/**
-	 * Access level of account 0 = regular user, > 0 = GM
-	 */
-	private byte accessLevel;
+  /**
+   * Access level of account 0 = regular user, > 0 = GM
+   */
+  private byte accessLevel;
 
-	/**
-	 * Membership of this account (regular, premium etc)
-	 */
-	private byte membership;
+  /**
+   * Membership of this account (regular, premium etc)
+   */
+  private byte membership;
 
-	/**
-	 * Account activated
-	 */
-	private byte activated;
+  /**
+   * Account activated
+   */
+  private byte activated;
 
-	/**
-	 * last server visited by user -1 if none
-	 */
-	private byte lastServer;
+  /**
+   * last server visited by user -1 if none
+   */
+  private byte lastServer;
 
-	/**
-	 * Last ip of user -1 if none
-	 */
-	private String lastIp;
+  /**
+   * Last ip of user -1 if none
+   */
+  private String lastIp;
 
-	/**
-	 * Last mac of user xx-xx-xx-xx-xx-xx if none
-	 */
-	private String lastMac = "xx-xx-xx-xx-xx-xx";
+  /**
+   * Last mac of user xx-xx-xx-xx-xx-xx if none
+   */
+  private String lastMac = "xx-xx-xx-xx-xx-xx";
 
-	/**
-	 * The only ip that is allowed to this account
-	 */
-	private String ipForce;
+  /**
+   * The only ip that is allowed to this account
+   */
+  private String ipForce;
 
-	/**
-	 * The only HDD serial that is allowed for this account (must be checked on game server side)
-	 */
-	private String allowedHddSerial;
+  /**
+   * The only HDD serial that is allowed for this account (must be checked on game server side)
+   */
+  private String allowedHddSerial;
 
-	/**
-	 * AccountTime data
-	 */
-	private AccountTime accountTime;
+  /**
+   * AccountTime data
+   */
+  private AccountTime accountTime;
 
-	/**
-	 * Returns account id, null if not stored in DB
-	 * 
-	 * @return account id
-	 */
-	public Integer getId() {
-		return id;
-	}
+  /**
+   * Returns account id, null if not stored in DB
+   * 
+   * @return account id
+   */
+  public Integer getId() {
+    return id;
+  }
 
-	/**
-	 * Sets account id
-	 * 
-	 * @param id
-	 *          account id
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
+  /**
+   * Sets account id
+   * 
+   * @param id
+   *          account id
+   */
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	/**
-	 * Returns account name
-	 * 
-	 * @return account name
-	 */
-	public String getName() {
-		return name;
-	}
+  /**
+   * Returns account name
+   * 
+   * @return account name
+   */
+  public String getName() {
+    return name;
+  }
 
-	/**
-	 * Sets account name
-	 * 
-	 * @param name
-	 *          account name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+  /**
+   * Sets account name
+   * 
+   * @param name
+   *          account name
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	/**
-	 * Returns password hash
-	 * 
-	 * @return password hash
-	 */
-	public String getPasswordHash() {
-		return passwordHash;
-	}
+  /**
+   * Returns password hash
+   * 
+   * @return password hash
+   */
+  public String getPasswordHash() {
+    return passwordHash;
+  }
 
-	/**
-	 * Sets password hash
-	 * 
-	 * @param passwordHash
-	 *          password hash
-	 */
-	public void setPasswordHash(String passwordHash) {
-		this.passwordHash = passwordHash;
-	}
+  /**
+   * Sets password hash
+   * 
+   * @param passwordHash
+   *          password hash
+   */
+  public void setPasswordHash(String passwordHash) {
+    this.passwordHash = passwordHash;
+  }
 
-	/**
-	 * @return The account creation date
-	 */
-	public Timestamp getCreationDate() {
-		return creationDate;
-	}
+  /**
+   * @return The account creation date
+   */
+  public Timestamp getCreationDate() {
+    return creationDate;
+  }
 
-	public void setCreationDate(Timestamp creationDate) {
-		this.creationDate = creationDate;
-	}
+  public void setCreationDate(Timestamp creationDate) {
+    this.creationDate = creationDate;
+  }
 
-	/**
-	 * Returns access level of account
-	 * 
-	 * @return access level of account
-	 */
-	public byte getAccessLevel() {
-		return accessLevel;
-	}
+  /**
+   * Returns access level of account
+   * 
+   * @return access level of account
+   */
+  public byte getAccessLevel() {
+    return accessLevel;
+  }
 
-	/**
-	 * Sets access level of account
-	 * 
-	 * @param accessLevel
-	 *          access level of account
-	 */
-	public void setAccessLevel(byte accessLevel) {
-		this.accessLevel = accessLevel;
-	}
+  /**
+   * Sets access level of account
+   * 
+   * @param accessLevel
+   *          access level of account
+   */
+  public void setAccessLevel(byte accessLevel) {
+    this.accessLevel = accessLevel;
+  }
 
-	/**
-	 * @return the membership
-	 */
-	public byte getMembership() {
-		return membership;
-	}
+  /**
+   * @return the membership
+   */
+  public byte getMembership() {
+    return membership;
+  }
 
-	/**
-	 * @param membership
-	 *          the membership to set
-	 */
-	public void setMembership(byte membership) {
-		this.membership = membership;
-	}
+  /**
+   * @param membership
+   *          the membership to set
+   */
+  public void setMembership(byte membership) {
+    this.membership = membership;
+  }
 
-	/**
-	 * Returns activation status of account
-	 * 
-	 * @return activation status of account
-	 */
-	public byte getActivated() {
-		return activated;
-	}
+  /**
+   * Returns activation status of account
+   * 
+   * @return activation status of account
+   */
+  public byte getActivated() {
+    return activated;
+  }
 
-	/**
-	 * Sets account activation status
-	 * 
-	 * @param activated
-	 *          whether the account is activated and can log in
-	 */
-	public void setActivated(byte activated) {
-		this.activated = activated;
-	}
+  /**
+   * Sets account activation status
+   * 
+   * @param activated
+   *          whether the account is activated and can log in
+   */
+  public void setActivated(byte activated) {
+    this.activated = activated;
+  }
 
-	/**
-	 * Returns last server that player visited
-	 * 
-	 * @return last server that player visited
-	 */
-	public byte getLastServer() {
-		return lastServer;
-	}
+  /**
+   * Returns last server that player visited
+   * 
+   * @return last server that player visited
+   */
+  public byte getLastServer() {
+    return lastServer;
+  }
 
-	/**
-	 * Sets last server that player visited
-	 * 
-	 * @param lastServer
-	 *          last server that player visited
-	 */
-	public void setLastServer(byte lastServer) {
-		this.lastServer = lastServer;
-	}
+  /**
+   * Sets last server that player visited
+   * 
+   * @param lastServer
+   *          last server that player visited
+   */
+  public void setLastServer(byte lastServer) {
+    this.lastServer = lastServer;
+  }
 
-	/**
-	 * Returns last ip that player played from
-	 * 
-	 * @return last ip that player played from
-	 */
-	public String getLastIp() {
-		return lastIp;
-	}
+  /**
+   * Returns last ip that player played from
+   * 
+   * @return last ip that player played from
+   */
+  public String getLastIp() {
+    return lastIp;
+  }
 
-	/**
-	 * Sets last ip that player players from
-	 * 
-	 * @param lastIp
-	 *          last ip that player played from
-	 */
-	public void setLastIp(String lastIp) {
-		this.lastIp = lastIp;
-	}
+  /**
+   * Sets last ip that player players from
+   * 
+   * @param lastIp
+   *          last ip that player played from
+   */
+  public void setLastIp(String lastIp) {
+    this.lastIp = lastIp;
+  }
 
-	/**
-	 * Returns last mac that player played from
-	 * 
-	 * @return last mac that player played from
-	 */
-	public String getLastMac() {
-		return lastMac;
-	}
+  /**
+   * Returns last mac that player played from
+   * 
+   * @return last mac that player played from
+   */
+  public String getLastMac() {
+    return lastMac;
+  }
 
-	/**
-	 * Sets last mac that player players from
-	 * 
-	 * @param lastMac
-	 *          last mac that player played from
-	 */
-	public void setLastMac(String lastMac) {
-		this.lastMac = lastMac;
-	}
+  /**
+   * Sets last mac that player players from
+   * 
+   * @param lastMac
+   *          last mac that player played from
+   */
+  public void setLastMac(String lastMac) {
+    this.lastMac = lastMac;
+  }
 
-	/**
-	 * Returns IP that player is forced to use with his account
-	 * 
-	 * @return ip that player is forced to use with his account
-	 */
-	public String getIpForce() {
-		return ipForce;
-	}
+  /**
+   * Returns IP that player is forced to use with his account
+   * 
+   * @return ip that player is forced to use with his account
+   */
+  public String getIpForce() {
+    return ipForce;
+  }
 
-	/**
-	 * Sets ip that player has to use with his account
-	 * 
-	 * @param ipForce
-	 *          sets ip that players has to use with his account
-	 */
-	public void setIpForce(String ipForce) {
-		this.ipForce = ipForce;
-	}
+  /**
+   * Sets ip that player has to use with his account
+   * 
+   * @param ipForce
+   *          sets ip that players has to use with his account
+   */
+  public void setIpForce(String ipForce) {
+    this.ipForce = ipForce;
+  }
 
-	/**
-	 * @return The HDD serial that this account is allowed to connect with (null if unset)
-	 */
-	public String getAllowedHddSerial() {
-		return allowedHddSerial;
-	}
-	
-	/**
-	 * Sets the HDD serial that this account is allowed to connect with
-	 */
-	public void setAllowedHddSerial(String allowedHddSerial) {
-		this.allowedHddSerial = allowedHddSerial;
-	}
+  /**
+   * @return The HDD serial that this account is allowed to connect with (null if unset)
+   */
+  public String getAllowedHddSerial() {
+    return allowedHddSerial;
+  }
+  
+  /**
+   * Sets the HDD serial that this account is allowed to connect with
+   */
+  public void setAllowedHddSerial(String allowedHddSerial) {
+    this.allowedHddSerial = allowedHddSerial;
+  }
 
-	/**
-	 * @return accountTime
-	 */
-	public AccountTime getAccountTime() {
-		return accountTime;
-	}
+  /**
+   * @return accountTime
+   */
+  public AccountTime getAccountTime() {
+    return accountTime;
+  }
 
-	/**
-	 * @param accountTime
-	 */
-	public void setAccountTime(AccountTime accountTime) {
-		this.accountTime = accountTime;
-	}
+  /**
+   * @param accountTime
+   */
+  public void setAccountTime(AccountTime accountTime) {
+    this.accountTime = accountTime;
+  }
 
-	/**
-	 * Returns true if players name and password has are equals
-	 * 
-	 * @param o
-	 *          another player to check
-	 * @return true if names and password hash matches
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
+  /**
+   * Returns true if players name and password has are equals
+   * 
+   * @param o
+   *          another player to check
+   * @return true if names and password hash matches
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
 
-		if (!(o instanceof Account)) {
-			return false;
-		}
+    if (!(o instanceof Account)) {
+      return false;
+    }
 
-		Account account = (Account) o;
+    Account account = (Account) o;
 
-		// noinspection SimplifiableIfStatement
-		if (name != null ? !name.equals(account.name) : account.name != null) {
-			return false;
-		}
+    // noinspection SimplifiableIfStatement
+    if (name != null ? !name.equals(account.name) : account.name != null) {
+      return false;
+    }
 
-		return !(passwordHash != null ? !passwordHash.equals(account.passwordHash) : account.passwordHash != null);
+    return !(passwordHash != null ? !passwordHash.equals(account.passwordHash) : account.passwordHash != null);
 
-	}
+  }
 
-	/**
-	 * Returns player hashcode.
-	 * 
-	 * @return player hashcode
-	 */
-	@Override
-	public int hashCode() {
-		int result = name != null ? name.hashCode() : 0;
+  /**
+   * Returns player hashcode.
+   * 
+   * @return player hashcode
+   */
+  @Override
+  public int hashCode() {
+    int result = name != null ? name.hashCode() : 0;
 
-		result = 31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
+    result = 31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
 
-		return result;
-	}
+    return result;
+  }
 }

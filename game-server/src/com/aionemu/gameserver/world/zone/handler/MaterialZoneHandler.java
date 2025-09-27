@@ -23,51 +23,51 @@ import com.aionemu.gameserver.world.zone.ZoneInstance;
  */
 public class MaterialZoneHandler implements ZoneHandler {
 
-	private final Map<Integer, AbstractMaterialSkillActor> observed = new ConcurrentHashMap<>();
-	private final Spatial geometry;
-	private final MaterialTemplate template;
-	private Race ownerRace = Race.NONE;
+  private final Map<Integer, AbstractMaterialSkillActor> observed = new ConcurrentHashMap<>();
+  private final Spatial geometry;
+  private final MaterialTemplate template;
+  private Race ownerRace = Race.NONE;
 
-	public MaterialZoneHandler(Spatial geometry, MaterialTemplate template) {
-		this.geometry = geometry;
-		this.template = template;
-		String name = geometry.getName();
-		if (name.startsWith("BU_AB_DARKSP"))
-			ownerRace = Race.ASMODIANS;
-		else if (name.startsWith("BU_AB_LIGHTSP"))
-			ownerRace = Race.ELYOS;
-	}
+  public MaterialZoneHandler(Spatial geometry, MaterialTemplate template) {
+    this.geometry = geometry;
+    this.template = template;
+    String name = geometry.getName();
+    if (name.startsWith("BU_AB_DARKSP"))
+      ownerRace = Race.ASMODIANS;
+    else if (name.startsWith("BU_AB_LIGHTSP"))
+      ownerRace = Race.ELYOS;
+  }
 
-	@Override
-	public void onEnterZone(Creature creature, ZoneInstance zone) {
-		if (ownerRace == creature.getRace())
-			return;
-		List<MaterialSkill> matchingSkills = new ArrayList<>();
-		for (MaterialSkill skill : template.getSkills()) {
-			if (skill.getTarget().matches(creature))
-				matchingSkills.add(skill);
-		}
-		if (matchingSkills.isEmpty())
-			return;
-		// Teminon/Primum Landing shield 14 & 15, abyss core 16
-		CheckType checkType = geometry.getMaterialId() >= 14 && geometry.getMaterialId() <= 16 ? CheckType.PASS : CheckType.TOUCH;
-		ZoneCollisionMaterialActor actor = new ZoneCollisionMaterialActor(creature, geometry, matchingSkills, checkType);
-		creature.getObserveController().addObserver(actor);
-		observed.put(creature.getObjectId(), actor);
-		if (GeoDataConfig.GEO_MATERIALS_SHOWDETAILS && creature instanceof Player player && player.isStaff())
-			PacketSendUtility.sendMessage(player, "Entered material zone " + geometry.getName());
-		actor.moved();
-	}
+  @Override
+  public void onEnterZone(Creature creature, ZoneInstance zone) {
+    if (ownerRace == creature.getRace())
+      return;
+    List<MaterialSkill> matchingSkills = new ArrayList<>();
+    for (MaterialSkill skill : template.getSkills()) {
+      if (skill.getTarget().matches(creature))
+        matchingSkills.add(skill);
+    }
+    if (matchingSkills.isEmpty())
+      return;
+    // Teminon/Primum Landing shield 14 & 15, abyss core 16
+    CheckType checkType = geometry.getMaterialId() >= 14 && geometry.getMaterialId() <= 16 ? CheckType.PASS : CheckType.TOUCH;
+    ZoneCollisionMaterialActor actor = new ZoneCollisionMaterialActor(creature, geometry, matchingSkills, checkType);
+    creature.getObserveController().addObserver(actor);
+    observed.put(creature.getObjectId(), actor);
+    if (GeoDataConfig.GEO_MATERIALS_SHOWDETAILS && creature instanceof Player player && player.isStaff())
+      PacketSendUtility.sendMessage(player, "Entered material zone " + geometry.getName());
+    actor.moved();
+  }
 
-	@Override
-	public void onLeaveZone(Creature creature, ZoneInstance zone) {
-		AbstractMaterialSkillActor actor = observed.remove(creature.getObjectId());
-		if (actor != null) {
-			creature.getObserveController().removeObserver(actor);
-			actor.abort();
-		}
-		if (GeoDataConfig.GEO_MATERIALS_SHOWDETAILS && creature instanceof Player player && player.isStaff()) {
-			PacketSendUtility.sendMessage(player, "Left material zone " + geometry.getName());
-		}
-	}
+  @Override
+  public void onLeaveZone(Creature creature, ZoneInstance zone) {
+    AbstractMaterialSkillActor actor = observed.remove(creature.getObjectId());
+    if (actor != null) {
+      creature.getObserveController().removeObserver(actor);
+      actor.abort();
+    }
+    if (GeoDataConfig.GEO_MATERIALS_SHOWDETAILS && creature instanceof Player player && player.isStaff()) {
+      PacketSendUtility.sendMessage(player, "Left material zone " + geometry.getName());
+    }
+  }
 }

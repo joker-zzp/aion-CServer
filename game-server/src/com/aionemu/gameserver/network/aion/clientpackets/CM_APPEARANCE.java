@@ -27,93 +27,93 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_APPEARANCE extends AionClientPacket {
 
-	private byte type;
-	private int itemObjId;
-	private String newName;
+  private byte type;
+  private int itemObjId;
+  private String newName;
 
-	public CM_APPEARANCE(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_APPEARANCE(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		type = readC();
-		readC();
-		readH();
-		itemObjId = readD();
-		switch (type) {
-			case 0:
-			case 1:
-				newName = readS();
-				break;
-		}
+  @Override
+  protected void readImpl() {
+    type = readC();
+    readC();
+    readH();
+    itemObjId = readD();
+    switch (type) {
+      case 0:
+      case 1:
+        newName = readS();
+        break;
+    }
 
-	}
+  }
 
-	@Override
-	protected void runImpl() {
-		final Player player = getConnection().getActivePlayer();
+  @Override
+  protected void runImpl() {
+    final Player player = getConnection().getActivePlayer();
 
-		switch (type) {
-			case 0: // Change Char Name
-				tryChangeCharacterName(player, Util.convertName(newName), itemObjId);
-				break;
-			case 1: // Change Legion Name
-				tryChangeLegionName(player, newName, itemObjId);
-				break;
-			case 2: // cosmetic items
-				tryUseCosmeticItem(player, itemObjId);
-				break;
-		}
-	}
+    switch (type) {
+      case 0: // Change Char Name
+        tryChangeCharacterName(player, Util.convertName(newName), itemObjId);
+        break;
+      case 1: // Change Legion Name
+        tryChangeLegionName(player, newName, itemObjId);
+        break;
+      case 2: // cosmetic items
+        tryUseCosmeticItem(player, itemObjId);
+        break;
+    }
+  }
 
-	private void tryChangeCharacterName(Player player, String newName, int itemObjId) {
-		String oldName = player.getName();
-		if (oldName.equals(newName))
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_EDIT_CHAR_NAME_ERROR_SAME_YOUR_NAME());
-		else if (!NameRestrictionService.isValidName(newName) || NameRestrictionService.isForbidden(newName))
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_EDIT_CHAR_NAME_ERROR_WRONG_INPUT());
-		else if (PlayerService.isNameUsedOrReserved(oldName, newName))
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_EDIT_CHAR_NAME_ALREADY_EXIST());
-		else if ((player.getInventory().getItemByObjId(itemObjId).getItemId() != 169670000 && player.getInventory().getItemByObjId(itemObjId).getItemId() != 169670001)
-			|| !player.getInventory().decreaseByObjectId(itemObjId, 1))
-			AuditLogger.log(player, "tried to rename himself without coupon");
-		else {
-			OldNamesDAO.insertNames(player.getObjectId(), oldName, newName);
+  private void tryChangeCharacterName(Player player, String newName, int itemObjId) {
+    String oldName = player.getName();
+    if (oldName.equals(newName))
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_EDIT_CHAR_NAME_ERROR_SAME_YOUR_NAME());
+    else if (!NameRestrictionService.isValidName(newName) || NameRestrictionService.isForbidden(newName))
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_EDIT_CHAR_NAME_ERROR_WRONG_INPUT());
+    else if (PlayerService.isNameUsedOrReserved(oldName, newName))
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_EDIT_CHAR_NAME_ALREADY_EXIST());
+    else if ((player.getInventory().getItemByObjId(itemObjId).getItemId() != 169670000 && player.getInventory().getItemByObjId(itemObjId).getItemId() != 169670001)
+      || !player.getInventory().decreaseByObjectId(itemObjId, 1))
+      AuditLogger.log(player, "tried to rename himself without coupon");
+    else {
+      OldNamesDAO.insertNames(player.getObjectId(), oldName, newName);
 
-			player.getCommonData().setName(newName);
-			PlayerDAO.storePlayer(player);
-			onPlayerNameChanged(player, oldName);
-		}
-	}
+      player.getCommonData().setName(newName);
+      PlayerDAO.storePlayer(player);
+      onPlayerNameChanged(player, oldName);
+    }
+  }
 
-	public static void onPlayerNameChanged(Player player, String oldName) {
-		World.getInstance().updateCachedPlayerName(oldName, player);
-		if (player.isLegionMember()) {
-			LegionService.getInstance().updateCachedPlayerName(oldName, player);
-			LegionService.getInstance().addHistory(player.getLegion(), oldName, LegionHistoryAction.CHARACTER_RENAME, player.getName());
-		}
-		PacketSendUtility.broadcastToWorld(new SM_RENAME(player, oldName)); // broadcast to world to update all friendlists, housing npcs, etc.
-	}
+  public static void onPlayerNameChanged(Player player, String oldName) {
+    World.getInstance().updateCachedPlayerName(oldName, player);
+    if (player.isLegionMember()) {
+      LegionService.getInstance().updateCachedPlayerName(oldName, player);
+      LegionService.getInstance().addHistory(player.getLegion(), oldName, LegionHistoryAction.CHARACTER_RENAME, player.getName());
+    }
+    PacketSendUtility.broadcastToWorld(new SM_RENAME(player, oldName)); // broadcast to world to update all friendlists, housing npcs, etc.
+  }
 
-	private void tryChangeLegionName(Player player, String newName, int itemObjId) {
-		Legion legion = player.getLegion();
-		if (legion == null || !player.getLegionMember().isBrigadeGeneral()) {
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_EDIT_GUILD_NAME_ERROR_ONLY_MASTER_CAN_CHANGE_NAME());
-			return;
-		}
-		LegionService.getInstance().tryRename(legion, newName, player, itemObjId);
-	}
+  private void tryChangeLegionName(Player player, String newName, int itemObjId) {
+    Legion legion = player.getLegion();
+    if (legion == null || !player.getLegionMember().isBrigadeGeneral()) {
+      PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_EDIT_GUILD_NAME_ERROR_ONLY_MASTER_CAN_CHANGE_NAME());
+      return;
+    }
+    LegionService.getInstance().tryRename(legion, newName, player, itemObjId);
+  }
 
-	private void tryUseCosmeticItem(Player player, int itemObjId) {
-		Item item = player.getInventory().getItemByObjId(itemObjId);
-		if (item != null) {
-			for (AbstractItemAction action : item.getItemTemplate().getActions().getItemActions()) {
-				if (action instanceof CosmeticItemAction && action.canAct(player, null, null)) {
-					action.act(player, null, item);
-					break;
-				}
-			}
-		}
-	}
+  private void tryUseCosmeticItem(Player player, int itemObjId) {
+    Item item = player.getInventory().getItemByObjId(itemObjId);
+    if (item != null) {
+      for (AbstractItemAction action : item.getItemTemplate().getActions().getItemActions()) {
+        if (action instanceof CosmeticItemAction && action.canAct(player, null, null)) {
+          action.act(player, null, item);
+          break;
+        }
+      }
+    }
+  }
 }

@@ -14,23 +14,23 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "SkillAttackInstantEffect")
 public class SkillAttackInstantEffect extends DamageEffect {
 
-	@XmlAttribute
-	protected int rnddmg;// TODO should be enum and different types of random damage behaviour
-	@XmlAttribute
-	protected boolean cannotmiss;
+  @XmlAttribute
+  protected int rnddmg;// TODO should be enum and different types of random damage behaviour
+  @XmlAttribute
+  protected boolean cannotmiss;
 
-	public int getRnddmg() {
-		return rnddmg;
-	}
+  public int getRnddmg() {
+    return rnddmg;
+  }
 
-	public boolean isCannotmiss() {
-		return cannotmiss;
-	}
+  public boolean isCannotmiss() {
+    return cannotmiss;
+  }
 
-	protected boolean canDodgeOrResist(Effect effect) {
-		if (cannotmiss)
-			return false;
-		return super.canDodgeOrResist(effect);
-	}
+  protected boolean canDodgeOrResist(Effect effect) {
+    if (cannotmiss)
+      return false;
+    return super.canDodgeOrResist(effect);
+  }
 
 }

@@ -9,11 +9,11 @@ import com.aionemu.gameserver.model.geometry.RectangleArea;
  */
 public class RegionZone extends RectangleArea {
 
-	public RegionZone(float startX, float startY, float minZ, float maxZ) {
-		super(null, 0, startX, startY, startX + WorldConfig.WORLD_REGION_SIZE, startY + WorldConfig.WORLD_REGION_SIZE, minZ, maxZ);
-	}
+  public RegionZone(float startX, float startY, float minZ, float maxZ) {
+    super(null, 0, startX, startY, startX + WorldConfig.WORLD_REGION_SIZE, startY + WorldConfig.WORLD_REGION_SIZE, minZ, maxZ);
+  }
 
-	public boolean isInside(AbstractArea area) {
-		return true;
-	}
+  public boolean isInside(AbstractArea area) {
+    return true;
+  }
 }

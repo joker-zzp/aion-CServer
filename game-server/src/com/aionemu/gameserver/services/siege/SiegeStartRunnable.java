@@ -7,19 +7,19 @@ import com.aionemu.gameserver.services.SiegeService;
  */
 public class SiegeStartRunnable implements Runnable {
 
-	private final int locationId;
+  private final int locationId;
 
-	public SiegeStartRunnable(int locationId) {
-		this.locationId = locationId;
-	}
+  public SiegeStartRunnable(int locationId) {
+    this.locationId = locationId;
+  }
 
-	@Override
-	public void run() {
-		SiegeService.getInstance().checkSiegeStart(getLocationId());
-	}
+  @Override
+  public void run() {
+    SiegeService.getInstance().checkSiegeStart(getLocationId());
+  }
 
-	public int getLocationId() {
-		return locationId;
-	}
+  public int getLocationId() {
+    return locationId;
+  }
 
 }

@@ -12,22 +12,22 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "TradeinItem")
 public class TradeinItem {
 
-	@XmlAttribute
-	private int id;
-	@XmlAttribute
-	private long price;
+  @XmlAttribute
+  private int id;
+  @XmlAttribute
+  private long price;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public long getPrice() {
-		return price;
-	}
+  public long getPrice() {
+    return price;
+  }
 
-	@Override
-	public String toString() {
-		return "TradeinItem [id=" + id + ", price=" + price + "]";
-	}
+  @Override
+  public String toString() {
+    return "TradeinItem [id=" + id + ", price=" + price + "]";
+  }
 
 }

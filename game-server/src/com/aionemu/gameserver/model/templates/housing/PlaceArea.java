@@ -10,16 +10,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum PlaceArea {
 
-	ALL,
-	INTERIOR,
-	EXTERIOR;
+  ALL,
+  INTERIOR,
+  EXTERIOR;
 
-	public String value() {
-		return name();
-	}
+  public String value() {
+    return name();
+  }
 
-	public static PlaceArea fromValue(String value) {
-		return valueOf(value);
-	}
+  public static PlaceArea fromValue(String value) {
+    return valueOf(value);
+  }
 
 }

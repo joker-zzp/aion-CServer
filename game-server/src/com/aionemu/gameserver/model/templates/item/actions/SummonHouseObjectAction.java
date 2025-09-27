@@ -15,23 +15,23 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 @XmlType(name = "SummonHouseObjectAction")
 public class SummonHouseObjectAction extends AbstractItemAction {
 
-	@XmlAttribute(name = "id")
-	private int objectId;
+  @XmlAttribute(name = "id")
+  private int objectId;
 
-	@Override
-	public boolean canAct(Player player, Item parentItem, Item targetItem, Object... params) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+  @Override
+  public boolean canAct(Player player, Item parentItem, Item targetItem, Object... params) {
+    // TODO Auto-generated method stub
+    return false;
+  }
 
-	@Override
-	public void act(Player player, Item parentItem, Item targetItem, Object... params) {
-		// TODO Auto-generated method stub
+  @Override
+  public void act(Player player, Item parentItem, Item targetItem, Object... params) {
+    // TODO Auto-generated method stub
 
-	}
+  }
 
-	public int getTemplateId() {
-		return objectId;
-	}
+  public int getTemplateId() {
+    return objectId;
+  }
 
 }

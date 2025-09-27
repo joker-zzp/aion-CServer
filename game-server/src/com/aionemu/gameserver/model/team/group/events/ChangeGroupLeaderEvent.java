@@ -12,34 +12,34 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class ChangeGroupLeaderEvent extends ChangeLeaderEvent<PlayerGroup> {
 
-	public ChangeGroupLeaderEvent(PlayerGroup team, Player eventPlayer) {
-		super(team, eventPlayer);
-	}
+  public ChangeGroupLeaderEvent(PlayerGroup team, Player eventPlayer) {
+    super(team, eventPlayer);
+  }
 
-	public ChangeGroupLeaderEvent(PlayerGroup team) {
-		super(team, null);
-	}
+  public ChangeGroupLeaderEvent(PlayerGroup team) {
+    super(team, null);
+  }
 
-	@Override
-	public void handleEvent() {
-		if (eventPlayer == null) {
-			changeLeaderToNextAvailablePlayer();
-		} else {
-			changeLeaderTo(eventPlayer);
-		}
-	}
+  @Override
+  public void handleEvent() {
+    if (eventPlayer == null) {
+      changeLeaderToNextAvailablePlayer();
+    } else {
+      changeLeaderTo(eventPlayer);
+    }
+  }
 
-	@Override
-	protected void changeLeaderTo(final Player player) {
-		team.changeLeader(team.getMember(player.getObjectId()));
-		team.forEach(member -> {
-			PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(team));
-			if (!player.equals(member)) {
-				PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_PARTY_HE_IS_NEW_LEADER(player.getName()));
-			} else {
-				PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_PARTY_YOU_BECOME_NEW_LEADER());
-			}
-		});
-	}
+  @Override
+  protected void changeLeaderTo(final Player player) {
+    team.changeLeader(team.getMember(player.getObjectId()));
+    team.forEach(member -> {
+      PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(team));
+      if (!player.equals(member)) {
+        PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_PARTY_HE_IS_NEW_LEADER(player.getName()));
+      } else {
+        PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_PARTY_YOU_BECOME_NEW_LEADER());
+      }
+    });
+  }
 
 }

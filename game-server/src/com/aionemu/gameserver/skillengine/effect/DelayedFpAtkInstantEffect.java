@@ -13,42 +13,42 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public class DelayedFpAtkInstantEffect extends EffectTemplate {
 
-	@XmlAttribute
-	protected int delay;
-	@XmlAttribute
-	protected boolean percent;
+  @XmlAttribute
+  protected int delay;
+  @XmlAttribute
+  protected boolean percent;
 
-	@Override
-	public void calculate(Effect effect) {
-		// Only players have FP
-		if (effect.getEffected() instanceof Player)
-			super.calculate(effect, null, null);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    // Only players have FP
+    if (effect.getEffected() instanceof Player)
+      super.calculate(effect, null, null);
+  }
 
-	@Override
-	public void applyEffect(final Effect effect) {
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+  @Override
+  public void applyEffect(final Effect effect) {
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
 
-			@Override
-			public void run() {
-				calculateAndApplyDamage(effect);
-			}
-		}, delay);
-	}
+      @Override
+      public void run() {
+        calculateAndApplyDamage(effect);
+      }
+    }, delay);
+  }
 
-	private void calculateAndApplyDamage(Effect effect) {
-		if (!effect.getEffector().isEnemy(effect.getEffected()))
-			return;
-		int valueWithDelta = calculateBaseValue(effect);
-		Player player = (Player) effect.getEffected();
-		int maxFP = player.getLifeStats().getMaxFp();
+  private void calculateAndApplyDamage(Effect effect) {
+    if (!effect.getEffector().isEnemy(effect.getEffected()))
+      return;
+    int valueWithDelta = calculateBaseValue(effect);
+    Player player = (Player) effect.getEffected();
+    int maxFP = player.getLifeStats().getMaxFp();
 
-		int newValue = valueWithDelta;
-		// Support for values in percentage
-		if (percent)
-			newValue = (maxFP * valueWithDelta) / 100;
+    int newValue = valueWithDelta;
+    // Support for values in percentage
+    if (percent)
+      newValue = (maxFP * valueWithDelta) / 100;
 
-		player.getLifeStats().reduceFp(TYPE.FP_DAMAGE, newValue, effect.getSkillId(), LOG.FPATTACK);
-	}
+    player.getLifeStats().reduceFp(TYPE.FP_DAMAGE, newValue, effect.getSkillId(), LOG.FPATTACK);
+  }
 
 }

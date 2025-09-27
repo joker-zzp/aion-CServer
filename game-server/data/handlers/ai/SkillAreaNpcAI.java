@@ -10,7 +10,7 @@ import com.aionemu.gameserver.model.gameobjects.Npc;
 @AIName("skillarea")
 public class SkillAreaNpcAI extends NpcAI {
 
-	public SkillAreaNpcAI(Npc owner) {
-		super(owner);
-	}
+  public SkillAreaNpcAI(Npc owner) {
+    super(owner);
+  }
 }

@@ -17,23 +17,23 @@ import javax.xml.bind.annotation.XmlType;
 @XmlSeeAlso({ MailPart.class })
 public class StringParamList {
 
-	@XmlElement(name = "param")
-	protected List<Param> params;
+  @XmlElement(name = "param")
+  protected List<Param> params;
 
-	public List<Param> getParams() {
-		return params == null ? Collections.emptyList() : params;
-	}
+  public List<Param> getParams() {
+    return params == null ? Collections.emptyList() : params;
+  }
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlType(name = "")
-	public static class Param {
+  @XmlAccessorType(XmlAccessType.FIELD)
+  @XmlType(name = "")
+  public static class Param {
 
-		@XmlAttribute(name = "id", required = true)
-		protected String id;
+    @XmlAttribute(name = "id", required = true)
+    protected String id;
 
-		public String getId() {
-			return id;
-		}
-	}
+    public String getId() {
+      return id;
+    }
+  }
 
 }

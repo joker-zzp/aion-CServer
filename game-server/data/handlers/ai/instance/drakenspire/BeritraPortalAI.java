@@ -18,24 +18,24 @@ import ai.ActionItemNpcAI;
 @AIName("beritra_portal")
 public class BeritraPortalAI extends ActionItemNpcAI {
 
-	public BeritraPortalAI(Npc owner) {
-		super(owner);
-	}
+  public BeritraPortalAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(final Player player) {
-		switch (Rnd.get(1, 3)) {
-			case 1:
-				TeleportService.teleportTo(player, 301390000, 174.7f, 518.2f, 1749.6f, (byte) 59, TeleportAnimation.FADE_OUT);
-				break;
-			case 2:
-				TeleportService.teleportTo(player, 301390000, 173.4f, 517.9f, 1749.6f, (byte) 59, TeleportAnimation.FADE_OUT);
-				break;
-			case 3:
-				TeleportService.teleportTo(player, 301390000, 173.4f, 514.6f, 1749.6f, (byte) 59, TeleportAnimation.FADE_OUT);
-				break;
-		}
-		player.getController().startProtectionActiveTask();
-		ThreadPoolManager.getInstance().schedule(() -> PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(false, 0, 0, 915, true)), 1000);
-	}
+  @Override
+  protected void handleUseItemFinish(final Player player) {
+    switch (Rnd.get(1, 3)) {
+      case 1:
+        TeleportService.teleportTo(player, 301390000, 174.7f, 518.2f, 1749.6f, (byte) 59, TeleportAnimation.FADE_OUT);
+        break;
+      case 2:
+        TeleportService.teleportTo(player, 301390000, 173.4f, 517.9f, 1749.6f, (byte) 59, TeleportAnimation.FADE_OUT);
+        break;
+      case 3:
+        TeleportService.teleportTo(player, 301390000, 173.4f, 514.6f, 1749.6f, (byte) 59, TeleportAnimation.FADE_OUT);
+        break;
+    }
+    player.getController().startProtectionActiveTask();
+    ThreadPoolManager.getInstance().schedule(() -> PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(false, 0, 0, 915, true)), 1000);
+  }
 }

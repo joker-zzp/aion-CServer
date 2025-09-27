@@ -13,9 +13,9 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "UtilityEffect")
 public class UtilityEffect extends EffectTemplate {
 
-	@Override
-	public void applyEffect(Effect effect) {
-		// TODO Auto-generated method stub
+  @Override
+  public void applyEffect(Effect effect) {
+    // TODO Auto-generated method stub
 
-	}
+  }
 }

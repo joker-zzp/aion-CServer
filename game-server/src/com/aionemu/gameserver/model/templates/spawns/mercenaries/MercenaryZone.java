@@ -18,9 +18,9 @@ import com.aionemu.gameserver.model.templates.spawns.Spawn;
 @XmlType(name = "MercenaryZone")
 public class MercenaryZone {
 
-	@XmlAttribute(name = "zone")
-	private int zone;
-	@XmlAttribute(name = "costs")
+  @XmlAttribute(name = "zone")
+  private int zone;
+  @XmlAttribute(name = "costs")
   private int costs;
   @XmlAttribute(name = "cooldown")
   private int cooldown;
@@ -28,51 +28,51 @@ public class MercenaryZone {
   private int msgId;
   @XmlAttribute(name = "announce_id")
   private int announceId;
-	@XmlElement(name = "spawn")
-	private List<Spawn> spawns;
-	@XmlTransient
-	private int worldId;
-	@XmlTransient
-	private int siegeId;
+  @XmlElement(name = "spawn")
+  private List<Spawn> spawns;
+  @XmlTransient
+  private int worldId;
+  @XmlTransient
+  private int siegeId;
 
-	public int getZoneId() {
-		return zone;
-	}
-	
-	public int getCosts() {
-		return costs;
+  public int getZoneId() {
+    return zone;
+  }
+  
+  public int getCosts() {
+    return costs;
   }
 
   public int getCooldown() {
-  	return cooldown;
+    return cooldown;
   }
 
   public int getMsgId() {
-  	return msgId;
+    return msgId;
   }
 
   public int getAnnounceId() {
-  	return announceId;
+    return announceId;
   }
 
-	public List<Spawn> getSpawns() {
-		return spawns;
-	}
+  public List<Spawn> getSpawns() {
+    return spawns;
+  }
 
-	public int getWorldId() {
-		return worldId;
-	}
+  public int getWorldId() {
+    return worldId;
+  }
 
-	public void setWorldId(int worldId) {
-		this.worldId = worldId;
-	}
+  public void setWorldId(int worldId) {
+    this.worldId = worldId;
+  }
 
-	public int getSiegeId() {
-		return siegeId;
-	}
+  public int getSiegeId() {
+    return siegeId;
+  }
 
-	public void setSiegeId(int siegeId) {
-		this.siegeId = siegeId;
-	}
+  public void setSiegeId(int siegeId) {
+    this.siegeId = siegeId;
+  }
 
 }

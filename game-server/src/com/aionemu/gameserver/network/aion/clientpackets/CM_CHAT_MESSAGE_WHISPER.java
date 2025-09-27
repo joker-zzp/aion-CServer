@@ -24,55 +24,55 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_CHAT_MESSAGE_WHISPER extends AionClientPacket {
 
-	/**
-	 * To whom this message is sent
-	 */
-	private String name;
+  /**
+   * To whom this message is sent
+   */
+  private String name;
 
-	/**
-	 * Message text
-	 */
-	private String message;
+  /**
+   * Message text
+   */
+  private String message;
 
-	/**
-	 * Constructs new client packet instance.
-	 * 
-	 * @param opcode
-	 */
-	public CM_CHAT_MESSAGE_WHISPER(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  /**
+   * Constructs new client packet instance.
+   * 
+   * @param opcode
+   */
+  public CM_CHAT_MESSAGE_WHISPER(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	/**
-	 * Read message
-	 */
-	@Override
-	protected void readImpl() {
-		name = readS();
-		message = readS();
-	}
+  /**
+   * Read message
+   */
+  @Override
+  protected void readImpl() {
+    name = readS();
+    message = readS();
+  }
 
-	@Override
-	protected void runImpl() {
-		String realName = ChatUtil.getRealCharName(name);
-		Player sender = getConnection().getActivePlayer();
-		Player receiver = World.getInstance().getPlayer(realName);
+  @Override
+  protected void runImpl() {
+    String realName = ChatUtil.getRealCharName(name);
+    Player sender = getConnection().getActivePlayer();
+    Player receiver = World.getInstance().getPlayer(realName);
 
-		if (receiver == null) {
-			sendPacket(SM_SYSTEM_MESSAGE.STR_NO_SUCH_USER(realName));
-		} else if (receiver.isInCustomState(CustomPlayerState.NO_WHISPERS_MODE) && !sender.isStaff()) {
-			sendPacket(SM_SYSTEM_MESSAGE.STR_WHISPER_REFUSE(receiver.getName(true)));
-		} else if (sender.getLevel() < CustomConfig.LEVEL_TO_WHISPER && !receiver.isStaff()) {
-			sendPacket(SM_SYSTEM_MESSAGE.STR_CANT_WHISPER_LEVEL(String.valueOf(CustomConfig.LEVEL_TO_WHISPER)));
-		} else if (receiver.getBlockList().contains(sender.getObjectId())) {
-			sendPacket(SM_SYSTEM_MESSAGE.STR_YOU_EXCLUDED(receiver.getName()));
-		} else if (sender.getRace() != receiver.getRace() && !CustomConfig.SPEAKING_BETWEEN_FACTIONS && !sender.isStaff() && !receiver.isStaff()) {
-			sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_CANT_WHISPER_OTHER_RACE());
-		} else {
-			if (!PlayerRestrictions.canChat(sender))
-				return;
-			PlayerChatService.logWhisper(sender, receiver, message);
-			PacketSendUtility.sendPacket(receiver, new SM_MESSAGE(sender, NameRestrictionService.filterMessage(message), ChatType.WHISPER));
-		}
-	}
+    if (receiver == null) {
+      sendPacket(SM_SYSTEM_MESSAGE.STR_NO_SUCH_USER(realName));
+    } else if (receiver.isInCustomState(CustomPlayerState.NO_WHISPERS_MODE) && !sender.isStaff()) {
+      sendPacket(SM_SYSTEM_MESSAGE.STR_WHISPER_REFUSE(receiver.getName(true)));
+    } else if (sender.getLevel() < CustomConfig.LEVEL_TO_WHISPER && !receiver.isStaff()) {
+      sendPacket(SM_SYSTEM_MESSAGE.STR_CANT_WHISPER_LEVEL(String.valueOf(CustomConfig.LEVEL_TO_WHISPER)));
+    } else if (receiver.getBlockList().contains(sender.getObjectId())) {
+      sendPacket(SM_SYSTEM_MESSAGE.STR_YOU_EXCLUDED(receiver.getName()));
+    } else if (sender.getRace() != receiver.getRace() && !CustomConfig.SPEAKING_BETWEEN_FACTIONS && !sender.isStaff() && !receiver.isStaff()) {
+      sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_CANT_WHISPER_OTHER_RACE());
+    } else {
+      if (!PlayerRestrictions.canChat(sender))
+        return;
+      PlayerChatService.logWhisper(sender, receiver, message);
+      PacketSendUtility.sendPacket(receiver, new SM_MESSAGE(sender, NameRestrictionService.filterMessage(message), ChatType.WHISPER));
+    }
+  }
 }

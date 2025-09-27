@@ -17,22 +17,22 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @XmlType(name = "ResurrectEffect")
 public class ResurrectEffect extends EffectTemplate {
 
-	@XmlAttribute(name = "skill_id")
-	protected int skillId;
+  @XmlAttribute(name = "skill_id")
+  protected int skillId;
 
-	@Override
-	public void applyEffect(Effect effect) {
-		if (effect.getEffected() instanceof Player) {
-			Player effectedPlayer = (Player) effect.getEffected();
-			effectedPlayer.setPlayerResActivate(true);
-			effectedPlayer.setResurrectionSkill(skillId);
-			PacketSendUtility.sendPacket(effectedPlayer, new SM_RESURRECT(effect.getEffector(), effect.getSkillId()));
-		}
-	}
+  @Override
+  public void applyEffect(Effect effect) {
+    if (effect.getEffected() instanceof Player) {
+      Player effectedPlayer = (Player) effect.getEffected();
+      effectedPlayer.setPlayerResActivate(true);
+      effectedPlayer.setResurrectionSkill(skillId);
+      PacketSendUtility.sendPacket(effectedPlayer, new SM_RESURRECT(effect.getEffector(), effect.getSkillId()));
+    }
+  }
 
-	@Override
-	public void calculate(Effect effect) {
-		if (effect.getEffected() instanceof Player && effect.getEffected().isDead())
-			super.calculate(effect, null, null);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    if (effect.getEffected() instanceof Player && effect.getEffected().isDead())
+      super.calculate(effect, null, null);
+  }
 }

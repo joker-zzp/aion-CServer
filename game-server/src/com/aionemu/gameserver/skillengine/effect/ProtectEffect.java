@@ -19,39 +19,39 @@ import com.aionemu.gameserver.skillengine.model.ShieldType;
 @XmlType(name = "ProtectEffect")
 public class ProtectEffect extends ShieldEffect {
 
-	@Override
-	public void startEffect(final Effect effect) {
-		AttackShieldObserver asObserver = new AttackShieldObserver(value, hitvalue, percent, false, effect, hitType, getType(), hitTypeProb, 0, radius,
-			null, 0);
-		effect.addObserver(effect.getEffected(), asObserver);
+  @Override
+  public void startEffect(final Effect effect) {
+    AttackShieldObserver asObserver = new AttackShieldObserver(value, hitvalue, percent, false, effect, hitType, getType(), hitTypeProb, 0, radius,
+      null, 0);
+    effect.addObserver(effect.getEffected(), asObserver);
 
-		if (effect.getEffector() instanceof Summon) {
-			effect.addObserver(effect.getEffector(), new ActionObserver(ObserverType.SUMMONRELEASE) {
+    if (effect.getEffector() instanceof Summon) {
+      effect.addObserver(effect.getEffector(), new ActionObserver(ObserverType.SUMMONRELEASE) {
 
-				@Override
-				public void summonrelease() {
-					effect.endEffect();
-				}
+        @Override
+        public void summonrelease() {
+          effect.endEffect();
+        }
 
-			});
-		} else {
-			effect.addObserver(effect.getEffector(), new ActionObserver(ObserverType.DEATH) {
+      });
+    } else {
+      effect.addObserver(effect.getEffector(), new ActionObserver(ObserverType.DEATH) {
 
-				@Override
-				public void died(Creature creature) {
-					effect.endEffect();
-				}
+        @Override
+        public void died(Creature creature) {
+          effect.endEffect();
+        }
 
-			});
-		}
-	}
+      });
+    }
+  }
 
-	@Override
-	public void endEffect(Effect effect) {
-	}
+  @Override
+  public void endEffect(Effect effect) {
+  }
 
-	@Override
-	public ShieldType getType() {
-		return ShieldType.PROTECT;
-	}
+  @Override
+  public ShieldType getType() {
+    return ShieldType.PROTECT;
+  }
 }

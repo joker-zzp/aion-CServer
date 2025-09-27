@@ -16,45 +16,45 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @AIName("stonespear_guardian_stone")
 public class StonespearGuardianStoneAI extends NpcAI {
 
-	private Future<?> task;
+  private Future<?> task;
 
-	public StonespearGuardianStoneAI(Npc owner) {
-		super(owner);
-	}
+  public StonespearGuardianStoneAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void handleSpawned() {
-		super.handleSpawned();
-		startTask();
-	}
+  @Override
+  public void handleSpawned() {
+    super.handleSpawned();
+    startTask();
+  }
 
-	private void startTask() {
-		task = ThreadPoolManager.getInstance().schedule(() -> {
-			PacketSendUtility.broadcastPacket(getOwner(), SM_SYSTEM_MESSAGE.STR_MSG_OBJ_End());
-			getOwner().getController().delete();
-		}, 55000); // message says 2mins but its actually only ~1min.
-	}
+  private void startTask() {
+    task = ThreadPoolManager.getInstance().schedule(() -> {
+      PacketSendUtility.broadcastPacket(getOwner(), SM_SYSTEM_MESSAGE.STR_MSG_OBJ_End());
+      getOwner().getController().delete();
+    }, 55000); // message says 2mins but its actually only ~1min.
+  }
 
-	@Override
-	public void handleDied() {
-		super.handleDied();
-		getOwner().getController().delete();
-		if (task != null && !task.isCancelled())
-			task.cancel(true);
-	}
+  @Override
+  public void handleDied() {
+    super.handleDied();
+    getOwner().getController().delete();
+    if (task != null && !task.isCancelled())
+      task.cancel(true);
+  }
 
-	@Override
-	public void handleDespawned() {
-		if (task != null && !task.isCancelled())
-			task.cancel(true);
-		super.handleDespawned();
-	}
+  @Override
+  public void handleDespawned() {
+    if (task != null && !task.isCancelled())
+      task.cancel(true);
+    super.handleDespawned();
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		return switch (question) {
-			case ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT, REWARD_LOOT, ALLOW_DECAY -> false;
-			default -> super.ask(question);
-		};
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    return switch (question) {
+      case ALLOW_RESPAWN, REWARD_AP_XP_DP_LOOT, REWARD_LOOT, ALLOW_DECAY -> false;
+      default -> super.ask(question);
+    };
+  }
 }

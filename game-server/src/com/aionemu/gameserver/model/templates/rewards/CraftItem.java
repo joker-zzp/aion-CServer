@@ -31,39 +31,39 @@ import com.aionemu.gameserver.model.templates.QuestTemplate;
 @XmlType(name = "CraftItem")
 public class CraftItem extends CraftReward {
 
-	@XmlAttribute(name = "minLevel", required = true)
-	private int minLevel;
+  @XmlAttribute(name = "minLevel", required = true)
+  private int minLevel;
 
-	@XmlAttribute(name = "maxLevel", required = true)
-	private int maxLevel;
+  @XmlAttribute(name = "maxLevel", required = true)
+  private int maxLevel;
 
-	/**
-	 * Gets the value of the minLevel property.
-	 */
-	public int getMinLevel() {
-		return minLevel;
-	}
+  /**
+   * Gets the value of the minLevel property.
+   */
+  public int getMinLevel() {
+    return minLevel;
+  }
 
-	/**
-	 * Gets the value of the maxLevel property.
-	 */
-	public int getMaxLevel() {
-		return maxLevel;
-	}
+  /**
+   * Gets the value of the maxLevel property.
+   */
+  public int getMaxLevel() {
+    return maxLevel;
+  }
 
-	@Override
-	public long getCount() {
-		return Rnd.get(3, 5);
-	}
+  @Override
+  public long getCount() {
+    return Rnd.get(3, 5);
+  }
 
-	@Override
-	protected boolean matchesQuest(QuestTemplate questTemplate) {
-		if (!super.matchesQuest(questTemplate))
-			return false;
-		if (questTemplate.getCombineSkillPoint() < minLevel)
-			return false;
-		if (questTemplate.getCombineSkillPoint() > maxLevel)
-			return false;
-		return true;
-	}
+  @Override
+  protected boolean matchesQuest(QuestTemplate questTemplate) {
+    if (!super.matchesQuest(questTemplate))
+      return false;
+    if (questTemplate.getCombineSkillPoint() < minLevel)
+      return false;
+    if (questTemplate.getCombineSkillPoint() > maxLevel)
+      return false;
+    return true;
+  }
 }

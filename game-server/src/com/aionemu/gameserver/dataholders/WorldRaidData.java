@@ -20,29 +20,29 @@ import com.aionemu.gameserver.model.templates.worldraid.WorldRaidLocation;
 @XmlRootElement(name = "world_raid_locations")
 public class WorldRaidData {
 
-	@XmlElement(name = "world_raid_location")
-	private List<WorldRaidLocation> worldRaidLocations;
+  @XmlElement(name = "world_raid_location")
+  private List<WorldRaidLocation> worldRaidLocations;
 
-	@XmlTransient
-	private Map<Integer, WorldRaidLocation> locationsById = new HashMap<>();
+  @XmlTransient
+  private Map<Integer, WorldRaidLocation> locationsById = new HashMap<>();
 
-	void afterUnmarshal(Unmarshaller u, Object parent) {
-		for (WorldRaidLocation location : worldRaidLocations)
-			locationsById.putIfAbsent(location.getLocationId(), location);
-		worldRaidLocations.clear();
-		worldRaidLocations = null;
-	}
+  void afterUnmarshal(Unmarshaller u, Object parent) {
+    for (WorldRaidLocation location : worldRaidLocations)
+      locationsById.putIfAbsent(location.getLocationId(), location);
+    worldRaidLocations.clear();
+    worldRaidLocations = null;
+  }
 
-	public WorldRaidLocation getLocationsById(int locationId) {
-		return locationsById.get(locationId);
-	}
+  public WorldRaidLocation getLocationsById(int locationId) {
+    return locationsById.get(locationId);
+  }
 
-	public Map<Integer, WorldRaidLocation> getLocations() {
-		return locationsById;
-	}
+  public Map<Integer, WorldRaidLocation> getLocations() {
+    return locationsById;
+  }
 
-	public int size() {
-		return locationsById.size();
-	}
+  public int size() {
+    return locationsById.size();
+  }
 
 }

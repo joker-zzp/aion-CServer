@@ -13,31 +13,31 @@ import com.aionemu.gameserver.network.aion.AionConnection.State;
  */
 public class CM_SHOW_DIALOG extends AionClientPacket {
 
-	private int targetObjectId;
+  private int targetObjectId;
 
-	public CM_SHOW_DIALOG(int opcode, Set<State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_SHOW_DIALOG(int opcode, Set<State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void readImpl() {
-		targetObjectId = readD();
-	}
+  @Override
+  protected void readImpl() {
+    targetObjectId = readD();
+  }
 
-	@Override
-	protected void runImpl() {
-		Player player = getConnection().getActivePlayer();
-		if (player.isProtectionActive())
-			player.getController().stopProtectionActiveTask();
+  @Override
+  protected void runImpl() {
+    Player player = getConnection().getActivePlayer();
+    if (player.isProtectionActive())
+      player.getController().stopProtectionActiveTask();
 
-		if (player.isTrading())
-			return;
+    if (player.isTrading())
+      return;
 
-		if (player.getKnownList().getObject(targetObjectId) instanceof Npc target) {
-			TalkInfo talkInfo = target.getObjectTemplate().getTalkInfo();
-			if (talkInfo != null && !talkInfo.isCanTalkInvisible() && player.isInAnyHide())
-				player.getEffectController().removeHideEffects();
-			target.getController().onDialogRequest(player);
-		}
-	}
+    if (player.getKnownList().getObject(targetObjectId) instanceof Npc target) {
+      TalkInfo talkInfo = target.getObjectTemplate().getTalkInfo();
+      if (talkInfo != null && !talkInfo.isCanTalkInvisible() && player.isInAnyHide())
+        player.getEffectController().removeHideEffects();
+      target.getController().onDialogRequest(player);
+    }
+  }
 }

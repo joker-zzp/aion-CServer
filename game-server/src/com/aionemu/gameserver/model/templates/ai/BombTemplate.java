@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "BombTemplate")
 public class BombTemplate {
 
-	@XmlAttribute(name = "skillId")
-	private int skillId = 0;
-	@XmlAttribute(name = "cd")
-	private int cd = 0;
+  @XmlAttribute(name = "skillId")
+  private int skillId = 0;
+  @XmlAttribute(name = "cd")
+  private int cd = 0;
 
-	public int getCd() {
-		return cd;
-	}
+  public int getCd() {
+    return cd;
+  }
 
-	public int getSkillId() {
-		return skillId;
-	}
+  public int getSkillId() {
+    return skillId;
+  }
 }

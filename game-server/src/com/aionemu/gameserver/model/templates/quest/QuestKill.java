@@ -16,54 +16,54 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "QuestKill")
 public class QuestKill {
 
-	@XmlAttribute(name = "seq")
-	private int seq;
+  @XmlAttribute(name = "seq")
+  private int seq;
 
-	@XmlAttribute(name = "npc_ids")
-	private List<Integer> npcIds;
+  @XmlAttribute(name = "npc_ids")
+  private List<Integer> npcIds;
 
-	@XmlAttribute(name = "count")
-	private int kill;
+  @XmlAttribute(name = "count")
+  private int kill;
 
-	@XmlAttribute(name = "var")
-	private int var;
+  @XmlAttribute(name = "var")
+  private int var;
 
-	@XmlAttribute(name = "step")
-	private int step;
+  @XmlAttribute(name = "step")
+  private int step;
 
-	@XmlTransient
-	private List<Integer> npcIdSet;
+  @XmlTransient
+  private List<Integer> npcIdSet;
 
-	/**
-	 * @return the seq
-	 */
-	public int getSequenceNumber() {
-		return seq;
-	}
+  /**
+   * @return the seq
+   */
+  public int getSequenceNumber() {
+    return seq;
+  }
 
-	public int getKillCount() {
-		return kill;
-	}
+  public int getKillCount() {
+    return kill;
+  }
 
-	public int getVar() {
-		return var;
-	}
+  public int getVar() {
+    return var;
+  }
 
-	public int getQuestStep() {
-		return step;
-	}
+  public int getQuestStep() {
+    return step;
+  }
 
-	/**
-	 * @return the npcIds
-	 */
-	public List<Integer> getNpcIds() {
-		if (npcIdSet == null)
-			npcIdSet = new ArrayList<>();
-		if (npcIds != null) {
-			npcIdSet.addAll(npcIds);
-			npcIds.clear();
-			npcIds = null;
-		}
-		return npcIdSet;
-	}
+  /**
+   * @return the npcIds
+   */
+  public List<Integer> getNpcIds() {
+    if (npcIdSet == null)
+      npcIdSet = new ArrayList<>();
+    if (npcIds != null) {
+      npcIdSet.addAll(npcIds);
+      npcIds.clear();
+      npcIds = null;
+    }
+    return npcIdSet;
+  }
 }

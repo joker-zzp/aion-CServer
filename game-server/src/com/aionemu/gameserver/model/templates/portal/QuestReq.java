@@ -12,25 +12,25 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "QuestReq")
 public class QuestReq {
 
-	@XmlAttribute(name = "quest_id")
-	protected int questId;
-	@XmlAttribute(name = "quest_step")
-	protected int questStep;
+  @XmlAttribute(name = "quest_id")
+  protected int questId;
+  @XmlAttribute(name = "quest_step")
+  protected int questStep;
 
-	public int getQuestId() {
-		return questId;
-	}
+  public int getQuestId() {
+    return questId;
+  }
 
-	public void setQuestId(int value) {
-		this.questId = value;
-	}
+  public void setQuestId(int value) {
+    this.questId = value;
+  }
 
-	public int getQuestStep() {
-		return questStep;
-	}
+  public int getQuestStep() {
+    return questStep;
+  }
 
-	public void setQuestStep(int value) {
-		this.questStep = value;
-	}
+  public void setQuestStep(int value) {
+    this.questStep = value;
+  }
 
 }

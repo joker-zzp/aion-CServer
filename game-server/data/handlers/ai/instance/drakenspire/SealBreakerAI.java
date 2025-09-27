@@ -13,20 +13,20 @@ import ai.AggressiveNoLootNpcAI;
 @AIName("drakenspire_seal_breaker")
 public class SealBreakerAI extends AggressiveNoLootNpcAI {
 
-	public SealBreakerAI(Npc owner) {
-		super(owner);
-	}
+  public SealBreakerAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleDied() {
-		PacketSendUtility.broadcastMessage(getOwner(), 1501334); // Arrrgh!
-		super.handleDied();
-	}
+  @Override
+  protected void handleDied() {
+    PacketSendUtility.broadcastMessage(getOwner(), 1501334); // Arrrgh!
+    super.handleDied();
+  }
 
-	@Override
-	public boolean ask(AIQuestion question) {
-		if (question == AIQuestion.IS_IMMUNE_TO_ABNORMAL_STATES)
-			return true;
-		return super.ask(question);
-	}
+  @Override
+  public boolean ask(AIQuestion question) {
+    if (question == AIQuestion.IS_IMMUNE_TO_ABNORMAL_STATES)
+      return true;
+    return super.ask(question);
+  }
 }

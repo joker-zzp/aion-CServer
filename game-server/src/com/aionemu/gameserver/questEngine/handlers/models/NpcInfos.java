@@ -14,23 +14,23 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "NpcInfos")
 public class NpcInfos {
 
-	@XmlAttribute(name = "npc_ids", required = true)
-	private List<Integer> npcIds;
-	
-	@XmlAttribute(name = "movie")
-	private int movie;
+  @XmlAttribute(name = "npc_ids", required = true)
+  private List<Integer> npcIds;
+  
+  @XmlAttribute(name = "movie")
+  private int movie;
 
-	/**
-	 * Gets the value of the npcIds property.
-	 */
-	public List<Integer> getNpcIds() {
-		return npcIds;
-	}
+  /**
+   * Gets the value of the npcIds property.
+   */
+  public List<Integer> getNpcIds() {
+    return npcIds;
+  }
 
-	/**
-	 * @return the movie
-	 */
-	public int getMovie() {
-		return movie;
-	}
+  /**
+   * @return the movie
+   */
+  public int getMovie() {
+    return movie;
+  }
 }

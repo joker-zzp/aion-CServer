@@ -14,14 +14,14 @@ import com.aionemu.gameserver.utils.PositionUtil;
 @XmlType(name = "FrontDamageModifier")
 public class FrontDamageModifier extends ActionModifier {
 
-	@Override
-	public int analyze(Effect effect) {
-		return value + effect.getSkillLevel() * delta;
-	}
+  @Override
+  public int analyze(Effect effect) {
+    return value + effect.getSkillLevel() * delta;
+  }
 
-	@Override
-	public boolean check(Effect effect) {
-		return PositionUtil.isInFrontOf(effect.getEffector(), effect.getEffected());
-	}
+  @Override
+  public boolean check(Effect effect) {
+    return PositionUtil.isInFrontOf(effect.getEffector(), effect.getEffected());
+  }
 
 }

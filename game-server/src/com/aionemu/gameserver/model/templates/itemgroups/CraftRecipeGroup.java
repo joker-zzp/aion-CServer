@@ -34,12 +34,12 @@ import com.aionemu.gameserver.model.templates.rewards.CraftRecipe;
 @XmlType(name = "CraftRecipeGroup")
 public class CraftRecipeGroup extends BonusItemGroup {
 
-	@XmlElement(name = "item")
-	private List<CraftRecipe> items;
+  @XmlElement(name = "item")
+  private List<CraftRecipe> items;
 
-	@Override
-	public List<CraftRecipe> getItems() {
-		return items == null ? Collections.emptyList() : items;
-	}
+  @Override
+  public List<CraftRecipe> getItems() {
+    return items == null ? Collections.emptyList() : items;
+  }
 
 }

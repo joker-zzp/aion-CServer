@@ -10,12 +10,12 @@ import com.aionemu.gameserver.model.templates.item.ItemAttackType;
 @AIName("ahserion_sorcerer")
 public class AhserionSorcerer extends AhserionAggressiveNpcAI {
 
-	public AhserionSorcerer(Npc owner) {
-		super(owner);
-	}
+  public AhserionSorcerer(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public ItemAttackType modifyAttackType(ItemAttackType type) {
-		return ItemAttackType.MAGICAL_FIRE;
-	}
+  @Override
+  public ItemAttackType modifyAttackType(ItemAttackType type) {
+    return ItemAttackType.MAGICAL_FIRE;
+  }
 }

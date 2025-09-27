@@ -16,12 +16,12 @@ import com.aionemu.gameserver.network.aion.AionConnection;
  */
 public class CM_DEBUG_COMMAND extends AbstractGmCommandPacket {
 
-	public CM_DEBUG_COMMAND(int opcode, Set<AionConnection.State> validStates) {
-		super(opcode, validStates);
-	}
+  public CM_DEBUG_COMMAND(int opcode, Set<AionConnection.State> validStates) {
+    super(opcode, validStates);
+  }
 
-	@Override
-	protected void runImpl() {
-		LoggerFactory.getLogger("ADMINAUDIT_LOG").info(getConnection().getActivePlayer() + " sent debug command ////" + command);
-	}
+  @Override
+  protected void runImpl() {
+    LoggerFactory.getLogger("ADMINAUDIT_LOG").info(getConnection().getActivePlayer() + " sent debug command ////" + command);
+  }
 }

@@ -9,17 +9,17 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  */
 public class SM_HEADING_UPDATE extends AionServerPacket {
 
-	private int objectId;
-	private byte heading;
+  private int objectId;
+  private byte heading;
 
-	public SM_HEADING_UPDATE(VisibleObject target) {
-		this.objectId = target.getObjectId();
-		this.heading = target.getHeading();
-	}
+  public SM_HEADING_UPDATE(VisibleObject target) {
+    this.objectId = target.getObjectId();
+    this.heading = target.getHeading();
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		writeD(objectId);
-		writeC(heading);
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    writeD(objectId);
+    writeC(heading);
+  }
 }

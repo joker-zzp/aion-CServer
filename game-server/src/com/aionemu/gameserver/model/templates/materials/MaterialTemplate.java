@@ -15,25 +15,25 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "MaterialTemplate", propOrder = { "skills" })
 public class MaterialTemplate {
 
-	@XmlElement(name = "skill", required = true)
-	private List<MaterialSkill> skills;
+  @XmlElement(name = "skill", required = true)
+  private List<MaterialSkill> skills;
 
-	@XmlAttribute(name = "skill_obstacle")
-	private Integer skillObstacle;
+  @XmlAttribute(name = "skill_obstacle")
+  private Integer skillObstacle;
 
-	@XmlAttribute(required = true)
-	private int id;
+  @XmlAttribute(required = true)
+  private int id;
 
-	public List<MaterialSkill> getSkills() {
-		return skills;
-	}
+  public List<MaterialSkill> getSkills() {
+    return skills;
+  }
 
-	public Integer getSkillObstacle() {
-		return skillObstacle;
-	}
+  public Integer getSkillObstacle() {
+    return skillObstacle;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
 }

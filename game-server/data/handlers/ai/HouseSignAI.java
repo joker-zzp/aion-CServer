@@ -13,18 +13,18 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 @AIName("housesign")
 public class HouseSignAI extends GeneralNpcAI {
 
-	public HouseSignAI(Npc owner) {
-		super(owner);
-	}
+  public HouseSignAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		DialogPage page = DialogPage.getByActionId(dialogActionId);
-		if (page == DialogPage.NULL)
-			return false;
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    DialogPage page = DialogPage.getByActionId(dialogActionId);
+    if (page == DialogPage.NULL)
+      return false;
 
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getOwner().getObjectId(), page.id()));
-		return true;
-	}
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getOwner().getObjectId(), page.id()));
+    return true;
+  }
 
 }

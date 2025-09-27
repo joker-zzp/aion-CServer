@@ -17,43 +17,43 @@ import com.aionemu.gameserver.utils.PositionUtil;
  */
 public class MentorMonsterHunt extends MonsterHunt {
 
-	private int menteMinLevel;
-	private int menteMaxLevel;
+  private int menteMinLevel;
+  private int menteMaxLevel;
 
-	public MentorMonsterHunt(int questId, List<Integer> startNpcIds, List<Integer> endNpcIds, List<Monster> monsters,
-		int menteMinLevel, int menteMaxLevel, boolean reward, boolean rewardNextStep) {
-		super(questId, startNpcIds, endNpcIds, monsters, 0, 0, null, 0, null, 0, reward, rewardNextStep);
-		this.menteMinLevel = menteMinLevel;
-		this.menteMaxLevel = menteMaxLevel;
-	}
+  public MentorMonsterHunt(int questId, List<Integer> startNpcIds, List<Integer> endNpcIds, List<Monster> monsters,
+    int menteMinLevel, int menteMaxLevel, boolean reward, boolean rewardNextStep) {
+    super(questId, startNpcIds, endNpcIds, monsters, 0, 0, null, 0, null, 0, reward, rewardNextStep);
+    this.menteMinLevel = menteMinLevel;
+    this.menteMaxLevel = menteMaxLevel;
+  }
 
-	@Override
-	public boolean onKillEvent(QuestEnv env) {
-		Player player = env.getPlayer();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (qs != null && qs.getStatus() == QuestStatus.START) {
-			switch (DataManager.QUEST_DATA.getQuestById(questId).getMentorType()) {
-				case MENTOR:
-					if (player.isMentor()) {
-						PlayerGroup group = player.getPlayerGroup();
-						for (Player member : group.getMembers()) {
-							if (member.getLevel() >= menteMinLevel && member.getLevel() <= menteMaxLevel
-								&& PositionUtil.isInRange(player, member, GroupConfig.GROUP_MAX_DISTANCE)) {
-								return super.onKillEvent(env);
-							}
-						}
-					}
-					break;
-				case MENTE:
-					if (player.isInGroup()) {
-						PlayerGroup group = player.getPlayerGroup();
-						for (Player member : group.getMembers()) {
-							if (member.isMentor() && PositionUtil.isInRange(player, member, GroupConfig.GROUP_MAX_DISTANCE))
-								return super.onKillEvent(env);
-						}
-					}
-			}
-		}
-		return false;
-	}
+  @Override
+  public boolean onKillEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(questId);
+    if (qs != null && qs.getStatus() == QuestStatus.START) {
+      switch (DataManager.QUEST_DATA.getQuestById(questId).getMentorType()) {
+        case MENTOR:
+          if (player.isMentor()) {
+            PlayerGroup group = player.getPlayerGroup();
+            for (Player member : group.getMembers()) {
+              if (member.getLevel() >= menteMinLevel && member.getLevel() <= menteMaxLevel
+                && PositionUtil.isInRange(player, member, GroupConfig.GROUP_MAX_DISTANCE)) {
+                return super.onKillEvent(env);
+              }
+            }
+          }
+          break;
+        case MENTE:
+          if (player.isInGroup()) {
+            PlayerGroup group = player.getPlayerGroup();
+            for (Player member : group.getMembers()) {
+              if (member.isMentor() && PositionUtil.isInRange(player, member, GroupConfig.GROUP_MAX_DISTANCE))
+                return super.onKillEvent(env);
+            }
+          }
+      }
+    }
+    return false;
+  }
 }

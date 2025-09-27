@@ -18,32 +18,32 @@ import ai.ActionItemNpcAI;
 @AIName("linkgateFoundrySecretRoomTeleport")
 public class LinkgateFoundrySecretTeleportAI extends ActionItemNpcAI {
 
-	public LinkgateFoundrySecretTeleportAI(Npc owner) {
-		super(owner);
-	}
+  public LinkgateFoundrySecretTeleportAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 1011));
+  }
 
-	@Override
-	public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
-		switchFloor(player, dialogActionId);
-		return true;
-	}
+  @Override
+  public boolean onDialogSelect(Player player, int dialogActionId, int questId, int extendedRewardIndex) {
+    switchFloor(player, dialogActionId);
+    return true;
+  }
 
-	private void switchFloor(Player player, int dialogActionId) {
-		switch (dialogActionId) {
-			case SETPRO1:
-				TeleportService.teleportTo(player, 301270000, 177.65f, 258.15f, 313, (byte) 60, TeleportAnimation.FADE_OUT_BEAM);
-				break;
-			case SETPRO2:
-				TeleportService.teleportTo(player, 301270000, 176.11f, 258.44f, 354, (byte) 60, TeleportAnimation.FADE_OUT_BEAM);
-				break;
-			case SETPRO3:
-				TeleportService.teleportTo(player, 301270000, 176.11f, 258.44f, 394, (byte) 60, TeleportAnimation.FADE_OUT_BEAM);
-				break;
-		}
-	}
+  private void switchFloor(Player player, int dialogActionId) {
+    switch (dialogActionId) {
+      case SETPRO1:
+        TeleportService.teleportTo(player, 301270000, 177.65f, 258.15f, 313, (byte) 60, TeleportAnimation.FADE_OUT_BEAM);
+        break;
+      case SETPRO2:
+        TeleportService.teleportTo(player, 301270000, 176.11f, 258.44f, 354, (byte) 60, TeleportAnimation.FADE_OUT_BEAM);
+        break;
+      case SETPRO3:
+        TeleportService.teleportTo(player, 301270000, 176.11f, 258.44f, 394, (byte) 60, TeleportAnimation.FADE_OUT_BEAM);
+        break;
+    }
+  }
 }

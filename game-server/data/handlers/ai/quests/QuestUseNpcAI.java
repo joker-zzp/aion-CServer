@@ -13,13 +13,13 @@ import ai.ActionItemNpcAI;
 @AIName("quest_use_npc")
 public class QuestUseNpcAI extends ActionItemNpcAI {
 
-	public QuestUseNpcAI(Npc owner) {
-		super(owner);
-	}
+  public QuestUseNpcAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	protected void handleUseItemFinish(Player player) {
-		if (getObjectTemplate().isDialogNpc())
-			TalkEventHandler.onTalk(this, player);
-	}
+  @Override
+  protected void handleUseItemFinish(Player player) {
+    if (getObjectTemplate().isDialogNpc())
+      TalkEventHandler.onTalk(this, player);
+  }
 }

@@ -11,13 +11,13 @@ import com.aionemu.gameserver.model.stats.container.StatEnum;
 @AIName("rift_protector")
 public class RiftProtectorAI extends AggressiveNpcAI {
 
-	public RiftProtectorAI(Npc owner) {
-		super(owner);
-	}
+  public RiftProtectorAI(Npc owner) {
+    super(owner);
+  }
 
-	@Override
-	public void modifyOwnerStat(Stat2 stat) {
-		if (stat.getStat() == StatEnum.MAXHP)
-			stat.setBaseRate(0.1f);
-	}
+  @Override
+  public void modifyOwnerStat(Stat2 stat) {
+    if (stat.getStat() == StatEnum.MAXHP)
+      stat.setBaseRate(0.1f);
+  }
 }

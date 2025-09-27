@@ -13,23 +13,23 @@ import com.aionemu.gameserver.model.templates.item.bonuses.StatBonusType;
  */
 public class RandomBonusEffect implements StatOwner {
 
-	private final int statBonusId;
-	private final List<StatFunction> stats;
+  private final int statBonusId;
+  private final List<StatFunction> stats;
 
-	public RandomBonusEffect(StatBonusType type, int statBonusSetId, int statBonusId) {
-		this.statBonusId = statBonusId;
-		this.stats = DataManager.ITEM_RANDOM_BONUSES.getTemplate(type, statBonusSetId, statBonusId).getModifiers();
-	}
+  public RandomBonusEffect(StatBonusType type, int statBonusSetId, int statBonusId) {
+    this.statBonusId = statBonusId;
+    this.stats = DataManager.ITEM_RANDOM_BONUSES.getTemplate(type, statBonusSetId, statBonusId).getModifiers();
+  }
 
-	public int getStatBonusId() {
-		return statBonusId;
-	}
+  public int getStatBonusId() {
+    return statBonusId;
+  }
 
-	public void applyEffect(Player player) {
-		player.getGameStats().addEffect(this, stats);
-	}
+  public void applyEffect(Player player) {
+    player.getGameStats().addEffect(this, stats);
+  }
 
-	public void endEffect(Player player) {
-		player.getGameStats().endEffect(this);
-	}
+  public void endEffect(Player player) {
+    player.getGameStats().endEffect(this);
+  }
 }

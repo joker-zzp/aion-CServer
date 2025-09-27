@@ -9,18 +9,18 @@ import com.aionemu.gameserver.services.VortexService;
  */
 public class GeneratorDestroyListener extends OnDieEventListener {
 
-	private final DimensionalVortex<?> vortex;
+  private final DimensionalVortex<?> vortex;
 
-	public GeneratorDestroyListener(DimensionalVortex<?> vortex) {
-		this.vortex = vortex;
-	}
+  public GeneratorDestroyListener(DimensionalVortex<?> vortex) {
+    this.vortex = vortex;
+  }
 
-	@Override
-	public void onAfterEvent(GeneralAIEvent event) {
-		if (event.isHandled()) {
-			vortex.setGeneratorDestroyed(true);
-			VortexService.getInstance().stopInvasion(vortex.getVortexLocationId());
-		}
-	}
+  @Override
+  public void onAfterEvent(GeneralAIEvent event) {
+    if (event.isHandled()) {
+      vortex.setGeneratorDestroyed(true);
+      VortexService.getInstance().stopInvasion(vortex.getVortexLocationId());
+    }
+  }
 
 }

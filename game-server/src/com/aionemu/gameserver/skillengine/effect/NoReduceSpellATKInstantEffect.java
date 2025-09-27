@@ -15,22 +15,22 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "NoReduceSpellATKInstantEffect")
 public class NoReduceSpellATKInstantEffect extends DamageEffect {
 
-	@XmlAttribute
-	protected boolean percent;
-	@XmlAttribute(name = "max_damage")
-	protected int max_damage;
+  @XmlAttribute
+  protected boolean percent;
+  @XmlAttribute(name = "max_damage")
+  protected int max_damage;
 
-	@Override
-	public void calculateDamage(Effect effect) {
-		int valueWithDelta = calculateBaseValue(effect);
-		if (percent) {
-			float percentToCount = valueWithDelta / 100f;
-			valueWithDelta = (int) (effect.getEffected().getLifeStats().getMaxHp() * percentToCount);
-		}
+  @Override
+  public void calculateDamage(Effect effect) {
+    int valueWithDelta = calculateBaseValue(effect);
+    if (percent) {
+      float percentToCount = valueWithDelta / 100f;
+      valueWithDelta = (int) (effect.getEffected().getLifeStats().getMaxHp() * percentToCount);
+    }
 
-		if (max_damage > 0)
-			valueWithDelta = valueWithDelta > max_damage ? max_damage : valueWithDelta;
+    if (max_damage > 0)
+      valueWithDelta = valueWithDelta > max_damage ? max_damage : valueWithDelta;
 
-		AttackUtil.calculateSkillResult(effect, valueWithDelta, this, false);
-	}
+    AttackUtil.calculateSkillResult(effect, valueWithDelta, this, false);
+  }
 }

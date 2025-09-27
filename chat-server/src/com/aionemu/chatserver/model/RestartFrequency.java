@@ -5,8 +5,8 @@ package com.aionemu.chatserver.model;
  */
 public enum RestartFrequency {
 
-	DAILY,
-	WEEKLY,
-	MONTHLY
+  DAILY,
+  WEEKLY,
+  MONTHLY
 
 }

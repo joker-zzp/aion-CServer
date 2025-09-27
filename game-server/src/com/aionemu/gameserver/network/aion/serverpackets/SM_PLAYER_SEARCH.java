@@ -18,32 +18,32 @@ import com.aionemu.gameserver.utils.ChatUtil;
  */
 public class SM_PLAYER_SEARCH extends AionServerPacket {
 
-	private List<Player> players;
+  private List<Player> players;
 
-	/**
-	 * Constructs a new packet that will send these players
-	 * 
-	 * @param players
-	 *          List of players to show
-	 */
-	public SM_PLAYER_SEARCH(List<Player> players) {
-		this.players = players;
-	}
+  /**
+   * Constructs a new packet that will send these players
+   * 
+   * @param players
+   *          List of players to show
+   */
+  public SM_PLAYER_SEARCH(List<Player> players) {
+    this.players = players;
+  }
 
-	@Override
-	protected void writeImpl(AionConnection con) {
-		Player activePlayer = con.getActivePlayer();
-		writeH(players.size());
-		for (Player player : players) {
-			writeD(player.getWorldId());
-			writeF(player.getX());
-			writeF(player.getY());
-			writeF(player.getZ());
-			writeC(player.getPlayerClass().getClassId());
-			writeC(player.getGender().getGenderId());
-			writeC(player.getLevel());
-			writeC(player.getPlayerSettings().isInDeniedStatus(DeniedStatus.GROUP) ? 1 : player.isInTeam() ? 3 : player.isLookingForGroup() ? 2 : 0);
-			writeS(ChatUtil.toFactionPrefixedName(activePlayer, player), CHARNAME_MAX_LENGTH + 2);
-		}
-	}
+  @Override
+  protected void writeImpl(AionConnection con) {
+    Player activePlayer = con.getActivePlayer();
+    writeH(players.size());
+    for (Player player : players) {
+      writeD(player.getWorldId());
+      writeF(player.getX());
+      writeF(player.getY());
+      writeF(player.getZ());
+      writeC(player.getPlayerClass().getClassId());
+      writeC(player.getGender().getGenderId());
+      writeC(player.getLevel());
+      writeC(player.getPlayerSettings().isInDeniedStatus(DeniedStatus.GROUP) ? 1 : player.isInTeam() ? 3 : player.isLookingForGroup() ? 2 : 0);
+      writeS(ChatUtil.toFactionPrefixedName(activePlayer, player), CHARNAME_MAX_LENGTH + 2);
+    }
+  }
 }

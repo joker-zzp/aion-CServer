@@ -15,119 +15,119 @@ import com.aionemu.gameserver.services.VortexService;
  */
 public abstract class DimensionalVortex<VL extends VortexLocation> {
 
-	private final VL vortexLocation;
-	private final GeneratorDestroyListener generatorDestroyListener = new GeneratorDestroyListener(this);
-	private final AtomicBoolean finished = new AtomicBoolean();
-	private boolean generatorDestroyed;
-	private Npc generator;
-	private boolean started;
+  private final VL vortexLocation;
+  private final GeneratorDestroyListener generatorDestroyListener = new GeneratorDestroyListener(this);
+  private final AtomicBoolean finished = new AtomicBoolean();
+  private boolean generatorDestroyed;
+  private Npc generator;
+  private boolean started;
 
-	protected abstract void startInvasion();
+  protected abstract void startInvasion();
 
-	protected abstract void stopInvasion();
+  protected abstract void stopInvasion();
 
-	public abstract void addPlayer(Player player, boolean isInvader);
+  public abstract void addPlayer(Player player, boolean isInvader);
 
-	public abstract void kickPlayer(Player player, boolean isInvader);
+  public abstract void kickPlayer(Player player, boolean isInvader);
 
-	public abstract void updateDefenders(Player defender);
+  public abstract void updateDefenders(Player defender);
 
-	public abstract void updateInvaders(Player invader);
+  public abstract void updateInvaders(Player invader);
 
-	public abstract Map<Integer, Player> getDefenders();
+  public abstract Map<Integer, Player> getDefenders();
 
-	public abstract Map<Integer, Player> getInvaders();
+  public abstract Map<Integer, Player> getInvaders();
 
-	public DimensionalVortex(VL vortexLocation) {
-		this.vortexLocation = vortexLocation;
-	}
+  public DimensionalVortex(VL vortexLocation) {
+    this.vortexLocation = vortexLocation;
+  }
 
-	public final void start() {
+  public final void start() {
 
-		boolean doubleStart = false;
+    boolean doubleStart = false;
 
-		synchronized (this) {
-			if (started) {
-				doubleStart = true;
-			} else {
-				started = true;
-			}
-		}
+    synchronized (this) {
+      if (started) {
+        doubleStart = true;
+      } else {
+        started = true;
+      }
+    }
 
-		if (doubleStart) {
-			return;
-		}
+    if (doubleStart) {
+      return;
+    }
 
-		startInvasion();
-	}
+    startInvasion();
+  }
 
-	public final void stop() {
-		if (finished.compareAndSet(false, true)) {
-			stopInvasion();
-		}
-	}
+  public final void stop() {
+    if (finished.compareAndSet(false, true)) {
+      stopInvasion();
+    }
+  }
 
-	protected void initRiftGenerator() {
+  protected void initRiftGenerator() {
 
-		Npc gen = null;
+    Npc gen = null;
 
-		for (VisibleObject obj : getVortexLocation().getSpawned()) {
-			int npcId = ((Npc) obj).getNpcId();
-			if (npcId == 209487 || npcId == 209486) {
-				gen = (Npc) obj;
-			}
-		}
+    for (VisibleObject obj : getVortexLocation().getSpawned()) {
+      int npcId = ((Npc) obj).getNpcId();
+      if (npcId == 209487 || npcId == 209486) {
+        gen = (Npc) obj;
+      }
+    }
 
-		if (gen == null) {
-			throw new NullPointerException("No generator was found in loc:" + getVortexLocationId());
-		}
+    if (gen == null) {
+      throw new NullPointerException("No generator was found in loc:" + getVortexLocationId());
+    }
 
-		setGenerator(gen);
-		registerSiegeBossListeners();
-	}
+    setGenerator(gen);
+    registerSiegeBossListeners();
+  }
 
-	protected void spawn(VortexStateType type) {
-		VortexService.getInstance().spawn(getVortexLocation(), type);
-	}
+  protected void spawn(VortexStateType type) {
+    VortexService.getInstance().spawn(getVortexLocation(), type);
+  }
 
-	protected void despawn() {
-		VortexService.getInstance().despawn(getVortexLocation());
-	}
+  protected void despawn() {
+    VortexService.getInstance().despawn(getVortexLocation());
+  }
 
-	protected void registerSiegeBossListeners() {
-		getGenerator().getAi().addEventListener(generatorDestroyListener);
-	}
+  protected void registerSiegeBossListeners() {
+    getGenerator().getAi().addEventListener(generatorDestroyListener);
+  }
 
-	protected void unregisterSiegeBossListeners() {
-		getGenerator().getAi().removeEventListener(generatorDestroyListener);
-	}
+  protected void unregisterSiegeBossListeners() {
+    getGenerator().getAi().removeEventListener(generatorDestroyListener);
+  }
 
-	public boolean isGeneratorDestroyed() {
-		return generatorDestroyed;
-	}
+  public boolean isGeneratorDestroyed() {
+    return generatorDestroyed;
+  }
 
-	public void setGeneratorDestroyed(boolean state) {
-		this.generatorDestroyed = state;
-	}
+  public void setGeneratorDestroyed(boolean state) {
+    this.generatorDestroyed = state;
+  }
 
-	public Npc getGenerator() {
-		return generator;
-	}
+  public Npc getGenerator() {
+    return generator;
+  }
 
-	public void setGenerator(Npc generator) {
-		this.generator = generator;
-	}
+  public void setGenerator(Npc generator) {
+    this.generator = generator;
+  }
 
-	public boolean isFinished() {
-		return finished.get();
-	}
+  public boolean isFinished() {
+    return finished.get();
+  }
 
-	public VL getVortexLocation() {
-		return vortexLocation;
-	}
+  public VL getVortexLocation() {
+    return vortexLocation;
+  }
 
-	public int getVortexLocationId() {
-		return vortexLocation.getId();
-	}
+  public int getVortexLocationId() {
+    return vortexLocation.getId();
+  }
 
 }

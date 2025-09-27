@@ -9,8 +9,8 @@ import org.jboss.netty.handler.codec.oneone.OneToOneDecoder;
  */
 public class LoginPacketDecoder extends OneToOneDecoder {
 
-	@Override
-	protected Object decode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception {
-		return msg;
-	}
+  @Override
+  protected Object decode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception {
+    return msg;
+  }
 }

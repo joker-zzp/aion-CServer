@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Component")
 public class Component {
 
-	@XmlAttribute
-	protected int itemid;
-	@XmlAttribute
-	protected int quantity;
+  @XmlAttribute
+  protected int itemid;
+  @XmlAttribute
+  protected int quantity;
 
-	public int getItemId() {
-		return itemid;
-	}
+  public int getItemId() {
+    return itemid;
+  }
 
-	public int getQuantity() {
-		return quantity;
-	}
+  public int getQuantity() {
+    return quantity;
+  }
 }

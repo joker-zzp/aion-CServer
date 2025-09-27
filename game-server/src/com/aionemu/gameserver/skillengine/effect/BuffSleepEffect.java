@@ -14,17 +14,17 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "BuffSleepEffect")
 public class BuffSleepEffect extends SleepEffect {
 
-	@Override
-	public void calculate(Effect effect) {
-		effect.addSuccessEffect(this);
-	}
+  @Override
+  public void calculate(Effect effect) {
+    effect.addSuccessEffect(this);
+  }
 
-	@Override
-	public void startEffect(final Effect effect) {
-		final Creature effected = effect.getEffected();
-		effected.getController().cancelCurrentSkill(effect.getEffector());
-		effect.setAbnormal(AbnormalState.SLEEP);
-		effected.getEffectController().setAbnormal(AbnormalState.SLEEP);
-	}
+  @Override
+  public void startEffect(final Effect effect) {
+    final Creature effected = effect.getEffected();
+    effected.getController().cancelCurrentSkill(effect.getEffector());
+    effect.setAbnormal(AbnormalState.SLEEP);
+    effected.getEffectController().setAbnormal(AbnormalState.SLEEP);
+  }
 
 }
