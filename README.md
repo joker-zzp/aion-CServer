@@ -14,3 +14,22 @@
 原项目文档([English](https://github.com/beyond-aion/aion-server/blob/4.8/README.md))
 
 本项目为 Aion 4.8 服务器模拟器的中文版本, 目前修复了一些中文相关问题, 优化了部分代码
+
+配置了docker-compose.yml, 可以直接使用docker-compose up -d 启动 所有游戏服务
+
+在启动前, 请先配置环境变量, 在项目中 创建 `.env` 文件, 并配置好环境变量
+
+```env
+AION_HOME=
+AION_LOG_PATH=
+AION_DB_PATH=
+AION_SERVER_IP=
+AION_DB_NAME=
+AION_DB_USER=
+AION_DB_PASSWORD=
+AION_GAME_PASSWORD=
+```
+
+`docker-compose -f ./aion-compose.yml up -d` 启动创建服务
+
+启动完成后, 可以使用 `docker-compose -f ./aion-compose.yml ps` 查看服务状态  `docker logs -f aion-gs` 查看游戏服务日志
