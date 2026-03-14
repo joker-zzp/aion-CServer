@@ -251,7 +251,10 @@ services:
     command: >
       sh -c '
         set -e
-
+        apt-get update && apt-get install -y iputils-ping net-tools || {
+          echo "安装 iputils-ping net-tools 失败"
+          exit 1
+        }
         echo "解压目录..."
         # 将 app 中target/server.zip 解压到当前目录
         jar -xf /app/game-server/target/game-server.zip || {
@@ -319,3 +322,11 @@ volumes:
 networks:
   aion-network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+    driver_opts:
+      com.docker.network.bridge.name: aion-bridge
+      com.docker.network.bridge.enable_icc: "true"  # 启用容器间通信
+      com.docker.network.bridge.enable_ip_masquerade: "true"  # 启用IP伪装

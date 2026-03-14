@@ -14,6 +14,7 @@ public class EnergyBuff extends AdminCommand {
 
   public EnergyBuff() {
     super("energy");
+    setSyntaxInfo("repose|salvation|refresh info|reset|add [点数] - 管理玩家的能量值");
   }
 
   @Override
@@ -26,7 +27,7 @@ public class EnergyBuff extends AdminCommand {
 
     Creature creature = (Creature) target;
     if (params == null || params.length < 1) {
-      info(player, null);
+      sendInfo(player);
     } else if (target instanceof Player) {
       if (params[0].equals("repose")) {
         Player targetPlayer = (Player) creature;
@@ -49,14 +50,9 @@ public class EnergyBuff extends AdminCommand {
         Player targetPlayer = (Player) creature;
         PacketSendUtility.sendPacket(targetPlayer, new SM_STATS_INFO(targetPlayer));
       }
-    } else
+    } else {
       PacketSendUtility.sendMessage(player, "这不是玩家");
-  }
-
-  @Override
-  public void info(Player player, String message) {
-    String syntax = "//energy repose|salvation|refresh info|reset|add [点数]";
-    PacketSendUtility.sendMessage(player, syntax);
+    }
   }
 
 }

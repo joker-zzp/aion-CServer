@@ -46,7 +46,7 @@ public class BaseCommand extends AdminCommand {
 
   protected void showBaseLocationList(Player player, String[] params) {
     BaseService.getInstance().getBaseLocations().values()
-        .forEach(loc -> PacketSendUtility.sendMessage(player, "基地: %d 属于 %s".formatted(loc.getId(), loc.getOccupier())));
+      .forEach(loc -> PacketSendUtility.sendMessage(player, "基地: %d 属于 %s".formatted(loc.getId(), loc.getOccupier())));
   }
 
   private void startBase(Player player, String[] params) {

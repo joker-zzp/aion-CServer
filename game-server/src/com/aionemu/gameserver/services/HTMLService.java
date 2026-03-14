@@ -109,6 +109,13 @@ public class HTMLService {
       return;
     }
 
+    // 处理每日登录奖励
+    if (items != null && !items.isEmpty() && items.get(0) == -1) {
+      // 特殊标记，表示来自每日登录奖励
+      com.aionemu.gameserver.services.player.DailyLoginRewardService.getInstance().giveDailyReward(player, messageId);
+      return;
+    }
+
     Guide guide = GuideDAO.loadGuide(player.getObjectId(), messageId);
 
     if (guide != null) {

@@ -32,7 +32,14 @@ public class Bk extends AdminCommand {
   private String bookmark_name = "";
 
   public Bk() {
-    super("bk");
+    super("bk", "书签管理");
+
+    setSyntaxInfo(
+      "list - 列出所有书签",
+      "add - 添加书签",
+      "del - 删除书签",
+      "tele - 传送到书签"
+    );
   }
 
   @Override
@@ -74,7 +81,8 @@ public class Bk extends AdminCommand {
 
         updateInfo(player.getObjectId());
       } catch (Exception e) {
-        PacketSendUtility.sendMessage(player, "用法 //bk <add|del|tele> <书签名称>");
+        // PacketSendUtility.sendMessage(player, "用法 //bk <add|del|tele> <书签名称>");
+        sendInfo(player);
         return;
       }
     else if (params[0].equals("del")) {

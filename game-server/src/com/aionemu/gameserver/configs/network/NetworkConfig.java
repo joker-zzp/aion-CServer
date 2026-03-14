@@ -126,4 +126,10 @@ public class NetworkConfig {
 
   @Property(key = "gameserver.network.flood.long.tick", defaultValue = "60")
   public static int Flood_LTick;
+  
+  /**
+   * Enable IP mapping for Docker network environments
+   */
+  @Property(key = "gameserver.network.enable_ip_mapping", defaultValue = "true")
+  public static boolean ENABLE_IP_MAPPING;
 }

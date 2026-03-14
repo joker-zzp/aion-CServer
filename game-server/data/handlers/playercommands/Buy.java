@@ -31,40 +31,40 @@ public class Buy extends PlayerCommand {
   private static final Map<Integer, Map<String, Integer>> rewards = new LinkedHashMap<>();
 
   public Buy() {
-    super("buy", "Exchange your " + ChatUtil.item(REWARD_COIN_ID) + " for various rewards.");
+    super("buy", "使用你的 " + ChatUtil.item(REWARD_COIN_ID) + " 兑换各种奖励.");
 
     // @formatter:off
     setSyntaxInfo(
-      " - Shows all buyable rewards.",
-      "<item link|ID> - Buys the respective item."
+      " - 显示所有可购买的奖励.",
+      "<物品链接|ID> - 购买相应的物品."
     );
     // @formatter:on
     initRewards();
   }
 
   private void initRewards() {
-    addReward(166000194, 5, 40); // Delta Enchantment Stone
-    addReward(166000195, 5, 50); // Epsilon Enchantment Stone
-    addReward(188051516, 1, 100); // Smart Greater Scroll Bundle
-    addReward(162000107, 30, 100); // Saam King's Herb
-    addReward(162000124, 50, 100); // Superior Recovery Serum
-    addReward(188051868, 1, 50); // [Event] Strongest Inquin Form Candy Pouch
-    addReward(188053610, 3, 150); // [Event] Level 70 Composite Manastone Bundle
-    addReward(188053618, 1, 200); // Honorable Elim's Idian Bundle
-    addReward(166500002, 2, 50); // Amplification Stone
-    addReward(166030005, 2, 80); // Tempering Solution
-    addReward(188053295, 1, 200); // Empyrean Plume Chest
-    addReward(188950015, 1, 400); // Special Courier Pass (Eternal/Lv. 61-65)
-    addReward(188950019, 1, 500); // Special Courier Pass (Mythic/Lv. 61-65)
-    addReward(165020015, 1, 1000); // Armor Wrapping Scroll (Eternal/Lv. 65 and lower)
-    addReward(165020014, 1, 1150); // Weapon Wrapping Scroll (Eternal/Lv. 65 and lower)
-    addReward(165020021, 1, 1350); // Noble Armor Wrapping Scroll (Mythic/Lv. 65 and lower)
-    addReward(165020020, 1, 1500); // Noble Weapon Wrapping Scroll (Mythic/Lv. 65 and lower)
-    addReward(190020175, 1, 1500); // Tahabata Egg
-    addReward(187060103, 1, 1300); // Prestige Wings
-    addReward(169610342, 1, 1000); // [Title] Forgotten Conqueror
-    addReward(190100051, 1, 1200); // Flying Pagati
-    addReward(188053109, 1, 2500); // Ahserion's Equipment Chest
+    addReward(166000194, 5, 40); // 德尔塔强化石
+    addReward(166000195, 5, 50); // 艾普西隆强化石
+    addReward(188051516, 1, 100); // 智能高级卷轴包
+    addReward(162000107, 30, 100); // 萨阿姆王的草药
+    addReward(162000124, 50, 100); // 高级恢复药水
+    addReward(188051868, 1, 50); // [活动] 最强因坤形态糖果袋
+    addReward(188053610, 3, 150); // [活动] 70级合成魔石包
+    addReward(188053618, 1, 200); // 荣耀的伊利姆的伊迪安包
+    addReward(166500002, 2, 50); // 增幅石
+    addReward(166030005, 2, 80); // 淬炼溶液
+    addReward(188053295, 1, 200); // 天国羽毛宝箱
+    addReward(188950015, 1, 400); // 特殊快递通行证 (永恒/61-65级)
+    addReward(188950019, 1, 500); // 特殊快递通行证 (神话/61-65级)
+    addReward(165020015, 1, 1000); // 防具包裹卷轴 (永恒/65级及以下)
+    addReward(165020014, 1, 1150); // 武器包裹卷轴 (永恒/65级及以下)
+    addReward(165020021, 1, 1350); // 贵族防具包裹卷轴 (神话/65级及以下)
+    addReward(165020020, 1, 1500); // 贵族武器包裹卷轴 (神话/65级及以下)
+    addReward(190020175, 1, 1500); // 塔哈巴塔蛋
+    addReward(187060103, 1, 1300); // 威望之翼
+    addReward(169610342, 1, 1000); // [称号] 被遗忘的征服者
+    addReward(190100051, 1, 1200); // 飞行帕加蒂
+    addReward(188053109, 1, 2500); // 阿什里翁装备宝箱
   }
 
   @Override
@@ -78,7 +78,7 @@ public class Buy extends PlayerCommand {
   }
 
   private void showRewards(Player player) {
-    sendInfo(player, "Cost:");
+    sendInfo(player, "价格:");
     for (Entry<Integer, Map<String, Integer>> idMap : rewards.entrySet()) {
       String itemString;
       String cost = String.valueOf(idMap.getValue().get("cost"));
@@ -95,22 +95,22 @@ public class Buy extends PlayerCommand {
       itemString += ChatUtil.item(idMap.getKey());
       sendInfo(player, itemString);
     }
-    sendInfo(player, "To buy:");
-    sendInfo(player, "1. Right-click an item from the list to your Memo Pad.");
-    sendInfo(player, "2. Type " + ChatUtil.color(getAliasWithPrefix(), Color.WHITE) + " in your chat field (with space).");
-    sendInfo(player, "3. (Ctrl + Right-click) the item from your Memo Pad.");
+    sendInfo(player, "购买方法:");
+    sendInfo(player, "1. 右键点击列表中的物品添加到记事本.");
+    sendInfo(player, "2. 在聊天框中输入 " + ChatUtil.color(getAliasWithPrefix(), Color.WHITE) + " (带空格).");
+    sendInfo(player, "3. (Ctrl + 右键) 从记事本中点击物品.");
   }
 
   private void buyItem(Player player, String itemLink) {
-    // redeem item
+    // 兑换物品
     int itemId = ChatUtil.getItemId(itemLink);
     if (DataManager.ITEM_DATA.getItemTemplate(itemId) == null) {
-      sendInfo(player, "\"" + itemLink + "\" is not a valid item (must be an item link or ID).");
+      sendInfo(player, "\"" + itemLink + "\" 不是有效的物品 (必须是物品链接或ID).");
       return;
     }
 
     if (!rewards.containsKey(itemId)) {
-      sendInfo(player, ChatUtil.item(itemId) + " is not contained in the rewards.");
+      sendInfo(player, ChatUtil.item(itemId) + " 不在奖励列表中.");
       return;
     }
     int cost = rewards.get(itemId).get("cost");
@@ -119,7 +119,7 @@ public class Buy extends PlayerCommand {
       rewardCoins += i.getItemCount();
 
     if (cost > rewardCoins) {
-      sendInfo(player, "You need " + cost + " to buy " + ChatUtil.item(itemId) + ".");
+      sendInfo(player, "购买 " + ChatUtil.item(itemId) + " 需要 " + cost + ".");
       return;
     }
 
@@ -128,7 +128,7 @@ public class Buy extends PlayerCommand {
       @Override
       public void acceptRequest(Creature requester, Player responder) {
         if (player.getInventory().decreaseByItemId(REWARD_COIN_ID, cost)) {
-          sendInfo(player, "You have spent " + cost + ".");
+          sendInfo(player, "你花费了 " + cost + ".");
           ItemService.addItem(player, itemId, rewards.get(itemId).get("amount"), true,
             new ItemUpdatePredicate(ItemAddType.DECOMPOSABLE, ItemUpdateType.INC_CASH_ITEM));
         }

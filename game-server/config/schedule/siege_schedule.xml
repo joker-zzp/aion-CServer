@@ -80,7 +80,8 @@
 	<!-- Agent Fight -->
 	<!-- 代理人战斗 -->
 	<agent_fight id="8011">
-		<siegeTime>0 50 16 ? * SUN</siegeTime>
+		<siegeTime>0 50 16 ? * SAT,SUN</siegeTime>
+    <siegeTime>0 0 21 ? * MON,TUE,WED,THU,FRI</siegeTime>
 	</agent_fight>
 	<!--
 	<fortress id="10111">

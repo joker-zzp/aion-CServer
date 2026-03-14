@@ -10,9 +10,13 @@ import com.aionemu.gameserver.utils.chathandlers.PlayerCommand;
 public class Pvp extends PlayerCommand {
 
   public Pvp() {
-    super("pvp", "Join the custom PvP-Map where you can fight against the opposing faction.");
+    super("pvp", "加入自定义PvP地图, 您可以在此与对立阵营战斗.");
 
-    setSyntaxInfo("<join | leave | info> - Join the PvP-Map by typing .pvp join.\nYou can leave the PvP-Map by typing .pvp leave.\nType .pvp info to see how many players are on the PvP-Map.");
+    setSyntaxInfo(
+      "join - 加入自定义PvP地图",
+      "leave - 离开自定义PvP地图",
+      "info - 显示当前地图上的玩家数量"
+    );
   }
 
   @Override
@@ -26,7 +30,7 @@ public class Pvp extends PlayerCommand {
         PvpMapService.getInstance().leaveMap(player);
       } else if (params[0].equalsIgnoreCase("info")) {
         int size = PvpMapService.getInstance().getParticipantsSize();
-        sendInfo(player, "There " + (size == 1 ? "is" : "are") + " currently " + (size == 0 ? "no" : size) + " player" + (size != 1 ? "s" : "") +" on the map.");
+        sendInfo(player, "当前地图上" + (size == 0 ? "没有" : (size == 1 ? "有" + size + "名" : "有" + size + "名")) + "玩家。");
       } else {
         sendInfo(player);
       }

@@ -24,8 +24,8 @@ public class Collide extends AdminCommand {
 
     // @formatter:off
     setSyntaxInfo(
-        " - 列出目标与地面之间的碰撞.",
-        "me - 列出您与目标之间的碰撞."
+      " - 列出目标与地面之间的碰撞.",
+      "me - 列出您与目标之间的碰撞."
     );
     // @formatter:on
   }

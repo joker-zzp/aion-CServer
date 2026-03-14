@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aionemu.commons.utils.GenericValidator;
+import com.aionemu.gameserver.configs.network.NetworkConfig;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.dataholders.PlayerInitialData.LocationData;
 import com.aionemu.gameserver.model.animations.ObjectDeleteAnimation;
@@ -66,6 +67,12 @@ public class World {
    * World maps supported by server.
    */
   private final Map<Integer, WorldMap> worldMaps = new HashMap<>();
+
+  /**
+   * 存储公网IP到容器内部IP的映射，用于解决Docker网络环境下的IP差异问题
+   */
+  private final Map<String, String> publicIpToInternalIpMap = new ConcurrentHashMap<>();
+  private final Map<String, String> internalIpToPublicIpMap = new ConcurrentHashMap<>();
 
   private World() {
     DataManager.WORLD_MAPS_DATA.forEachParalllel(template -> {
@@ -188,7 +195,20 @@ public class World {
    * @see PlayerContainer#get(String)
    */
   public Player getPlayer(String name) {
-    return allPlayers.get(name);
+    // 首先尝试直接获取玩家
+    Player player = allPlayers.get(name);
+    
+    // 如果IP映射功能启用且直接获取失败，则尝试使用IP映射查找
+    if (player == null && NetworkConfig.ENABLE_IP_MAPPING) {
+      // 遍历所有玩家，查找可能由于IP映射问题导致的同名玩家
+      for (Player p : allPlayers.getAllPlayers()) {
+        if (name.equalsIgnoreCase(p.getName())) {
+          return p;
+        }
+      }
+    }
+    
+    return player;
   }
 
   /**
@@ -396,6 +416,69 @@ public class World {
 
   public void forEachObject(Consumer<VisibleObject> consumer) {
     CollectionUtil.forEach(allObjects.values(), consumer);
+  }
+
+  /**
+   * 添加IP映射关系
+   * @param publicIp 公网IP
+   * @param internalIp 容器内部IP
+   */
+  public void addIpMapping(String publicIp, String internalIp) {
+    if (publicIp != null && internalIp != null && !publicIp.equals(internalIp)) {
+      publicIpToInternalIpMap.put(publicIp, internalIp);
+      internalIpToPublicIpMap.put(internalIp, publicIp);
+      log.debug("Added IP mapping: {} -> {}", publicIp, internalIp);
+    }
+  }
+
+  /**
+   * 移除IP映射关系
+   * @param ip 要移除的IP（公网或内部IP）
+   */
+  public void removeIpMapping(String ip) {
+    if (ip != null) {
+      String internalIp = publicIpToInternalIpMap.remove(ip);
+      if (internalIp != null) {
+        internalIpToPublicIpMap.remove(internalIp);
+        log.debug("Removed IP mapping: {} -> {}", ip, internalIp);
+      } else {
+        String publicIp = internalIpToPublicIpMap.remove(ip);
+        if (publicIp != null) {
+          publicIpToInternalIpMap.remove(publicIp);
+          log.debug("Removed IP mapping: {} -> {}", publicIp, ip);
+        }
+      }
+    }
+  }
+
+  /**
+   * 获取内部IP对应的公网IP
+   * @param internalIp 内部IP
+   * @return 对应的公网IP，如果没有映射则返回原IP
+   */
+  public String getPublicIp(String internalIp) {
+    if (internalIp != null && NetworkConfig.ENABLE_IP_MAPPING) {
+      String publicIp = internalIpToPublicIpMap.get(internalIp);
+      if (publicIp != null) {
+        return publicIp;
+      }
+    }
+    return internalIp;
+  }
+
+  /**
+   * 获取公网IP对应的内部IP
+   * @param publicIp 公网IP
+   * @return 对应的内部IP，如果没有映射则返回原IP
+   */
+  public String getInternalIp(String publicIp) {
+    if (publicIp != null && NetworkConfig.ENABLE_IP_MAPPING) {
+      String internalIp = publicIpToInternalIpMap.get(publicIp);
+      if (internalIp != null) {
+        return internalIp;
+      }
+    }
+    return publicIp;
   }
 
   private static class SingletonHolder {

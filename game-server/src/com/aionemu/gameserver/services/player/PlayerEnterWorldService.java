@@ -342,6 +342,9 @@ public final class PlayerEnterWorldService {
 
     if (HTMLConfig.ENABLE_HTML_WELCOME)
       HTMLService.showHTML(player, HTMLCache.getInstance().getHTML("welcome.xhtml"));
+    
+    // 显示每日登录奖励
+    DailyLoginRewardService.getInstance().onPlayerLogin(player);
 
     AdventService.getInstance().onLogin(player);
 

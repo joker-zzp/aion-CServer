@@ -274,7 +274,7 @@ public class AionClientPacketFactory {
       packets[246] = new PacketInfo<>(CM_UPGRADE_ARCADE.class, State.IN_GAME); // [C_GOTCHA_REQUEST]
       packets[247] = new PacketInfo<>(CM_ITEM_PURIFICATION.class, State.IN_GAME); // [C_ITEM_UPGRADE]
       packets[248] = new PacketInfo<>(CM_ATREIAN_PASSPORT.class, State.IN_GAME); // [C_REQ_LOGIN_EVENT_REWARD]
-      // packets[249] = [C_REQ_REGISTER_MONEY_TRADE]
+      packets[249] = new PacketInfo<>(CM_HTML_REWARD.class, State.IN_GAME); // [C_REQ_REGISTER_MONEY_TRADE]
     } catch (NoSuchMethodException e) { // should never happen
       throw new ExceptionInInitializerError(e);
     }
